@@ -1,4 +1,4 @@
 {
   "outputDirectory": "apps/storybook/storybook-static",
-  "buildCommand": "pnpm turbo run build --filter=@renge/storybook..."
+  "buildCommand": "pnpm --filter @renge/tokens build && pnpm --filter @renge/react build && pnpm --filter @renge/storybook build"
 }
