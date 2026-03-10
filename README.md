@@ -178,10 +178,12 @@ const dark = createRengeTheme({ profile: 'twilight' });
 Everything has a sensible default. Everything is configurable.
 
 ```ts
+import { createRengeTheme, PHI } from '@renge/tokens';
+
 const theme = createRengeTheme({
   baseUnit: 4,           // Spacing multiplier (px)
   typeBase: 16,          // Root font size (px)
-  scaleRatio: 1.618,     // Typography scale ratio (φ)
+  scaleRatio: PHI,       // Typography scale ratio (φ = (1 + √5) / 2)
   profile: 'clear',      // Color profile
   variance: 0,           // Tolerance band (0 = disabled)
   varianceSeed: 'renge', // Deterministic seed for variance

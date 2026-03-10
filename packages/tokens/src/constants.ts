@@ -4,8 +4,8 @@
  * The mathematical foundation. These values derive everything else.
  */
 
-export const PHI = 1.618033988749;
-export const GOLDEN_ANGLE = 137.5077640500378;
+export const PHI = (1 + Math.sqrt(5)) / 2;
+export const GOLDEN_ANGLE = 360 / (PHI * PHI);
 export const FIBONACCI = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89] as const;
 
 /**

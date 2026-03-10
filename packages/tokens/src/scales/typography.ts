@@ -32,7 +32,7 @@ export function createTypeScale(
   for (const step of TYPE_STEPS) {
     const size = base * Math.pow(ratio, step.exp);
     scale[step.key] = {
-      fontSize: `${Math.round(size * 100) / 100}px`,
+      fontSize: `${size}px`,
       lineHeight: step.lh,
     };
   }

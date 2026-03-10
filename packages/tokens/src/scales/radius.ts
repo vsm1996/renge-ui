@@ -22,7 +22,7 @@ export function createRadiusScale(
     if (variance > 0 && random) {
       value = applyVariance(value, variance, random);
     }
-    scale[String(index + 1)] = `${Math.round(value * 100) / 100}px`;
+    scale[String(index + 1)] = `${value}px`;
   });
 
   return scale;

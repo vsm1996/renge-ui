@@ -11,7 +11,7 @@ export interface RengeThemeConfig {
   baseUnit?: number;
   /** Base font size in px. Default: 16 */
   typeBase?: number;
-  /** Typography scale ratio. Default: PHI (1.618) */
+  /** Typography scale ratio. Default: φ = (1 + √5) / 2 */
   scaleRatio?: number;
   /** Color profile. Default: 'clear' */
   profile?: ProfileName;

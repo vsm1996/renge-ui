@@ -2,7 +2,7 @@
  * Spacing Scale
  *
  * Fibonacci × baseUnit. Natural growth, not arbitrary steps.
- * Default (baseUnit: 4): 4, 8, 12, 20, 32, 52, 84, 136, 220, 356
+ * Default (baseUnit: 4): 1×4, 2×4, 3×4, 5×4, 8×4, 13×4, 21×4, 34×4, 55×4, 89×4
  */
 
 import { FIBONACCI, applyVariance } from "../constants";
@@ -19,7 +19,7 @@ export function createSpacingScale(
     if (variance > 0 && random) {
       value = applyVariance(value, variance, random);
     }
-    scale[String(index + 1)] = `${Math.round(value * 100) / 100}px`;
+    scale[String(index + 1)] = `${value}px`;
   });
 
   return scale;

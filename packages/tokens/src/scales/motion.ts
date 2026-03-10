@@ -18,7 +18,7 @@ export function createDurationScale(
     if (variance > 0 && random) {
       value = applyVariance(value, variance, random);
     }
-    scale[String(index + 1)] = `${Math.round(value)}ms`;
+    scale[String(index + 1)] = `${value}ms`;
   });
 
   return scale;

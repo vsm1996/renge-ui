@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef, type CSSProperties } from 'react';
 
 export type InputSize = 'sm' | 'md' | 'lg';
 export type InputState = 'default' | 'error' | 'success';
@@ -9,7 +9,7 @@ export interface InputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'siz
   fullWidth?: boolean;
 }
 
-const sizeStyles: Record<InputSize, React.CSSProperties> = {
+const sizeStyles: Record<InputSize, CSSProperties> = {
   sm: {
     padding: 'var(--renge-space-1) var(--renge-space-2)',
     fontSize: 'var(--renge-font-size-sm)',

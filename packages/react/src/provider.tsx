@@ -1,11 +1,11 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useInsertionEffect, type ReactNode } from 'react';
 import { createRengeTheme } from '@renge/tokens';
 import type { RengeThemeConfig, RengeTheme } from '@renge/tokens';
 import { RengeContext } from './context';
 export { useRenge } from './hooks';
 
 export interface RengeProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   config?: RengeThemeConfig;
   /** Inject theme CSS into document <head>. Default: true */
   injectCSS?: boolean;
@@ -30,8 +30,8 @@ export function RengeProvider({
     [baseUnit, typeBase, scaleRatio, profile, variance, varianceSeed, includeReset, selector]
   );
 
-  useEffect(() => {
-    if (!injectCSS) return;
+  useInsertionEffect(() => {
+    if (!injectCSS || typeof document === 'undefined') return;
 
     const styleId = 'renge-theme';
     let styleEl = document.getElementById(styleId) as HTMLStyleElement | null;
@@ -43,10 +43,6 @@ export function RengeProvider({
     }
 
     styleEl.textContent = theme.css;
-
-    return () => {
-      // Don't remove on cleanup — other components may depend on it
-    };
   }, [theme.css, injectCSS]);
 
   const value = useMemo(() => ({

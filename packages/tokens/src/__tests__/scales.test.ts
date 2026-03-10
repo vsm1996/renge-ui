@@ -9,7 +9,7 @@ import {
   createAnimationKeyframesCSS,
   ANIMATION_NAMES,
 } from "../scales";
-import { PHI, FIBONACCI } from "../constants";
+import { PHI, FIBONACCI, seededRandom } from "../constants";
 
 describe("createSpacingScale", () => {
   it("produces 11 keys (0–10)", () => {
@@ -67,14 +67,12 @@ describe("createTypeScale", () => {
 
   it("lg is base × PHI", () => {
     const scale = createTypeScale(16);
-    const expected = `${Math.round(16 * PHI * 100) / 100}px`;
-    expect(scale.lg.fontSize).toBe(expected);
+    expect(scale.lg.fontSize).toBe(`${16 * PHI}px`);
   });
 
   it("sm is base × PHI^-1", () => {
     const scale = createTypeScale(16);
-    const expected = `${Math.round((16 / PHI) * 100) / 100}px`;
-    expect(scale.sm.fontSize).toBe(expected);
+    expect(scale.sm.fontSize).toBe(`${16 / PHI}px`);
   });
 
   it("base line height is 1.6", () => {
@@ -224,6 +222,104 @@ describe("createAnimationVars", () => {
   it("vibrate uses duration-6 (quick)", () => {
     const vars = createAnimationVars();
     expect(vars["--renge-animation-vibrate"]).toContain("var(--renge-duration-6)");
+  });
+});
+
+describe("createSpacingScale — precision", () => {
+  it("outputs exact Fibonacci × baseUnit without rounding", () => {
+    const scale = createSpacingScale(3);
+    // 3 × 5 = 15, 3 × 13 = 39 — should be exact, not rounded
+    expect(scale["4"]).toBe("15px");
+    expect(scale["6"]).toBe("39px");
+  });
+
+  it("spacing values are strictly increasing", () => {
+    const scale = createSpacingScale(4);
+    for (let i = 1; i < 10; i++) {
+      const curr = parseFloat(scale[String(i)]);
+      const next = parseFloat(scale[String(i + 1)]);
+      expect(next).toBeGreaterThan(curr);
+    }
+  });
+
+  it("variance produces non-integer values (no rounding)", () => {
+    const rng = seededRandom("precision-test");
+    const scale = createSpacingScale(4, 0.1, rng);
+    const values = FIBONACCI.map((_, i) => parseFloat(scale[String(i + 1)]));
+    // With variance, at least some values should have decimal parts
+    const hasDecimals = values.some((v) => v !== Math.round(v));
+    expect(hasDecimals).toBe(true);
+  });
+});
+
+describe("createTypeScale — precision", () => {
+  it("outputs exact φ-derived sizes without rounding", () => {
+    const scale = createTypeScale(16);
+    // xs = 16 * PHI^-2 — this is irrational, should not be rounded
+    const expected = 16 * Math.pow(PHI, -2);
+    expect(scale.xs.fontSize).toBe(`${expected}px`);
+  });
+
+  it("font sizes are strictly increasing from xs to 4xl", () => {
+    const keys = ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl"];
+    const scale = createTypeScale(16);
+    for (let i = 0; i < keys.length - 1; i++) {
+      const curr = parseFloat(scale[keys[i]].fontSize);
+      const next = parseFloat(scale[keys[i + 1]].fontSize);
+      expect(next).toBeGreaterThan(curr);
+    }
+  });
+
+  it("custom ratio is used instead of PHI", () => {
+    const scale = createTypeScale(16, 2);
+    expect(scale.lg.fontSize).toBe("32px"); // 16 * 2^1
+    expect(scale.xl.fontSize).toBe("64px"); // 16 * 2^2
+  });
+
+  it("scale is symmetric: sm × ratio ≈ base, base × ratio ≈ lg", () => {
+    const scale = createTypeScale(16);
+    const sm = parseFloat(scale.sm.fontSize);
+    const base = parseFloat(scale.base.fontSize);
+    const lg = parseFloat(scale.lg.fontSize);
+    expect(sm * PHI).toBeCloseTo(base, 10);
+    expect(base * PHI).toBeCloseTo(lg, 10);
+  });
+});
+
+describe("createRadiusScale — precision", () => {
+  it("outputs exact values without rounding", () => {
+    const rng = seededRandom("radius-prec");
+    const scale = createRadiusScale(4, 0.1, rng);
+    const values = FIBONACCI.slice(0, 5).map((_, i) => parseFloat(scale[String(i + 1)]));
+    const hasDecimals = values.some((v) => v !== Math.round(v));
+    expect(hasDecimals).toBe(true);
+  });
+
+  it("radius and spacing share the same Fibonacci base for steps 1-5", () => {
+    const spacing = createSpacingScale(4);
+    const radius = createRadiusScale(4);
+    for (let i = 1; i <= 5; i++) {
+      expect(radius[String(i)]).toBe(spacing[String(i)]);
+    }
+  });
+});
+
+describe("createDurationScale — precision", () => {
+  it("outputs exact values without rounding", () => {
+    const rng = seededRandom("duration-prec");
+    const scale = createDurationScale(0.1, rng);
+    const values = FIBONACCI.slice(0, 10).map((_, i) => parseFloat(scale[String(i + 1)]));
+    const hasDecimals = values.some((v) => v !== Math.round(v));
+    expect(hasDecimals).toBe(true);
+  });
+
+  it("durations are strictly increasing", () => {
+    const scale = createDurationScale();
+    for (let i = 1; i < 10; i++) {
+      const curr = parseFloat(scale[String(i)]);
+      const next = parseFloat(scale[String(i + 1)]);
+      expect(next).toBeGreaterThan(curr);
+    }
   });
 });
 

@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef, type CSSProperties } from 'react';
 
 export type BadgeVariant = 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 export type BadgeSize = 'sm' | 'md' | 'lg';
@@ -23,7 +23,7 @@ const colorVars = (variant: BadgeVariant) => {
   };
 };
 
-const sizeStyles: Record<BadgeSize, React.CSSProperties> = {
+const sizeStyles: Record<BadgeSize, CSSProperties> = {
   sm: { padding: 'var(--renge-space-1) var(--renge-space-2)', fontSize: 'var(--renge-font-size-xs)' },
   md: { padding: 'var(--renge-space-1) var(--renge-space-3)', fontSize: 'var(--renge-font-size-xs)' },
   lg: { padding: 'var(--renge-space-2) var(--renge-space-3)', fontSize: 'var(--renge-font-size-sm)' },
