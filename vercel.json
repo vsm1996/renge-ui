@@ -1,4 +1,6 @@
 {
-  "outputDirectory": "apps/storybook/storybook-static",
-  "buildCommand": "pnpm --filter @renge/tokens build && pnpm --filter @renge/react build && pnpm --filter @renge/storybook build"
+  "buildCommand": "pnpm --filter @renge/tokens build && pnpm --filter @renge/site build",
+  "outputDirectory": "apps/.next",
+  "installCommand": "pnpm install",
+  "framework": "nextjs"
 }
