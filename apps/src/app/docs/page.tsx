@@ -531,7 +531,7 @@ function AvatarDocs() {
         <PropRow name="src" type="string" defaultVal="—" desc="Image URL. Takes priority over initials." />
         <PropRow name="alt" type="string" defaultVal="—" desc="Alt text / aria-label." />
         <PropRow name="initials" type="string" defaultVal="—" desc="Up to 2 chars displayed when no src." />
-        <PropRow name="size" type='"1" | "2" | "3" | "4" | "5"' defaultVal='"3"' desc="20 / 32 / 48 / 64 / 84 px." />
+        <PropRow name="size" type='"1" | "2" | "3" | "4" | "5"' defaultVal='"3"' desc="20 / 32 / 52 / 84 / 136 px — Fibonacci × 4." />
         <PropRow name="shape" type='"circle" | "square"' defaultVal='"circle"' desc="Full radius or radius-3." />
       </PropsTable>
     </ComponentSection>
