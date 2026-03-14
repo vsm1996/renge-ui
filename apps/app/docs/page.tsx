@@ -19,10 +19,10 @@ import { ProfileProvider, ProfileToggle } from "@/components/ui/ProfileToggle";
 function PropRow({ name, type, defaultVal, desc }: { name: string; type: string; defaultVal?: string; desc: string }) {
   return (
     <tr>
-      <td style={{ padding: "var(--renge-space-3) var(--renge-space-4)", fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-accent)", borderBottom: "1px solid var(--renge-color-border-subtle)", whiteSpace: "nowrap" }}>{name}</td>
-      <td style={{ padding: "var(--renge-space-3) var(--renge-space-4)", fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", borderBottom: "1px solid var(--renge-color-border-subtle)", whiteSpace: "nowrap" }}>{type}</td>
-      <td style={{ padding: "var(--renge-space-3) var(--renge-space-4)", fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{defaultVal ?? "—"}</td>
-      <td style={{ padding: "var(--renge-space-3) var(--renge-space-4)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-subtle)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{desc}</td>
+      <td style={{ padding: "var(--renge-space-3) var(--renge-space-4)", fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", borderBottom: "1px solid var(--renge-color-border-subtle)", whiteSpace: "nowrap" }}>{name}</td>
+      <td style={{ padding: "var(--renge-space-3) var(--renge-space-4)", fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", borderBottom: "1px solid var(--renge-color-border-subtle)", whiteSpace: "nowrap" }}>{type}</td>
+      <td style={{ padding: "var(--renge-space-3) var(--renge-space-4)", fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{defaultVal ?? "—"}</td>
+      <td style={{ padding: "var(--renge-space-3) var(--renge-space-4)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{desc}</td>
     </tr>
   );
 }
@@ -34,7 +34,7 @@ function PropsTable({ children }: { children: React.ReactNode }) {
         <thead>
           <tr style={{ background: "var(--renge-color-bg-subtle)" }}>
             {["Prop", "Type", "Default", "Description"].map(h => (
-              <th key={h} style={{ padding: "var(--renge-space-2) var(--renge-space-4)", textAlign: "left", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{h}</th>
+              <th key={h} style={{ padding: "var(--renge-space-2) var(--renge-space-4)", textAlign: "left", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -56,7 +56,7 @@ function Code({ children }: { children: string }) {
   return (
     <div style={{ background: "var(--renge-color-bg-inverse)", borderRadius: "var(--renge-radius-2)", padding: "var(--renge-space-4)", overflowX: "auto" }}>
       <pre style={{ margin: 0 }}>
-        <code style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-inverse)", lineHeight: 1.7 }}>{children}</code>
+        <code style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-inverse)", lineHeight: 1.7 }}>{children}</code>
       </pre>
     </div>
   );
