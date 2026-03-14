@@ -2,111 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { PHI, EASE_OUT } from "@/lib/phi";
-import { PhiSpiral } from "@/components/ui/PhiSpiral";
-
-/**
- * PHI golden ratio rectangle with an exact golden spiral.
- *
- * The spiral is built from 6 quarter-circle arcs, each radius = previous / PHI.
- * Centers follow the corners of the recursively-nested golden rectangles.
- * All arcs are clockwise (sweep=1) in SVG coordinates.
- *
- * Derivation for W×H rectangle where H = W/PHI:
- *   r1 = H          arc 1: (0,0)      → (r1,r1),   center (0,r1)
- *   r2 = W−r1       arc 2: (r1,r1)    → (W,r3),    center (W,r1)
- *   r3 = r1−r2      arc 3: (W,r3)     → (r1+r4,0), center (W,0)
- *   r4 = r2−r3      arc 4: (r1+r4,0)  → (r1,r4),   center (r1,0)
- *   r5 = r3−r4      arc 5: (r1,r4)    → (r1+r5,r3),center (r1,r3)
- *   r6 = r4−r5      arc 6: (r1+r5,r3) → (r1+r4,r3−r6), center (r1+r4,r3)
- */
-function GoldenRectangle() {
-  const w = 340;
-  const h = w / PHI;
-
-  const r1 = h;
-  const r2 = w - r1;
-  const r3 = r1 - r2;
-  const r4 = r2 - r3;
-  const r5 = r3 - r4;
-  const r6 = r4 - r5;
-
-  const spiralPath = [
-    `M 0 0`,
-    `A ${r1} ${r1} 0 0 1 ${r1} ${r1}`,
-    `A ${r2} ${r2} 0 0 1 ${w} ${r3}`,
-    `A ${r3} ${r3} 0 0 1 ${r1 + r4} 0`,
-    `A ${r4} ${r4} 0 0 1 ${r1} ${r4}`,
-    `A ${r5} ${r5} 0 0 1 ${r1 + r5} ${r3}`,
-    `A ${r6} ${r6} 0 0 1 ${r1 + r4} ${r3 - r6}`,
-  ].join(" ");
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        width: w,
-        height: h,
-        maxWidth: "90vw",
-      }}
-    >
-      {/* Outer rectangle */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          border: "1px solid var(--renge-color-accent)",
-          opacity: 0.5,
-        }}
-      />
-      {/* Square portion — left side */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: h,
-          height: h,
-          background: "var(--renge-color-accent-subtle)",
-          borderRight: "1px solid var(--renge-color-accent)",
-          opacity: 0.3,
-        }}
-      />
-      {/* The golden spiral */}
-      <svg
-        viewBox={`0 0 ${w} ${h}`}
-        width={w}
-        height={h}
-        style={{ position: "absolute", inset: 0 }}
-        aria-hidden
-      >
-        <path
-          d={spiralPath}
-          fill="none"
-          stroke="var(--renge-color-accent)"
-          strokeWidth={1.5}
-          strokeLinecap="round"
-          opacity={0.8}
-        />
-      </svg>
-      {/* Ratio label */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "var(--renge-space-3)",
-          right: "var(--renge-space-3)",
-          fontSize: "var(--renge-font-size-xs)",
-          color: "var(--renge-color-accent)",
-          fontFamily: "var(--font-body)",
-          letterSpacing: "0.1em",
-          opacity: 0.8,
-        }}
-      >
-        1 : {PHI.toFixed(3)}
-      </div>
-    </div>
-  );
-}
+import { GOLDEN_ANGLE, EASE_OUT } from "@/lib/phi";
+import { Lotus } from "@/components/ui/Lotus";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -117,14 +14,14 @@ const fadeUp = {
   }),
 };
 
-function SpiralBackground() {
+function LotusBackground() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const spiralOpacity = useTransform(scrollYProgress, [0, 0.5], [0.08, 0]);
-  const spiralY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0.07, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
     <motion.div
@@ -134,12 +31,12 @@ function SpiralBackground() {
         top: "50%",
         left: "50%",
         x: "-50%",
-        y: spiralY,
-        opacity: spiralOpacity,
+        y,
+        opacity,
         pointerEvents: "none",
       }}
     >
-      <PhiSpiral size={700} strokeColor="var(--renge-color-fg)" animate />
+      <Lotus size={700} animate />
     </motion.div>
   );
 }
@@ -158,8 +55,8 @@ export function Hero() {
         overflow: "hidden",
       }}
     >
-      {/* Background PHI spiral */}
-      <SpiralBackground />
+      {/* Background lotus — parallax, low opacity */}
+      <LotusBackground />
 
       {/* Content */}
       <div
@@ -174,14 +71,28 @@ export function Hero() {
           maxWidth: 720,
         }}
       >
-        {/* The geometry — before any text */}
+        {/* Lotus — the geometry before the words */}
         <motion.div
           initial="hidden"
           animate="visible"
           custom={0}
           variants={fadeUp}
         >
-          <GoldenRectangle />
+          <Lotus size={300} animate />
+
+          {/* Golden angle label */}
+          <p
+            style={{
+              marginTop: "var(--renge-space-3)",
+              fontSize: "var(--renge-font-size-xs)",
+              color: "var(--renge-color-accent)",
+              fontFamily: "var(--font-body)",
+              letterSpacing: "0.12em",
+              opacity: 0.7,
+            }}
+          >
+            φ° = {GOLDEN_ANGLE.toFixed(3)}°
+          </p>
         </motion.div>
 
         {/* Headline */}
@@ -266,7 +177,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
-          transition={{ delay: 1.2, duration: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
           style={{
             position: "absolute",
             bottom: "var(--renge-space-6)",
@@ -279,7 +190,7 @@ export function Hero() {
             fontFamily: "var(--font-body)",
           }}
         >
-          φ = {PHI.toFixed(6)}...
+          φ° = {GOLDEN_ANGLE.toFixed(3)}°
         </motion.div>
       </div>
     </section>
