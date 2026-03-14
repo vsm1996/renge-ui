@@ -3,17 +3,17 @@ import { createRengeTheme } from "../index";
 import { profiles, getProfile, createSemanticColorVars, createPaletteVars } from "../index";
 import { semanticColorKeys } from "../types";
 
-const ALL_PROFILES = ["clear", "earth", "twilight"] as const;
+const ALL_PROFILES = ["ocean", "earth", "twilight"] as const;
 
 describe("color profiles", () => {
   it("all three profiles exist", () => {
-    expect(profiles).toHaveProperty("clear");
+    expect(profiles).toHaveProperty("ocean");
     expect(profiles).toHaveProperty("earth");
     expect(profiles).toHaveProperty("twilight");
   });
 
   it("getProfile returns the correct profile", () => {
-    expect(getProfile("clear")).toBe(profiles.clear);
+    expect(getProfile("ocean")).toBe(profiles.ocean);
     expect(getProfile("earth")).toBe(profiles.earth);
     expect(getProfile("twilight")).toBe(profiles.twilight);
   });
@@ -30,7 +30,7 @@ describe("color profiles", () => {
 
 describe("createSemanticColorVars", () => {
   it("generates CSS vars for all semantic keys", () => {
-    const vars = createSemanticColorVars(profiles.clear);
+    const vars = createSemanticColorVars(profiles.ocean);
     for (const key of semanticColorKeys) {
       // camelCase → kebab-case: bgSubtle → bg-subtle
       const cssKey = `--renge-color-${key.replace(/([A-Z])/g, "-$1").toLowerCase()}`;
@@ -72,19 +72,19 @@ describe("palette vars", () => {
 });
 
 describe("palette abstraction", () => {
-  it("clear profile danger uses cranberryRed from the palette (not hardcoded)", () => {
-    const theme = createRengeTheme({ profile: "clear" });
+  it("ocean profile danger uses cranberryRed from the palette (not hardcoded)", () => {
+    const theme = createRengeTheme({ profile: "ocean" });
     const paletteVars = createPaletteVars();
     expect(theme.vars["--renge-color-danger"]).toBe(paletteVars["--renge-palette-cranberry-red"]);
   });
 });
 
 describe("theme color output per profile", () => {
-  it("clear profile has a light background", () => {
-    const theme = createRengeTheme({ profile: "clear" });
+  it("ocean profile has a light background", () => {
+    const theme = createRengeTheme({ profile: "ocean" });
     const bg = theme.vars["--renge-color-bg"];
     expect(bg).toBeDefined();
-    // Clear bg should be a high-lightness oklch value
+    // Ocean bg should be a high-lightness oklch value
     const match = bg.match(/oklch\((\d+(?:\.\d+)?)%/);
     if (match) {
       expect(parseFloat(match[1])).toBeGreaterThan(80);

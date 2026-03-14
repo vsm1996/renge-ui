@@ -148,46 +148,49 @@ function createSpacingScale(baseUnit, variance = 0, random) {
     return scale;
 }
 // src/scales/typography.ts
+var LH_BODY = +PHI.toFixed(3);
+var LH_HEADING = +(1 + 1 / (PHI * PHI)).toFixed(3);
+var LH_DISPLAY = +(1 + 1 / (PHI * PHI * PHI)).toFixed(3);
 var TYPE_STEPS = [
     {
         key: "xs",
         exp: -2,
-        lh: "1.5"
+        lh: String(LH_BODY)
     },
     {
         key: "sm",
         exp: -1,
-        lh: "1.5"
+        lh: String(LH_BODY)
     },
     {
         key: "base",
         exp: 0,
-        lh: "1.6"
+        lh: String(LH_BODY)
     },
     {
         key: "lg",
         exp: 1,
-        lh: "1.4"
+        lh: String(LH_BODY)
     },
     {
         key: "xl",
         exp: 2,
-        lh: "1.3"
+        lh: String(LH_HEADING)
     },
     {
         key: "2xl",
         exp: 3,
-        lh: "1.2"
+        lh: String(LH_HEADING)
     },
     {
         key: "3xl",
         exp: 4,
-        lh: "1.2"
+        lh: String(LH_DISPLAY)
     },
     {
         key: "4xl",
         exp: 5,
-        lh: "1.2"
+        lh: String(LH_DISPLAY)
     }
 ];
 function createTypeScale(base, ratio = PHI) {
@@ -202,6 +205,8 @@ function createTypeScale(base, ratio = PHI) {
     return scale;
 }
 // src/scales/motion.ts
+var A = +(1 / (PHI * PHI)).toFixed(3);
+var B = +(1 / PHI).toFixed(3);
 function createDurationScale(variance = 0, random) {
     const scale = {
         "0": "0ms"
@@ -218,10 +223,10 @@ function createDurationScale(variance = 0, random) {
 function createEasingTokens() {
     return {
         linear: "linear",
-        "ease-out": "cubic-bezier(0.22, 1, 0.36, 1)",
-        "ease-in": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
-        "ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)",
-        spring: "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+        "ease-out": `cubic-bezier(${A}, 1, ${B}, 1)`,
+        "ease-in": `cubic-bezier(${A}, 0, 1, ${B})`,
+        "ease-in-out": `cubic-bezier(${A}, 0, ${B}, 1)`,
+        spring: `cubic-bezier(${A}, ${B}, ${B}, ${1 + A})`
     };
 }
 // src/scales/radius.ts
@@ -603,8 +608,8 @@ function createPaletteVars() {
     }
     return vars;
 }
-// src/colors/profiles/clear.ts
-var clear = {
+// src/colors/profiles/ocean.ts
+var ocean = {
     bg: oklch(palette.snowWhite),
     bgSubtle: oklch(palette.fogWhite),
     bgMuted: "oklch(95% 0.02 210)",
@@ -631,19 +636,19 @@ var clear = {
 // src/colors/profiles/earth.ts
 var earth = {
     bg: oklch(palette.birchWhite),
-    bgSubtle: oklch(palette.sandBeige),
-    bgMuted: "oklch(92% 0.04 30)",
-    bgInverse: oklch(palette.earthBrown),
-    fg: "oklch(20% 0.03 30)",
-    fgSubtle: "oklch(35% 0.04 30)",
-    fgMuted: oklch(palette.stoneGrey),
+    bgSubtle: oklch(palette.desertTan),
+    bgMuted: "oklch(92% 0.03 28)",
+    bgInverse: oklch(palette.barkBrown),
+    fg: "oklch(18% 0.04 28)",
+    fgSubtle: "oklch(33% 0.05 28)",
+    fgMuted: "oklch(52% 0.1 28)",
     fgInverse: oklch(palette.birchWhite),
-    border: "oklch(78% 0.04 30)",
-    borderSubtle: "oklch(88% 0.02 30)",
-    borderFocus: oklch(palette.earthyOchre),
-    accent: oklch(palette.earthyOchre),
-    accentHover: oklch(palette.earthBrown),
-    accentSubtle: "oklch(90% 0.08 40)",
+    border: "oklch(76% 0.05 28)",
+    borderSubtle: "oklch(87% 0.03 28)",
+    borderFocus: oklch(palette.earthBrown),
+    accent: oklch(palette.earthBrown),
+    accentHover: oklch(palette.chocolate),
+    accentSubtle: "oklch(88% 0.06 28)",
     success: oklch(palette.mossGreen),
     successSubtle: "oklch(90% 0.08 130)",
     warning: oklch(palette.sunsetOrange),
@@ -680,7 +685,7 @@ var twilight = {
 };
 // src/colors/profiles/index.ts
 var profiles = {
-    clear,
+    ocean,
     earth,
     twilight
 };
@@ -700,7 +705,7 @@ var defaults = {
     baseUnit: 4,
     typeBase: 16,
     scaleRatio: PHI,
-    profile: "clear",
+    profile: "ocean",
     variance: 0,
     varianceSeed: "renge",
     includeReset: false,
@@ -875,7 +880,7 @@ __turbopack_context__.s([
  */ var __TURBOPACK__imported__module__$5b$project$5d2f$packages$2f$tokens$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/packages/tokens/dist/index.mjs [app-rsc] (ecmascript)");
 ;
 ;
-function generateRootCSS(profile = "clear") {
+function generateRootCSS(profile = "ocean") {
     const theme = (0, __TURBOPACK__imported__module__$5b$project$5d2f$packages$2f$tokens$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createRengeTheme"])({
         profile
     });
@@ -982,11 +987,11 @@ const metadata = {
 };
 function RootLayout({ children }) {
     // Generate token CSS server-side — inject as style tag
-    const tokenCSS = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$src$2f$lib$2f$tokens$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$locals$3e$__["generateRootCSS"])("clear");
+    const tokenCSS = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$src$2f$lib$2f$tokens$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$locals$3e$__["generateRootCSS"])("ocean");
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("html", {
         lang: "en",
         className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$dm_serif_display_27ec275a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].variable} ${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$outfit_93ba0792$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].variable}`,
-        "data-profile": "clear",
+        "data-profile": "ocean",
         suppressHydrationWarning: true,
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("head", {

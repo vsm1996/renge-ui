@@ -27,7 +27,7 @@ const defaults: Required<RengeThemeConfig> = {
   baseUnit: 4,
   typeBase: 16,
   scaleRatio: PHI,
-  profile: "clear",
+  profile: "ocean",
   variance: 0,
   varianceSeed: "renge",
   includeReset: false,

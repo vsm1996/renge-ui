@@ -154,14 +154,14 @@ Three layers. Components only touch the outermost one.
 
 | Profile | Character | Accent |
 |---------|-----------|--------|
-| **Clear** | Bright, airy | Sky blue |
+| **Ocean** | Bright, airy | Sky blue |
 | **Earth** | Grounded, warm | Earthy ochre |
 | **Twilight** | Dark, cool | Lavender |
 
 ```ts
 import { createRengeTheme } from '@renge/tokens';
 
-// Default: Clear
+// Default: Ocean
 const light = createRengeTheme();
 
 // Grounded alternative
@@ -184,7 +184,7 @@ const theme = createRengeTheme({
   baseUnit: 4,           // Spacing multiplier (px)
   typeBase: 16,          // Root font size (px)
   scaleRatio: PHI,       // Typography scale ratio (φ = (1 + √5) / 2)
-  profile: 'clear',      // Color profile
+  profile: 'ocean',      // Color profile
   variance: 0,           // Tolerance band (0 = disabled)
   varianceSeed: 'renge', // Deterministic seed for variance
   includeReset: false,   // Inject minimal CSS reset

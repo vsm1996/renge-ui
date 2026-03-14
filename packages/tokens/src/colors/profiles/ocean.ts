@@ -1,5 +1,5 @@
 /**
- * Clear Profile
+ * Ocean Profile
  *
  * Bright, airy. The default.
  * Sky-blue accent, snow-white backgrounds.
@@ -8,7 +8,7 @@
 import type { SemanticColorMap } from "../../types";
 import { oklch, palette } from "../palette";
 
-export const clear: SemanticColorMap = {
+export const ocean: SemanticColorMap = {
   bg: oklch(palette.snowWhite),
   bgSubtle: oklch(palette.fogWhite),
   bgMuted: "oklch(95% 0.02 210)",

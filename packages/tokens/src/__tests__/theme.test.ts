@@ -14,7 +14,7 @@ describe("createRengeTheme", () => {
     expect(config.baseUnit).toBe(4);
     expect(config.typeBase).toBe(16);
     expect(config.scaleRatio).toBeCloseTo(1.618);
-    expect(config.profile).toBe("clear");
+    expect(config.profile).toBe("ocean");
     expect(config.variance).toBe(0);
     expect(config.varianceSeed).toBe("renge");
     expect(config.includeReset).toBe(false);
@@ -80,17 +80,17 @@ describe("createRengeTheme", () => {
   });
 
   it("switching profiles changes color vars", () => {
-    const clear = createRengeTheme({ profile: "clear" });
+    const ocean = createRengeTheme({ profile: "ocean" });
     const twilight = createRengeTheme({ profile: "twilight" });
-    expect(clear.vars["--renge-color-bg"]).not.toBe(
+    expect(ocean.vars["--renge-color-bg"]).not.toBe(
       twilight.vars["--renge-color-bg"]
     );
   });
 
   it("switching profiles does not change spacing vars", () => {
-    const clear = createRengeTheme({ profile: "clear" });
+    const ocean = createRengeTheme({ profile: "ocean" });
     const earth = createRengeTheme({ profile: "earth" });
-    expect(clear.vars["--renge-space-4"]).toBe(earth.vars["--renge-space-4"]);
+    expect(ocean.vars["--renge-space-4"]).toBe(earth.vars["--renge-space-4"]);
   });
 
   it("custom baseUnit scales spacing", () => {

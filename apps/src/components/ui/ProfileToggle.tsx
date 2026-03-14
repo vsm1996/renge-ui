@@ -14,7 +14,7 @@ interface ProfileContextValue {
 }
 
 const ProfileContext = createContext<ProfileContextValue>({
-  profile: "clear",
+  profile: "ocean",
   setProfile: () => {},
 });
 
@@ -27,7 +27,7 @@ export function useProfile() {
 // ============================================================================
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [profile, setProfileState] = useState<ProfileName>("clear");
+  const [profile, setProfileState] = useState<ProfileName>("ocean");
 
   const setProfile = useCallback((p: ProfileName) => {
     setProfileState(p);
@@ -42,7 +42,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   // Sync on mount to ensure correct state
   useEffect(() => {
-    setProfile("clear");
+    setProfile("ocean");
   }, [setProfile]);
 
   return (
@@ -57,7 +57,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 // ============================================================================
 
 const PROFILES: { id: ProfileName; label: string; description: string }[] = [
-  { id: "clear", label: "Clear", description: "Sky blue. Light. Airy." },
+  { id: "ocean", label: "Ocean", description: "Sky blue. Light. Airy." },
   { id: "earth", label: "Earth", description: "Ochre. Warm. Grounded." },
   { id: "twilight", label: "Twilight", description: "Indigo. Deep. Nocturnal." },
 ];

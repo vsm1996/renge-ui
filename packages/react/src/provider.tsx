@@ -47,7 +47,7 @@ export function RengeProvider({
 
   const value = useMemo(() => ({
     theme,
-    profile: profile ?? 'clear',
+    profile: profile ?? 'ocean',
   }), [theme, profile]);
 
   return (

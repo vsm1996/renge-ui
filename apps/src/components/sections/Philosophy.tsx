@@ -62,13 +62,14 @@ function FibViz() {
           key={i}
           style={{
             flex: 1,
+            height: Math.round((fib / max) * 48),
             background: "var(--renge-color-accent)",
             borderRadius: "var(--renge-radius-1) var(--renge-radius-1) 0 0",
             opacity: 0.3 + (i / fibs.length) * 0.7,
             transformOrigin: "bottom",
           }}
           initial={{ scaleY: 0 }}
-          animate={inView ? { scaleY: fib / max } : { scaleY: 0 }}
+          animate={inView ? { scaleY: 1 } : { scaleY: 0 }}
           transition={{ duration: 0.8, delay: i * 0.08, ease: EASE_OUT }}
         />
       ))}

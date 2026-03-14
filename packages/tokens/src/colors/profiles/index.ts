@@ -1,10 +1,10 @@
-import { clear } from "./clear";
+import { ocean } from "./ocean";
 import { earth } from "./earth";
 import { twilight } from "./twilight";
 import type { SemanticColorMap, ProfileName } from "../../types";
 
 export const profiles: Record<ProfileName, SemanticColorMap> = {
-  clear,
+  ocean,
   earth,
   twilight,
 };

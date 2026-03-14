@@ -17,7 +17,7 @@ import { RengeProvider } from '@renge/react';
 
 function App() {
   return (
-    <RengeProvider config={{ profile: 'clear' }}>
+    <RengeProvider config={{ profile: 'ocean' }}>
       <YourApp />
     </RengeProvider>
   );
@@ -43,7 +43,7 @@ Returns the current theme and profile from context. Must be used inside `RengePr
 const { theme, profile } = useRenge();
 // theme.vars['--renge-color-accent']
 // theme.css  → full CSS string
-// profile    → 'clear' | 'earth' | 'twilight'
+// profile    → 'ocean' | 'earth' | 'twilight'
 ```
 
 ### `useRengeTheme(config?)`
@@ -210,11 +210,11 @@ Use `injectCSS={false}` and inject the CSS string server-side:
 import { createRengeTheme } from '@renge/tokens';
 
 // Server
-const theme = createRengeTheme({ profile: 'clear' });
+const theme = createRengeTheme({ profile: 'ocean' });
 // Embed theme.css in your HTML <head>
 
 // Client
-<RengeProvider config={{ profile: 'clear' }} injectCSS={false}>
+<RengeProvider config={{ profile: 'ocean' }} injectCSS={false}>
   <App />
 </RengeProvider>
 ```

@@ -97,46 +97,49 @@ function createSpacingScale(baseUnit, variance = 0, random) {
     return scale;
 }
 // src/scales/typography.ts
+var LH_BODY = +PHI.toFixed(3);
+var LH_HEADING = +(1 + 1 / (PHI * PHI)).toFixed(3);
+var LH_DISPLAY = +(1 + 1 / (PHI * PHI * PHI)).toFixed(3);
 var TYPE_STEPS = [
     {
         key: "xs",
         exp: -2,
-        lh: "1.5"
+        lh: String(LH_BODY)
     },
     {
         key: "sm",
         exp: -1,
-        lh: "1.5"
+        lh: String(LH_BODY)
     },
     {
         key: "base",
         exp: 0,
-        lh: "1.6"
+        lh: String(LH_BODY)
     },
     {
         key: "lg",
         exp: 1,
-        lh: "1.4"
+        lh: String(LH_BODY)
     },
     {
         key: "xl",
         exp: 2,
-        lh: "1.3"
+        lh: String(LH_HEADING)
     },
     {
         key: "2xl",
         exp: 3,
-        lh: "1.2"
+        lh: String(LH_HEADING)
     },
     {
         key: "3xl",
         exp: 4,
-        lh: "1.2"
+        lh: String(LH_DISPLAY)
     },
     {
         key: "4xl",
         exp: 5,
-        lh: "1.2"
+        lh: String(LH_DISPLAY)
     }
 ];
 function createTypeScale(base, ratio = PHI) {
@@ -151,6 +154,8 @@ function createTypeScale(base, ratio = PHI) {
     return scale;
 }
 // src/scales/motion.ts
+var A = +(1 / (PHI * PHI)).toFixed(3);
+var B = +(1 / PHI).toFixed(3);
 function createDurationScale(variance = 0, random) {
     const scale = {
         "0": "0ms"
@@ -167,10 +172,10 @@ function createDurationScale(variance = 0, random) {
 function createEasingTokens() {
     return {
         linear: "linear",
-        "ease-out": "cubic-bezier(0.22, 1, 0.36, 1)",
-        "ease-in": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
-        "ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)",
-        spring: "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+        "ease-out": `cubic-bezier(${A}, 1, ${B}, 1)`,
+        "ease-in": `cubic-bezier(${A}, 0, 1, ${B})`,
+        "ease-in-out": `cubic-bezier(${A}, 0, ${B}, 1)`,
+        spring: `cubic-bezier(${A}, ${B}, ${B}, ${1 + A})`
     };
 }
 // src/scales/radius.ts
@@ -552,8 +557,8 @@ function createPaletteVars() {
     }
     return vars;
 }
-// src/colors/profiles/clear.ts
-var clear = {
+// src/colors/profiles/ocean.ts
+var ocean = {
     bg: oklch(palette.snowWhite),
     bgSubtle: oklch(palette.fogWhite),
     bgMuted: "oklch(95% 0.02 210)",
@@ -580,19 +585,19 @@ var clear = {
 // src/colors/profiles/earth.ts
 var earth = {
     bg: oklch(palette.birchWhite),
-    bgSubtle: oklch(palette.sandBeige),
-    bgMuted: "oklch(92% 0.04 30)",
-    bgInverse: oklch(palette.earthBrown),
-    fg: "oklch(20% 0.03 30)",
-    fgSubtle: "oklch(35% 0.04 30)",
-    fgMuted: oklch(palette.stoneGrey),
+    bgSubtle: oklch(palette.desertTan),
+    bgMuted: "oklch(92% 0.03 28)",
+    bgInverse: oklch(palette.barkBrown),
+    fg: "oklch(18% 0.04 28)",
+    fgSubtle: "oklch(33% 0.05 28)",
+    fgMuted: "oklch(52% 0.1 28)",
     fgInverse: oklch(palette.birchWhite),
-    border: "oklch(78% 0.04 30)",
-    borderSubtle: "oklch(88% 0.02 30)",
-    borderFocus: oklch(palette.earthyOchre),
-    accent: oklch(palette.earthyOchre),
-    accentHover: oklch(palette.earthBrown),
-    accentSubtle: "oklch(90% 0.08 40)",
+    border: "oklch(76% 0.05 28)",
+    borderSubtle: "oklch(87% 0.03 28)",
+    borderFocus: oklch(palette.earthBrown),
+    accent: oklch(palette.earthBrown),
+    accentHover: oklch(palette.chocolate),
+    accentSubtle: "oklch(88% 0.06 28)",
     success: oklch(palette.mossGreen),
     successSubtle: "oklch(90% 0.08 130)",
     warning: oklch(palette.sunsetOrange),
@@ -629,7 +634,7 @@ var twilight = {
 };
 // src/colors/profiles/index.ts
 var profiles = {
-    clear,
+    ocean,
     earth,
     twilight
 };
@@ -649,7 +654,7 @@ var defaults = {
     baseUnit: 4,
     typeBase: 16,
     scaleRatio: PHI,
-    profile: "clear",
+    profile: "ocean",
     variance: 0,
     varianceSeed: "renge",
     includeReset: false,
@@ -816,14 +821,14 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$packages$2f$tokens$2f$dist$2
 ;
 ;
 const ProfileContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])({
-    profile: "clear",
+    profile: "ocean",
     setProfile: ()=>{}
 });
 function useProfile() {
     return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(ProfileContext);
 }
 function ProfileProvider({ children }) {
-    const [profile, setProfileState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("clear");
+    const [profile, setProfileState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("ocean");
     const setProfile = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((p)=>{
         setProfileState(p);
         // Apply semantic color vars to :root
@@ -836,7 +841,7 @@ function ProfileProvider({ children }) {
     }, []);
     // Sync on mount to ensure correct state
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        setProfile("clear");
+        setProfile("ocean");
     }, [
         setProfile
     ]);
@@ -857,8 +862,8 @@ function ProfileProvider({ children }) {
 // ============================================================================
 const PROFILES = [
     {
-        id: "clear",
-        label: "Clear",
+        id: "ocean",
+        label: "Ocean",
         description: "Sky blue. Light. Airy."
     },
     {
@@ -947,9 +952,9 @@ const FIBONACCI = [
     89
 ];
 const EASE_OUT = [
-    0.22,
+    0.382,
     1,
-    0.36,
+    0.618,
     1
 ];
 function phi(n) {
@@ -1833,6 +1838,7 @@ function FibViz() {
         children: fibs.map((fib, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$framer$2d$motion$40$12$2e$36$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["motion"].div, {
                 style: {
                     flex: 1,
+                    height: Math.round(fib / max * 48),
                     background: "var(--renge-color-accent)",
                     borderRadius: "var(--renge-radius-1) var(--renge-radius-1) 0 0",
                     opacity: 0.3 + i / fibs.length * 0.7,
@@ -1842,7 +1848,7 @@ function FibViz() {
                     scaleY: 0
                 },
                 animate: inView ? {
-                    scaleY: fib / max
+                    scaleY: 1
                 } : {
                     scaleY: 0
                 },
@@ -1911,12 +1917,12 @@ function PhyllotaxisViz() {
                 }
             }, i, false, {
                 fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                lineNumber: 103,
+                lineNumber: 104,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-        lineNumber: 101,
+        lineNumber: 102,
         columnNumber: 5
     }, this);
 }
@@ -1932,7 +1938,7 @@ const principles = [
         body: "The golden ratio appears in nautilus shells, sunflower spirals, galaxy arms. We built the spacing scale from it.",
         viz: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PhiViz, {}, void 0, false, {
             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-            lineNumber: 129,
+            lineNumber: 130,
             columnNumber: 10
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1944,7 +1950,7 @@ const principles = [
         body: "The sequence that generates PHI. Every Renge size step follows it. Growth that feels inevitable.",
         viz: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FibViz, {}, void 0, false, {
             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-            lineNumber: 137,
+            lineNumber: 138,
             columnNumber: 10
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1956,7 +1962,7 @@ const principles = [
         body: "The golden angle. Nature's solution to optimal packing — the logic behind leaves on a stem, seeds in a sunflower.",
         viz: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PhyllotaxisViz, {}, void 0, false, {
             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-            lineNumber: 145,
+            lineNumber: 146,
             columnNumber: 10
         }, ("TURBOPACK compile-time value", void 0))
     }
@@ -2019,7 +2025,7 @@ function Philosophy() {
                             children: "The argument"
                         }, void 0, false, {
                             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                            lineNumber: 182,
+                            lineNumber: 183,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -2034,13 +2040,13 @@ function Philosophy() {
                             children: "Why natural mathematics?"
                         }, void 0, false, {
                             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                            lineNumber: 192,
+                            lineNumber: 193,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                    lineNumber: 175,
+                    lineNumber: 176,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2075,7 +2081,7 @@ function Philosophy() {
                                     children: p.symbol
                                 }, void 0, false, {
                                     fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                                    lineNumber: 228,
+                                    lineNumber: 229,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2092,7 +2098,7 @@ function Philosophy() {
                                             children: p.title
                                         }, void 0, false, {
                                             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                                            lineNumber: 240,
+                                            lineNumber: 241,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2106,13 +2112,13 @@ function Philosophy() {
                                             children: p.subtitle
                                         }, void 0, false, {
                                             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                                            lineNumber: 250,
+                                            lineNumber: 251,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                                    lineNumber: 239,
+                                    lineNumber: 240,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2122,7 +2128,7 @@ function Philosophy() {
                                     children: p.viz
                                 }, void 0, false, {
                                     fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                                    lineNumber: 262,
+                                    lineNumber: 263,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$6_$40$babel$2b$core$40$7$2e$29$2e$0_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2136,29 +2142,29 @@ function Philosophy() {
                                     children: p.body
                                 }, void 0, false, {
                                     fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                                    lineNumber: 267,
+                                    lineNumber: 268,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, p.id, true, {
                             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                            lineNumber: 211,
+                            lineNumber: 212,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-                    lineNumber: 205,
+                    lineNumber: 206,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-            lineNumber: 173,
+            lineNumber: 174,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/apps/src/components/sections/Philosophy.tsx",
-        lineNumber: 163,
+        lineNumber: 164,
         columnNumber: 5
     }, this);
 }
@@ -3124,7 +3130,7 @@ const OPTIONS = [
         description: "CSS custom properties — framework agnostic.",
         code: `import { createRengeTheme } from "@renge/tokens";
 
-const theme = createRengeTheme({ profile: "clear" });
+const theme = createRengeTheme({ profile: "ocean" });
 
 // Inject into your document
 const style = document.createElement("style");
@@ -3156,7 +3162,7 @@ const theme = createRengeTheme({ profile: "earth" });
 import { createRengeTheme } from "@renge/tokens";
 
 export default function RootLayout({ children }) {
-  const theme = createRengeTheme({ profile: "clear" });
+  const theme = createRengeTheme({ profile: "ocean" });
   return (
     <html>
       <head>

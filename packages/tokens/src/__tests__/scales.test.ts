@@ -75,16 +75,23 @@ describe("createTypeScale", () => {
     expect(scale.sm.fontSize).toBe(`${16 / PHI}px`);
   });
 
-  it("base line height is 1.6", () => {
+  it("body line height is φ (1.618)", () => {
     const scale = createTypeScale(16);
-    expect(scale.base.lineHeight).toBe("1.6");
+    expect(scale.base.lineHeight).toBe("1.618");
+    expect(scale.xs.lineHeight).toBe("1.618");
+    expect(scale.lg.lineHeight).toBe("1.618");
   });
 
-  it("display sizes (2xl+) have tighter line height (1.2)", () => {
+  it("heading sizes (xl–2xl) use 1+1/φ² line height (1.382)", () => {
     const scale = createTypeScale(16);
-    expect(scale["2xl"].lineHeight).toBe("1.2");
-    expect(scale["3xl"].lineHeight).toBe("1.2");
-    expect(scale["4xl"].lineHeight).toBe("1.2");
+    expect(scale["xl"].lineHeight).toBe("1.382");
+    expect(scale["2xl"].lineHeight).toBe("1.382");
+  });
+
+  it("display sizes (3xl–4xl) use 1+1/φ³ line height (1.236)", () => {
+    const scale = createTypeScale(16);
+    expect(scale["3xl"].lineHeight).toBe("1.236");
+    expect(scale["4xl"].lineHeight).toBe("1.236");
   });
 });
 
@@ -149,8 +156,8 @@ describe("createEasingTokens", () => {
 
   it("spring has overshoot (y2 > 1)", () => {
     const easing = createEasingTokens();
-    // spring: cubic-bezier(0.175, 0.885, 0.32, 1.275) — y2=1.275 overshoots
-    expect(easing["spring"]).toContain("1.275");
+    // spring: cubic-bezier(A, B, B, 1+A) — y2 = 1+1/φ² = 1.382 overshoots
+    expect(easing["spring"]).toContain("1.382");
   });
 });
 

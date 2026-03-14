@@ -39,7 +39,7 @@ const theme = createRengeTheme({
   baseUnit: 4,           // Spacing multiplier in px. Default: 4
   typeBase: 16,          // Root font size in px. Default: 16
   scaleRatio: 1.618,     // Typography scale ratio (φ). Default: PHI
-  profile: 'clear',      // Color profile. Default: 'clear'
+  profile: 'ocean',      // Color profile. Default: 'ocean'
   variance: 0,           // Tolerance band 0–1 (0 = disabled). Default: 0
   varianceSeed: 'renge', // Seed for deterministic variance. Default: 'renge'
   includeReset: false,   // Inject minimal CSS reset. Default: false
@@ -109,7 +109,7 @@ profile (semantic mapping: palette → 22 role tokens)
 
 | Profile | Character | Accent |
 |---------|-----------|--------|
-| `clear` | Bright, airy light theme | Sky blue |
+| `ocean` | Bright, airy light theme | Sky blue |
 | `earth` | Grounded, warm light theme | Earthy ochre |
 | `twilight` | Dark mode, cool tones | Lavender |
 

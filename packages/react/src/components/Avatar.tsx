@@ -11,13 +11,14 @@ export interface AvatarProps extends ComponentPropsWithoutRef<'div'> {
   shape?: AvatarShape;
 }
 
-// Fibonacci-adjacent pixel sizes: 20, 32, 48, 64, 84
+// True Fibonacci sizes: FIBONACCI[3..7] × 4px = 20, 32, 52, 84, 136
+// Consecutive ratios converge to φ: 32/20=1.6, 52/32=1.625, 84/52=1.615, 136/84=1.619
 const sizePx: Record<AvatarSize, number> = {
   '1': 20,
   '2': 32,
-  '3': 48,
-  '4': 64,
-  '5': 84,
+  '3': 52,
+  '4': 84,
+  '5': 136,
 };
 
 const fontSizeFor: Record<AvatarSize, string> = {

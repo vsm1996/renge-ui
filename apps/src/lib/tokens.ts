@@ -16,7 +16,7 @@ export { PHI, FIBONACCI };
 export type { ProfileName };
 
 /** Generate :root CSS for a given profile */
-export function generateRootCSS(profile: ProfileName = "clear"): string {
+export function generateRootCSS(profile: ProfileName = "ocean"): string {
   const theme = createRengeTheme({ profile });
   return theme.css;
 }

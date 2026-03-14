@@ -83,7 +83,7 @@ const OPTIONS = [
     description: "CSS custom properties — framework agnostic.",
     code: `import { createRengeTheme } from "@renge/tokens";
 
-const theme = createRengeTheme({ profile: "clear" });
+const theme = createRengeTheme({ profile: "ocean" });
 
 // Inject into your document
 const style = document.createElement("style");
@@ -115,7 +115,7 @@ const theme = createRengeTheme({ profile: "earth" });
 import { createRengeTheme } from "@renge/tokens";
 
 export default function RootLayout({ children }) {
-  const theme = createRengeTheme({ profile: "clear" });
+  const theme = createRengeTheme({ profile: "ocean" });
   return (
     <html>
       <head>

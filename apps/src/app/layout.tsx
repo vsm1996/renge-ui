@@ -34,13 +34,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   // Generate token CSS server-side — inject as style tag
-  const tokenCSS = generateRootCSS("clear");
+  const tokenCSS = generateRootCSS("ocean");
 
   return (
     <html
       lang="en"
       className={`${dmSerifDisplay.variable} ${outfit.variable}`}
-      data-profile="clear"
+      data-profile="ocean"
       suppressHydrationWarning
     >
       <head>

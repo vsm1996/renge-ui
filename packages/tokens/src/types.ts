@@ -13,7 +13,7 @@ export interface RengeThemeConfig {
   typeBase?: number;
   /** Typography scale ratio. Default: φ = (1 + √5) / 2 */
   scaleRatio?: number;
-  /** Color profile. Default: 'clear' */
+  /** Color profile. Default: 'ocean' */
   profile?: ProfileName;
   /** Tolerance variance (0 = disabled). Default: 0 */
   variance?: number;
@@ -102,7 +102,7 @@ export const semanticColorKeys: SemanticColor[] = [
 // Profiles
 // ============================================================================
 
-export type ProfileName = "clear" | "earth" | "twilight";
+export type ProfileName = "ocean" | "earth" | "twilight";
 
 // ============================================================================
 // Phyllotaxis
