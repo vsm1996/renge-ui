@@ -9,7 +9,7 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "lint": "eslint \"packages/**/*.{ts,tsx}\" \"apps/**/*.{ts,tsx}\"",
-    "storybook": "turbo run dev --filter=@renge/storybook"
+    "site": "turbo run dev --filter=@renge/site"
   },
   "keywords": [],
   "author": "",

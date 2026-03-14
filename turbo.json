@@ -5,9 +5,9 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "@renge/storybook#build": {
+"@renge/site#build": {
       "dependsOn": ["^build"],
-      "outputs": ["storybook-static/**"]
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "dev": {
       "dependsOn": ["^build"],
