@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Renge Token Variables — injected server-side into :root
+   The actual values come from createRengeTheme() in layout.tsx.
+   Profile-specific semantic colors are swapped via data-profile.
+   ============================================================ */
+
+/* ============================================================
+   Tailwind v4 theme — maps Renge tokens to Tailwind utilities
+   ============================================================ */
+@theme {
+  /* Fonts */
+  --font-display: "DM Serif Display", Georgia, serif;
+  --font-body: "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Colors mapped from Renge semantic vars */
+  --color-bg: var(--renge-color-bg);
+  --color-bg-subtle: var(--renge-color-bg-subtle);
+  --color-bg-muted: var(--renge-color-bg-muted);
+  --color-bg-inverse: var(--renge-color-bg-inverse);
+  --color-fg: var(--renge-color-fg);
+  --color-fg-subtle: var(--renge-color-fg-subtle);
+  --color-fg-muted: var(--renge-color-fg-muted);
+  --color-fg-inverse: var(--renge-color-fg-inverse);
+  --color-border: var(--renge-color-border);
+  --color-border-subtle: var(--renge-color-border-subtle);
+  --color-accent: var(--renge-color-accent);
+  --color-accent-hover: var(--renge-color-accent-hover);
+  --color-accent-subtle: var(--renge-color-accent-subtle);
+
+  /* Spacing mapped from Renge space tokens */
+  --spacing-renge-1: var(--renge-space-1);   /* 4px */
+  --spacing-renge-2: var(--renge-space-2);   /* 8px */
+  --spacing-renge-3: var(--renge-space-3);   /* 12px */
+  --spacing-renge-4: var(--renge-space-4);   /* 20px */
+  --spacing-renge-5: var(--renge-space-5);   /* 32px */
+  --spacing-renge-6: var(--renge-space-6);   /* 52px */
+  --spacing-renge-7: var(--renge-space-7);   /* 84px */
+  --spacing-renge-8: var(--renge-space-8);   /* 136px */
+
+  /* Border radius */
+  --radius-renge-1: var(--renge-radius-1);
+  --radius-renge-2: var(--renge-radius-2);
+  --radius-renge-3: var(--renge-radius-3);
+  --radius-renge-full: var(--renge-radius-full);
+}
+
+/* ============================================================
+   Base styles — all using Renge tokens
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--renge-color-bg);
+  color: var(--renge-color-fg);
+  font-family: "Outfit", system-ui, sans-serif;
+  font-size: var(--renge-font-size-base);
+  line-height: var(--renge-line-height-base);
+  transition: background-color 600ms var(--renge-easing-ease-in-out),
+              color 600ms var(--renge-easing-ease-in-out);
+}
+
+/* Profile transition — everything color-related transitions smoothly */
+[data-profile] * {
+  transition: background-color 600ms var(--renge-easing-ease-in-out),
+              color 400ms var(--renge-easing-ease-in-out),
+              border-color 400ms var(--renge-easing-ease-in-out);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--renge-color-accent-subtle);
+  color: var(--renge-color-fg);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--renge-color-bg-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--renge-color-border);
+  border-radius: var(--renge-radius-full);
+}
