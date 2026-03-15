@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { PHI, EASE_OUT, FIBONACCI } from "@/lib/phi";
+import { useBreakpoint } from "@/lib/useBreakpoint";
 
 // ============================================================================
 // PHI visualization — animated golden ratio bars
@@ -159,13 +160,14 @@ const fadeUp = {
 export function Philosophy() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-15%" });
+  const isMobile = useBreakpoint();
 
   return (
     <section
       ref={ref}
       id="philosophy"
       style={{
-        padding: "var(--renge-space-8) var(--renge-space-5)",
+        padding: `var(--renge-space-8) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
         background: "var(--renge-color-bg-subtle)",
         borderTop: "1px solid var(--renge-color-border-subtle)",
         borderBottom: "1px solid var(--renge-color-border-subtle)",
@@ -205,7 +207,7 @@ export function Philosophy() {
         {/* Three columns */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gridTemplateColumns: `repeat(auto-fit, minmax(${isMobile ? "100%" : "280px"}, 1fr))`,
           gap: "var(--renge-space-5)",
         }}>
           {principles.map((p, i) => (

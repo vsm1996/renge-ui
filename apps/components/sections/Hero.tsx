@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { GOLDEN_ANGLE, EASE_OUT } from "@/lib/phi";
+import { useBreakpoint } from "@/lib/useBreakpoint";
 import { Lotus } from "@/components/ui/Lotus";
 
 const fadeUp = {
@@ -16,6 +17,7 @@ const fadeUp = {
 
 function LotusBackground() {
   const ref = useRef<HTMLDivElement>(null);
+  const isMobile = useBreakpoint();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -36,12 +38,14 @@ function LotusBackground() {
         pointerEvents: "none",
       }}
     >
-      <Lotus size={700} animate />
+      <Lotus size={isMobile ? 360 : 700} animate />
     </motion.div>
   );
 }
 
 export function Hero() {
+  const isMobile = useBreakpoint();
+
   return (
     <section
       style={{
@@ -51,7 +55,7 @@ export function Hero() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "var(--renge-space-7) var(--renge-space-5)",
+        padding: `var(--renge-space-7) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
         overflow: "hidden",
       }}
     >
@@ -68,7 +72,7 @@ export function Hero() {
           alignItems: "center",
           gap: "var(--renge-space-6)",
           textAlign: "center",
-          maxWidth: 720,
+          maxWidth: isMobile ? "100%" : 720,
         }}
       >
         {/* Lotus — the geometry before the words */}
@@ -78,7 +82,7 @@ export function Hero() {
           custom={0}
           variants={fadeUp}
         >
-          <Lotus size={300} animate />
+          <Lotus size={isMobile ? 200 : 300} animate />
 
           {/* Golden angle label */}
           <p
@@ -103,7 +107,7 @@ export function Hero() {
           variants={fadeUp}
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(48px, 6vw, 80px)",
+            fontSize: isMobile ? "clamp(36px, 9vw, 56px)" : "clamp(48px, 6vw, 80px)",
             lineHeight: 1.15,
             color: "var(--renge-color-fg)",
             fontWeight: 400,
@@ -121,7 +125,7 @@ export function Hero() {
           custom={0.35}
           variants={fadeUp}
           style={{
-            fontSize: "var(--renge-font-size-lg)",
+            fontSize: isMobile ? "var(--renge-font-size-base)" : "var(--renge-font-size-lg)",
             color: "var(--renge-color-fg-subtle)",
             lineHeight: "var(--renge-line-height-lg)",
             maxWidth: 560,

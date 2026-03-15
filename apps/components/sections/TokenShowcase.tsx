@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { PHI, EASE_OUT, FIBONACCI } from "@/lib/phi";
+import { useBreakpoint } from "@/lib/useBreakpoint";
 import { ProfileToggle } from "@/components/ui/ProfileToggle";
 
 // ============================================================================
@@ -84,7 +85,7 @@ function ColorShowcase() {
       </div>
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
         gap: "var(--renge-space-3)",
       }}>
         {semanticColors.map(({ key, label }) => (
@@ -117,6 +118,7 @@ function ColorShowcase() {
 // ============================================================================
 
 function SpacingShowcase() {
+  const isMobile = useBreakpoint();
   const fibSteps = FIBONACCI.slice(0, 8).map((fib, i) => ({
     step: i + 1,
     px: fib * 4,
@@ -131,7 +133,7 @@ function SpacingShowcase() {
         {fibSteps.map(({ step, px, fib }) => (
           <div key={step} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-4)" }}>
             <div style={{
-              width: 48,
+              width: 32,
               fontSize: "var(--renge-font-size-xs)",
               color: "var(--renge-color-fg-muted)",
               fontFamily: "var(--font-mono, monospace)",
@@ -141,8 +143,7 @@ function SpacingShowcase() {
               {step}
             </div>
             <div style={{
-              width: px,
-              maxWidth: "calc(100% - 120px)",
+              width: Math.min(px, isMobile ? 160 : 340),
               height: 8,
               background: "var(--renge-color-accent)",
               borderRadius: "var(--renge-radius-full)",
@@ -180,12 +181,16 @@ const typeSteps = [
 ];
 
 function TypeScaleShowcase() {
+  const isMobile = useBreakpoint();
+  // On mobile, hide the largest sizes that would overflow
+  const steps = isMobile ? typeSteps.slice(0, 6) : typeSteps;
+
   return (
     <div>
       <SectionLabel>Tokens / Typography</SectionLabel>
       <SubheadingH3>PHI type scale.</SubheadingH3>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-3)" }}>
-        {typeSteps.slice().reverse().map(({ key, label, exp }) => {
+        {steps.slice().reverse().map(({ key, label, exp }) => {
           const px = (16 * Math.pow(PHI, exp)).toFixed(2);
           return (
             <div
@@ -204,8 +209,11 @@ function TypeScaleShowcase() {
                 color: "var(--renge-color-fg)",
                 lineHeight: `var(--renge-line-height-${key})`,
                 flex: 1,
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
               }}>
-                {key === "4xl" || key === "3xl" ? "Proportion." : "The ratios that appear in living things."}
+                {key === "4xl" || key === "3xl" || (isMobile && key === "2xl") ? "Proportion." : "The ratios that appear in living things."}
               </span>
               <span style={{
                 fontSize: "var(--renge-font-size-xs)",
@@ -214,7 +222,7 @@ function TypeScaleShowcase() {
                 flexShrink: 0,
                 letterSpacing: "0.04em",
               }}>
-                {label} · {px}px · φ^{exp}
+                {label} · {px}px
               </span>
             </div>
           );
@@ -225,7 +233,7 @@ function TypeScaleShowcase() {
 }
 
 // ============================================================================
-// Motion showcase
+// Motion showcase — container-relative animation
 // ============================================================================
 
 const easings: { key: string; label: string; curve: [number, number, number, number] }[] = [
@@ -235,6 +243,65 @@ const easings: { key: string; label: string; curve: [number, number, number, num
   { key: "spring", label: "spring", curve: [0.175, 0.885, 0.32, 1.275] },
 ];
 
+function EasingRow({ label, curve }: { label: string; curve: [number, number, number, number] }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [trackWidth, setTrackWidth] = useState(300);
+
+  useEffect(() => {
+    if (!trackRef.current) return;
+    const obs = new ResizeObserver((entries) => {
+      setTrackWidth(entries[0].contentRect.width);
+    });
+    obs.observe(trackRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-4)" }}>
+      <div style={{
+        width: 80,
+        fontSize: "var(--renge-font-size-xs)",
+        color: "var(--renge-color-fg-muted)",
+        fontFamily: "var(--font-mono, monospace)",
+        flexShrink: 0,
+        letterSpacing: "0.04em",
+      }}>
+        {label}
+      </div>
+      <div ref={trackRef} style={{ flex: 1, position: "relative", height: 32 }}>
+        <motion.div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: "50%",
+            translateY: "-50%",
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: "var(--renge-color-accent)",
+          }}
+          animate={{ x: trackWidth - 8 }}
+          transition={{
+            duration: 1.5,
+            ease: curve,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 0.5,
+          }}
+        />
+        <div style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 1,
+          background: "var(--renge-color-border-subtle)",
+        }} />
+      </div>
+    </div>
+  );
+}
+
 function MotionShowcase() {
   return (
     <div>
@@ -242,48 +309,7 @@ function MotionShowcase() {
       <SubheadingH3>Natural easing.</SubheadingH3>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-4)" }}>
         {easings.map(({ key, label, curve }) => (
-          <div key={key} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-4)" }}>
-            <div style={{
-              width: 100,
-              fontSize: "var(--renge-font-size-xs)",
-              color: "var(--renge-color-fg-muted)",
-              fontFamily: "var(--font-mono, monospace)",
-              flexShrink: 0,
-              letterSpacing: "0.04em",
-            }}>
-              {label}
-            </div>
-            <div style={{ flex: 1, position: "relative", height: 32 }}>
-              <motion.div
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: "50%",
-                  translateY: "-50%",
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  background: "var(--renge-color-accent)",
-                }}
-                animate={{ x: "calc(100vw - 200px)" }}
-                transition={{
-                  duration: 1.5,
-                  ease: curve,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  repeatDelay: 0.5,
-                }}
-              />
-              <div style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 1,
-                background: "var(--renge-color-border-subtle)",
-              }} />
-            </div>
-          </div>
+          <EasingRow key={key} label={label} curve={curve} />
         ))}
       </div>
     </div>
@@ -342,13 +368,14 @@ function RadiusShowcase() {
 export function TokenShowcase() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
+  const isMobile = useBreakpoint();
 
   return (
     <section
       ref={ref}
       id="tokens"
       style={{
-        padding: "var(--renge-space-8) var(--renge-space-5)",
+        padding: `var(--renge-space-8) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
         background: "var(--renge-color-bg)",
       }}
     >
@@ -363,7 +390,7 @@ export function TokenShowcase() {
           <SectionLabel>The system</SectionLabel>
           <h2 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(32px, 4vw, 56px)",
+            fontSize: isMobile ? "clamp(28px, 7vw, 48px)" : "clamp(32px, 4vw, 56px)",
             color: "var(--renge-color-fg)",
             fontWeight: 400,
             margin: 0,

@@ -2,9 +2,12 @@
 
 import { motion } from "framer-motion";
 import { PHI } from "@/lib/phi";
+import { useBreakpoint } from "@/lib/useBreakpoint";
 import { ProfileToggle } from "./ProfileToggle";
 
 export function Nav() {
+  const isMobile = useBreakpoint();
+
   return (
     <motion.nav
       style={{
@@ -16,7 +19,7 @@ export function Nav() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "var(--renge-space-3) var(--renge-space-5)",
+        padding: `var(--renge-space-3) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
         borderBottom: "1px solid transparent",
       }}
     >
@@ -51,9 +54,9 @@ export function Nav() {
         </span>
       </a>
 
-      {/* Nav links */}
+      {/* Nav links — hidden on mobile */}
       <div style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-5)" }}>
-        {[
+        {!isMobile && [
           { label: "Philosophy", href: "#philosophy" },
           { label: "Tokens", href: "#tokens" },
           { label: "Components", href: "/docs" },

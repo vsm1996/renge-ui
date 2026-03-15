@@ -1,5 +1,6 @@
 "use client";
 import { EASE_OUT } from "@/lib/phi";
+import { useBreakpoint } from "@/lib/useBreakpoint";
 
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
@@ -132,6 +133,7 @@ export default function RootLayout({ children }) {
 export function GettingStarted() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
+  const isMobile = useBreakpoint();
   const [activeOption, setActiveOption] = useState("css");
 
   const active = OPTIONS.find((o) => o.id === activeOption) ?? OPTIONS[0];
@@ -141,7 +143,7 @@ export function GettingStarted() {
       ref={ref}
       id="start"
       style={{
-        padding: "var(--renge-space-8) var(--renge-space-5)",
+        padding: `var(--renge-space-8) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
         background: "var(--renge-color-bg-subtle)",
         borderTop: "1px solid var(--renge-color-border-subtle)",
       }}

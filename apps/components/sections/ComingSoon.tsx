@@ -1,5 +1,6 @@
 "use client";
 import { EASE_OUT } from "@/lib/phi";
+import { useBreakpoint } from "@/lib/useBreakpoint";
 
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
@@ -16,6 +17,7 @@ const fadeUp = {
 export function ComingSoon() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
+  const isMobile = useBreakpoint();
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -31,7 +33,7 @@ export function ComingSoon() {
       ref={ref}
       id="react"
       style={{
-        padding: "var(--renge-space-8) var(--renge-space-5)",
+        padding: `var(--renge-space-8) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
         background: "var(--renge-color-bg)",
         borderTop: "1px solid var(--renge-color-border-subtle)",
         textAlign: "center",
@@ -66,7 +68,7 @@ export function ComingSoon() {
           variants={fadeUp}
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(32px, 4vw, 56px)",
+            fontSize: isMobile ? "clamp(28px, 8vw, 48px)" : "clamp(32px, 4vw, 56px)",
             color: "var(--renge-color-fg)",
             fontWeight: 400,
             margin: 0,
@@ -103,9 +105,10 @@ export function ComingSoon() {
           onSubmit={handleSubmit}
           style={{
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             gap: "var(--renge-space-2)",
             justifyContent: "center",
-            flexWrap: "wrap",
+            alignItems: "stretch",
           }}
         >
           {submitted ? (
@@ -133,7 +136,8 @@ export function ComingSoon() {
                   color: "var(--renge-color-fg)",
                   fontSize: "var(--renge-font-size-base)",
                   fontFamily: "var(--font-body)",
-                  minWidth: 240,
+                  width: isMobile ? "100%" : "auto",
+                  minWidth: isMobile ? "auto" : 240,
                   outline: "none",
                 }}
               />
