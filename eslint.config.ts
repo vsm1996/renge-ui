@@ -10,7 +10,6 @@ export default tseslint.config(
       "**/*.js",
       "**/*.mjs",
       "**/*.cjs",
-      "**/storybook-static/**",
     ],
   },
 
@@ -19,7 +18,7 @@ export default tseslint.config(
 
   // React hooks rules for packages that use React
   {
-    files: ["packages/react/**/*.{ts,tsx}", "apps/storybook/**/*.{ts,tsx}"],
+    files: ["packages/react/**/*.{ts,tsx}", "apps/**/*.{ts,tsx}"],
     plugins: {
       "react-hooks": reactHooks,
     },
