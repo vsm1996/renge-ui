@@ -27,6 +27,21 @@ export const metadata: Metadata = {
     description:
       "A design system built on natural mathematics. PHI. Fibonacci. The ratios that appear in every living thing.",
     type: "website",
+    images: [
+      {
+        url: "/images/renge-ui.png",
+        width: 1200,
+        height: 630,
+        alt: "Renge — Proportion as a First Principle",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Renge — Proportion as a First Principle",
+    description:
+      "A design system built on natural mathematics. PHI. Fibonacci. The ratios that appear in every living thing.",
+    images: ["/images/renge-ui.png"],
   },
 };
 
