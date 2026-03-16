@@ -10,7 +10,7 @@ import { oklch, palette } from "../palette";
 
 export const ocean: SemanticColorMap = {
   bg: oklch(palette.snowWhite),
-  bgSubtle: oklch(palette.fogWhite),
+  bgSubtle: "oklch(92% 0.03 210)",
   bgMuted: "oklch(95% 0.02 210)",
   bgInverse: oklch(palette.slateBlue),
   fg: "oklch(20% 0.02 210)",
@@ -22,7 +22,7 @@ export const ocean: SemanticColorMap = {
   borderFocus: oklch(palette.skyBlue),
   accent: oklch(palette.skyBlue),
   accentHover: oklch(palette.riverBlue),
-  accentSubtle: "oklch(92% 0.04 210)",
+  accentSubtle: "oklch(92% 0.08 210)",
   success: oklch(palette.grassGreen),
   successSubtle: "oklch(92% 0.08 120)",
   warning: oklch(palette.sunsetOrange),
