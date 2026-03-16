@@ -11,7 +11,7 @@ describe("createRengeTheme", () => {
 
   it("resolves all defaults", () => {
     const { config } = createRengeTheme();
-    expect(config.baseUnit).toBe(4);
+    expect(config.baseUnit).toBe(6);
     expect(config.typeBase).toBe(16);
     expect(config.scaleRatio).toBeCloseTo(1.618);
     expect(config.profile).toBe("ocean");

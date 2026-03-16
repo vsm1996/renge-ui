@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { createSpacingScale, createRadiusScale, createFractalScale } from "@renge/tokens";
 
 const SCALE_KEY = "renge-scale";
@@ -23,18 +23,41 @@ function applyScale(base: number) {
   for (const [k, v] of Object.entries(fractal)) {
     root.style.setProperty(`--renge-size-${k}`, v);
   }
+}
 
-  try { localStorage.setItem(SCALE_KEY, String(base)); } catch {}
+function clearScale() {
+  // Remove inline overrides so the stylesheet cascade (server-rendered default) takes over cleanly
+  const root = document.documentElement;
+  const spacing = createSpacingScale(DEFAULT_BASE);
+  const radius = createRadiusScale(DEFAULT_BASE);
+  const fractal = createFractalScale(DEFAULT_BASE);
+  for (const k of Object.keys(spacing)) root.style.removeProperty(`--renge-space-${k}`);
+  for (const k of Object.keys(radius)) root.style.removeProperty(`--renge-radius-${k}`);
+  for (const k of Object.keys(fractal)) root.style.removeProperty(`--renge-size-${k}`);
+}
+
+let saveTimer: ReturnType<typeof setTimeout> | null = null;
+function persistScale(base: number) {
+  if (saveTimer !== null) clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try {
+      if (base === DEFAULT_BASE) {
+        localStorage.removeItem(SCALE_KEY);
+      } else {
+        localStorage.setItem(SCALE_KEY, String(base));
+      }
+    } catch {}
+    saveTimer = null;
+  }, 300);
 }
 
 export function ScaleControl() {
   const [base, setBase] = useState(DEFAULT_BASE);
-  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     try {
       const stored = parseFloat(localStorage.getItem(SCALE_KEY) ?? "");
-      if (!isNaN(stored) && stored >= MIN_BASE && stored <= MAX_BASE) {
+      if (!isNaN(stored) && stored >= MIN_BASE && stored <= MAX_BASE && stored !== DEFAULT_BASE) {
         setBase(stored);
         applyScale(stored);
       }
@@ -44,24 +67,18 @@ export function ScaleControl() {
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseFloat(e.target.value);
     setBase(val);
-    // Throttle CSS writes to one per animation frame for smooth dragging
-    if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => {
+    if (val === DEFAULT_BASE) {
+      clearScale(); // removes inline overrides — stylesheet takes over, no cascade conflict
+    } else {
       applyScale(val);
-      rafRef.current = null;
-    });
+    }
+    persistScale(val);
   }, []);
 
   const reset = useCallback(() => {
     setBase(DEFAULT_BASE);
-    // Clear inline overrides so the server-rendered values restore
-    const root = document.documentElement;
-    const spacing = createSpacingScale(DEFAULT_BASE);
-    const radius = createRadiusScale(DEFAULT_BASE);
-    const fractal = createFractalScale(DEFAULT_BASE);
-    for (const k of Object.keys(spacing)) root.style.removeProperty(`--renge-space-${k}`);
-    for (const k of Object.keys(radius)) root.style.removeProperty(`--renge-radius-${k}`);
-    for (const k of Object.keys(fractal)) root.style.removeProperty(`--renge-size-${k}`);
+    clearScale();
+    if (saveTimer !== null) clearTimeout(saveTimer);
     try { localStorage.removeItem(SCALE_KEY); } catch {}
   }, []);
 
@@ -152,24 +169,3 @@ export function ScaleControl() {
     </div>
   );
 }
-
-/**
- * Inline script content to restore scale before first paint.
- * Call from layout.tsx <script> tag.
- */
-export const SCALE_RESTORE_SCRIPT = `(function(){
-  try {
-    var base = parseFloat(localStorage.getItem('${SCALE_KEY}') || '${DEFAULT_BASE}');
-    if (isNaN(base) || base < ${MIN_BASE} || base > ${MAX_BASE}) return;
-    var FIB = [1,2,3,5,8,13,21,34,55,89];
-    var PHI = 1.6180339887;
-    var r = document.documentElement;
-    FIB.forEach(function(f,i){ r.style.setProperty('--renge-space-'+(i+1), (f*base)+'px'); });
-    r.style.setProperty('--renge-space-0','0px');
-    // Radius (same Fib steps, clamped)
-    [0,4,8,12,20,32].forEach(function(v,i){
-      r.style.setProperty('--renge-radius-'+[1,2,3,4,5][i] || 'none', (v ? Math.round(FIB[i]*base/4*4)+'px' : '0px'));
-    });
-    r.style.setProperty('--renge-radius-full','9999px');
-  } catch(e){}
-})()`;

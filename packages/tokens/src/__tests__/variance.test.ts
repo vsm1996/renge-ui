@@ -6,7 +6,7 @@ describe("variance system", () => {
   it("variance=0 produces exact Fibonacci spacing values", () => {
     const theme = createRengeTheme({ variance: 0 });
     FIBONACCI.forEach((fib, i) => {
-      expect(theme.vars[`--renge-space-${i + 1}`]).toBe(`${fib * 4}px`);
+      expect(theme.vars[`--renge-space-${i + 1}`]).toBe(`${fib * 6}px`);
     });
   });
 
@@ -32,7 +32,7 @@ describe("variance system", () => {
     const theme = createRengeTheme({ variance: 0.2, varianceSeed: "drift" });
     // At least one value should differ from the exact calculation
     const anyDrifted = FIBONACCI.some(
-      (fib, i) => theme.vars[`--renge-space-${i + 1}`] !== `${fib * 4}px`
+      (fib, i) => theme.vars[`--renge-space-${i + 1}`] !== `${fib * 6}px`
     );
     expect(anyDrifted).toBe(true);
   });
@@ -53,7 +53,7 @@ describe("variance system", () => {
     const variance = 0.1;
     const theme = createRengeTheme({ variance, varianceSeed: "bounds-test" });
     FIBONACCI.forEach((fib, i) => {
-      const exact = fib * 4;
+      const exact = fib * 6;
       const actual = parseFloat(theme.vars[`--renge-space-${i + 1}`]);
       const maxDrift = exact * variance;
       expect(Math.abs(actual - exact)).toBeLessThanOrEqual(maxDrift + 0.01); // 0.01 for rounding

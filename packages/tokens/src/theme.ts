@@ -25,7 +25,7 @@ import type { RengeThemeConfig, RengeTheme } from "./types";
 // ============================================================================
 
 const defaults: Required<RengeThemeConfig> = {
-  baseUnit: 4,
+  baseUnit: 6,
   typeBase: 16,
   scaleRatio: PHI,
   profile: "ocean",

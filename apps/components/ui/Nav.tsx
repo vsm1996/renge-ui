@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { PHI } from "@/lib/phi";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { ProfileToggle } from "./ProfileToggle";
+import { Lotus } from "./Lotus";
 
 const NAV_LINKS = [
   { label: "Philosophy", href: "#philosophy" },
@@ -80,16 +80,7 @@ export function Nav() {
             color: "var(--renge-color-fg)",
           }}
         >
-          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden>
-            <rect
-              x="1" y="1"
-              width={12.36}
-              height={12.36 / PHI}
-              fill="none"
-              stroke="var(--renge-color-accent)"
-              strokeWidth="1"
-            />
-          </svg>
+          <Lotus size={26} animate={false} />
           <span style={{
             fontFamily: "var(--font-display)",
             fontSize: "var(--renge-font-size-lg)",
