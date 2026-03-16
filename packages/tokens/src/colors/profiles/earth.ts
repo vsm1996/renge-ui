@@ -29,7 +29,7 @@ export const earth: SemanticColorMap = {
   accentSubtle: "oklch(30% 0.12 42)",          // dark ochre tint for subtle surfaces
   success:      oklch(palette.leafGreen),
   successSubtle:"oklch(25% 0.08 130)",
-  warning:      "oklch(80% 0.26 50)",
+  warning:      "oklch(80% 0.20 50)",
   warningSubtle:"oklch(28% 0.08 50)",
   danger:       oklch(palette.cranberryRed),
   dangerSubtle: "oklch(26% 0.08 10)",

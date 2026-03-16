@@ -1,8 +1,11 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { profiles, createSemanticColorVars } from "@renge/tokens";
+import { profiles } from "@renge/tokens";
 import type { ProfileName } from "@renge/tokens";
+
+const STORAGE_KEY = "renge-profile";
+const DEFAULT_PROFILE: ProfileName = "ocean";
 
 // ============================================================================
 // Context
@@ -14,7 +17,7 @@ interface ProfileContextValue {
 }
 
 const ProfileContext = createContext<ProfileContextValue>({
-  profile: "ocean",
+  profile: DEFAULT_PROFILE,
   setProfile: () => {},
 });
 
@@ -23,26 +26,43 @@ export function useProfile() {
 }
 
 // ============================================================================
-// Provider — applies profile CSS vars to document root
+// Helpers
+// ============================================================================
+
+function readStoredProfile(): ProfileName {
+  if (typeof window === "undefined") return DEFAULT_PROFILE;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY) as ProfileName | null;
+    if (stored && stored in profiles) return stored;
+  } catch {}
+  return DEFAULT_PROFILE;
+}
+
+function applyProfile(p: ProfileName) {
+  // CSS handles the actual color vars via [data-profile] selectors in layout.
+  // We only need to set the attribute — instant, no flash.
+  document.documentElement.setAttribute("data-profile", p);
+  try {
+    localStorage.setItem(STORAGE_KEY, p);
+  } catch {}
+}
+
+// ============================================================================
+// Provider
 // ============================================================================
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [profile, setProfileState] = useState<ProfileName>("ocean");
+  const [profile, setProfileState] = useState<ProfileName>(DEFAULT_PROFILE);
 
   const setProfile = useCallback((p: ProfileName) => {
     setProfileState(p);
-    // Apply semantic color vars to :root
-    const vars = createSemanticColorVars(profiles[p]);
-    const root = document.documentElement;
-    root.setAttribute("data-profile", p);
-    for (const [key, value] of Object.entries(vars)) {
-      root.style.setProperty(key, value);
-    }
+    applyProfile(p);
   }, []);
 
-  // Sync on mount to ensure correct state
+  // On mount: restore persisted profile
   useEffect(() => {
-    setProfile("ocean");
+    const stored = readStoredProfile();
+    setProfile(stored);
   }, [setProfile]);
 
   return (
@@ -57,9 +77,12 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 // ============================================================================
 
 const PROFILES: { id: ProfileName; label: string; description: string }[] = [
-  { id: "ocean", label: "Ocean", description: "Sky blue. Light. Airy." },
-  { id: "earth", label: "Earth", description: "Ochre. Warm. Grounded." },
-  { id: "twilight", label: "Twilight", description: "Indigo. Deep. Nocturnal." },
+  { id: "ocean",   label: "Ocean",   description: "Sky blue. Light. Airy." },
+  { id: "earth",   label: "Earth",   description: "Ochre. Warm. Grounded." },
+  { id: "twilight",label: "Twilight",description: "Indigo. Deep. Nocturnal." },
+  { id: "fire",    label: "Fire",    description: "Ember. Active. Burning." },
+  { id: "void",    label: "Void",    description: "Dark. Minimal. Still." },
+  { id: "leaf",    label: "Leaf",    description: "Forest green. Alive. Light." },
 ];
 
 export function ProfileToggle() {
@@ -71,6 +94,7 @@ export function ProfileToggle() {
         display: "flex",
         gap: "var(--renge-space-2)",
         alignItems: "center",
+        flexWrap: "wrap",
       }}
       role="radiogroup"
       aria-label="Color profile"

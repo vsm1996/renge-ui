@@ -1,12 +1,18 @@
 import { ocean } from "./ocean";
 import { earth } from "./earth";
 import { twilight } from "./twilight";
+import { fire } from "./fire";
+import { void_ } from "./void";
+import { leaf } from "./leaf";
 import type { SemanticColorMap, ProfileName } from "../../types";
 
 export const profiles: Record<ProfileName, SemanticColorMap> = {
   ocean,
   earth,
   twilight,
+  fire,
+  void: void_,
+  leaf,
 };
 
 export function getProfile(name: ProfileName): SemanticColorMap {

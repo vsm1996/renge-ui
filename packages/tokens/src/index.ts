@@ -18,6 +18,8 @@ export {
   createDurationScale,
   createEasingTokens,
   createRadiusScale,
+  createFractalScale,
+  FRACTAL_STEPS,
   createAnimationVars,
   createAnimationKeyframesCSS,
   ANIMATION_NAMES,

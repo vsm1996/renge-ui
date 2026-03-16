@@ -12,6 +12,7 @@ import {
   createDurationScale,
   createEasingTokens,
   createRadiusScale,
+  createFractalScale,
   createAnimationVars,
   createAnimationKeyframesCSS,
 } from "./scales";
@@ -60,6 +61,7 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   const duration = createDurationScale(variance, random);
   const easing = createEasingTokens();
   const radius = createRadiusScale(baseUnit, variance, random);
+  const fractal = createFractalScale(baseUnit);
   const paletteVars = createPaletteVars();
   const semanticVars = createSemanticColorVars(profiles[profile]);
 
@@ -90,6 +92,11 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   // Radius
   for (const [key, value] of Object.entries(radius)) {
     vars[`--renge-radius-${key}`] = value;
+  }
+
+  // Fractal size scale
+  for (const [key, value] of Object.entries(fractal)) {
+    vars[`--renge-size-${key}`] = value;
   }
 
   // Palette
@@ -153,6 +160,7 @@ html {
     { prefix: "--renge-duration-", comment: "/* Motion - Duration */" },
     { prefix: "--renge-easing-", comment: "/* Motion - Easing */" },
     { prefix: "--renge-radius-", comment: "/* Border Radius */" },
+    { prefix: "--renge-size-", comment: "/* Fractal Size Scale */" },
     { prefix: "--renge-animation-", comment: "/* Animations */" },
     { prefix: "--renge-palette-", comment: "/* Palette Colors */" },
     { prefix: "--renge-color-", comment: "/* Semantic Colors */" },

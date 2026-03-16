@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { generateRootCSS } from "@/lib/tokens";
+import { generateRootCSS, generateAllProfilesCSS } from "@/lib/tokens";
 import "./globals.css";
 
 const dmSerifDisplay = DM_Serif_Display({
@@ -34,8 +34,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Generate token CSS server-side — inject as style tag
+  // Base scales (spacing, type, motion, radius) + ocean as :root default
   const tokenCSS = generateRootCSS("ocean");
+  // All profile color overrides via [data-profile] selectors — no JS flash
+  const profilesCSS = generateAllProfilesCSS();
 
   return (
     <html
@@ -48,6 +50,16 @@ export default function RootLayout({
         <style
           dangerouslySetInnerHTML={{ __html: tokenCSS }}
           data-renge-tokens
+        />
+        <style
+          dangerouslySetInnerHTML={{ __html: profilesCSS }}
+          data-renge-profiles
+        />
+        {/* Restore persisted profile before first paint — prevents flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=localStorage.getItem('renge-profile');var valid=['ocean','earth','twilight','fire','void','leaf'];if(p&&valid.indexOf(p)!==-1){document.documentElement.setAttribute('data-profile',p)}}catch(e){}})()`,
+          }}
         />
       </head>
       <body>

@@ -15,10 +15,27 @@ import type { ProfileName } from "@renge/tokens";
 export { PHI, FIBONACCI };
 export type { ProfileName };
 
-/** Generate :root CSS for a given profile */
+/** Generate :root CSS for a given profile (base scales + that profile's colors) */
 export function generateRootCSS(profile: ProfileName = "ocean"): string {
   const theme = createRengeTheme({ profile });
   return theme.css;
+}
+
+/**
+ * Generate CSS for all profiles using [data-profile] attribute selectors.
+ * This lets the browser apply the correct profile from CSS alone — no JS flash.
+ * The base theme (scales, palette) lives in :root via generateRootCSS.
+ * Each profile block overrides only the semantic color vars.
+ */
+export function generateAllProfilesCSS(): string {
+  const profileNames = Object.keys(profiles) as ProfileName[];
+  return profileNames
+    .map((name) => {
+      const vars = createSemanticColorVars(profiles[name]);
+      const lines = Object.entries(vars).map(([k, v]) => `  ${k}: ${v};`);
+      return `[data-profile="${name}"] {\n${lines.join("\n")}\n}`;
+    })
+    .join("\n\n");
 }
 
 /** Get CSS variable string map for a profile (for inline style injection) */

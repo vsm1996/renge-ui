@@ -49,7 +49,7 @@ function Demo({ children, label }: { children: React.ReactNode; label?: string }
   return (
     <div>
       {label && (
-        <p style={{ fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", letterSpacing: "0.08em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-2)" }}>{label}</p>
+        <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", letterSpacing: "0.08em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-2)" }}>{label}</p>
       )}
       <div style={{ padding: "var(--renge-space-6)", background: "var(--renge-color-bg-subtle)", borderRadius: "var(--renge-radius-2)", border: "1px solid var(--renge-color-border-subtle)", display: "flex", flexWrap: "wrap", gap: "var(--renge-space-4)", alignItems: "flex-start" }}>
         {children}
@@ -1158,7 +1158,7 @@ export default function DocsPage() {
 
           {/* Page header */}
           <div style={{ paddingBottom: "var(--renge-space-6)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
-            <p style={{ fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-accent)", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-3)" }}>@renge/react</p>
+            <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-3)" }}>@renge/react</p>
             <Heading level={1} size="3xl" style={{ marginBottom: "var(--renge-space-4)", fontFamily: "var(--font-display)", fontWeight: 400, letterSpacing: "-0.02em" }}>Components</Heading>
             <Text as="p" size="lg" color="fg-subtle" style={{ margin: 0, marginBottom: "var(--renge-space-5)", maxWidth: 560 }}>
               18 components built on the token system. Proportional. Accessible. Composable. No class names — every style references a Renge CSS variable.

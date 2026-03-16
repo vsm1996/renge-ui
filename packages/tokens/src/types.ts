@@ -102,7 +102,7 @@ export const semanticColorKeys: SemanticColor[] = [
 // Profiles
 // ============================================================================
 
-export type ProfileName = "ocean" | "earth" | "twilight";
+export type ProfileName = "ocean" | "earth" | "twilight" | "fire" | "void" | "leaf";
 
 // ============================================================================
 // Phyllotaxis
