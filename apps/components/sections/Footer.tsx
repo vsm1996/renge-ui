@@ -13,7 +13,7 @@ export function Footer() {
       ref={ref}
       style={{
         padding: "var(--renge-space-7) var(--renge-space-5)",
-        background: "var(--renge-color-bg-inverse)",
+        background: "var(--renge-color-fg-muted)",
         color: "var(--renge-color-fg-inverse)",
         borderTop: "1px solid var(--renge-color-border)",
       }}
