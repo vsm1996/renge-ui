@@ -18,18 +18,22 @@ const outfit = Outfit({
   display: "swap",
 });
 
+const siteUrl = "https://renge-ui.vercel.app";
+
 export const metadata: Metadata = {
   title: "Renge — Proportion as a First Principle",
   description:
     "A design system built on natural mathematics. PHI. Fibonacci. The ratios that appear in every living thing.",
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title: "Renge — Proportion as a First Principle",
     description:
       "A design system built on natural mathematics. PHI. Fibonacci. The ratios that appear in every living thing.",
     type: "website",
+    url: siteUrl,
     images: [
       {
-        url: "/images/renge-ui.png",
+        url: `${siteUrl}/images/renge-ui.png`,
         width: 1200,
         height: 630,
         alt: "Renge — Proportion as a First Principle",
@@ -41,7 +45,7 @@ export const metadata: Metadata = {
     title: "Renge — Proportion as a First Principle",
     description:
       "A design system built on natural mathematics. PHI. Fibonacci. The ratios that appear in every living thing.",
-    images: ["/images/renge-ui.png"],
+    images: [`${siteUrl}/images/renge-ui.png`],
   },
 };
 
