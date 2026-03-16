@@ -3,26 +3,29 @@ import { createRengeTheme } from "../index";
 import { profiles, getProfile, createSemanticColorVars, createPaletteVars } from "../index";
 import { semanticColorKeys } from "../types";
 
-const ALL_PROFILES = ["ocean", "earth", "twilight"] as const;
+const ALL_PROFILES = ["ocean", "earth", "twilight", "fire", "void", "leaf"] as const;
+const ALL_MODES = ["light", "dark"] as const;
 
 describe("color profiles", () => {
-  it("all three profiles exist", () => {
-    expect(profiles).toHaveProperty("ocean");
-    expect(profiles).toHaveProperty("earth");
-    expect(profiles).toHaveProperty("twilight");
-  });
-
-  it("getProfile returns the correct profile", () => {
-    expect(getProfile("ocean")).toBe(profiles.ocean);
-    expect(getProfile("earth")).toBe(profiles.earth);
-    expect(getProfile("twilight")).toBe(profiles.twilight);
-  });
-
-  it("each profile has all 22 semantic keys", () => {
+  it("all profiles exist", () => {
     for (const name of ALL_PROFILES) {
-      const profile = profiles[name];
-      for (const key of semanticColorKeys) {
-        expect(profile).toHaveProperty(key);
+      expect(profiles).toHaveProperty(name);
+    }
+  });
+
+  it("getProfile returns the correct light variant by default", () => {
+    expect(getProfile("ocean")).toBe(profiles.ocean.light);
+    expect(getProfile("earth")).toBe(profiles.earth.light);
+    expect(getProfile("twilight", "dark")).toBe(profiles.twilight.dark);
+  });
+
+  it("each profile × mode has all semantic keys", () => {
+    for (const name of ALL_PROFILES) {
+      for (const mode of ALL_MODES) {
+        const profile = profiles[name][mode];
+        for (const key of semanticColorKeys) {
+          expect(profile).toHaveProperty(key);
+        }
       }
     }
   });
@@ -30,7 +33,7 @@ describe("color profiles", () => {
 
 describe("createSemanticColorVars", () => {
   it("generates CSS vars for all semantic keys", () => {
-    const vars = createSemanticColorVars(profiles.ocean);
+    const vars = createSemanticColorVars(profiles.ocean.light);
     for (const key of semanticColorKeys) {
       // camelCase → kebab-case: bgSubtle → bg-subtle
       const cssKey = `--renge-color-${key.replace(/([A-Z])/g, "-$1").toLowerCase()}`;
@@ -39,7 +42,7 @@ describe("createSemanticColorVars", () => {
   });
 
   it("all values are non-empty strings", () => {
-    const vars = createSemanticColorVars(profiles.twilight);
+    const vars = createSemanticColorVars(profiles.twilight.dark);
     for (const value of Object.values(vars)) {
       expect(typeof value).toBe("string");
       expect(value.length).toBeGreaterThan(0);
@@ -92,7 +95,7 @@ describe("theme color output per profile", () => {
   });
 
   it("twilight profile has a dark background", () => {
-    const theme = createRengeTheme({ profile: "twilight" });
+    const theme = createRengeTheme({ profile: "twilight", mode: "dark" });
     const bg = theme.vars["--renge-color-bg"];
     expect(bg).toBeDefined();
     // Twilight bg should be a low-lightness oklch value
@@ -108,6 +111,24 @@ describe("theme color output per profile", () => {
       expect(theme.vars).toHaveProperty("--renge-color-bg");
       expect(theme.vars).toHaveProperty("--renge-color-accent");
       expect(theme.vars).toHaveProperty("--renge-color-danger");
+    }
+  });
+
+  it("earth and fire light profiles have distinct accent colors", () => {
+    const earth = createRengeTheme({ profile: "earth", mode: "light" });
+    const fire  = createRengeTheme({ profile: "fire",  mode: "light" });
+    expect(earth.vars["--renge-color-accent"]).not.toBe(fire.vars["--renge-color-accent"]);
+    // Earth accent is golden-ochre (H≈50), fire is red-orange (H≈24) — hues must differ
+    const earthH = parseFloat(earth.vars["--renge-color-accent"].match(/oklch\([^)]+\s+(\d+(?:\.\d+)?)\)/)?.[1] ?? "0");
+    const fireH  = parseFloat(fire.vars["--renge-color-accent"].match(/oklch\([^)]+\s+(\d+(?:\.\d+)?)\)/)?.[1] ?? "0");
+    expect(Math.abs(earthH - fireH)).toBeGreaterThan(10);
+  });
+
+  it("mode config is respected — light and dark produce different bg", () => {
+    for (const profile of ALL_PROFILES) {
+      const light = createRengeTheme({ profile, mode: "light" });
+      const dark  = createRengeTheme({ profile, mode: "dark" });
+      expect(light.vars["--renge-color-bg"]).not.toBe(dark.vars["--renge-color-bg"]);
     }
   });
 });

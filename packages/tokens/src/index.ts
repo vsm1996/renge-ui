@@ -47,6 +47,8 @@ export type {
   semanticColorKeys,
   SemanticColor,
   ProfileName,
+  ProfileMode,
+  ProfileVariant,
   PhyllotaxisPoint,
   PhyllotaxisConfig,
 } from "./types.ts";

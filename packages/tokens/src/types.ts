@@ -15,6 +15,8 @@ export interface RengeThemeConfig {
   scaleRatio?: number;
   /** Color profile. Default: 'ocean' */
   profile?: ProfileName;
+  /** Light or dark mode. Default: 'light' */
+  mode?: ProfileMode;
   /** Tolerance variance (0 = disabled). Default: 0 */
   variance?: number;
   /** Deterministic seed for variance. Default: 'renge' */
@@ -103,6 +105,12 @@ export const semanticColorKeys: SemanticColor[] = [
 // ============================================================================
 
 export type ProfileName = "ocean" | "earth" | "twilight" | "fire" | "void" | "leaf";
+export type ProfileMode = "light" | "dark";
+
+export interface ProfileVariant {
+  light: SemanticColorMap;
+  dark: SemanticColorMap;
+}
 
 // ============================================================================
 // Phyllotaxis

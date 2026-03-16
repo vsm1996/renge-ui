@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Serif_Display, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { generateRootCSS, generateAllProfilesCSS } from "@/lib/tokens";
+import { FloatingControls } from "@/components/ui/FloatingControls";
 import "./globals.css";
 
 const dmSerifDisplay = DM_Serif_Display({
@@ -55,15 +56,16 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: profilesCSS }}
           data-renge-profiles
         />
-        {/* Restore persisted profile before first paint — prevents flash */}
+        {/* Restore persisted profile + mode + scale before first paint — prevents flash */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=localStorage.getItem('renge-profile');var valid=['ocean','earth','twilight','fire','void','leaf'];if(p&&valid.indexOf(p)!==-1){document.documentElement.setAttribute('data-profile',p)}}catch(e){}})()`,
+            __html: `(function(){try{var r=document.documentElement;var p=localStorage.getItem('renge-profile');var validP=['ocean','earth','twilight','fire','void','leaf'];if(p&&validP.indexOf(p)!==-1)r.setAttribute('data-profile',p);var m=localStorage.getItem('renge-mode');if(m==='light'||m==='dark')r.setAttribute('data-mode',m)}catch(e){}})();(function(){try{var base=parseFloat(localStorage.getItem('renge-scale')||'');if(isNaN(base)||base<2||base>8)return;var FIB=[1,2,3,5,8,13,21,34,55,89];var r=document.documentElement;r.style.setProperty('--renge-space-0','0px');FIB.forEach(function(f,i){r.style.setProperty('--renge-space-'+(i+1),(f*base)+'px');});}catch(e){}})()`,
           }}
         />
       </head>
       <body>
         {children}
+        <FloatingControls />
         <Analytics />
       </body>
     </html>

@@ -9,6 +9,7 @@ import {
   createAnimationKeyframesCSS,
   ANIMATION_NAMES,
 } from "../scales";
+import { createFractalScale, FRACTAL_STEPS } from "../index";
 import { PHI, FIBONACCI, seededRandom } from "../constants";
 
 describe("createSpacingScale", () => {
@@ -351,5 +352,50 @@ describe("createAnimationKeyframesCSS", () => {
     expect(css).toContain("var(--renge-color-danger)");
     expect(css).not.toContain("#10b981");
     expect(css).not.toContain("#ef4444");
+  });
+});
+
+describe("createFractalScale", () => {
+  it(`produces ${FRACTAL_STEPS} steps`, () => {
+    const scale = createFractalScale(4);
+    expect(Object.keys(scale)).toHaveLength(FRACTAL_STEPS);
+  });
+
+  it("keys are '1' through FRACTAL_STEPS", () => {
+    const scale = createFractalScale(4);
+    for (let i = 1; i <= FRACTAL_STEPS; i++) {
+      expect(scale).toHaveProperty(String(i));
+    }
+  });
+
+  it("values are px strings", () => {
+    const scale = createFractalScale(4);
+    for (const v of Object.values(scale)) {
+      expect(v).toMatch(/^\d+(\.\d+)?px$/);
+    }
+  });
+
+  it("step-1 equals baseUnit", () => {
+    expect(createFractalScale(4)["1"]).toBe("4px");
+    expect(createFractalScale(8)["1"]).toBe("8px");
+  });
+
+  it("each step grows by PHI relative to the previous", () => {
+    const scale = createFractalScale(4);
+    for (let i = 2; i <= FRACTAL_STEPS; i++) {
+      const prev = parseFloat(scale[String(i - 1)]);
+      const curr = parseFloat(scale[String(i)]);
+      expect(curr / prev).toBeCloseTo(1.6180339887, 2);
+    }
+  });
+
+  it("scales proportionally with a different baseUnit", () => {
+    const s4 = createFractalScale(4);
+    const s8 = createFractalScale(8);
+    for (let i = 1; i <= FRACTAL_STEPS; i++) {
+      const v4 = parseFloat(s4[String(i)]);
+      const v8 = parseFloat(s8[String(i)]);
+      expect(v8 / v4).toBeCloseTo(2, 1);
+    }
   });
 });

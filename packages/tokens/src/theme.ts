@@ -29,6 +29,7 @@ const defaults: Required<RengeThemeConfig> = {
   typeBase: 16,
   scaleRatio: PHI,
   profile: "ocean",
+  mode: "light",
   variance: 0,
   varianceSeed: "renge",
   includeReset: false,
@@ -46,6 +47,7 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
     typeBase,
     scaleRatio,
     profile,
+    mode,
     variance,
     varianceSeed,
     selector,
@@ -63,7 +65,7 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   const radius = createRadiusScale(baseUnit, variance, random);
   const fractal = createFractalScale(baseUnit);
   const paletteVars = createPaletteVars();
-  const semanticVars = createSemanticColorVars(profiles[profile]);
+  const semanticVars = createSemanticColorVars(profiles[profile][mode]);
 
   // Assemble all CSS variables
   const vars: Record<string, string> = {};

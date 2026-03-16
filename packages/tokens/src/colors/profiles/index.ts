@@ -4,9 +4,9 @@ import { twilight } from "./twilight";
 import { fire } from "./fire";
 import { void_ } from "./void";
 import { leaf } from "./leaf";
-import type { SemanticColorMap, ProfileName } from "../../types";
+import type { SemanticColorMap, ProfileName, ProfileMode, ProfileVariant } from "../../types";
 
-export const profiles: Record<ProfileName, SemanticColorMap> = {
+export const profiles: Record<ProfileName, ProfileVariant> = {
   ocean,
   earth,
   twilight,
@@ -15,22 +15,20 @@ export const profiles: Record<ProfileName, SemanticColorMap> = {
   leaf,
 };
 
-export function getProfile(name: ProfileName): SemanticColorMap {
-  return profiles[name];
+export function getProfile(name: ProfileName, mode: ProfileMode = "light"): SemanticColorMap {
+  return profiles[name][mode];
 }
 
 /**
- * Generate semantic CSS custom properties from a profile.
+ * Generate semantic CSS custom properties from a profile + mode.
  */
 export function createSemanticColorVars(
   profile: SemanticColorMap
 ): Record<string, string> {
   const vars: Record<string, string> = {};
-
   for (const [key, value] of Object.entries(profile)) {
     const kebab = key.replace(/([A-Z])/g, "-$1").toLowerCase();
     vars[`--renge-color-${kebab}`] = value;
   }
-
   return vars;
 }

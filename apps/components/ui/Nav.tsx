@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { PHI } from "@/lib/phi";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -8,15 +9,22 @@ import { ProfileToggle } from "./ProfileToggle";
 
 const NAV_LINKS = [
   { label: "Philosophy", href: "#philosophy" },
-  { label: "Tokens",     href: "#tokens" },
+  { label: "Tokens", href: "#tokens" },
   { label: "Components", href: "/docs" },
-  { label: "Start",      href: "#start" },
+  { label: "Example", href: "/oakland" },
+  { label: "Start", href: "#start" },
 ];
 
 export function Nav() {
   const isMobile = useBreakpoint();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Resolve hash links to absolute paths when not on the home page
+  const resolveHref = (href: string) =>
+    href.startsWith("#") && !isHome ? `/${href}` : href;
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 24);
@@ -63,7 +71,7 @@ export function Nav() {
       >
         {/* Logo */}
         <a
-          href="#"
+          href="/"
           style={{
             display: "flex",
             alignItems: "center",
@@ -97,7 +105,7 @@ export function Nav() {
             {NAV_LINKS.map(({ label, href }) => (
               <a
                 key={href}
-                href={href}
+                href={resolveHref(href)}
                 style={{
                   fontSize: "var(--renge-font-size-sm)",
                   color: "var(--renge-color-fg-muted)",
@@ -179,7 +187,7 @@ export function Nav() {
               {NAV_LINKS.map(({ label, href }) => (
                 <a
                   key={href}
-                  href={href}
+                  href={resolveHref(href)}
                   onClick={() => setMenuOpen(false)}
                   style={{
                     fontSize: "var(--renge-font-size-base)",

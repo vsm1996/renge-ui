@@ -10,37 +10,58 @@ import {
   PHI,
   FIBONACCI,
 } from "@renge/tokens";
-import type { ProfileName } from "@renge/tokens";
+import type { ProfileName, ProfileMode } from "@renge/tokens";
+
+export type { ProfileMode };
 
 export { PHI, FIBONACCI };
 export type { ProfileName };
 
 /** Generate :root CSS for a given profile (base scales + that profile's colors) */
-export function generateRootCSS(profile: ProfileName = "ocean"): string {
-  const theme = createRengeTheme({ profile });
+export function generateRootCSS(profile: ProfileName = "ocean", baseUnit = 6): string {
+  const theme = createRengeTheme({ profile, baseUnit });
   return theme.css;
 }
 
 /**
- * Generate CSS for all profiles using [data-profile] attribute selectors.
- * This lets the browser apply the correct profile from CSS alone — no JS flash.
- * The base theme (scales, palette) lives in :root via generateRootCSS.
- * Each profile block overrides only the semantic color vars.
+ * Generate CSS for all profiles × modes using attribute selectors.
+ * The browser applies the correct profile+mode from CSS alone — zero JS flash.
+ *
+ * Selector strategy:
+ *   [data-profile="X"]                          → light (default)
+ *   [data-profile="X"][data-mode="dark"]        → dark explicit
+ *   @media (prefers-color-scheme: dark)
+ *     [data-profile="X"]:not([data-mode="light"]) → dark when no manual override
  */
 export function generateAllProfilesCSS(): string {
   const profileNames = Object.keys(profiles) as ProfileName[];
-  return profileNames
-    .map((name) => {
-      const vars = createSemanticColorVars(profiles[name]);
-      const lines = Object.entries(vars).map(([k, v]) => `  ${k}: ${v};`);
-      return `[data-profile="${name}"] {\n${lines.join("\n")}\n}`;
-    })
-    .join("\n\n");
+  const blocks: string[] = [];
+
+  for (const name of profileNames) {
+    const variant = profiles[name];
+
+    const lightVars = createSemanticColorVars(variant.light);
+    const darkVars  = createSemanticColorVars(variant.dark);
+
+    const lightLines = Object.entries(lightVars).map(([k, v]) => `  ${k}: ${v};`).join("\n");
+    const darkLines  = Object.entries(darkVars).map(([k, v]) => `  ${k}: ${v};`).join("\n");
+
+    blocks.push(
+      // Light (default for this profile)
+      `[data-profile="${name}"] {\n${lightLines}\n}`,
+      // Explicit dark override
+      `[data-profile="${name}"][data-mode="dark"] {\n${darkLines}\n}`,
+      // System dark preference (only when user hasn't manually chosen light)
+      `@media (prefers-color-scheme: dark) {\n  [data-profile="${name}"]:not([data-mode="light"]) {\n${darkLines.split("\n").map(l => "  " + l).join("\n")}\n  }\n}`,
+    );
+  }
+
+  return blocks.join("\n\n");
 }
 
 /** Get CSS variable string map for a profile (for inline style injection) */
-export function getProfileVars(profile: ProfileName): Record<string, string> {
-  const semanticColorVars = createSemanticColorVars(profiles[profile]);
+export function getProfileVars(profile: ProfileName, mode: ProfileMode = "light"): Record<string, string> {
+  const semanticColorVars = createSemanticColorVars(profiles[profile][mode]);
   const vars: Record<string, string> = {};
   for (const [key, value] of Object.entries(semanticColorVars)) {
     vars[key] = value;
