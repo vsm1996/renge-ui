@@ -71,14 +71,14 @@ export function ScaleControl() {
     <div
       style={{
         position: "fixed",
-        bottom: "var(--renge-space-5)",
-        right: "var(--renge-space-5)",
+        bottom: "32px",
+        right: "32px",
         zIndex: 200,
         display: "flex",
         alignItems: "center",
-        gap: "var(--renge-space-3)",
-        padding: "12px 20px",
-        borderRadius: "var(--renge-radius-full)",
+        gap: "12px",
+        padding: "10px 20px",
+        borderRadius: "9999px",
         border: "1px solid var(--renge-color-border)",
         background: "color-mix(in oklch, var(--renge-color-bg) 92%, transparent)",
         backdropFilter: "blur(16px)",
@@ -135,7 +135,7 @@ export function ScaleControl() {
           title="Reset to default"
           style={{
             padding: "4px 12px",
-            borderRadius: "var(--renge-radius-full)",
+            borderRadius: "9999px",
             border: "1px solid var(--renge-color-border)",
             background: "transparent",
             color: "var(--renge-color-fg-muted)",
