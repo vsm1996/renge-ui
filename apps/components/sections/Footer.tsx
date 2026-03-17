@@ -64,7 +64,7 @@ export function Footer() {
           {/* Links */}
           <div style={{ display: "flex", gap: "var(--renge-space-5)", alignItems: "center" }}>
             <a
-              href="https://github.com"
+              href="https://github.com/vsm1996/renge-ui"
               target="_blank"
               rel="noopener noreferrer"
               style={{

@@ -46,8 +46,8 @@ Components follow fractal design principles — a card at 200px and a card at 80
 
 | Package | Purpose | Status |
 |---------|---------|--------|
-| `@renge-ui/tokens` | Design tokens — spacing, typography, color, motion, radius, animation, phyllotaxis | ✅ v0.1 |
-| `@renge-ui/react` | Component primitives — Stack, Grid, Text, Card, Button, Heading, Divider, Section | ✅ v0.1 |
+| `@renge-ui/tokens` | Design tokens — spacing, typography, color, motion, radius, animation, phyllotaxis | ✅ v1.0 |
+| `@renge-ui/react` | 18 component primitives — layout, text, forms, navigation, status | ✅ v1.0 |
 | `@renge-ui/tailwind` | Tailwind CSS preset | Planned |
 
 ---
@@ -150,25 +150,71 @@ Three layers. Components only touch the outermost one.
 
 **Semantic** — 22 role-based tokens that components actually use: `--renge-color-bg`, `--renge-color-fg`, `--renge-color-accent`, `--renge-color-danger`, etc.
 
-**Profiles** — Mappings from palette to semantic. Switch the profile, switch the entire mood.
+**Profiles** — Mappings from palette to semantic. Switch the profile, switch the entire mood. Each profile has both `light` and `dark` variants.
 
 | Profile | Character | Accent |
 |---------|-----------|--------|
-| **Ocean** | Bright, airy | Sky blue |
-| **Earth** | Grounded, warm | Earthy ochre |
-| **Twilight** | Dark, cool | Lavender |
+| `ocean` | Bright, airy | Sky blue (default) |
+| `earth` | Grounded, warm | Earthy ochre |
+| `twilight` | Cool, atmospheric | Lavender |
+| `fire` | Energetic | Amber-orange |
+| `void` | Deep, minimal | Muted indigo |
+| `leaf` | Fresh, natural | Moss green |
 
 ```ts
 import { createRengeTheme } from '@renge-ui/tokens';
 
-// Default: Ocean
+// Default: Ocean light
 const light = createRengeTheme();
 
-// Grounded alternative
-const warm = createRengeTheme({ profile: 'earth' });
+// Grounded, dark
+const warm = createRengeTheme({ profile: 'earth', mode: 'dark' });
 
-// Dark mode
-const dark = createRengeTheme({ profile: 'twilight' });
+// Cool atmospheric
+const cool = createRengeTheme({ profile: 'twilight', mode: 'light' });
+```
+
+---
+
+## Architecture
+
+```
+@renge-ui/tokens                ← proportional source of truth
+       ↑
+@renge-ui/react                 ← optional component layer
+       ↑
+harmonia-ui (external)          ← behavioral layer (consumes Renge)
+       ↑
+your application
+```
+
+The dependency graph is strictly one-directional. Tokens know nothing about React. React knows nothing about any behavioral layer. Each layer can be used independently.
+
+### Token generation pipeline
+
+```
+createRengeTheme(config)
+    │
+    ├── createSpacingScale()      → --renge-space-{0–10}
+    ├── createTypeScale()         → --renge-font-size-{xs–4xl}
+    │                               --renge-line-height-{xs–4xl}
+    ├── createDurationScale()     → --renge-duration-{0–10}
+    ├── createEasingTokens()      → --renge-easing-{linear|ease-out|...}
+    ├── createRadiusScale()       → --renge-radius-{none|1–5|full}
+    ├── createAnimationVars()     → --renge-animation-*
+    ├── createPaletteVars()       → --renge-palette-{name}
+    └── createSemanticColorVars() → --renge-color-{semantic-role}
+         ↓
+    { config, vars, css }
+```
+
+The `css` field is a complete, self-contained stylesheet. Inject it once and every `var(--renge-*)` reference in the page resolves.
+
+### Monorepo build order
+
+```
+pnpm build
+    tokens → react → site (turbo enforces this order)
 ```
 
 ---
@@ -235,6 +281,30 @@ const points = phyllotaxis({
 ```
 
 Use for avatar clusters, tag clouds, decorative patterns, radial menus, or data visualization nodes.
+
+---
+
+## Trade-offs
+
+### Why Fibonacci spacing instead of a linear scale?
+
+Linear scales (4, 8, 12, 16...) let you do arithmetic composition. Fibonacci does not — `space-3` + `space-3` ≠ `space-4`. The trade-off is intentional: non-linear spacing prevents the visual sameness that comes from pixel-grid arithmetic, and the growth rate matches how elements naturally feel heavier as they grow. Design to the scale, not around it.
+
+### Why OKLCH instead of HSL or hex?
+
+OKLCH is perceptually uniform. A 10-unit change in `L` looks the same regardless of hue. This makes programmatic color manipulation reliable — auto-generated hover states, tints, and shades behave as expected. The trade-off: older browsers (pre-2023) don't support OKLCH. For legacy support, convert values to sRGB before injecting.
+
+### Why CSS custom properties instead of static CSS?
+
+Runtime configurability — profile, mode, and base unit can be changed without a build step. The trade-off: CSS must be injected via JavaScript. For SSR or static export, generate `theme.css` server-side and embed it in `<head>` before JavaScript loads to prevent flash of unstyled content.
+
+### Why inline styles in the React components?
+
+No runtime CSS-in-JS cost. No class name collisions. SSR works without hydration ceremony. The components are portable — they work in any environment where the token CSS is present. The trade-off: `:hover`, `:focus-visible`, and similar pseudo-classes require JavaScript event handlers instead of CSS rules. See `Input` in `@renge-ui/react` for how focus rings are handled.
+
+### Why a seeded PRNG for variance?
+
+Determinism. Given the same seed, the same output is always produced. This makes variance testable, reproducible across environments, and snapshottable. The trade-off: debugging "why is this space 22px not 20px?" requires knowing variance is active and what seed is in use.
 
 ---
 
