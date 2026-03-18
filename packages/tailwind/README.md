@@ -34,8 +34,6 @@ style.textContent = css;
 document.head.appendChild(style);
 ```
 
-Or in a Next.js / CSS-in-JS context, use `createRengeTheme().css` in your global stylesheet.
-
 ---
 
 ## Generated Utility Classes
@@ -92,7 +90,7 @@ Maps `--renge-line-height-{xs–4xl}` (φ-derived: body 1.618, heading 1.382, di
 
 ```html
 <p class="leading-renge-base">Body — φ = 1.618</p>
-<h2 class="leading-renge-xl">Heading — 1 + 1/φ² = 1.382</h2>
+<h2 class="leading-renge-xl">Heading — 1.382</h2>
 ```
 
 Same 8 steps as font size (`renge-xs` through `renge-4xl`).

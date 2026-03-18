@@ -364,7 +364,6 @@ describe("colors scale", () => {
 
 describe("cross-scale consistency", () => {
   it("spacing and transitionDuration have the same number of numeric steps", () => {
-    // Both are 0-10 (11 entries from Fibonacci-based token scale)
     expect(Object.keys(preset.theme.extend.spacing)).toHaveLength(11);
     expect(Object.keys(preset.theme.extend.transitionDuration)).toHaveLength(11);
   });
