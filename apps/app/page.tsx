@@ -10,7 +10,6 @@ import { Footer } from "@/components/sections/Footer";
 export default function Home() {
   return (
     <ProfileProvider>
-      <a href="#main" className="skip-link">Skip to main content</a>
       <Nav />
       <main id="main">
         <Hero />

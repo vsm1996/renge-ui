@@ -82,6 +82,21 @@ export function getProfileVars(profile: ProfileName, mode: ProfileMode = "light"
   return vars;
 }
 
+/**
+ * Generate a mobile spacing override block using baseUnit=4.
+ * Injected as @media (max-width: 768px) to prevent horizontal overflow
+ * on small screens where the default baseUnit=6 produces values too large.
+ */
+export function generateMobileSpacingCSS(breakpoint = 768): string {
+  const mobileTheme = createRengeTheme({ baseUnit: 4 });
+  const spacingVars = Object.entries(mobileTheme.vars)
+    .filter(([k]) => k.startsWith("--renge-space-"))
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([k, v]) => `    ${k}: ${v};`)
+    .join("\n");
+  return `@media (max-width: ${breakpoint}px) {\n  :root {\n${spacingVars}\n  }\n}`;
+}
+
 /** Spacing steps: Fibonacci × 4px — var refs */
 export const space = {
   0: "var(--renge-space-0)",

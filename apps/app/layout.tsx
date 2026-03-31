@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { generateRootCSS, generateAllProfilesCSS } from "@/lib/tokens";
+import { generateRootCSS, generateAllProfilesCSS, generateMobileSpacingCSS } from "@/lib/tokens";
 import { FloatingControls } from "@/components/ui/FloatingControls";
 import "./globals.css";
 
@@ -58,6 +58,8 @@ export default function RootLayout({
   const tokenCSS = generateRootCSS("ocean");
   // All profile color overrides via [data-profile] selectors — no JS flash
   const profilesCSS = generateAllProfilesCSS();
+  // Mobile spacing override — baseUnit 4 at ≤768px to prevent horizontal overflow
+  const mobileCSS = generateMobileSpacingCSS();
 
   return (
     <html
@@ -74,6 +76,10 @@ export default function RootLayout({
         <style
           dangerouslySetInnerHTML={{ __html: profilesCSS }}
           data-renge-profiles
+        />
+        <style
+          dangerouslySetInnerHTML={{ __html: mobileCSS }}
+          data-renge-mobile
         />
         {/* Restore persisted profile + mode + scale before first paint — prevents flash */}
         <script

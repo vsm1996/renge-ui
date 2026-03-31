@@ -95,26 +95,6 @@ body {
   border-radius: var(--renge-radius-1);
 }
 
-/* Skip link — hidden until focused, lets keyboard users jump to main content */
-.skip-link {
-  position: absolute;
-  top: -9999px;
-  left: var(--renge-space-3);
-  z-index: 9999;
-  padding: var(--renge-space-2) var(--renge-space-4);
-  background: var(--renge-color-bg);
-  color: var(--renge-color-fg);
-  border: 2px solid var(--renge-color-border-focus);
-  border-radius: var(--renge-radius-2);
-  font-family: var(--font-body);
-  font-size: var(--renge-font-size-sm);
-  text-decoration: none;
-  white-space: nowrap;
-}
-.skip-link:focus {
-  top: var(--renge-space-3);
-}
-
 /* Reduced motion — cut all animation and transition durations system-wide */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

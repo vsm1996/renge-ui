@@ -11,7 +11,8 @@ import {
   Alert, Spinner, Progress,
   Navbar,
 } from "@renge-ui/react";
-import { ProfileProvider, ProfileToggle } from "@/components/ui/ProfileToggle";
+import { ProfileProvider } from "@/components/ui/ProfileToggle";
+import { Nav } from "@/components/ui/Nav";
 
 // ============================================================================
 // Shared primitives
@@ -1286,23 +1287,7 @@ export default function DocsPage() {
 
   return (
     <ProfileProvider>
-      {/* Top nav */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "var(--renge-color-bg)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
-        <div style={{ maxWidth: 1260, margin: "0 auto", padding: `0 ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`, height: 52, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <Stack direction="horizontal" gap="5" align="center">
-            <Link href="/" style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-xl)", color: "var(--renge-color-fg)", textDecoration: "none", letterSpacing: "-0.01em" }}>Renge</Link>
-            <span style={{ color: "var(--renge-color-border)", fontSize: "var(--renge-font-size-base)" }}>/</span>
-            <Text size="base" color="fg-muted">Components</Text>
-          </Stack>
-          {!isMobile && (
-            <Stack direction="horizontal" gap="4" align="center">
-              <Link href="/#tokens" style={{ fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", textDecoration: "none" }}>Tokens</Link>
-              <Link href="/#start" style={{ fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", textDecoration: "none" }}>Install</Link>
-              <ProfileToggle />
-            </Stack>
-          )}
-        </div>
-      </div>
+      <Nav />
 
       {/* Layout */}
       <div style={{ maxWidth: 1260, margin: "0 auto", paddingLeft: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingRight: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingTop: "calc(52px + var(--renge-space-7))", paddingBottom: "var(--renge-space-8)", display: "flex", gap: "var(--renge-space-8)", alignItems: "flex-start" }}>
