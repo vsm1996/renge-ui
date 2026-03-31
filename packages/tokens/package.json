@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/tokens",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Design tokens for the Renge design system — φ-based typography, Fibonacci spacing, OKLCH colors, natural motion.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -12,17 +12,27 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
-  "keywords": ["design-system", "tokens", "css-variables", "golden-ratio", "fibonacci"],
+  "keywords": [
+    "design-system",
+    "tokens",
+    "css-variables",
+    "golden-ratio",
+    "fibonacci"
+  ],
   "author": "Vanessa Martin",
   "license": "MIT",
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/vsm1996/renge-ui"
