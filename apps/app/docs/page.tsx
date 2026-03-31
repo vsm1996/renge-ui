@@ -1294,20 +1294,18 @@ export default function DocsPage() {
             <span style={{ color: "var(--renge-color-border)", fontSize: "var(--renge-font-size-base)" }}>/</span>
             <Text size="base" color="fg-muted">Components</Text>
           </Stack>
-          <Stack direction="horizontal" gap="4" align="center">
-            {!isMobile && (
-              <>
-                <Link href="/#tokens" style={{ fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", textDecoration: "none" }}>Tokens</Link>
-                <Link href="/#start" style={{ fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", textDecoration: "none" }}>Install</Link>
-              </>
-            )}
-            <ProfileToggle />
-          </Stack>
+          {!isMobile && (
+            <Stack direction="horizontal" gap="4" align="center">
+              <Link href="/#tokens" style={{ fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", textDecoration: "none" }}>Tokens</Link>
+              <Link href="/#start" style={{ fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg-muted)", textDecoration: "none" }}>Install</Link>
+              <ProfileToggle />
+            </Stack>
+          )}
         </div>
       </div>
 
       {/* Layout */}
-      <div style={{ maxWidth: 1260, margin: "0 auto", padding: `0 ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`, paddingTop: "calc(52px + var(--renge-space-7))", paddingBottom: "var(--renge-space-8)", display: "flex", gap: "var(--renge-space-8)", alignItems: "flex-start" }}>
+      <div style={{ maxWidth: 1260, margin: "0 auto", paddingLeft: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingRight: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingTop: "calc(52px + var(--renge-space-7))", paddingBottom: "var(--renge-space-8)", display: "flex", gap: "var(--renge-space-8)", alignItems: "flex-start" }}>
 
         {/* Sidebar — hidden on mobile */}
         {!isMobile && <Sidebar active={activeSection} />}
