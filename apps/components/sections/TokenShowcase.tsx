@@ -55,17 +55,54 @@ function SubheadingH3({ children }: { children: React.ReactNode }) {
 // Color showcase
 // ============================================================================
 
-const semanticColors = [
-  { key: "bg", label: "bg" },
-  { key: "bg-subtle", label: "bg-subtle" },
-  { key: "bg-muted", label: "bg-muted" },
-  { key: "fg", label: "fg" },
-  { key: "fg-subtle", label: "fg-subtle" },
-  { key: "fg-muted", label: "fg-muted" },
-  { key: "border", label: "border" },
-  { key: "accent", label: "accent" },
-  { key: "accent-hover", label: "accent-hover" },
-  { key: "accent-subtle", label: "accent-subtle" },
+const colorGroups = [
+  {
+    label: "Background",
+    tokens: [
+      { key: "bg",          jsKey: "bg",         desc: "Page background" },
+      { key: "bg-subtle",   jsKey: "bgSubtle",   desc: "Slightly elevated surface" },
+      { key: "bg-muted",    jsKey: "bgMuted",    desc: "Muted surface, less emphasis" },
+      { key: "bg-inverse",  jsKey: "bgInverse",  desc: "Inverted — dark in light mode" },
+    ],
+  },
+  {
+    label: "Foreground",
+    tokens: [
+      { key: "fg",          jsKey: "fg",         desc: "Primary text" },
+      { key: "fg-subtle",   jsKey: "fgSubtle",   desc: "Secondary text" },
+      { key: "fg-muted",    jsKey: "fgMuted",    desc: "Placeholder, disabled text" },
+      { key: "fg-inverse",  jsKey: "fgInverse",  desc: "Text on inverted background" },
+    ],
+  },
+  {
+    label: "Border",
+    tokens: [
+      { key: "border",        jsKey: "border",       desc: "Default dividers" },
+      { key: "border-subtle", jsKey: "borderSubtle", desc: "Hairline, low-emphasis" },
+      { key: "border-focus",  jsKey: "borderFocus",  desc: "Keyboard focus ring" },
+    ],
+  },
+  {
+    label: "Interactive",
+    tokens: [
+      { key: "accent",        jsKey: "accent",       desc: "Primary interactive color" },
+      { key: "accent-hover",  jsKey: "accentHover",  desc: "Hover state" },
+      { key: "accent-subtle", jsKey: "accentSubtle", desc: "Tinted background" },
+    ],
+  },
+  {
+    label: "Status",
+    tokens: [
+      { key: "success",         jsKey: "success",         desc: "Positive outcome" },
+      { key: "success-subtle",  jsKey: "successSubtle",   desc: "Success tint background" },
+      { key: "warning",         jsKey: "warning",         desc: "Caution required" },
+      { key: "warning-subtle",  jsKey: "warningSubtle",   desc: "Warning tint background" },
+      { key: "danger",          jsKey: "danger",          desc: "Error or destructive" },
+      { key: "danger-subtle",   jsKey: "dangerSubtle",    desc: "Danger tint background" },
+      { key: "info",            jsKey: "info",            desc: "Informational" },
+      { key: "info-subtle",     jsKey: "infoSubtle",      desc: "Info tint background" },
+    ],
+  },
 ];
 
 function ColorShowcase() {
@@ -83,29 +120,57 @@ function ColorShowcase() {
         <SubheadingH3>Color profiles.</SubheadingH3>
         <ProfileToggle />
       </div>
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-        gap: "var(--renge-space-3)",
-      }}>
-        {semanticColors.map(({ key, label }) => (
-          <div key={key} style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-1)" }}>
-            <div style={{
-              height: 60,
-              borderRadius: "var(--renge-radius-2)",
-              background: `var(--renge-color-${key})`,
-              border: "1px solid var(--renge-color-border-subtle)",
-              transition: "background 600ms var(--renge-easing-ease-in-out)",
-            }} />
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-6)" }}>
+        {colorGroups.map(({ label, tokens }) => (
+          <div key={label}>
             <p style={{
-              fontSize: "var(--renge-font-size-sm)",
+              fontSize: "var(--renge-font-size-xs)",
               color: "var(--renge-color-fg-muted)",
-              fontFamily: "var(--font-mono, monospace)",
+              fontFamily: "var(--font-body)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              fontWeight: 600,
               margin: 0,
-              letterSpacing: "0.04em",
+              marginBottom: "var(--renge-space-3)",
             }}>
-              --renge-color-{label}
+              {label}
             </p>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+              gap: "var(--renge-space-3)",
+            }}>
+              {tokens.map(({ key, jsKey, desc }) => (
+                <div key={key} style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-1)" }}>
+                  <div style={{
+                    height: 52,
+                    borderRadius: "var(--renge-radius-2)",
+                    background: `var(--renge-color-${key})`,
+                    border: "1px solid var(--renge-color-border-subtle)",
+                    transition: "background 600ms var(--renge-easing-ease-in-out)",
+                  }} />
+                  <p style={{
+                    fontSize: "var(--renge-font-size-sm)",
+                    color: "var(--renge-color-fg-muted)",
+                    fontFamily: "var(--font-mono, monospace)",
+                    margin: 0,
+                    letterSpacing: "0.04em",
+                  }}>
+                    color.{jsKey}
+                  </p>
+                  <p style={{
+                    fontSize: "var(--renge-font-size-xs)",
+                    color: "var(--renge-color-fg-muted)",
+                    fontFamily: "var(--font-mono, monospace)",
+                    margin: 0,
+                    opacity: 0.6,
+                    letterSpacing: "0.02em",
+                  }}>
+                    --renge-color-{key}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -133,7 +198,7 @@ function SpacingShowcase() {
         {fibSteps.map(({ step, px, fib }) => (
           <div key={step} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-4)" }}>
             <div style={{
-              width: 32,
+              width: 28,
               fontSize: "var(--renge-font-size-sm)",
               color: "var(--renge-color-fg-muted)",
               fontFamily: "var(--font-mono, monospace)",
@@ -143,20 +208,31 @@ function SpacingShowcase() {
               {step}
             </div>
             <div style={{
-              width: Math.min(px, isMobile ? 160 : 340),
+              width: Math.min(px, isMobile ? 120 : 280),
               height: 8,
               background: "var(--renge-color-accent)",
               borderRadius: "var(--renge-radius-full)",
               opacity: 0.5 + (step / 10) * 0.5,
               flexShrink: 0,
             }} />
-            <div style={{
-              fontSize: "var(--renge-font-size-sm)",
-              color: "var(--renge-color-fg-muted)",
-              fontFamily: "var(--font-mono, monospace)",
-              letterSpacing: "0.04em",
-            }}>
-              {fib} × 4 = {px}px
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <span style={{
+                fontSize: "var(--renge-font-size-sm)",
+                color: "var(--renge-color-fg-muted)",
+                fontFamily: "var(--font-mono, monospace)",
+                letterSpacing: "0.04em",
+              }}>
+                {fib} × 4 = {px}px
+              </span>
+              <span style={{
+                fontSize: "var(--renge-font-size-xs)",
+                color: "var(--renge-color-fg-muted)",
+                fontFamily: "var(--font-mono, monospace)",
+                opacity: 0.6,
+                letterSpacing: "0.02em",
+              }}>
+                space[{step}] · --renge-space-{step}
+              </span>
             </div>
           </div>
         ))}
@@ -215,15 +291,25 @@ function TypeScaleShowcase() {
               }}>
                 {key === "4xl" || key === "3xl" || (isMobile && key === "2xl") ? "Proportion." : "The ratios that appear in living things."}
               </span>
-              <span style={{
-                fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-muted)",
-                fontFamily: "var(--font-mono, monospace)",
-                flexShrink: 0,
-                letterSpacing: "0.04em",
-              }}>
-                {label} · {px}px
-              </span>
+              <div style={{ display: "flex", flexDirection: "column", gap: 2, flexShrink: 0 }}>
+                <span style={{
+                  fontSize: "var(--renge-font-size-sm)",
+                  color: "var(--renge-color-fg-muted)",
+                  fontFamily: "var(--font-mono, monospace)",
+                  letterSpacing: "0.04em",
+                }}>
+                  {label} · {px}px
+                </span>
+                <span style={{
+                  fontSize: "var(--renge-font-size-xs)",
+                  color: "var(--renge-color-fg-muted)",
+                  fontFamily: "var(--font-mono, monospace)",
+                  opacity: 0.6,
+                  letterSpacing: "0.02em",
+                }}>
+                  fontSize.{label}
+                </span>
+              </div>
             </div>
           );
         })}
@@ -351,8 +437,8 @@ function RadiusShowcase() {
               textAlign: "center",
               letterSpacing: "0.04em",
             }}>
-              <div>{key}</div>
-              <div>{fib ? `${px}px` : "pill"}</div>
+              <div>radius.{key}</div>
+              <div style={{ opacity: 0.7 }}>{fib ? `${px}px` : "pill"}</div>
             </div>
           </div>
         ))}

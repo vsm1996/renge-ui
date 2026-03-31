@@ -37,6 +37,10 @@ export {
 // Phyllotaxis
 export { phyllotaxis } from "./phyllotaxis";
 
+// Static var references — typed CSS variable strings, no runtime needed
+export { rengeVars } from "./vars";
+export type { RengeVars } from "./vars";
+
 // Types
 export type {
   RengeThemeConfig,

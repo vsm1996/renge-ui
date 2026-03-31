@@ -128,6 +128,35 @@ export default function RootLayout({ children }) {
 }`,
     lang: "tsx",
   },
+  {
+    id: "vars",
+    label: "rengeVars",
+    description: "Typed CSS variable references — no string construction, full IDE autocomplete.",
+    code: `import { createRengeTheme, rengeVars } from "@renge-ui/tokens";
+
+// Use rengeVars anywhere you need a CSS var() string
+const cardStyle = {
+  background: rengeVars.color.bg,          // "var(--renge-color-bg)"
+  padding:    rengeVars.space[4],           // "var(--renge-space-4)"
+  borderRadius: rengeVars.radius[2],        // "var(--renge-radius-2)"
+  fontSize:   rengeVars.fontSize.base,      // "var(--renge-font-size-base)"
+  transition: \`all \${rengeVars.duration[2]} \${rengeVars.easing.out}\`,
+};
+
+// Map Renge tokens to your system's variable names — no guessing needed
+const theme = createRengeTheme({ profile: "earth", mode: "light" });
+const aliases = [
+  ["--color-primary",  rengeVars.color.accent],
+  ["--color-bg",       rengeVars.color.bg],
+  ["--color-text",     rengeVars.color.fg],
+  ["--color-error",    rengeVars.color.danger],
+].map(([k, v]) => \`  \${k}: \${v};\`).join("\\n");
+
+document.head.insertAdjacentHTML("beforeend",
+  \`<style>\${theme.css}\\n:root {\\n\${aliases}\\n}</style>\`
+);`,
+    lang: "ts",
+  },
 ];
 
 export function GettingStarted() {

@@ -227,6 +227,63 @@ The drift is what keeps surfaces from feeling machine-stamped while preserving a
 
 ---
 
+## Static Token References — `rengeVars`
+
+`rengeVars` is a statically typed object of all CSS variable references. Use it instead of constructing `var(--renge-*)` strings by hand — IDE autocomplete, no typos, no prefix guessing.
+
+```ts
+import { rengeVars } from '@renge-ui/tokens';
+
+// All values are literal CSS var() strings
+rengeVars.color.bg          // "var(--renge-color-bg)"
+rengeVars.color.bgSubtle    // "var(--renge-color-bg-subtle)"
+rengeVars.space[4]          // "var(--renge-space-4)"
+rengeVars.fontSize.lg       // "var(--renge-font-size-lg)"
+rengeVars.duration[3]       // "var(--renge-duration-3)"
+rengeVars.radius[2]         // "var(--renge-radius-2)"
+rengeVars.easing.out        // "var(--renge-easing-ease-out)"
+```
+
+### Mapping to another system's tokens
+
+`rengeVars` eliminates the need for defensive prefix checking when integrating with a host design system:
+
+```ts
+import { createRengeTheme, rengeVars } from '@renge-ui/tokens';
+
+const theme = createRengeTheme({ profile: 'earth', mode: 'light' });
+
+// Direct mapping — no resolveVar() or prefix guessing needed
+const aliases: [string, string][] = [
+  ['--color-bg-primary',    rengeVars.color.bg],
+  ['--color-bg-secondary',  rengeVars.color.bgSubtle],
+  ['--color-text-primary',  rengeVars.color.fg],
+  ['--color-text-secondary',rengeVars.color.fgSubtle],
+  ['--color-accent',        rengeVars.color.accent],
+  ['--color-error',         rengeVars.color.danger],
+  ['--color-success',       rengeVars.color.success],
+];
+
+const aliasCSS = `:root {\n${aliases.map(([k, v]) => `  ${k}: ${v};`).join('\n')}\n}`;
+
+// Inject both: Renge base vars + your system's aliases
+document.head.insertAdjacentHTML('beforeend', `<style>${theme.css}\n${aliasCSS}</style>`);
+```
+
+### Available keys
+
+| Group | Keys |
+|-------|------|
+| `color` | `bg`, `bgSubtle`, `bgMuted`, `bgInverse`, `fg`, `fgSubtle`, `fgMuted`, `fgInverse`, `border`, `borderSubtle`, `borderFocus`, `accent`, `accentHover`, `accentSubtle`, `success`, `successSubtle`, `warning`, `warningSubtle`, `danger`, `dangerSubtle`, `info`, `infoSubtle` |
+| `space` | `0` – `10` |
+| `fontSize` | `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl` |
+| `lineHeight` | `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl` |
+| `duration` | `0` – `9` |
+| `easing` | `linear`, `out`, `in`, `inOut`, `spring` |
+| `radius` | `none`, `1` – `5`, `full` |
+
+---
+
 ## Advanced Exports
 
 For custom scale generation or extending the system:
