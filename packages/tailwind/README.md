@@ -7,7 +7,7 @@ Requires `@renge-ui/tokens` (or equivalent) to inject the CSS custom properties 
 ## Install
 
 ```bash
-pnpm add @renge-ui/tailwind
+pnpm add @renge-ui/tailwind @renge-ui/tokens
 ```
 
 ## Setup
@@ -27,11 +27,14 @@ Then inject the Renge CSS variables via `@renge-ui/tokens`:
 
 ```ts
 import { createRengeTheme } from '@renge-ui/tokens';
-
+import { useInsertionEffect } from "react";
 const { css } = createRengeTheme({ profile: 'ocean', mode: 'light' });
-const style = document.createElement('style');
-style.textContent = css;
-document.head.appendChild(style);
+
+ useInsertionEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+ }, [])
 ```
 
 ---

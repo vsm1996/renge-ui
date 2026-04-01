@@ -28,7 +28,7 @@
   },
   "packageManager": "pnpm@10.30.2",
   "dependencies": {
-    "@renge-ui/tokens": "workspace:*"
+    "@renge-ui/tokens": "^1.0.4"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
