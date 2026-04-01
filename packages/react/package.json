@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React component primitives for the Renge design system.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -12,16 +12,25 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["design-system", "react", "components", "golden-ratio"],
+  "keywords": [
+    "design-system",
+    "react",
+    "components",
+    "golden-ratio"
+  ],
   "author": "Vanessa Martin",
   "license": "MIT",
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/vsm1996/renge-ui"
