@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm --filter @renge-ui/tokens build && pnpm --filter @renge-ui/react build && pnpm --filter @renge-ui/site build",
+  "buildCommand": "pnpm --filter @renge-ui/tokens build && pnpm --filter @renge-ui/tailwind build && pnpm --filter @renge-ui/react build && pnpm --filter @renge-ui/site build",
   "outputDirectory": "apps/out",
   "installCommand": "pnpm install"
 }
