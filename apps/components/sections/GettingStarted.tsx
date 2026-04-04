@@ -79,6 +79,69 @@ function CodeBlock({ code }: { code: string; lang?: string }) {
 
 const OPTIONS = [
   {
+    id: "twv4",
+    label: "Tailwind v4",
+    description: "One plugin line. All tokens baked into your stylesheet at build time — no runtime injection, no flash.",
+    code: `# Install
+pnpm add @renge-ui/tailwind
+
+# globals.css
+@import "tailwindcss";
+@plugin "@renge-ui/tailwind/plugin";
+
+# layout.tsx (or any root element)
+<html data-profile="ocean">
+
+# Use the utilities — all Tailwind variants work (hover:, md:, dark:, etc.)
+<div class="bg-renge-bg text-renge-fg p-renge-5 rounded-renge-2">
+  <button class="bg-renge-accent hover:bg-renge-accent-hover
+                 text-renge-fg-inverse px-renge-4 py-renge-3
+                 rounded-renge-full duration-renge-2 ease-renge-ease-out
+                 transition-colors">
+    Click me
+  </button>
+</div>
+
+# Switch profiles at runtime — no rebuild needed
+document.documentElement.setAttribute("data-profile", "twilight");
+document.documentElement.setAttribute("data-mode", "dark");`,
+    lang: "tsx",
+  },
+  {
+    id: "twv3",
+    label: "Tailwind v3",
+    description: "Preset for Tailwind v3 — extends theme with renge-* suffixed utilities. Requires token CSS injected separately.",
+    code: `# Install
+pnpm add @renge-ui/tailwind @renge-ui/tokens
+
+# tailwind.config.ts
+import rengePreset from "@renge-ui/tailwind";
+import type { Config } from "tailwindcss";
+
+export default {
+  presets: [rengePreset],
+  content: ["./src/**/*.{ts,tsx}"],
+} satisfies Config;
+
+# app/layout.tsx — inject token CSS server-side (no flash)
+import { RengeStylesheet } from "@renge-ui/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <html data-profile="ocean">
+      <head>
+        <RengeStylesheet />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+
+# Same utility classes as v4
+<div class="bg-renge-bg text-renge-fg p-renge-5 rounded-renge-2">`,
+    lang: "tsx",
+  },
+  {
     id: "css",
     label: "CSS",
     description: "CSS custom properties — framework agnostic.",
@@ -93,39 +156,28 @@ document.head.appendChild(style);`,
     lang: "ts",
   },
   {
-    id: "js",
-    label: "JavaScript",
-    description: "Typed tokens for direct consumption.",
-    code: `import {
-  PHI,
-  FIBONACCI,
-  createRengeTheme,
-  profiles,
-} from "@renge-ui/tokens";
-
-const theme = createRengeTheme({ profile: "earth" });
-// theme.vars — Record<string, string>
-// theme.css  — full :root { ... } block`,
-    lang: "ts",
-  },
-  {
     id: "next",
     label: "Next.js",
-    description: "Server-side injection — no flash.",
+    description: "Server-side injection via RengeStylesheet — no flash, no useInsertionEffect.",
     code: `// app/layout.tsx
-import { createRengeTheme } from "@renge-ui/tokens";
+import { RengeStylesheet } from "@renge-ui/react";
 
 export default function RootLayout({ children }) {
-  const theme = createRengeTheme({ profile: "ocean" });
   return (
-    <html>
+    <html data-profile="ocean">
       <head>
-        <style dangerouslySetInnerHTML={{ __html: theme.css }} />
+        <RengeStylesheet />
       </head>
       <body>{children}</body>
     </html>
   );
-}`,
+}
+
+// Or generate the CSS manually for full control:
+import { createRengeTheme } from "@renge-ui/tokens";
+
+const theme = createRengeTheme({ profile: "ocean" });
+// theme.css — complete :root { --renge-* } block`,
     lang: "tsx",
   },
   {
@@ -163,7 +215,7 @@ export function GettingStarted() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
   const isMobile = useBreakpoint();
-  const [activeOption, setActiveOption] = useState("css");
+  const [activeOption, setActiveOption] = useState("twv4");
 
   const active = OPTIONS.find((o) => o.id === activeOption) ?? OPTIONS[0];
 
@@ -207,7 +259,7 @@ export function GettingStarted() {
           }}>
             Install and consume.
           </h2>
-          <CodeBlock code="pnpm add @renge-ui/tokens" lang="bash" />
+          <CodeBlock code="pnpm add @renge-ui/tailwind @renge-ui/tokens" lang="bash" />
         </motion.div>
 
         {/* Option tabs */}

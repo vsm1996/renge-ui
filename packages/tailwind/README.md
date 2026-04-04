@@ -1,16 +1,91 @@
 # @renge-ui/tailwind
 
-Tailwind CSS v3 preset for the Renge design system. Maps all `--renge-*` CSS custom properties to utility classes. Zero hardcoded values — every utility references a CSS variable.
+Tailwind CSS integration for the Renge design system. Maps all `--renge-*` CSS custom properties to utility classes. Zero hardcoded values — every utility references a CSS variable.
 
-Requires `@renge-ui/tokens` (or equivalent) to inject the CSS custom properties at runtime.
+Two exports:
+- **`@renge-ui/tailwind`** — Tailwind CSS v3 preset (`theme.extend`)
+- **`@renge-ui/tailwind/plugin`** — Tailwind CSS v4 plugin (`@plugin`)
 
-## Install
+---
+
+## Tailwind CSS v4 (recommended)
+
+One import. Everything baked in at build time. No runtime injection.
+
+### Install
+
+```bash
+pnpm add @renge-ui/tailwind
+```
+
+### Setup
+
+```css
+/* globals.css */
+@import "tailwindcss";
+@plugin "@renge-ui/tailwind/plugin";
+```
+
+```html
+<!-- Set data-profile on <html> to activate a color profile -->
+<html data-profile="ocean">
+<html data-profile="earth" data-mode="dark">
+```
+
+Done. All `--renge-*` token CSS is injected at build time. All utility classes are registered and support every Tailwind variant (`hover:`, `md:`, `dark:`, `focus:`, etc.).
+
+### What the plugin injects
+
+**Into `:root`** — base token custom properties:
+```css
+:root {
+  --renge-space-0: 0px;
+  --renge-space-4: 20px;
+  --renge-font-size-base: 16px;
+  --renge-font-size-lg: 25.89px;
+  --renge-radius-2: 8px;
+  --renge-duration-4: 500ms;
+  --renge-easing-spring: cubic-bezier(0.382, 0.618, 0.618, 1.382);
+  /* … all spacing, type, radius, duration, easing vars */
+}
+```
+
+**Into `[data-profile]` selectors** — all 6 profiles × light/dark:
+```css
+[data-profile="ocean"]                              { --renge-color-bg: oklch(…); … }
+[data-profile="ocean"][data-mode="dark"]            { --renge-color-bg: oklch(…); … }
+@media (prefers-color-scheme: dark) {
+  [data-profile="ocean"]:not([data-mode="light"])   { --renge-color-bg: oklch(…); … }
+}
+/* × 6 profiles (ocean, earth, twilight, fire, void, leaf) */
+```
+
+### Profile switching
+
+```ts
+// Runtime profile switch — CSS updates immediately, no rebuild
+document.documentElement.setAttribute('data-profile', 'twilight');
+
+// Force dark mode
+document.documentElement.setAttribute('data-mode', 'dark');
+
+// Follow system preference (remove the override)
+document.documentElement.removeAttribute('data-mode');
+```
+
+---
+
+## Tailwind CSS v3
+
+Uses `theme.extend` via the preset. Requires a separate CSS injection step (the preset only maps class names to var references — it does not inject the vars themselves).
+
+### Install
 
 ```bash
 pnpm add @renge-ui/tailwind @renge-ui/tokens
 ```
 
-## Setup
+### Setup
 
 ```ts
 // tailwind.config.ts
@@ -23,48 +98,58 @@ export default {
 } satisfies Config;
 ```
 
-Then inject the Renge CSS variables via `@renge-ui/tokens`:
+Inject the CSS variables server-side (Next.js example):
 
-```ts
+```tsx
+// app/layout.tsx
 import { createRengeTheme } from '@renge-ui/tokens';
-import { useInsertionEffect } from "react";
-const { css } = createRengeTheme({ profile: 'ocean', mode: 'light' });
 
- useInsertionEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = css;
-    document.head.appendChild(style);
- }, [])
+export default function Layout({ children }) {
+  const theme = createRengeTheme({ profile: 'ocean' });
+  return (
+    <html data-profile="ocean">
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: theme.css }} />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
 ```
+
+Or use `<RengeStylesheet />` from `@renge-ui/react` for the same result.
 
 ---
 
 ## Generated Utility Classes
 
-All utilities are prefixed with `renge-` and reference CSS variables — values update automatically when the active token profile changes.
+All utilities are prefixed with `renge-` and reference CSS variables. Values update automatically when the active token profile changes — no rebuild needed.
 
 ### Spacing
 
-Maps `--renge-space-{0–10}` (Fibonacci × base unit).
+Maps `--renge-space-{0–10}` (Fibonacci × base unit). Applies to all Tailwind spacing consumers.
 
 ```html
 <div class="p-renge-4 m-renge-2 gap-renge-3">
-<div class="space-x-renge-5 px-renge-6">
+<div class="space-x-renge-5 px-renge-6 w-renge-8">
+<div class="hover:p-renge-5 md:gap-renge-4">
 ```
 
-| Class suffix | CSS variable |
-|---|---|
-| `renge-0` | `var(--renge-space-0)` |
-| `renge-1` | `var(--renge-space-1)` |
-| `renge-2` | `var(--renge-space-2)` |
-| `renge-3` | `var(--renge-space-3)` |
-| `renge-4` | `var(--renge-space-4)` |
-| `renge-5` | `var(--renge-space-5)` |
-| `renge-6` | `var(--renge-space-6)` |
-| `renge-7` | `var(--renge-space-7)` |
-| `renge-8` | `var(--renge-space-8)` |
-| `renge-9` | `var(--renge-space-9)` |
-| `renge-10` | `var(--renge-space-10)` |
+| Suffix | CSS variable | Default |
+|---|---|---|
+| `renge-0` | `var(--renge-space-0)` | 0px |
+| `renge-1` | `var(--renge-space-1)` | 4px |
+| `renge-2` | `var(--renge-space-2)` | 4px |
+| `renge-3` | `var(--renge-space-3)` | 12px |
+| `renge-4` | `var(--renge-space-4)` | 20px |
+| `renge-5` | `var(--renge-space-5)` | 32px |
+| `renge-6` | `var(--renge-space-6)` | 52px |
+| `renge-7` | `var(--renge-space-7)` | 84px |
+| `renge-8` | `var(--renge-space-8)` | 136px |
+| `renge-9` | `var(--renge-space-9)` | 220px |
+| `renge-10` | `var(--renge-space-10)` | 356px |
+
+Applicable utilities: `p-`, `px-`, `py-`, `pt-`, `pr-`, `pb-`, `pl-`, `ps-`, `pe-`, `m-`, `mx-`, `my-`, `mt-`, `mr-`, `mb-`, `ml-`, `ms-`, `me-`, `gap-`, `gap-x-`, `gap-y-`, `w-`, `h-`, `size-`, `min-w-`, `min-h-`, `max-w-`, `max-h-`, `inset-`, `inset-x-`, `inset-y-`, `top-`, `right-`, `bottom-`, `left-`, `space-x-`, `space-y-`
 
 ### Font Size
 
@@ -76,16 +161,16 @@ Maps `--renge-font-size-{xs–4xl}` (φ-based scale, 8 steps).
 <span class="text-renge-xs">Caption</span>
 ```
 
-| Class | CSS variable |
-|---|---|
-| `text-renge-xs` | `var(--renge-font-size-xs)` |
-| `text-renge-sm` | `var(--renge-font-size-sm)` |
-| `text-renge-base` | `var(--renge-font-size-base)` |
-| `text-renge-lg` | `var(--renge-font-size-lg)` |
-| `text-renge-xl` | `var(--renge-font-size-xl)` |
-| `text-renge-2xl` | `var(--renge-font-size-2xl)` |
-| `text-renge-3xl` | `var(--renge-font-size-3xl)` |
-| `text-renge-4xl` | `var(--renge-font-size-4xl)` |
+| Class | CSS variable | Default |
+|---|---|---|
+| `text-renge-xs` | `var(--renge-font-size-xs)` | ~6.1px |
+| `text-renge-sm` | `var(--renge-font-size-sm)` | ~9.9px |
+| `text-renge-base` | `var(--renge-font-size-base)` | 16px |
+| `text-renge-lg` | `var(--renge-font-size-lg)` | ~25.9px |
+| `text-renge-xl` | `var(--renge-font-size-xl)` | ~41.9px |
+| `text-renge-2xl` | `var(--renge-font-size-2xl)` | ~67.8px |
+| `text-renge-3xl` | `var(--renge-font-size-3xl)` | ~109.7px |
+| `text-renge-4xl` | `var(--renge-font-size-4xl)` | ~177.4px |
 
 ### Line Height
 
@@ -104,30 +189,32 @@ Maps `--renge-radius-{none|1–5|full}` (Fibonacci × base unit).
 
 ```html
 <button class="rounded-renge-2">Default button</button>
-<div class="rounded-renge-full">Pill shape</div>
-<div class="rounded-renge-none">Square</div>
+<div class="rounded-renge-full">Pill</div>
+<div class="rounded-t-renge-3 rounded-b-renge-1">Asymmetric</div>
 ```
 
-| Class | CSS variable |
-|---|---|
-| `rounded-renge-none` | `var(--renge-radius-none)` |
-| `rounded-renge-1` | `var(--renge-radius-1)` |
-| `rounded-renge-2` | `var(--renge-radius-2)` |
-| `rounded-renge-3` | `var(--renge-radius-3)` |
-| `rounded-renge-4` | `var(--renge-radius-4)` |
-| `rounded-renge-5` | `var(--renge-radius-5)` |
-| `rounded-renge-full` | `var(--renge-radius-full)` |
+| Class | CSS variable | Default |
+|---|---|---|
+| `rounded-renge-none` | `var(--renge-radius-none)` | 0px |
+| `rounded-renge-1` | `var(--renge-radius-1)` | 4px |
+| `rounded-renge-2` | `var(--renge-radius-2)` | 8px |
+| `rounded-renge-3` | `var(--renge-radius-3)` | 12px |
+| `rounded-renge-4` | `var(--renge-radius-4)` | 20px |
+| `rounded-renge-5` | `var(--renge-radius-5)` | 32px |
+| `rounded-renge-full` | `var(--renge-radius-full)` | 9999px |
+
+Applicable utilities: `rounded-`, `rounded-t-`, `rounded-r-`, `rounded-b-`, `rounded-l-`, `rounded-s-`, `rounded-e-`, `rounded-tl-`, `rounded-tr-`, `rounded-br-`, `rounded-bl-`, `rounded-ss-`, `rounded-se-`, `rounded-ee-`, `rounded-es-`
 
 ### Transition Duration
 
-Maps `--renge-duration-{0–10}` (Fibonacci × 100ms: 0ms, 100ms, 200ms, 300ms, 500ms, 800ms…).
+Maps `--renge-duration-{0–10}` (Fibonacci × 100ms).
 
 ```html
-<div class="duration-renge-4 transition-all">500ms — natural acceleration</div>
-<div class="duration-renge-3 transition-opacity">300ms</div>
+<div class="duration-renge-4 transition-all">500ms</div>
+<div class="hover:duration-renge-2 transition-opacity">200ms on hover</div>
 ```
 
-| Class | CSS variable | Default value |
+| Class | CSS variable | Default |
 |---|---|---|
 | `duration-renge-0` | `var(--renge-duration-0)` | 0ms |
 | `duration-renge-1` | `var(--renge-duration-1)` | 100ms |
@@ -143,7 +230,7 @@ Maps `--renge-duration-{0–10}` (Fibonacci × 100ms: 0ms, 100ms, 200ms, 300ms, 
 
 ### Transition Easing
 
-Maps `--renge-easing-{curve}` (all control points derived from φ: A = 1/φ² ≈ 0.382, B = 1/φ ≈ 0.618).
+Maps `--renge-easing-{curve}` (all control points derived from φ).
 
 ```html
 <div class="ease-renge-spring duration-renge-4 transition-transform">Spring</div>
@@ -160,13 +247,16 @@ Maps `--renge-easing-{curve}` (all control points derived from φ: A = 1/φ² �
 
 ### Colors
 
-Maps `--renge-color-{token}` (22 semantic tokens — profile- and mode-aware via CSS variables).
+Maps `--renge-color-{token}` (22 semantic tokens — profile- and mode-aware).
 
 ```html
 <div class="bg-renge-bg text-renge-fg border border-renge-border">
 <button class="bg-renge-accent text-renge-fg-inverse hover:bg-renge-accent-hover">
 <p class="text-renge-danger">Error message</p>
+<div class="ring-2 ring-renge-border-focus">Focus indicator</div>
 ```
+
+All 22 tokens are available on every color-accepting utility: `bg-`, `text-`, `border-`, `ring-`, `outline-`, `fill-`, `stroke-`, `caret-`, `accent-`, `decoration-`, `shadow-`.
 
 #### Backgrounds
 | Class | CSS variable |
@@ -210,28 +300,14 @@ Maps `--renge-color-{token}` (22 semantic tokens — profile- and mode-aware via
 | `text-renge-info` | `var(--renge-color-info)` |
 | `bg-renge-info-subtle` | `var(--renge-color-info-subtle)` |
 
-> Color utilities work with any Tailwind color modifier: `bg-renge-accent`, `text-renge-fg`, `border-renge-border`, `ring-renge-border-focus`, `fill-renge-accent`, `stroke-renge-accent`, etc.
-
----
-
-## Profile Switching
-
-Because every utility references a CSS variable, switching color profiles is a single class swap — no Tailwind config change needed.
-
-```ts
-// Switch to earth profile, dark mode
-const { css } = createRengeTheme({ profile: 'earth', mode: 'dark' });
-document.documentElement.style.cssText = css; // or re-inject the stylesheet
-```
-
-Available profiles: `ocean` (default), `earth`, `twilight`, `fire`, `void`, `leaf`.
-
 ---
 
 ## Compatibility
 
-- **Tailwind CSS v3** — fully supported via `presets` array.
-- **Tailwind CSS v4** — uses a different CSS-based config model (`@theme`). This preset is not applicable for v4; use `@renge-ui/tokens` CSS output directly with `@theme` instead.
+| Tailwind version | Import | Config |
+|---|---|---|
+| v3 | `import rengePreset from '@renge-ui/tailwind'` | `presets: [rengePreset]` in `tailwind.config.ts` |
+| v4 | `@plugin "@renge-ui/tailwind/plugin"` | In CSS file |
 
 ---
 

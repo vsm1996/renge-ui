@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { generateRootCSS, generateAllProfilesCSS, generateMobileSpacingCSS } from "@/lib/tokens";
+import { generateMobileSpacingCSS } from "@/lib/tokens";
 import { FloatingControls } from "@/components/ui/FloatingControls";
 import "./globals.css";
 
@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   description:
     "A design system built on natural mathematics. PHI. Fibonacci. The ratios that appear in every living thing.",
   metadataBase: new URL(siteUrl),
+  authors: [{ name: "Vanessa Martin" }],
   openGraph: {
     title: "Renge — Proportion as a First Principle",
     description:
@@ -54,11 +55,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Base scales (spacing, type, motion, radius) + ocean as :root default
-  const tokenCSS = generateRootCSS("ocean");
-  // All profile color overrides via [data-profile] selectors — no JS flash
-  const profilesCSS = generateAllProfilesCSS();
-  // Mobile spacing override — baseUnit 4 at ≤768px to prevent horizontal overflow
+  // Mobile spacing override — baseUnit 4 at ≤768px to prevent horizontal overflow.
+  // Base tokens and all profile colors are now baked in via @plugin in globals.css.
   const mobileCSS = generateMobileSpacingCSS();
 
   return (
@@ -69,14 +67,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <style
-          dangerouslySetInnerHTML={{ __html: tokenCSS }}
-          data-renge-tokens
-        />
-        <style
-          dangerouslySetInnerHTML={{ __html: profilesCSS }}
-          data-renge-profiles
-        />
         <style
           dangerouslySetInnerHTML={{ __html: mobileCSS }}
           data-renge-mobile

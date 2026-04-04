@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/tokens",
-  "version": "1.0.3",
+  "version": "2.1.0",
   "description": "Design tokens for the Renge design system — φ-based typography, Fibonacci spacing, OKLCH colors, natural motion.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

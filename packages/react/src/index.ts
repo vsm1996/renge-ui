@@ -3,6 +3,8 @@
 // Provider & hooks
 export { RengeProvider, useRenge, useRengeTheme } from './provider';
 export type { RengeProviderProps } from './provider';
+export { RengeStylesheet } from './stylesheet';
+export type { RengeStylesheetProps } from './stylesheet';
 
 // Components
 export {

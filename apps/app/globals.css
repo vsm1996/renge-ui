@@ -1,13 +1,16 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Renge Token Variables — injected server-side into :root
-   The actual values come from createRengeTheme() in layout.tsx.
-   Profile-specific semantic colors are swapped via data-profile.
+   Renge — bakes all --renge-* token CSS into the stylesheet.
+   Injects base custom properties (:root) + all 6 profile color
+   selectors ([data-profile]). No runtime injection needed.
    ============================================================ */
+@plugin "@renge-ui/tailwind/plugin";
 
 /* ============================================================
-   Tailwind v4 theme — maps Renge tokens to Tailwind utilities
+   Tailwind v4 theme — site-specific aliases over Renge tokens.
+   These map --renge-color-* to short Tailwind utility names
+   (bg-bg, text-fg, etc.) for convenience within this app.
    ============================================================ */
 @theme {
   /* Fonts */

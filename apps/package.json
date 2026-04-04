@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@renge-ui/react": "workspace:*",
+    "@renge-ui/tailwind": "workspace:*",
     "@renge-ui/tokens": "workspace:*",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.36.0",
