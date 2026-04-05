@@ -23,8 +23,8 @@ const light: SemanticColorMap = {
   accent:       "oklch(46% 0.16 58)",            // warm tan — clearly golden-beige, not orange or red
   accentHover:  "oklch(38% 0.18 55)",
   accentSubtle: "oklch(94% 0.05 68)",            // barely-there cream tint
-  success:      oklch(palette.grassGreen),
-  successSubtle:"oklch(92% 0.06 120)",
+  success:      oklch(palette.mossGreen),
+  successSubtle:"oklch(92% 0.06 130)",
   warning:      oklch(palette.sunsetOrange),
   warningSubtle:"oklch(94% 0.05 40)",
   danger:       oklch(palette.cranberryRed),

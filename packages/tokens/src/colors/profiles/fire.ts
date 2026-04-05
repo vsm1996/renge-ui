@@ -23,8 +23,8 @@ const light: SemanticColorMap = {
   accent:       "oklch(50% 0.22 24)",            // burning ember — red-orange, distinct from Earth's amber
   accentHover:  "oklch(42% 0.24 22)",
   accentSubtle: "oklch(96% 0.10 24)",            // orange-red glow on surface
-  success:      oklch(palette.grassGreen),
-  successSubtle:"oklch(93% 0.05 120)",
+  success:      oklch(palette.mossGreen),
+  successSubtle:"oklch(93% 0.05 130)",
   warning:      "oklch(62% 0.20 52)",
   warningSubtle:"oklch(95% 0.04 52)",
   danger:       oklch(palette.cranberryRed),

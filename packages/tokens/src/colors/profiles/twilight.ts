@@ -29,8 +29,8 @@ const light: SemanticColorMap = {
   accent:       "oklch(54% 0.22 18)",            // vivid sunset pink-orange, distinct from fire's red and earth's tan
   accentHover:  "oklch(46% 0.24 16)",
   accentSubtle: "oklch(94% 0.06 18)",            // warm rose flush on periwinkle bg
-  success:      oklch(palette.grassGreen),
-  successSubtle:"oklch(92% 0.06 120)",
+  success:      oklch(palette.mossGreen),
+  successSubtle:"oklch(92% 0.06 130)",
   warning:      "oklch(62% 0.20 40)",
   warningSubtle:"oklch(94% 0.04 40)",
   danger:       oklch(palette.cranberryRed),

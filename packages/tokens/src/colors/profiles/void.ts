@@ -23,8 +23,8 @@ const light: SemanticColorMap = {
   accent:       "oklch(28% 0.04 250)",           // dark cool grey — high contrast on white
   accentHover:  "oklch(18% 0.03 250)",
   accentSubtle: "oklch(94% 0.02 250)",
-  success:      oklch(palette.grassGreen),
-  successSubtle:"oklch(93% 0.04 120)",
+  success:      oklch(palette.mossGreen),
+  successSubtle:"oklch(93% 0.04 130)",
   warning:      oklch(palette.sunsetOrange),
   warningSubtle:"oklch(95% 0.03 40)",
   danger:       oklch(palette.cranberryRed),

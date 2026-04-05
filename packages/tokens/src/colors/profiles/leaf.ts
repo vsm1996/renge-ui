@@ -30,7 +30,7 @@ const light: SemanticColorMap = {
   accent:       "oklch(50% 0.20 130)",
   accentHover:  "oklch(44% 0.22 130)",
   accentSubtle: "oklch(93% 0.06 130)",
-  success:      oklch(palette.seaFoam),          // teal — distinct from green accent
+  success:      "oklch(54% 0.10 170)",            // dark teal — distinct from green accent, AA ✓
   successSubtle:"oklch(92% 0.06 170)",
   warning:      oklch(palette.sunsetOrange),
   warningSubtle:"oklch(94% 0.04 40)",
