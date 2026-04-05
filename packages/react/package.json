@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/react",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "React component primitives for the Renge design system.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -37,7 +37,7 @@
   },
   "packageManager": "pnpm@10.30.2",
   "dependencies": {
-    "@renge-ui/tokens": "^2.1.0"
+    "@renge-ui/tokens": "workspace:*"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
