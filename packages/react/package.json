@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/react",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "React component primitives for the Renge design system.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
