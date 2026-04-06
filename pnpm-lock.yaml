@@ -79,8 +79,8 @@ importers:
   packages/react:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.2.1
-        version: 2.2.2
+        specifier: ^2.2.3
+        version: 2.2.3
     devDependencies:
       '@types/react':
         specifier: ^19.2.14
@@ -786,9 +786,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
-
-  '@renge-ui/tokens@2.2.2':
-    resolution: {integrity: sha512-RRd3/Quc8QJhAJL/lRDa9MVLdZSNcoekPaSBZQg4lZB9prHrGhEXxdzuLAmwk9Li4jKo4JCMBEJcoQLauyaqUA==}
 
   '@renge-ui/tokens@2.2.3':
     resolution: {integrity: sha512-XIsCLjZK+DWe22oGr59DlRUKs0jvnp0S5U3WsOwHKmibylU/fm+mG8qVOfW3LGQuqCner182pa/pxopw2YlsEA==}
@@ -2492,8 +2489,6 @@ snapshots:
 
   '@next/swc-win32-x64-msvc@16.1.6':
     optional: true
-
-  '@renge-ui/tokens@2.2.2': {}
 
   '@renge-ui/tokens@2.2.3': {}
 
