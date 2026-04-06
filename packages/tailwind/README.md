@@ -100,26 +100,24 @@ export default {
 } satisfies Config;
 ```
 
-Inject the CSS variables server-side (Next.js example):
+Inject the CSS variables by importing the pre-built stylesheet from `@renge-ui/tokens`:
 
 ```tsx
 // app/layout.tsx
-import { createRengeTheme } from '@renge-ui/tokens';
+import '@renge-ui/tokens/renge.css';
 
 export default function Layout({ children }) {
-  const theme = createRengeTheme({ profile: 'ocean' });
   return (
     <html data-profile="ocean">
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: theme.css }} />
-      </head>
       <body>{children}</body>
     </html>
   );
 }
 ```
 
-Or use `<RengeStylesheet />` from `@renge-ui/react` for the same result.
+All 6 profiles × light/dark are included. No `dangerouslySetInnerHTML`, no React dependency for token injection.
+
+Alternatively, use `<RengeStylesheet />` from `@renge-ui/react` if you need to generate tokens from a custom config at render time.
 
 ---
 

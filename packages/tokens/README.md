@@ -21,32 +21,56 @@ npm install @renge-ui/tokens
 
 ## Quick Start
 
+### Static stylesheet (recommended)
+
+Import the pre-built CSS file once in your root layout. No React, no runtime injection, no hydration errors.
+
+```ts
+// Next.js app/layout.tsx, Vite root, etc.
+import '@renge-ui/tokens/renge.css';
+```
+
+```css
+/* or plain CSS */
+@import '@renge-ui/tokens/renge.css';
+```
+
+Then set `data-profile` on `<html>` to activate a color profile:
+
+```html
+<html data-profile="ocean">                   <!-- light -->
+<html data-profile="ocean" data-mode="dark">  <!-- explicit dark -->
+```
+
+System `prefers-color-scheme: dark` is respected automatically — no attribute needed.
+
+Available profiles: `ocean` (default), `earth`, `twilight`, `fire`, `void`, `leaf`.
+
+---
+
+### Programmatic (custom config)
+
+Use `createRengeTheme()` when you need runtime-generated tokens — custom base unit, variance, or a specific selector.
+
 ```ts
 import { createRengeTheme } from '@renge-ui/tokens';
 
 const theme = createRengeTheme({ profile: 'ocean', mode: 'light' });
-
-const style = document.createElement('style');
-style.textContent = theme.css;
-document.head.appendChild(style);
-
-// CSS variables are now available on :root
-// var(--renge-color-bg), var(--renge-space-4), var(--renge-font-size-lg) ...
+// theme.css  → complete CSS string
+// theme.vars → Record<string, string> of all --renge-* properties
 ```
 
-**Next.js (server-side, no flash):**
+Inject server-side (Next.js):
 
 ```tsx
 // app/layout.tsx
 import { createRengeTheme } from '@renge-ui/tokens';
 
 export default function RootLayout({ children }) {
-  const theme = createRengeTheme({ profile: 'ocean' });
+  const { css } = createRengeTheme({ profile: 'ocean' });
   return (
     <html>
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: theme.css }} />
-      </head>
+      <head><style>{css}</style></head>
       <body>{children}</body>
     </html>
   );
@@ -386,7 +410,7 @@ const colors = getProfile('earth', 'dark');
 
 **OKLCH requires modern browsers.** Chrome 111+, Firefox 113+, Safari 16.4+.
 
-**CSS custom properties require injection.** For critical-path rendering, generate `theme.css` server-side and embed it before any JS loads.
+**CSS custom properties require injection.** The simplest path is `import '@renge-ui/tokens/renge.css'` — a static pre-built file handled at build time with no runtime cost. For custom config (non-default base unit, variance, etc.) use `createRengeTheme().css` injected server-side.
 
 ---
 

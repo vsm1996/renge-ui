@@ -10,20 +10,18 @@ pnpm add @renge-ui/react
 
 ## Setup
 
-There are two patterns depending on whether you're using the Tailwind plugin or not.
+### Static stylesheet (recommended — no React required)
 
-### With `@renge-ui/tailwind` plugin (recommended)
-
-The plugin injects all token CSS at build time. `RengeProvider` handles attribute syncing for profile switching — no runtime injection needed.
+The simplest setup. Import the pre-built CSS file once; use `RengeProvider` only if you need runtime profile switching.
 
 ```tsx
-// app/layout.tsx — inject tokens SSR-safe
-import { RengeStylesheet, RengeProvider } from '@renge-ui/react';
+// app/layout.tsx
+import '@renge-ui/tokens/renge.css';
+import { RengeProvider } from '@renge-ui/react';
 
 export default function Layout({ children }) {
   return (
     <html data-profile="ocean">
-      <head><RengeStylesheet /></head>
       <body>
         <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
           {children}
@@ -34,7 +32,36 @@ export default function Layout({ children }) {
 }
 ```
 
-### Without Tailwind (CSR only)
+No `dangerouslySetInnerHTML`. No hydration errors. The CSS file is resolved at build time by your bundler.
+
+### With `@renge-ui/tailwind` plugin
+
+The plugin injects all token CSS at build time — functionally equivalent to the static stylesheet but with Tailwind utility classes included.
+
+```tsx
+// app/layout.tsx
+import { RengeProvider } from '@renge-ui/react';
+
+export default function Layout({ children }) {
+  return (
+    <html data-profile="ocean">
+      <body>
+        <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
+          {children}
+        </RengeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@import "tailwindcss";
+@plugin "@renge-ui/tailwind/plugin";
+```
+
+### CSR only (no SSR)
 
 Set `injectCSS={true}` to inject the full CSS string into `<head>` at runtime via `useInsertionEffect`. Not SSR-safe — causes a style flash on server-rendered pages.
 
@@ -439,20 +466,17 @@ Animated flow-field canvas visualization. Accepts energy intensity and color pro
 
 ## SSR / Static Export
 
-Use `<RengeStylesheet />` to inject tokens server-side without a flash of unstyled content:
+**Preferred:** import `@renge-ui/tokens/renge.css` — a static file that contains all profiles and is injected by the bundler at build time, with zero runtime cost and no hydration issues:
 
 ```tsx
 // app/layout.tsx
-import { RengeStylesheet, RengeProvider } from '@renge-ui/react';
+import '@renge-ui/tokens/renge.css';
+import { RengeProvider } from '@renge-ui/react';
 
 export default function Layout({ children }) {
   return (
-    <html>
-      <head>
-        <RengeStylesheet config={{ profile: 'ocean', mode: 'light' }} />
-      </head>
+    <html data-profile="ocean">
       <body>
-        {/* injectCSS defaults to false — no runtime injection */}
         <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
           {children}
         </RengeProvider>
@@ -462,7 +486,28 @@ export default function Layout({ children }) {
 }
 ```
 
-For dynamic profile switching, use `@renge-ui/tailwind/plugin` instead — it embeds all profile variants at build time and switches via `data-profile` attribute. See the `@renge-ui/tailwind` README for setup.
+**Alternative:** `<RengeStylesheet />` renders a `<style>` tag with token CSS — SSR-safe, no flash, but generates a single profile/mode at render time (no built-in multi-profile switching):
+
+```tsx
+import { RengeStylesheet, RengeProvider } from '@renge-ui/react';
+
+export default function Layout({ children }) {
+  return (
+    <html>
+      <head>
+        <RengeStylesheet config={{ profile: 'ocean', mode: 'light' }} />
+      </head>
+      <body>
+        <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
+          {children}
+        </RengeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+For dynamic profile switching with full Tailwind integration, use `@renge-ui/tailwind/plugin` — all profile variants are embedded at build time, switching is just a `data-profile` attribute change.
 
 ---
 
