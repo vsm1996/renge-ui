@@ -328,8 +328,10 @@ import {
   createEasingTokens,
   createRadiusScale,
   createFractalScale,
+  FRACTAL_STEPS,
   createAnimationVars,
   createAnimationKeyframesCSS,
+  ANIMATION_NAMES,       // string[] of all 15 animation names
 
   // Color utilities
   palette,

@@ -10,14 +10,40 @@ pnpm add @renge-ui/react
 
 ## Setup
 
-Wrap your app in `RengeProvider`. It injects the generated CSS variables into `<head>` automatically via `useInsertionEffect`.
+There are two patterns depending on whether you're using the Tailwind plugin or not.
+
+### With `@renge-ui/tailwind` plugin (recommended)
+
+The plugin injects all token CSS at build time. `RengeProvider` handles attribute syncing for profile switching — no runtime injection needed.
+
+```tsx
+// app/layout.tsx — inject tokens SSR-safe
+import { RengeStylesheet, RengeProvider } from '@renge-ui/react';
+
+export default function Layout({ children }) {
+  return (
+    <html data-profile="ocean">
+      <head><RengeStylesheet /></head>
+      <body>
+        <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
+          {children}
+        </RengeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### Without Tailwind (CSR only)
+
+Set `injectCSS={true}` to inject the full CSS string into `<head>` at runtime via `useInsertionEffect`. Not SSR-safe — causes a style flash on server-rendered pages.
 
 ```tsx
 import { RengeProvider } from '@renge-ui/react';
 
 function App() {
   return (
-    <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
+    <RengeProvider config={{ profile: 'ocean', mode: 'light' }} injectCSS>
       <YourApp />
     </RengeProvider>
   );
@@ -29,7 +55,35 @@ function App() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `config` | `RengeThemeConfig` | `{}` | Theme configuration (see `@renge-ui/tokens`) |
-| `injectCSS` | `boolean` | `true` | Inject CSS into `<head>`. Set `false` for SSR or manual injection. |
+| `injectCSS` | `boolean` | `false` | Inject full CSS string into `<head>` at runtime. Set `true` for CSR-only apps without the Tailwind plugin. When `false`, syncs `data-profile`/`data-mode` attributes on `<html>` instead. |
+
+---
+
+## Components
+
+### `RengeStylesheet`
+
+SSR-safe style injection. Renders a `<style>` tag with all Renge token CSS. Use this in your root layout instead of `injectCSS`.
+
+```tsx
+import { RengeStylesheet } from '@renge-ui/react';
+
+// app/layout.tsx
+export default function Layout({ children }) {
+  return (
+    <html>
+      <head>
+        <RengeStylesheet config={{ profile: 'ocean', mode: 'light' }} />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `config` | `RengeThemeConfig` | `{}` | Theme configuration passed to `createRengeTheme()` |
 
 ---
 
@@ -37,13 +91,14 @@ function App() {
 
 ### `useRenge()`
 
-Returns the current theme and profile from context. Must be inside `RengeProvider`.
+Returns the current theme, profile, and mode from context. Must be inside `RengeProvider`.
 
 ```tsx
-const { theme, profile } = useRenge();
+const { theme, profile, mode } = useRenge();
 // theme.vars['--renge-color-accent']
 // theme.css  → full CSS string
 // profile    → 'ocean' | 'earth' | 'twilight' | 'fire' | 'void' | 'leaf'
+// mode       → 'light' | 'dark'
 ```
 
 ### `useRengeTheme(config?)`
@@ -384,22 +439,30 @@ Animated flow-field canvas visualization. Accepts energy intensity and color pro
 
 ## SSR / Static Export
 
-Use `injectCSS={false}` and inject the CSS string server-side:
+Use `<RengeStylesheet />` to inject tokens server-side without a flash of unstyled content:
 
 ```tsx
-import { createRengeTheme } from '@renge-ui/tokens';
+// app/layout.tsx
+import { RengeStylesheet, RengeProvider } from '@renge-ui/react';
 
-// Server — generate CSS for all profiles you need
-const theme = createRengeTheme({ profile: 'ocean', mode: 'light' });
-// Embed theme.css in your HTML <head>
-
-// Client — match profile to avoid re-injecting
-<RengeProvider config={{ profile: 'ocean', mode: 'light' }} injectCSS={false}>
-  <App />
-</RengeProvider>
+export default function Layout({ children }) {
+  return (
+    <html>
+      <head>
+        <RengeStylesheet config={{ profile: 'ocean', mode: 'light' }} />
+      </head>
+      <body>
+        {/* injectCSS defaults to false — no runtime injection */}
+        <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
+          {children}
+        </RengeProvider>
+      </body>
+    </html>
+  );
+}
 ```
 
-For multi-profile support (profile switcher), generate CSS for each profile using `data-profile` attribute selectors and inject all of them at build time. See `apps/lib/tokens.ts` in the monorepo for a reference implementation.
+For dynamic profile switching, use `@renge-ui/tailwind/plugin` instead — it embeds all profile variants at build time and switches via `data-profile` attribute. See the `@renge-ui/tailwind` README for setup.
 
 ---
 

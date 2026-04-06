@@ -77,13 +77,15 @@ document.documentElement.removeAttribute('data-mode');
 
 ## Tailwind CSS v3
 
-Uses `theme.extend` via the preset. Requires a separate CSS injection step (the preset only maps class names to var references — it does not inject the vars themselves).
+Uses `theme.extend` via the preset. Requires a separate CSS injection step — the preset only maps class names to var references and does not inject the vars themselves.
 
 ### Install
 
 ```bash
 pnpm add @renge-ui/tailwind @renge-ui/tokens
 ```
+
+(`@renge-ui/tokens` is needed to call `createRengeTheme()` directly for CSS variable injection.)
 
 ### Setup
 

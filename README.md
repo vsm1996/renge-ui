@@ -46,13 +46,15 @@ Components follow fractal design principles — a card at 200px and a card at 80
 
 | Package | Purpose | Status |
 |---------|---------|--------|
-| `@renge-ui/tokens` | Design tokens — spacing, typography, color, motion, radius, animation, phyllotaxis | ✅ v1.0 |
-| `@renge-ui/react` | 18 component primitives — layout, text, forms, navigation, status | ✅ v1.0 |
-| `@renge-ui/tailwind` | Tailwind CSS preset | Planned |
+| `@renge-ui/tokens` | Design tokens — spacing, typography, color, motion, radius, animation, phyllotaxis | ✅ v2.2 |
+| `@renge-ui/react` | 21 component primitives — layout, text, forms, navigation, status | ✅ v2.3 |
+| `@renge-ui/tailwind` | Tailwind CSS v3 preset + v4 plugin | ✅ v2.2 |
 
 ---
 
 ## Quick Start
+
+**Tokens only (any framework):**
 
 ```bash
 pnpm add @renge-ui/tokens
@@ -61,7 +63,7 @@ pnpm add @renge-ui/tokens
 ```ts
 import { createRengeTheme } from '@renge-ui/tokens';
 
-const theme = createRengeTheme();
+const theme = createRengeTheme({ profile: 'ocean', mode: 'light' });
 
 // Inject into your document
 const style = document.createElement('style');
@@ -70,6 +72,44 @@ document.head.appendChild(style);
 ```
 
 That gives you the full set of CSS custom properties — spacing, type, motion, radius, and color — ready to use anywhere.
+
+**With Tailwind CSS v4 (recommended):**
+
+```bash
+pnpm add @renge-ui/tailwind
+```
+
+```css
+/* globals.css */
+@import "tailwindcss";
+@plugin "@renge-ui/tailwind/plugin";
+```
+
+```html
+<html data-profile="ocean">
+```
+
+All `--renge-*` token CSS is injected at build time. All utility classes (`p-renge-4`, `text-renge-lg`, `bg-renge-accent`, etc.) are registered and support every Tailwind variant.
+
+**With React:**
+
+```bash
+pnpm add @renge-ui/react
+```
+
+```tsx
+import { RengeStylesheet, RengeProvider, Button, Stack } from '@renge-ui/react';
+
+// In your root layout (SSR-safe):
+<html><head><RengeStylesheet config={{ profile: 'ocean' }} /></head>
+
+// Wrap your app:
+<RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
+  <Stack gap="4">
+    <Button>Get started</Button>
+  </Stack>
+</RengeProvider>
+```
 
 ---
 
@@ -180,15 +220,15 @@ const cool = createRengeTheme({ profile: 'twilight', mode: 'light' });
 
 ```
 @renge-ui/tokens                ← proportional source of truth
-       ↑
-@renge-ui/react                 ← optional component layer
+       ↑                ↑
+@renge-ui/react    @renge-ui/tailwind   ← optional integration layers
        ↑
 harmonia-ui (external)          ← behavioral layer (consumes Renge)
        ↑
 your application
 ```
 
-The dependency graph is strictly one-directional. Tokens know nothing about React. React knows nothing about any behavioral layer. Each layer can be used independently.
+The dependency graph is strictly one-directional. Tokens know nothing about React or Tailwind. Each layer can be used independently.
 
 ### Token generation pipeline
 
@@ -214,7 +254,7 @@ The `css` field is a complete, self-contained stylesheet. Inject it once and eve
 
 ```
 pnpm build
-    tokens → react → site (turbo enforces this order)
+    tokens → react, tailwind → site (turbo enforces this order)
 ```
 
 ---
