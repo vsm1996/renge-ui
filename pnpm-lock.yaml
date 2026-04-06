@@ -101,8 +101,8 @@ importers:
   packages/tailwind:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.2.1
-        version: 2.2.2
+        specifier: ^2.2.3
+        version: 2.2.3
       tailwindcss:
         specifier: '>=3.0.0 <6.0.0'
         version: 4.2.1
@@ -789,6 +789,9 @@ packages:
 
   '@renge-ui/tokens@2.2.2':
     resolution: {integrity: sha512-RRd3/Quc8QJhAJL/lRDa9MVLdZSNcoekPaSBZQg4lZB9prHrGhEXxdzuLAmwk9Li4jKo4JCMBEJcoQLauyaqUA==}
+
+  '@renge-ui/tokens@2.2.3':
+    resolution: {integrity: sha512-XIsCLjZK+DWe22oGr59DlRUKs0jvnp0S5U3WsOwHKmibylU/fm+mG8qVOfW3LGQuqCner182pa/pxopw2YlsEA==}
 
   '@rollup/rollup-android-arm-eabi@4.59.0':
     resolution: {integrity: sha512-upnNBkA6ZH2VKGcBj9Fyl9IGNPULcjXRlg0LLeaioQWueH30p6IXtJEbKAgvyv+mJaMxSm1l6xwDXYjpEMiLMg==}
@@ -2491,6 +2494,8 @@ snapshots:
     optional: true
 
   '@renge-ui/tokens@2.2.2': {}
+
+  '@renge-ui/tokens@2.2.3': {}
 
   '@rollup/rollup-android-arm-eabi@4.59.0':
     optional: true

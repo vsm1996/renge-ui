@@ -45,7 +45,7 @@
   },
   "packageManager": "pnpm@10.30.2",
   "dependencies": {
-    "@renge-ui/tokens": "^2.2.1"
+    "@renge-ui/tokens": "^2.2.3"
   },
   "peerDependencies": {
     "tailwindcss": ">=3.0.0 <6.0.0"
