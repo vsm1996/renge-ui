@@ -33,8 +33,8 @@ function PhiViz() {
         display: "flex",
         gap: "var(--renge-space-5)",
         marginTop: "var(--renge-space-2)",
-        fontSize: "var(--renge-font-size-sm)",
-        color: "var(--renge-color-fg-subtle)",
+        fontSize: "var(--renge-font-size-xs)",
+        color: "var(--renge-color-fg-muted)",
         fontFamily: "var(--font-body)",
         letterSpacing: "0.06em",
       }}>
@@ -86,10 +86,10 @@ function PhyllotaxisViz() {
   const ref = useRef<SVGSVGElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
   const GOLDEN_ANGLE = 137.508;
-  const n = 55;
+  const n = 60;
   const size = 80;
   const points = Array.from({ length: n }, (_, i) => {
-    const r = Math.sqrt(i / n) * size * 0.88;
+    const r = Math.sqrt(i / n) * size;
     const theta = (i * GOLDEN_ANGLE * Math.PI) / 180;
     const round = (v: number) => Math.round(v * 1e4) / 1e4;
     return {
@@ -183,7 +183,7 @@ export function Philosophy() {
           style={{ marginBottom: "var(--renge-space-7)", textAlign: "center" }}
         >
           <p style={{
-            fontSize: "var(--renge-font-size-sm)",
+            fontSize: "var(--renge-font-size-xs)",
             color: "var(--renge-color-accent)",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
@@ -233,6 +233,7 @@ export function Philosophy() {
                 fontSize: "var(--renge-font-size-3xl)",
                 color: "var(--renge-color-accent)",
                 lineHeight: 1,
+                opacity: 0.6,
               }}>
                 {p.symbol}
               </div>

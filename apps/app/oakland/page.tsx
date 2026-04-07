@@ -267,7 +267,7 @@ function PhyllotaxisFlora() {
 
   // Pre-compute all 55 positions
   const allDots = Array.from({ length: PHYLLOTAXIS_TOTAL }, (_, n) => {
-    const r = SCALE * Math.sqrt(n);
+    const r = SCALE * Math.sqrt(n + 1);
     const theta = n * GOLDEN_ANGLE;
     const plantIdx = PLANT_POSITIONS.indexOf(n);
     const plant = plantIdx !== -1 ? PLANTS[plantIdx] : null;
@@ -340,7 +340,7 @@ function PhyllotaxisFlora() {
             <div style={{ fontFamily: "var(--font-body)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", fontWeight: 500 }}>
               {hoveredPlant.name}
             </div>
-            <div style={{ fontStyle: "italic", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)" }}>
+            <div style={{ fontStyle: "italic", fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-muted)" }}>
               {hoveredPlant.latin}
             </div>
           </div>
@@ -352,7 +352,7 @@ function PhyllotaxisFlora() {
         {(Object.entries(HABITAT_LABELS) as [string, string][]).map(([key, label]) => (
           <div key={key} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-2)" }}>
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: HABITAT_COLORS[key], flexShrink: 0 }} />
-            <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)" }}>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-muted)" }}>
               {label}
             </span>
           </div>
@@ -922,7 +922,7 @@ function PlantCard({ plant }: { plant: (typeof PLANTS)[0] }) {
           <Stack gap="1">
             <Text
               size="sm"
-              style={{ fontFamily: "var(--font-body)", color: "var(--renge-color-fg-subtle)", fontStyle: "italic" }}
+              style={{ fontFamily: "var(--font-body)", color: "var(--renge-color-fg-muted)", fontStyle: "italic" }}
             >
               {plant.latin}
             </Text>
@@ -944,7 +944,7 @@ function PlantCard({ plant }: { plant: (typeof PLANTS)[0] }) {
               height: 28,
               borderRadius: "var(--renge-radius-full)",
               border: "1px solid var(--renge-color-border)",
-              color: "var(--renge-color-fg-subtle)",
+              color: "var(--renge-color-fg-muted)",
               fontSize: 16,
               flexShrink: 0,
             }}
@@ -986,7 +986,7 @@ function PlantCard({ plant }: { plant: (typeof PLANTS)[0] }) {
             <Text
               size="sm"
               style={{
-                color: "var(--renge-color-fg-subtle)",
+                color: "var(--renge-color-fg-muted)",
                 lineHeight: 1.7,
                 fontStyle: "italic",
               }}
@@ -1031,10 +1031,10 @@ function ParkCard({ park }: { park: (typeof PARKS)[0] }) {
       <Stack gap="3" style={{ padding: "var(--renge-space-4)" }}>
         <Stack gap="1">
           <Stack gap="2" direction="horizontal" align="center" style={{ justifyContent: "space-between" }}>
-            <Badge variant="neutral" style={{ fontSize: "var(--renge-font-size-sm)" }}>
+            <Badge variant="neutral" style={{ fontSize: "var(--renge-font-size-xs)" }}>
               {park.type}
             </Badge>
-            <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)" }}>
+            <Text size="xs" style={{ color: "var(--renge-color-fg-muted)" }}>
               {park.elevation}
             </Text>
           </Stack>
@@ -1182,7 +1182,7 @@ export default function OaklandPage() {
                     >
                       <CountUp target={stat.value} suffix={stat.suffix} />
                     </Text>
-                    <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                    <Text size="xs" style={{ color: "var(--renge-color-fg-muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                       {stat.label}
                     </Text>
                   </Stack>
@@ -1265,7 +1265,7 @@ export default function OaklandPage() {
                 at this exact rotation between successive leaves. It emerges from PHI —
                 the same ratio that generates every step in Renge&apos;s spacing scale.
               </Text>
-              <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)", lineHeight: 1.6 }}>
+              <Text size="sm" style={{ color: "var(--renge-color-fg-muted)", lineHeight: 1.6 }}>
                 14 native plants from Oakland, arranged by the golden angle. Hover to identify.
               </Text>
             </Stack>
@@ -1427,9 +1427,9 @@ export default function OaklandPage() {
                 }}
               >
                 <Text
-                  size="sm"
+                  size="xs"
                   style={{
-                    color: "var(--renge-color-fg-subtle)",
+                    color: "var(--renge-color-fg-muted)",
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
                     marginBottom: "var(--renge-space-4)",
@@ -1587,7 +1587,7 @@ export default function OaklandPage() {
           textAlign: "center",
         }}
       >
-        <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)", letterSpacing: "0.08em" }}>
+        <Text size="xs" style={{ color: "var(--renge-color-fg-muted)", letterSpacing: "0.08em" }}>
           Built with Renge · Proportion as a first principle · 1 : 1.618
         </Text>
       </footer>
@@ -1632,10 +1632,10 @@ function TidalRhythm() {
         preserveAspectRatio="none"
       >
         {/* Zone labels */}
-        <text x={4} y={pickleweedY - 4} fontSize="8" fill="var(--renge-color-fg-subtle)" fontFamily="var(--font-body)">
+        <text x={4} y={pickleweedY - 4} fontSize="8" fill="var(--renge-color-fg-muted)" fontFamily="var(--font-body)">
           pickleweed zone
         </text>
-        <text x={4} y={tuleY - 4} fontSize="8" fill="var(--renge-color-fg-subtle)" fontFamily="var(--font-body)">
+        <text x={4} y={tuleY - 4} fontSize="8" fill="var(--renge-color-fg-muted)" fontFamily="var(--font-body)">
           tule / freshwater
         </text>
 
@@ -1679,7 +1679,7 @@ function TidalRhythm() {
           return (
             <g key={hour}>
               <line x1={x} y1={height - 12} x2={x} y2={height - 4} stroke="var(--renge-color-border)" strokeWidth={0.5} />
-              <text x={x} y={height} fontSize="7" fill="var(--renge-color-fg-subtle)" textAnchor="middle" fontFamily="var(--font-body)">
+              <text x={x} y={height} fontSize="7" fill="var(--renge-color-fg-muted)" textAnchor="middle" fontFamily="var(--font-body)">
                 {hour === 0 ? "12am" : hour === 12 ? "12pm" : hour < 12 ? `${hour}am` : `${hour - 12}pm`}
               </text>
             </g>
