@@ -124,7 +124,7 @@ function ColorShowcase() {
         {colorGroups.map(({ label, tokens }) => (
           <div key={label}>
             <p style={{
-              fontSize: "var(--renge-font-size-xs)",
+              fontSize: "var(--renge-font-size-sm)",
               color: "var(--renge-color-fg-muted)",
               fontFamily: "var(--font-body)",
               letterSpacing: "0.1em",
@@ -159,7 +159,7 @@ function ColorShowcase() {
                     color.{jsKey}
                   </p>
                   <p style={{
-                    fontSize: "var(--renge-font-size-xs)",
+                    fontSize: "var(--renge-font-size-sm)",
                     color: "var(--renge-color-fg-muted)",
                     fontFamily: "var(--font-mono, monospace)",
                     margin: 0,
@@ -225,7 +225,7 @@ function SpacingShowcase() {
                 {fib} × 4 = {px}px
               </span>
               <span style={{
-                fontSize: "var(--renge-font-size-xs)",
+                fontSize: "var(--renge-font-size-sm)",
                 color: "var(--renge-color-fg-muted)",
                 fontFamily: "var(--font-mono, monospace)",
                 opacity: 0.6,
@@ -301,7 +301,7 @@ function TypeScaleShowcase() {
                   {label} · {px}px
                 </span>
                 <span style={{
-                  fontSize: "var(--renge-font-size-xs)",
+                  fontSize: "var(--renge-font-size-sm)",
                   color: "var(--renge-color-fg-muted)",
                   fontFamily: "var(--font-mono, monospace)",
                   opacity: 0.6,

@@ -340,7 +340,7 @@ function PhyllotaxisFlora() {
             <div style={{ fontFamily: "var(--font-body)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", fontWeight: 500 }}>
               {hoveredPlant.name}
             </div>
-            <div style={{ fontStyle: "italic", fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-muted)" }}>
+            <div style={{ fontStyle: "italic", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)" }}>
               {hoveredPlant.latin}
             </div>
           </div>
@@ -352,7 +352,7 @@ function PhyllotaxisFlora() {
         {(Object.entries(HABITAT_LABELS) as [string, string][]).map(([key, label]) => (
           <div key={key} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-2)" }}>
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: HABITAT_COLORS[key], flexShrink: 0 }} />
-            <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-muted)" }}>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)" }}>
               {label}
             </span>
           </div>
@@ -1031,10 +1031,10 @@ function ParkCard({ park }: { park: (typeof PARKS)[0] }) {
       <Stack gap="3" style={{ padding: "var(--renge-space-4)" }}>
         <Stack gap="1">
           <Stack gap="2" direction="horizontal" align="center" style={{ justifyContent: "space-between" }}>
-            <Badge variant="neutral" style={{ fontSize: "var(--renge-font-size-xs)" }}>
+            <Badge variant="neutral" style={{ fontSize: "var(--renge-font-size-sm)" }}>
               {park.type}
             </Badge>
-            <Text size="xs" style={{ color: "var(--renge-color-fg-muted)" }}>
+            <Text size="sm" style={{ color: "var(--renge-color-fg-muted)" }}>
               {park.elevation}
             </Text>
           </Stack>
@@ -1182,7 +1182,7 @@ export default function OaklandPage() {
                     >
                       <CountUp target={stat.value} suffix={stat.suffix} />
                     </Text>
-                    <Text size="xs" style={{ color: "var(--renge-color-fg-muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                    <Text size="sm" style={{ color: "var(--renge-color-fg-muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                       {stat.label}
                     </Text>
                   </Stack>
@@ -1427,7 +1427,7 @@ export default function OaklandPage() {
                 }}
               >
                 <Text
-                  size="xs"
+                  size="sm"
                   style={{
                     color: "var(--renge-color-fg-muted)",
                     letterSpacing: "0.1em",
@@ -1587,7 +1587,7 @@ export default function OaklandPage() {
           textAlign: "center",
         }}
       >
-        <Text size="xs" style={{ color: "var(--renge-color-fg-muted)", letterSpacing: "0.08em" }}>
+        <Text size="sm" style={{ color: "var(--renge-color-fg-muted)", letterSpacing: "0.08em" }}>
           Built with Renge · Proportion as a first principle · 1 : 1.618
         </Text>
       </footer>

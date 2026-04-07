@@ -10,6 +10,7 @@ import {
   Card, Badge, Chip, Avatar, Stat,
   Alert, Spinner, Progress,
   Navbar,
+  EnergyRing, Pulse, FlowField,
 } from "@renge-ui/react";
 import { ProfileProvider } from "@/components/ui/ProfileToggle";
 import { Nav } from "@/components/ui/Nav";
@@ -139,6 +140,13 @@ const NAV_SECTIONS = [
     ]
   },
   {
+    label: "Data viz", items: [
+      { id: "energyring", label: "EnergyRing" },
+      { id: "pulse", label: "Pulse" },
+      { id: "flowfield", label: "FlowField" },
+    ]
+  },
+  {
     label: "System", items: [
       { id: "tokens", label: "Token API" },
       { id: "animations", label: "Animations" },
@@ -251,10 +259,10 @@ function GridDocs() {
       <Demo label="Golden ratio split (1fr 1.618fr)">
         <Grid columns="1fr 1.618fr" gap="4" style={{ width: "100%" }}>
           <div style={{ height: 56, background: "var(--renge-color-accent-subtle)", borderRadius: "var(--renge-radius-2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Text size="xs" color="fg-muted">1</Text>
+            <Text size="sm" color="fg-muted">1</Text>
           </div>
           <div style={{ height: 56, background: "var(--renge-color-accent-subtle)", borderRadius: "var(--renge-radius-2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Text size="xs" color="fg-muted">φ</Text>
+            <Text size="sm" color="fg-muted">φ</Text>
           </div>
         </Grid>
       </Demo>
@@ -329,7 +337,7 @@ function HeadingDocs() {
           {([1, 2, 3, 4] as const).map(level => (
             <div key={level} style={{ display: "flex", alignItems: "baseline", gap: "var(--renge-space-4)" }}>
               <Heading key={level} level={level}>Level {level} heading</Heading>
-              <Text size="xs" color="fg-muted" style={{ flexShrink: 0 }}>h{level} → {["3xl", "2xl", "xl", "lg"][level - 1]}</Text>
+              <Text size="sm" color="fg-muted" style={{ flexShrink: 0 }}>h{level} → {["3xl", "2xl", "xl", "lg"][level - 1]}</Text>
             </div>
           ))}
         </Stack>
@@ -367,7 +375,7 @@ function TextDocs() {
           {(["2xl", "xl", "lg", "base", "sm", "xs"] as const).map(size => (
             <div key={size} style={{ display: "flex", alignItems: "baseline", gap: "var(--renge-space-4)" }}>
               <Text size={size}>The ratio that appears in every living thing.</Text>
-              <Text size="xs" color="fg-muted" style={{ flexShrink: 0 }}>{size}</Text>
+              <Text size="sm" color="fg-muted" style={{ flexShrink: 0 }}>{size}</Text>
             </div>
           ))}
         </Stack>
@@ -388,7 +396,7 @@ function TextDocs() {
 <Text as="p" weight="medium" size="base">
   Fibonacci spacing.
 </Text>
-<Text size="xs" color="accent" weight="semibold">
+<Text size="sm" color="accent" weight="semibold">
   PHI = 1.618033...
 </Text>
 
@@ -596,22 +604,22 @@ function CardDocs() {
       <Demo label="Variants">
         <Card variant="elevated" style={{ minWidth: 160 }}>
           <Text size="sm" weight="medium">Elevated</Text>
-          <Text size="xs" color="fg-muted">Shadow on bg</Text>
+          <Text size="sm" color="fg-muted">Shadow on bg</Text>
         </Card>
         <Card variant="outlined" style={{ minWidth: 160 }}>
           <Text size="sm" weight="medium">Outlined</Text>
-          <Text size="xs" color="fg-muted">Border visible</Text>
+          <Text size="sm" color="fg-muted">Border visible</Text>
         </Card>
         <Card variant="filled" style={{ minWidth: 160 }}>
           <Text size="sm" weight="medium">Filled</Text>
-          <Text size="xs" color="fg-muted">bg-subtle surface</Text>
+          <Text size="sm" color="fg-muted">bg-subtle surface</Text>
         </Card>
       </Demo>
       <Demo label="Padding scale">
         <Stack direction="horizontal" gap="4" align="start" style={{ flexWrap: "wrap" }}>
           {(["2", "4", "6"] as const).map(p => (
             <Card key={p} variant="outlined" padding={p}>
-              <Text size="xs" color="fg-muted">padding="{p}"</Text>
+              <Text size="sm" color="fg-muted">padding="{p}"</Text>
             </Card>
           ))}
         </Stack>
@@ -722,7 +730,7 @@ function AvatarDocs() {
           {(["1", "2", "3", "4", "5"] as const).map(size => (
             <Stack key={size} gap="1" align="center">
               <Avatar size={size} initials="RG" />
-              <Text size="xs" color="fg-muted">{["20", "32", "52", "84", "136"][+size - 1]}px</Text>
+              <Text size="sm" color="fg-muted">{["20", "32", "52", "84", "136"][+size - 1]}px</Text>
             </Stack>
           ))}
         </Stack>
@@ -731,15 +739,15 @@ function AvatarDocs() {
         <Stack direction="horizontal" gap="4" align="center">
           <Stack gap="1" align="center">
             <Avatar initials="PH" size="3" />
-            <Text size="xs" color="fg-muted">circle</Text>
+            <Text size="sm" color="fg-muted">circle</Text>
           </Stack>
           <Stack gap="1" align="center">
             <Avatar initials="FB" size="3" shape="square" />
-            <Text size="xs" color="fg-muted">square</Text>
+            <Text size="sm" color="fg-muted">square</Text>
           </Stack>
           <Stack gap="1" align="center">
             <Avatar src="https://api.dicebear.com/9.x/shapes/svg?seed=renge" alt="Renge" size="3" />
-            <Text size="xs" color="fg-muted">image</Text>
+            <Text size="sm" color="fg-muted">image</Text>
           </Stack>
         </Stack>
       </Demo>
@@ -855,15 +863,15 @@ function SpinnerDocs() {
         <Stack direction="horizontal" gap="6" align="center">
           <Stack gap="2" align="center">
             <Spinner size="sm" />
-            <Text size="xs" color="fg-muted">sm · 16px</Text>
+            <Text size="sm" color="fg-muted">sm · 16px</Text>
           </Stack>
           <Stack gap="2" align="center">
             <Spinner size="md" />
-            <Text size="xs" color="fg-muted">md · 24px</Text>
+            <Text size="sm" color="fg-muted">md · 24px</Text>
           </Stack>
           <Stack gap="2" align="center">
             <Spinner size="lg" />
-            <Text size="xs" color="fg-muted">lg · 32px</Text>
+            <Text size="sm" color="fg-muted">lg · 32px</Text>
           </Stack>
         </Stack>
       </Demo>
@@ -871,15 +879,15 @@ function SpinnerDocs() {
         <Stack direction="horizontal" gap="6" align="center">
           <Stack gap="2" align="center">
             <Spinner color="accent" />
-            <Text size="xs" color="fg-muted">accent</Text>
+            <Text size="sm" color="fg-muted">accent</Text>
           </Stack>
           <Stack gap="2" align="center">
             <Spinner color="fg" />
-            <Text size="xs" color="fg-muted">fg</Text>
+            <Text size="sm" color="fg-muted">fg</Text>
           </Stack>
           <Stack gap="2" align="center">
             <Spinner color="fg-muted" />
-            <Text size="xs" color="fg-muted">fg-muted</Text>
+            <Text size="sm" color="fg-muted">fg-muted</Text>
           </Stack>
         </Stack>
       </Demo>
@@ -908,19 +916,19 @@ function ProgressDocs() {
       <Demo label="PHI-derived values">
         <Stack gap="4" style={{ width: "100%", minWidth: 280 }}>
           <Stack gap="1">
-            <Text size="xs" color="fg-muted">61.8% — 1/φ</Text>
+            <Text size="sm" color="fg-muted">61.8% — 1/φ</Text>
             <Progress value={61.8} label="PHI progress" />
           </Stack>
           <Stack gap="1">
-            <Text size="xs" color="fg-muted">38.2% — 1/φ²</Text>
+            <Text size="sm" color="fg-muted">38.2% — 1/φ²</Text>
             <Progress value={38.2} color="success" />
           </Stack>
           <Stack gap="1">
-            <Text size="xs" color="fg-muted">80% — warning</Text>
+            <Text size="sm" color="fg-muted">80% — warning</Text>
             <Progress value={80} color="warning" size="lg" />
           </Stack>
           <Stack gap="1">
-            <Text size="xs" color="fg-muted">20% — danger, no radius</Text>
+            <Text size="sm" color="fg-muted">20% — danger, no radius</Text>
             <Progress value={20} color="danger" size="sm" radius="none" />
           </Stack>
         </Stack>
@@ -1178,7 +1186,7 @@ function AnimationsDocs() {
             "float-wave", "pulse-color-shift", "swelling",
           ].map(name => (
             <div key={name} style={{ padding: "var(--renge-space-2) var(--renge-space-3)", borderRadius: "var(--renge-radius-2)", border: "1px solid var(--renge-color-border-subtle)", background: "var(--renge-color-bg)" }}>
-              <Text size="xs" style={{ fontFamily: "var(--font-mono, monospace)" }}>{name}</Text>
+              <Text size="sm" style={{ fontFamily: "var(--font-mono, monospace)" }}>{name}</Text>
             </div>
           ))}
         </div>
@@ -1215,6 +1223,153 @@ function AnimationsDocs() {
   );
 }
 
+function EnergyRingDocs() {
+  return (
+    <ComponentSection id="energyring" title="EnergyRing" description="Circular SVG ring showing an energy or progress level. Stroke width and label scale by PHI with the ring size — self-similar at every size.">
+      <Demo label="Sizes">
+        <Stack direction="horizontal" gap="5" align="center">
+          <EnergyRing value={72} size="sm" />
+          <EnergyRing value={72} size="md" />
+          <EnergyRing value={72} size="lg" />
+          <EnergyRing value={72} size="xl" />
+        </Stack>
+      </Demo>
+      <Demo label="Colors">
+        <Stack direction="horizontal" gap="5" align="center">
+          <EnergyRing value={65} size="lg" color="accent" />
+          <EnergyRing value={80} size="lg" color="success" />
+          <EnergyRing value={45} size="lg" color="warning" />
+          <EnergyRing value={30} size="lg" color="danger" />
+        </Stack>
+      </Demo>
+      <Demo label="Pulse rates">
+        <Stack direction="horizontal" gap="5" align="center">
+          <Stack gap="2" align="center">
+            <EnergyRing value={50} size="lg" pulse rate="rest" />
+            <Text size="sm" color="fg-muted">rest</Text>
+          </Stack>
+          <Stack gap="2" align="center">
+            <EnergyRing value={50} size="lg" pulse rate="active" />
+            <Text size="sm" color="fg-muted">active</Text>
+          </Stack>
+          <Stack gap="2" align="center">
+            <EnergyRing value={50} size="lg" pulse rate="fire" />
+            <Text size="sm" color="fg-muted">fire</Text>
+          </Stack>
+        </Stack>
+      </Demo>
+      <Code>{`<EnergyRing value={72} />
+<EnergyRing value={72} size="xl" color="success" />
+<EnergyRing value={50} size="lg" pulse rate="active" />
+<EnergyRing value={88} size="xl" label="88%" color="warning" />`}</Code>
+      <PropsTable>
+        <PropRow name="value" type="number" desc="Energy level 0–100." />
+        <PropRow name="size" type='"sm" | "md" | "lg" | "xl"' defaultVal='"md"' desc="Ring diameter — sm:32px → xl:136px, each step ≈ φ growth." />
+        <PropRow name="color" type='"accent" | "success" | "warning" | "danger"' defaultVal='"accent"' desc="Color channel — maps to semantic token." />
+        <PropRow name="pulse" type="boolean" defaultVal="false" desc="Enable breathing animation." />
+        <PropRow name="rate" type='"rest" | "active" | "fire"' defaultVal='"active"' desc="Pulse speed — rest=2100ms, active=800ms, fire=500ms." />
+        <PropRow name="label" type="string | null" defaultVal='"{value}%"' desc="Center label (shown at lg/xl only). Pass null to hide." />
+      </PropsTable>
+    </ComponentSection>
+  );
+}
+
+function PulseDocs() {
+  return (
+    <ComponentSection id="pulse" title="Pulse" description="A breathing dot — the minimal alive indicator. Scales to φ at peak. Rate maps to energy states with Fibonacci-derived durations.">
+      <Demo label="Sizes">
+        <Stack direction="horizontal" gap="5" align="center">
+          <Pulse size="sm" />
+          <Pulse size="md" />
+          <Pulse size="lg" />
+        </Stack>
+      </Demo>
+      <Demo label="Colors + rates">
+        <Stack direction="horizontal" gap="5" align="center">
+          <Stack gap="2" align="center">
+            <Pulse color="accent" rate="rest" size="lg" />
+            <Text size="sm" color="fg-muted">rest</Text>
+          </Stack>
+          <Stack gap="2" align="center">
+            <Pulse color="success" rate="active" size="lg" />
+            <Text size="sm" color="fg-muted">active</Text>
+          </Stack>
+          <Stack gap="2" align="center">
+            <Pulse color="danger" rate="fire" size="lg" />
+            <Text size="sm" color="fg-muted">fire</Text>
+          </Stack>
+        </Stack>
+      </Demo>
+      <Demo label="With ripple">
+        <Stack direction="horizontal" gap="5" align="center">
+          <Pulse color="accent" size="lg" ripple />
+          <Pulse color="success" size="lg" ripple rate="fire" />
+        </Stack>
+      </Demo>
+      <Demo label="Inline status indicator">
+        <Stack direction="horizontal" gap="2" align="center">
+          <Pulse color="success" size="sm" />
+          <Text size="sm">System online</Text>
+        </Stack>
+      </Demo>
+      <Code>{`<Pulse />
+<Pulse size="lg" color="success" rate="fire" />
+<Pulse size="lg" color="accent" ripple />
+
+{/* Status indicator */}
+<Stack direction="horizontal" gap="2" align="center">
+  <Pulse color="success" size="sm" />
+  <Text size="sm">System online</Text>
+</Stack>`}</Code>
+      <PropsTable>
+        <PropRow name="rate" type='"rest" | "active" | "fire"' defaultVal='"active"' desc="Breath speed — rest=2100ms (~29bpm), active=800ms, fire=500ms." />
+        <PropRow name="color" type='"accent" | "success" | "warning" | "danger" | "fg-muted"' defaultVal='"accent"' desc="Dot color channel." />
+        <PropRow name="size" type='"sm" | "md" | "lg"' defaultVal='"md"' desc="Dot diameter — 6px / 10px / 16px (fractal scale)." />
+        <PropRow name="ripple" type="boolean" defaultVal="false" desc="Show expanding ripple ring behind the dot." />
+      </PropsTable>
+    </ComponentSection>
+  );
+}
+
+function FlowFieldDocs() {
+  return (
+    <ComponentSection id="flowfield" title="FlowField" description="A living phyllotaxis dot field. Each dot is placed at a golden-angle position and pulses with a delay derived from its spiral index — energy flows outward along the golden spiral.">
+      <Demo label="Energy levels">
+        <Stack direction="horizontal" gap="5" align="center" style={{ flexWrap: "wrap" }}>
+          {(["void", "rest", "active", "fire"] as const).map(energy => (
+            <Stack key={energy} gap="2" align="center">
+              <FlowField energy={energy} size={120} count={89} />
+              <Text size="sm" color="fg-muted">{energy}</Text>
+            </Stack>
+          ))}
+        </Stack>
+      </Demo>
+      <Demo label="Colors">
+        <Stack direction="horizontal" gap="5" align="center">
+          <FlowField energy="active" color="accent" size={120} count={89} />
+          <FlowField energy="active" color="fg-muted" size={120} count={89} />
+          <FlowField energy="active" color="fg-subtle" size={120} count={89} />
+        </Stack>
+      </Demo>
+      <Code>{`<FlowField />
+<FlowField energy="fire" size={300} count={144} />
+<FlowField energy="rest" color="fg-muted" size={200} />
+
+{/* As a decorative background element */}
+<div style={{ position: "relative" }}>
+  <FlowField energy="void" style={{ position: "absolute", inset: 0, opacity: 0.4 }} />
+  <YourContent />
+</div>`}</Code>
+      <PropsTable>
+        <PropRow name="energy" type='"void" | "rest" | "active" | "fire"' defaultVal='"active"' desc="Controls density, opacity, and pulse rate. void=sparse/slow, fire=dense/fast." />
+        <PropRow name="count" type="number" defaultVal="144" desc="Maximum dot count at full energy. Actual count scales with energy density." />
+        <PropRow name="size" type="number" defaultVal="400" desc="Container width and height in px." />
+        <PropRow name="color" type='"accent" | "fg-muted" | "fg-subtle"' defaultVal='"accent"' desc="Dot color channel." />
+      </PropsTable>
+    </ComponentSection>
+  );
+}
+
 function PatternsDocs() {
   return (
     <ComponentSection id="patterns" title="Patterns" description="Common composition patterns using @renge-ui/react components.">
@@ -1233,7 +1388,7 @@ function PatternsDocs() {
               <Progress value={100} color="success" size="sm" />
             </Stack>
             <Divider spacing="0" />
-            <Text size="xs" color="fg-muted">Last run 2 minutes ago</Text>
+            <Text size="sm" color="fg-muted">Last run 2 minutes ago</Text>
           </Stack>
         </Card>
       </Demo>
@@ -1271,7 +1426,7 @@ import { createRengeTheme } from "@renge-ui/tokens";
 const theme = createRengeTheme({ profile: "twilight" });
 // Inject theme.css and all components adapt — no re-render.`}</Code>
       <Callout>
-        All 18 components use only <code>var(--renge-*)</code> CSS custom properties. Switch color profiles by injecting a new theme block — no component re-renders required.
+        All 21 components use only <code>var(--renge-*)</code> CSS custom properties. Switch color profiles by injecting a new theme block — no component re-renders required.
       </Callout>
     </ComponentSection>
   );
@@ -1303,7 +1458,7 @@ export default function DocsPage() {
             <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-3)" }}>@renge-ui/react</p>
             <Heading level={1} size="3xl" style={{ marginBottom: "var(--renge-space-4)", fontFamily: "var(--font-display)", fontWeight: 400, letterSpacing: "-0.02em" }}>Components</Heading>
             <Text as="p" size="lg" color="fg-subtle" style={{ margin: 0, marginBottom: "var(--renge-space-5)", maxWidth: 560 }}>
-              18 components built on the token system. Proportional. Accessible. Composable. No class names — every style references a Renge CSS variable.
+              21 components built on the token system. Proportional. Accessible. Composable. No class names — every style references a Renge CSS variable.
             </Text>
             <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap" }}>
               <Code>{"pnpm add @renge-ui/tokens @renge-ui/react"}</Code>
@@ -1346,6 +1501,11 @@ export default function DocsPage() {
 
           {/* Navigation */}
           <NavbarDocs />
+
+          {/* Data viz */}
+          <EnergyRingDocs />
+          <PulseDocs />
+          <FlowFieldDocs />
 
           {/* System */}
           <TokensDocs />

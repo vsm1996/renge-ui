@@ -48,7 +48,7 @@ function CodeBlock({ code }: { code: string; lang?: string }) {
           border: `1px solid var(--renge-color-border)`,
           borderRadius: "var(--renge-radius-full)",
           color: copied ? "var(--renge-color-fg-inverse)" : "var(--renge-color-fg-inverse)",
-          fontSize: "var(--renge-font-size-xs)",
+          fontSize: "var(--renge-font-size-sm)",
           fontFamily: "var(--font-body)",
           cursor: "pointer",
           transition: "all 200ms var(--renge-easing-ease-out)",
@@ -144,40 +144,53 @@ export default function RootLayout({ children }) {
   {
     id: "css",
     label: "CSS",
-    description: "CSS custom properties — framework agnostic.",
-    code: `import { createRengeTheme } from "@renge-ui/tokens";
+    description: "Static stylesheet — import once, no runtime injection, no hydration errors. Framework agnostic.",
+    code: `# Install
+pnpm add @renge-ui/tokens
 
-const theme = createRengeTheme({ profile: "ocean" });
+# Import the pre-built stylesheet once in your root
+import '@renge-ui/tokens/renge.css';  // JS/TS
+@import '@renge-ui/tokens/renge.css'; // plain CSS
 
-// Inject into your document
-const style = document.createElement("style");
-style.textContent = theme.css;
-document.head.appendChild(style);`,
+# Activate a color profile on <html>
+<html data-profile="ocean">            # light (default)
+<html data-profile="ocean" data-mode="dark">  # dark
+
+# Available profiles: ocean · earth · twilight · fire · void · leaf
+# System prefers-color-scheme respected automatically — no attribute needed.
+
+# — Advanced: programmatic config —
+# Use createRengeTheme() when you need a custom base unit or selector.
+import { createRengeTheme } from "@renge-ui/tokens";
+
+const { css } = createRengeTheme({ profile: "earth", mode: "dark" });
+// Inject css string however you need — <style> tag, SSR, etc.`,
     lang: "ts",
   },
   {
     id: "next",
     label: "Next.js",
-    description: "Server-side injection via RengeStylesheet — no flash, no useInsertionEffect.",
+    description: "Import renge.css in your root layout — one line, no flash, no dangerouslySetInnerHTML.",
     code: `// app/layout.tsx
-import { RengeStylesheet } from "@renge-ui/react";
+import '@renge-ui/tokens/renge.css';
 
 export default function RootLayout({ children }) {
   return (
-    <html data-profile="ocean">
-      <head>
-        <RengeStylesheet />
-      </head>
+    <html lang="en" data-profile="ocean">
       <body>{children}</body>
     </html>
   );
 }
 
-// Or generate the CSS manually for full control:
+// Switch profiles at runtime — no rebuild needed
+document.documentElement.setAttribute("data-profile", "twilight");
+document.documentElement.setAttribute("data-mode", "dark");
+
+// — Advanced: server-generated CSS for a specific user —
 import { createRengeTheme } from "@renge-ui/tokens";
 
-const theme = createRengeTheme({ profile: "ocean" });
-// theme.css — complete :root { --renge-* } block`,
+const { css } = createRengeTheme({ profile: "earth" });
+// Inline as a <style> tag or pass to a style sheet endpoint`,
     lang: "tsx",
   },
   {
@@ -238,7 +251,7 @@ export function GettingStarted() {
           style={{ marginBottom: "var(--renge-space-7)" }}
         >
           <p style={{
-            fontSize: "var(--renge-font-size-xs)",
+            fontSize: "var(--renge-font-size-sm)",
             color: "var(--renge-color-accent)",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
@@ -259,7 +272,7 @@ export function GettingStarted() {
           }}>
             Install and consume.
           </h2>
-          <CodeBlock code="pnpm add @renge-ui/tailwind @renge-ui/tokens" lang="bash" />
+          <CodeBlock code="pnpm add @renge-ui/tokens" lang="bash" />
         </motion.div>
 
         {/* Option tabs */}

@@ -117,7 +117,7 @@ export function Footer() {
           }}
         >
           <p style={{
-            fontSize: "var(--renge-font-size-xs)",
+            fontSize: "var(--renge-font-size-sm)",
             fontFamily: "var(--font-body)",
             margin: 0,
             opacity: 0.4,

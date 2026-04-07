@@ -33,7 +33,7 @@ function PhiViz() {
         display: "flex",
         gap: "var(--renge-space-5)",
         marginTop: "var(--renge-space-2)",
-        fontSize: "var(--renge-font-size-xs)",
+        fontSize: "var(--renge-font-size-sm)",
         color: "var(--renge-color-fg-muted)",
         fontFamily: "var(--font-body)",
         letterSpacing: "0.06em",
@@ -183,7 +183,7 @@ export function Philosophy() {
           style={{ marginBottom: "var(--renge-space-7)", textAlign: "center" }}
         >
           <p style={{
-            fontSize: "var(--renge-font-size-xs)",
+            fontSize: "var(--renge-font-size-sm)",
             color: "var(--renge-color-accent)",
             letterSpacing: "0.2em",
             textTransform: "uppercase",

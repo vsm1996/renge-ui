@@ -88,7 +88,7 @@ export function Hero() {
           <p
             style={{
               marginTop: "var(--renge-space-3)",
-              fontSize: "var(--renge-font-size-xs)",
+              fontSize: "var(--renge-font-size-sm)",
               color: "var(--renge-color-accent)",
               fontFamily: "var(--font-body)",
               letterSpacing: "0.12em",
@@ -187,7 +187,7 @@ export function Hero() {
             bottom: "var(--renge-space-6)",
             left: "50%",
             transform: "translateX(-50%)",
-            fontSize: "var(--renge-font-size-xs)",
+            fontSize: "var(--renge-font-size-sm)",
             color: "var(--renge-color-fg-muted)",
             letterSpacing: "0.15em",
             textTransform: "uppercase",
