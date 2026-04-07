@@ -13,7 +13,7 @@ export function Footer() {
       ref={ref}
       style={{
         padding: "var(--renge-space-7) var(--renge-space-5)",
-        background: "var(--renge-color-fg-muted)",
+        background: "var(--renge-color-fg-subtle)",
         color: "var(--renge-color-fg-inverse)",
         borderTop: "1px solid var(--renge-color-border)",
       }}
@@ -72,7 +72,6 @@ export function Footer() {
                 fontFamily: "var(--font-body)",
                 color: "var(--renge-color-fg-inverse)",
                 textDecoration: "none",
-                opacity: 0.6,
                 letterSpacing: "0.04em",
                 transition: "opacity 200ms",
               }}
@@ -88,7 +87,6 @@ export function Footer() {
                 fontFamily: "var(--font-body)",
                 color: "var(--renge-color-fg-inverse)",
                 textDecoration: "none",
-                opacity: 0.6,
                 letterSpacing: "0.04em",
                 transition: "opacity 200ms",
               }}

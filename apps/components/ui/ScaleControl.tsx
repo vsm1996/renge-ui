@@ -122,7 +122,7 @@ export function ScaleControl() {
         style={{
           fontSize: "13px",
           fontFamily: "var(--font-body)",
-          color: "var(--renge-color-fg-muted)",
+          color: "var(--renge-color-fg-subtle)",
           letterSpacing: "0.08em",
           textTransform: "uppercase",
           whiteSpace: "nowrap",
@@ -170,7 +170,7 @@ export function ScaleControl() {
             borderRadius: "9999px",
             border: "1px solid var(--renge-color-border)",
             background: "transparent",
-            color: "var(--renge-color-fg-muted)",
+            color: "var(--renge-color-fg-subtle)",
             fontSize: "12px",
             fontFamily: "var(--font-body)",
             cursor: "pointer",

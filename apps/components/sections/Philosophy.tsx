@@ -34,7 +34,7 @@ function PhiViz() {
         gap: "var(--renge-space-5)",
         marginTop: "var(--renge-space-2)",
         fontSize: "var(--renge-font-size-sm)",
-        color: "var(--renge-color-fg-muted)",
+        color: "var(--renge-color-fg-subtle)",
         fontFamily: "var(--font-body)",
         letterSpacing: "0.06em",
       }}>
@@ -233,7 +233,6 @@ export function Philosophy() {
                 fontSize: "var(--renge-font-size-3xl)",
                 color: "var(--renge-color-accent)",
                 lineHeight: 1,
-                opacity: 0.6,
               }}>
                 {p.symbol}
               </div>

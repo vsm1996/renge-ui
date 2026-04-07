@@ -99,14 +99,14 @@ export function Nav() {
                 href={resolveHref(href)}
                 style={{
                   fontSize: "var(--renge-font-size-sm)",
-                  color: "var(--renge-color-fg-muted)",
+                  color: "var(--renge-color-fg-subtle)",
                   textDecoration: "none",
                   fontFamily: "var(--font-body)",
                   letterSpacing: "0.04em",
                   transition: "color 200ms",
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "var(--renge-color-fg)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--renge-color-fg-muted)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--renge-color-fg-subtle)")}
               >
                 {label}
               </a>

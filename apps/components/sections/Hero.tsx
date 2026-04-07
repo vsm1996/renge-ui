@@ -188,7 +188,7 @@ export function Hero() {
             left: "50%",
             transform: "translateX(-50%)",
             fontSize: "var(--renge-font-size-sm)",
-            color: "var(--renge-color-fg-muted)",
+            color: "var(--renge-color-fg-subtle)",
             letterSpacing: "0.15em",
             textTransform: "uppercase",
             fontFamily: "var(--font-body)",

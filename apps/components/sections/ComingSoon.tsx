@@ -120,7 +120,7 @@ export function ComingSoon() {
                 borderRadius: "var(--renge-radius-full)",
                 border: "1px solid var(--renge-color-border)",
                 fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-muted)",
+                color: "var(--renge-color-fg-subtle)",
                 fontFamily: "var(--font-mono, monospace)",
                 letterSpacing: "0.02em",
                 background: "var(--renge-color-bg-subtle)",
@@ -174,7 +174,7 @@ export function ComingSoon() {
               borderRadius: "var(--renge-radius-full)",
               border: "1px solid var(--renge-color-border)",
               background: "transparent",
-              color: "var(--renge-color-fg-muted)",
+              color: "var(--renge-color-fg-subtle)",
               fontSize: "var(--renge-font-size-base)",
               fontFamily: "var(--font-mono, monospace)",
               cursor: "pointer",
@@ -189,7 +189,7 @@ export function ComingSoon() {
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = "var(--renge-color-border)";
-              e.currentTarget.style.color = "var(--renge-color-fg-muted)";
+              e.currentTarget.style.color = "var(--renge-color-fg-subtle)";
             }}
           >
             pnpm add @renge-ui/react

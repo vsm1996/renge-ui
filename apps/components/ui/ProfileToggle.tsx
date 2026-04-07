@@ -133,7 +133,7 @@ export function ProfileToggle() {
                 borderRadius: "var(--renge-radius-full)",
                 border: `1px solid ${active ? "var(--renge-color-accent)" : "var(--renge-color-border)"}`,
                 background: active ? "var(--renge-color-accent-subtle)" : "transparent",
-                color: active ? "var(--renge-color-accent)" : "var(--renge-color-fg-muted)",
+                color: active ? "var(--renge-color-accent)" : "var(--renge-color-fg-subtle)",
                 fontSize: "var(--renge-font-size-sm)",
                 fontFamily: "var(--font-body)",
                 cursor: "pointer",
@@ -164,7 +164,7 @@ export function ProfileToggle() {
           borderRadius: "var(--renge-radius-full)",
           border: "1px solid var(--renge-color-border)",
           background: "transparent",
-          color: "var(--renge-color-fg-muted)",
+          color: "var(--renge-color-fg-subtle)",
           cursor: "pointer",
           transition: "all 200ms var(--renge-easing-ease-out)",
           flexShrink: 0,
@@ -177,7 +177,7 @@ export function ProfileToggle() {
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.borderColor = "var(--renge-color-border)";
-          e.currentTarget.style.color = "var(--renge-color-fg-muted)";
+          e.currentTarget.style.color = "var(--renge-color-fg-subtle)";
         }}
       >
         {mode === "light" ? "☽" : "○"}

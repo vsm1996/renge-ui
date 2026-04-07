@@ -125,7 +125,7 @@ function ColorShowcase() {
           <div key={label}>
             <p style={{
               fontSize: "var(--renge-font-size-sm)",
-              color: "var(--renge-color-fg-muted)",
+              color: "var(--renge-color-fg-subtle)",
               fontFamily: "var(--font-body)",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
@@ -151,7 +151,7 @@ function ColorShowcase() {
                   }} />
                   <p style={{
                     fontSize: "var(--renge-font-size-sm)",
-                    color: "var(--renge-color-fg-muted)",
+                    color: "var(--renge-color-fg-subtle)",
                     fontFamily: "var(--font-mono, monospace)",
                     margin: 0,
                     letterSpacing: "0.04em",
@@ -160,11 +160,11 @@ function ColorShowcase() {
                   </p>
                   <p style={{
                     fontSize: "var(--renge-font-size-sm)",
-                    color: "var(--renge-color-fg-muted)",
+                    color: "var(--renge-color-fg-subtle)",
                     fontFamily: "var(--font-mono, monospace)",
                     margin: 0,
-                    opacity: 0.6,
                     letterSpacing: "0.02em",
+                    opacity: 0.7,
                   }}>
                     --renge-color-{key}
                   </p>
@@ -200,7 +200,7 @@ function SpacingShowcase() {
             <div style={{
               width: 28,
               fontSize: "var(--renge-font-size-sm)",
-              color: "var(--renge-color-fg-muted)",
+              color: "var(--renge-color-fg-subtle)",
               fontFamily: "var(--font-mono, monospace)",
               flexShrink: 0,
               letterSpacing: "0.04em",
@@ -218,7 +218,7 @@ function SpacingShowcase() {
             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <span style={{
                 fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-muted)",
+                color: "var(--renge-color-fg-subtle)",
                 fontFamily: "var(--font-mono, monospace)",
                 letterSpacing: "0.04em",
               }}>
@@ -226,10 +226,10 @@ function SpacingShowcase() {
               </span>
               <span style={{
                 fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-muted)",
+                color: "var(--renge-color-fg-subtle)",
                 fontFamily: "var(--font-mono, monospace)",
-                opacity: 0.6,
                 letterSpacing: "0.02em",
+                opacity: 0.7,
               }}>
                 space[{step}] · --renge-space-{step}
               </span>
@@ -294,7 +294,7 @@ function TypeScaleShowcase() {
               <div style={{ display: "flex", flexDirection: "column", gap: 2, flexShrink: 0 }}>
                 <span style={{
                   fontSize: "var(--renge-font-size-sm)",
-                  color: "var(--renge-color-fg-muted)",
+                  color: "var(--renge-color-fg-subtle)",
                   fontFamily: "var(--font-mono, monospace)",
                   letterSpacing: "0.04em",
                 }}>
@@ -302,10 +302,10 @@ function TypeScaleShowcase() {
                 </span>
                 <span style={{
                   fontSize: "var(--renge-font-size-sm)",
-                  color: "var(--renge-color-fg-muted)",
+                  color: "var(--renge-color-fg-subtle)",
                   fontFamily: "var(--font-mono, monospace)",
-                  opacity: 0.6,
                   letterSpacing: "0.02em",
+                  opacity: 0.7,
                 }}>
                   fontSize.{label}
                 </span>
@@ -347,7 +347,7 @@ function EasingRow({ label, curve }: { label: string; curve: [number, number, nu
       <div style={{
         width: 80,
         fontSize: "var(--renge-font-size-sm)",
-        color: "var(--renge-color-fg-muted)",
+        color: "var(--renge-color-fg-subtle)",
         fontFamily: "var(--font-mono, monospace)",
         flexShrink: 0,
         letterSpacing: "0.04em",
@@ -432,7 +432,7 @@ function RadiusShowcase() {
             }} />
             <div style={{
               fontSize: "var(--renge-font-size-sm)",
-              color: "var(--renge-color-fg-muted)",
+              color: "var(--renge-color-fg-subtle)",
               fontFamily: "var(--font-mono, monospace)",
               textAlign: "center",
               letterSpacing: "0.04em",

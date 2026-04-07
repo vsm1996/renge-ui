@@ -297,7 +297,7 @@ export function GettingStarted() {
                   borderRadius: "var(--renge-radius-full)",
                   border: `1px solid ${o.id === activeOption ? "var(--renge-color-accent)" : "var(--renge-color-border)"}`,
                   background: o.id === activeOption ? "var(--renge-color-accent-subtle)" : "transparent",
-                  color: o.id === activeOption ? "var(--renge-color-accent)" : "var(--renge-color-fg-muted)",
+                  color: o.id === activeOption ? "var(--renge-color-accent)" : "var(--renge-color-fg-subtle)",
                   fontSize: "var(--renge-font-size-sm)",
                   fontFamily: "var(--font-body)",
                   cursor: "pointer",
@@ -312,7 +312,7 @@ export function GettingStarted() {
 
           <p style={{
             fontSize: "var(--renge-font-size-sm)",
-            color: "var(--renge-color-fg-muted)",
+            color: "var(--renge-color-fg-subtle)",
             fontFamily: "var(--font-body)",
             margin: 0,
             marginBottom: "var(--renge-space-4)",
