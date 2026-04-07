@@ -263,7 +263,7 @@ function PhyllotaxisFlora() {
   const svgRef = useRef<SVGSVGElement>(null);
   const inView = useInView(svgRef, { once: true, margin: "-60px 0px" });
 
-  const SCALE = 12; // scale × √n → max radius at n=54: ~89px (keeps all dots well within viewBox)
+  const SCALE = 13.5; // scale × √n → max radius at n=54: ~99px
 
   // Pre-compute all 55 positions
   const allDots = Array.from({ length: PHYLLOTAXIS_TOTAL }, (_, n) => {
@@ -281,7 +281,7 @@ function PhyllotaxisFlora() {
       <div style={{ position: "relative" }}>
         <svg
           ref={svgRef}
-          viewBox="-110 -110 220 220"
+          viewBox="-106 -106 212 212"
           style={{ width: 320, height: 320 }}
         >
           {allDots.map(({ n, x, y, plant }) =>
