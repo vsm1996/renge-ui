@@ -136,8 +136,8 @@ export const FlowField = forwardRef<HTMLDivElement, FlowFieldProps>(
             return (
               <circle
                 key={pt.index}
-                cx={pt.x}
-                cy={pt.y}
+                cx={parseFloat(pt.x.toFixed(4))}
+                cy={parseFloat(pt.y.toFixed(4))}
                 r={cfg.baseR}
                 fill={colorVar}
                 style={{
