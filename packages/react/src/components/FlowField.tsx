@@ -127,7 +127,7 @@ export const FlowField = forwardRef<HTMLDivElement, FlowFieldProps>(
           aria-hidden="true"
           style={{ display: "block" }}
         >
-          {points.slice(0, visibleCount).map((pt) => {
+          {points.filter(pt => pt.radius > 0).slice(0, visibleCount).map((pt) => {
             // Delay = index / count × full duration cycle
             // Creates a wave that travels along the golden spiral
             const delayFraction = pt.index / visibleCount;
