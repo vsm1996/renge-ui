@@ -267,7 +267,7 @@ function PhyllotaxisFlora() {
 
   // Pre-compute all 55 positions
   const allDots = Array.from({ length: PHYLLOTAXIS_TOTAL }, (_, n) => {
-    const r = SCALE * Math.sqrt(n + 1);
+    const r = SCALE * Math.sqrt(n);
     const theta = n * GOLDEN_ANGLE;
     const plantIdx = PLANT_POSITIONS.indexOf(n);
     const plant = plantIdx !== -1 ? PLANTS[plantIdx] : null;

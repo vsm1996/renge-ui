@@ -89,9 +89,8 @@ function PhyllotaxisViz() {
   const n = 55;
   const size = 80;
   const points = Array.from({ length: n }, (_, i) => {
-    const idx = i + 1;
-    const r = Math.sqrt(idx / n) * size * 0.88;
-    const theta = (idx * GOLDEN_ANGLE * Math.PI) / 180;
+    const r = Math.sqrt(i / n) * size * 0.88;
+    const theta = (i * GOLDEN_ANGLE * Math.PI) / 180;
     const round = (v: number) => Math.round(v * 1e4) / 1e4;
     return {
       x: round(size + r * Math.cos(theta)),
