@@ -132,12 +132,15 @@ export const FlowField = forwardRef<HTMLDivElement, FlowFieldProps>(
             // Creates a wave that travels along the golden spiral
             const delayFraction = pt.index / visibleCount;
             const delayMs = delayFraction * 2100; // spread over ~2100ms max
+            // Round to 4 decimal places to avoid server/client floating-point
+            // precision differences (Node.js vs browser V8 can diverge at ~14th digit)
+            const r4 = (v: number) => Math.round(v * 1e4) / 1e4;
 
             return (
               <circle
                 key={pt.index}
-                cx={pt.x}
-                cy={pt.y}
+                cx={r4(pt.x)}
+                cy={r4(pt.y)}
                 r={cfg.baseR}
                 fill={colorVar}
                 style={{

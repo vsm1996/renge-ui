@@ -161,70 +161,58 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
       {/* Stamens — 21 dots (Fibonacci) in a ring around the receptacle */}
       {Array.from({ length: STAMEN_COUNT }, (_, i) => {
         const a = (i / STAMEN_COUNT) * 2 * Math.PI - Math.PI / 2;
+        const scx = cx + stamenRingR * Math.cos(a);
+        const scy = cy + stamenRingR * Math.sin(a);
         return (
-          <motion.circle
+          <motion.g
             key={`stamen-${i}`}
-            cx={cx + stamenRingR * Math.cos(a)}
-            cy={cy + stamenRingR * Math.sin(a)}
-            r={half * 0.009}
-            fill="var(--renge-color-accent)"
-            fillOpacity={0.65}
-            style={{ transformBox: "fill-box", transformOrigin: "center" }}
+            style={{ transformBox: "fill-box", transformOrigin: `${scx}px ${scy}px` }}
             initial={animate ? { scale: 0, opacity: 0 } : undefined}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              duration: 0.3,
-              delay: 0.84 + i * 0.018,
-              ease: EASE,
-            }}
-          />
+            transition={{ duration: 0.3, delay: 0.84 + i * 0.018, ease: EASE }}
+          >
+            <circle cx={scx} cy={scy} r={half * 0.009} fill="var(--renge-color-accent)" fillOpacity={0.65} />
+          </motion.g>
         );
       })}
 
       {/* Receptacle disc */}
-      <motion.circle
-        cx={cx}
-        cy={cy}
-        r={receptacleR}
-        fill="var(--renge-color-accent)"
-        fillOpacity={0.9}
-        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      <motion.g
+        style={{ transformBox: "fill-box", transformOrigin: `${cx}px ${cy}px` }}
         initial={animate ? { scale: 0 } : undefined}
         animate={{ scale: 1 }}
         transition={{ duration: 0.5, delay: 0.78, ease: EASE }}
-      />
+      >
+        <circle cx={cx} cy={cy} r={receptacleR} fill="var(--renge-color-accent)" fillOpacity={0.9} />
+      </motion.g>
 
       {/* Seed holes — 13 (Fibonacci) punched into the receptacle */}
       {Array.from({ length: SEED_COUNT }, (_, i) => {
         const a = (i / SEED_COUNT) * 2 * Math.PI - Math.PI / 2;
+        const scx = cx + seedRingR * Math.cos(a);
+        const scy = cy + seedRingR * Math.sin(a);
         return (
-          <motion.circle
+          <motion.g
             key={`seed-${i}`}
-            cx={cx + seedRingR * Math.cos(a)}
-            cy={cy + seedRingR * Math.sin(a)}
-            r={half * 0.017}
-            fill="var(--renge-color-bg)"
-            fillOpacity={0.75}
-            style={{ transformBox: "fill-box", transformOrigin: "center" }}
+            style={{ transformBox: "fill-box", transformOrigin: `${scx}px ${scy}px` }}
             initial={animate ? { scale: 0 } : undefined}
             animate={{ scale: 1 }}
             transition={{ duration: 0.28, delay: 0.88 + i * 0.026, ease: EASE }}
-          />
+          >
+            <circle cx={scx} cy={scy} r={half * 0.017} fill="var(--renge-color-bg)" fillOpacity={0.75} />
+          </motion.g>
         );
       })}
 
       {/* Centre seed */}
-      <motion.circle
-        cx={cx}
-        cy={cy}
-        r={half * 0.017}
-        fill="var(--renge-color-bg)"
-        fillOpacity={0.7}
-        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+      <motion.g
+        style={{ transformBox: "fill-box", transformOrigin: `${cx}px ${cy}px` }}
         initial={animate ? { scale: 0 } : undefined}
         animate={{ scale: 1 }}
         transition={{ duration: 0.28, delay: 1.05, ease: EASE }}
-      />
+      >
+        <circle cx={cx} cy={cy} r={half * 0.017} fill="var(--renge-color-bg)" fillOpacity={0.7} />
+      </motion.g>
     </svg>
   );
 }

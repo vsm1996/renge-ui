@@ -67,6 +67,8 @@ export function Nav() {
           justifyContent: "space-between",
           padding: `var(--renge-space-3) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
           borderBottom: "1px solid transparent",
+          background: "transparent",
+          backdropFilter: "blur(0px)",
         }}
       >
         {/* Logo */}
