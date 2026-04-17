@@ -6,48 +6,78 @@ export type { RengeProviderProps } from './provider';
 export { RengeStylesheet } from './stylesheet';
 export type { RengeStylesheetProps } from './stylesheet';
 
-// Components
+// Components — re-export everything from the components barrel
 export {
-  Stack,
-  Grid,
-  Text,
-  Heading,
+  // Layout
+  Stack, Grid, Section, Container, AspectRatio, Spacer,
+  // Typography
+  Text, Heading, Divider, Anchor,
+  // Surfaces
   Card,
-  Button,
-  Divider,
-  Section,
-  // Atoms
-  Badge,
-  Avatar,
-  Spinner,
-  Progress,
-  Input,
-  Chip,
-  // Molecules
-  Alert,
+  // Action
+  Button, IconButton, ButtonGroup, ButtonGroupItem, CopyButton,
+  // Data Input
+  Input, Select, Checkbox, Radio, RadioGroup, Switch, Textarea, Slider,
+  // Data Display
+  Badge, Avatar, Chip, Stat,
+  Table, TableHead, TableBody, TableFoot, TableRow, TableHeader, TableCell,
+  Tooltip, Accordion, AccordionItem, Timeline, TimelineItem, Skeleton,
+  // Feedback
+  Alert, Spinner, Progress, ToastProvider, useToast, Modal, ModalHeader, ModalBody, ModalFooter,
+  // Navigation
+  Navbar, Tabs, TabList, Tab, TabPanel, Breadcrumb, BreadcrumbItem, Pagination,
+  // Form Molecules
   FormField,
-  Stat,
-  // Organisms
-  Navbar,
-  // State Components
-  EnergyRing,
-  Pulse,
-  FlowField,
+  // Data Viz
+  EnergyRing, Pulse, FlowField,
 } from './components';
+
 export type {
+  // Data Viz
   EnergyRingProps, EnergyRingSize, EnergyRingRate, EnergyRingColor,
   PulseProps, PulseRate, PulseColor, PulseSize,
   FlowFieldProps, FlowEnergy, FlowColor,
+  // Display atoms
   BadgeProps, BadgeVariant, BadgeSize,
   AvatarProps, AvatarSize, AvatarShape,
   SpinnerProps, SpinnerSize, SpinnerColor,
   ProgressProps, ProgressColor, ProgressSize,
-  InputProps, InputSize, InputState,
   ChipProps, ChipVariant,
-  AlertProps, AlertStatus,
-  FormFieldProps,
   StatProps, TrendDirection,
+  // Feedback
+  AlertProps, AlertStatus,
+  ToastOptions, ToastStatus,
+  ModalProps, ModalSize, ModalHeaderProps, ModalBodyProps, ModalFooterProps,
+  // Form molecules
+  FormFieldProps,
+  // Data Input
+  InputProps, InputSize, InputState,
+  SelectProps, SelectSize, SelectState,
+  CheckboxProps, CheckboxSize,
+  RadioProps, RadioGroupProps, RadioSize,
+  SwitchProps, SwitchSize,
+  TextareaProps, TextareaSize, TextareaState,
+  SliderProps,
+  // Data Display
+  TableProps, TableRowProps, TableCellProps,
+  TooltipProps, TooltipPlacement,
+  AccordionProps, AccordionItemProps,
+  TimelineProps, TimelineItemProps, TimelineItemStatus,
+  SkeletonProps, SkeletonVariant,
+  // Navigation
   NavbarProps,
+  TabsProps, TabListProps, TabProps, TabPanelProps,
+  BreadcrumbProps, BreadcrumbItemProps,
+  PaginationProps,
+  AnchorProps, AnchorVariant,
+  // Layout
+  ContainerProps, ContainerSize,
+  AspectRatioProps,
+  SpacerProps, SpacerSize,
+  // Action
+  IconButtonProps, IconButtonSize, IconButtonVariant, IconButtonColorScheme,
+  ButtonGroupProps, ButtonGroupItemProps,
+  CopyButtonProps,
 } from './components';
 
 // Re-export tokens for convenience

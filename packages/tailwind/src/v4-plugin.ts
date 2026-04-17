@@ -29,6 +29,8 @@ import {
   createRengeTheme,
   profiles,
   createSemanticColorVars,
+  createAnimationVars,
+  createAnimationKeyframesCSS,
 } from "@renge-ui/tokens";
 import type { ProfileName } from "@renge-ui/tokens";
 
@@ -160,13 +162,46 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
       key.startsWith("--renge-line-height-") ||
       key.startsWith("--renge-radius-") ||
       key.startsWith("--renge-duration-") ||
-      key.startsWith("--renge-easing-")
+      key.startsWith("--renge-easing-") ||
+      key.startsWith("--renge-animation-")
     ) {
       baseVars[key] = value;
     }
   }
 
   addBase({ ":root": baseVars });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // § 1b — Animation @keyframes
+  //   Inject all 15 named animation keyframe blocks into :root scope.
+  //   Components reference these via var(--renge-animation-{name}).
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const keyframesCSS = createAnimationKeyframesCSS();
+  // Split on @keyframes boundaries and inject each block individually
+  const keyframeBlocks = keyframesCSS.split(/(?=@keyframes )/).filter(Boolean);
+  for (const block of keyframeBlocks) {
+    const match = block.match(/^@keyframes\s+([\w-]+)\s*\{([\s\S]*)\}$/);
+    if (!match) continue;
+    const [, name, body] = match;
+    // Parse keyframe stops into CSS-in-JS object
+    const stops: Record<string, Record<string, string>> = {};
+    const stopPattern = /([\d.]+%|from|to)\s*\{([^}]*)\}/g;
+    let m: RegExpExecArray | null;
+    while ((m = stopPattern.exec(body)) !== null) {
+      const [, stop, props] = m;
+      const declarations: Record<string, string> = {};
+      for (const decl of props.split(';').map((d) => d.trim()).filter(Boolean)) {
+        const colon = decl.indexOf(':');
+        if (colon === -1) continue;
+        declarations[decl.slice(0, colon).trim()] = decl.slice(colon + 1).trim();
+      }
+      stops[stop] = declarations;
+    }
+    if (Object.keys(stops).length > 0) {
+      addBase({ [`@keyframes ${name}`]: stops as never });
+    }
+  }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // § 2 — Profile color CSS → [data-profile] attribute selectors
