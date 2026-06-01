@@ -15,6 +15,9 @@ import {
   createFractalScale,
   createAnimationVars,
   createAnimationKeyframesCSS,
+  createContainerWidths,
+  createColumnMinWidths,
+  createAspectRatios,
 } from "./scales";
 import { createPaletteVars } from "./colors/palette";
 import { profiles, createSemanticColorVars } from "./colors/profiles";
@@ -64,6 +67,9 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   const easing = createEasingTokens();
   const radius = createRadiusScale(baseUnit, variance, random);
   const fractal = createFractalScale(baseUnit);
+  const containerWidths = createContainerWidths();
+  const columnMinWidths = createColumnMinWidths();
+  const aspectRatios = createAspectRatios();
   const paletteVars = createPaletteVars();
   const semanticVars = createSemanticColorVars(profiles[profile][mode]);
 
@@ -99,6 +105,21 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   // Fractal size scale
   for (const [key, value] of Object.entries(fractal)) {
     vars[`--renge-size-${key}`] = value;
+  }
+
+  // Container widths (200px × φⁿ progression)
+  for (const [key, value] of Object.entries(containerWidths)) {
+    vars[`--renge-container-${key}`] = value;
+  }
+
+  // Column min-widths (Fibonacci[6..9] × 8px)
+  for (const [key, value] of Object.entries(columnMinWidths)) {
+    vars[`--renge-col-min-${key}`] = value;
+  }
+
+  // Aspect ratios (PHI-derived + standard screen ratios)
+  for (const [key, value] of Object.entries(aspectRatios)) {
+    vars[`--renge-aspect-${key}`] = value;
   }
 
   // Palette
@@ -163,6 +184,9 @@ html {
     { prefix: "--renge-easing-", comment: "/* Motion - Easing */" },
     { prefix: "--renge-radius-", comment: "/* Border Radius */" },
     { prefix: "--renge-size-", comment: "/* Fractal Size Scale */" },
+    { prefix: "--renge-container-", comment: "/* Container Widths */" },
+    { prefix: "--renge-col-min-", comment: "/* Column Min-Widths */" },
+    { prefix: "--renge-aspect-", comment: "/* Aspect Ratios */" },
     { prefix: "--renge-animation-", comment: "/* Animations */" },
     { prefix: "--renge-palette-", comment: "/* Palette Colors */" },
     { prefix: "--renge-color-", comment: "/* Semantic Colors */" },

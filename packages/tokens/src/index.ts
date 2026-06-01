@@ -23,6 +23,9 @@ export {
   createAnimationVars,
   createAnimationKeyframesCSS,
   ANIMATION_NAMES,
+  createContainerWidths,
+  createColumnMinWidths,
+  createAspectRatios,
 } from "./scales";
 export type { TypeToken, AnimationName } from "./scales";
 

@@ -64,6 +64,7 @@ export default function RootLayout({
       lang="en"
       className={`${dmSerifDisplay.variable} ${outfit.variable}`}
       data-profile="ocean"
+      data-mode="light"
       suppressHydrationWarning
     >
       <head>

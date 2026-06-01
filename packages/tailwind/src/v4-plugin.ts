@@ -2,7 +2,7 @@
  * @renge-ui/tailwind — Tailwind CSS v4 Plugin
  *
  * Bakes ALL Renge token CSS into the stylesheet at build time:
- *   1. Base custom properties (:root) — spacing, type, motion, radius
+ *   1. Base custom properties (:root) — spacing, type, motion, radius, layout
  *   2. Profile color CSS ([data-profile] selectors) — all 6 profiles × light/dark
  *   3. Full utility class registration via matchUtilities — variants work automatically
  *
@@ -22,6 +22,11 @@
  *   Type      text-renge-lg, leading-renge-base …
  *   Radius    rounded-renge-2, rounded-t-renge-1, rounded-renge-full …
  *   Motion    duration-renge-4, ease-renge-spring …
+ *   Layout    stack, stack-h, flex-renge-row, flex-renge-col …
+ *             container-renge-sm, container-renge-md, container-renge-lg, container-renge-xl …
+ *             grid-cols-renge-2, grid-cols-renge-3, grid-cols-renge-4, grid-cols-renge-6, grid-cols-renge-12 …
+ *             grid-cols-auto-fit-renge-sm, grid-cols-auto-fill-renge-md …
+ *             aspect-renge-square, aspect-renge-golden, aspect-renge-vertical …
  */
 
 import plugin from "tailwindcss/plugin";
@@ -137,6 +142,53 @@ const easings = {
   "renge-spring":      "var(--renge-easing-spring)",
 } as const;
 
+// ─── Layout token value maps ───────────────────────────────────────────────────
+
+// Container max-widths — 200px × φⁿ: sm=524 md=847 lg=1371 xl=2218
+// Keys are plain size names; the utility prefix "container-renge" provides the namespace.
+const containerSizes = {
+  sm:   "var(--renge-container-sm)",
+  md:   "var(--renge-container-md)",
+  lg:   "var(--renge-container-lg)",
+  xl:   "var(--renge-container-xl)",
+  full: "100%",
+} as const;
+
+// Aspect ratios — golden = φ ≈ 1.618034, vertical = 1/φ ≈ 0.618034
+const aspectRatioValues = {
+  "renge-square":   "var(--renge-aspect-square)",
+  "renge-golden":   "var(--renge-aspect-golden)",
+  "renge-vertical": "var(--renge-aspect-vertical)",
+  "renge-video":    "var(--renge-aspect-video)",
+  "renge-classic":  "var(--renge-aspect-classic)",
+} as const;
+
+// Fixed grid column counts — base-6 system with 12-column extension
+// Divisors of 6: 1, 2, 3, 6 → 2, 3, 4, 6 cover most asymmetric layouts; 12 enables granular subdivision.
+const gridColCounts = {
+  "renge-2":  "repeat(2, minmax(0, 1fr))",
+  "renge-3":  "repeat(3, minmax(0, 1fr))",
+  "renge-4":  "repeat(4, minmax(0, 1fr))",
+  "renge-6":  "repeat(6, minmax(0, 1fr))",
+  "renge-12": "repeat(12, minmax(0, 1fr))",
+} as const;
+
+// Auto-fit grid column templates — col min-widths are Fibonacci[6..9] × 8px = [168, 272, 440, 712]px
+const gridAutoFitCols = {
+  "renge-xs": "repeat(auto-fit, minmax(var(--renge-col-min-xs), 1fr))",
+  "renge-sm": "repeat(auto-fit, minmax(var(--renge-col-min-sm), 1fr))",
+  "renge-md": "repeat(auto-fit, minmax(var(--renge-col-min-md), 1fr))",
+  "renge-lg": "repeat(auto-fit, minmax(var(--renge-col-min-lg), 1fr))",
+} as const;
+
+// Auto-fill grid column templates — same min-widths, preserve empty tracks
+const gridAutoFillCols = {
+  "renge-xs": "repeat(auto-fill, minmax(var(--renge-col-min-xs), 1fr))",
+  "renge-sm": "repeat(auto-fill, minmax(var(--renge-col-min-sm), 1fr))",
+  "renge-md": "repeat(auto-fill, minmax(var(--renge-col-min-md), 1fr))",
+  "renge-lg": "repeat(auto-fill, minmax(var(--renge-col-min-lg), 1fr))",
+} as const;
+
 // ─── Plugin ───────────────────────────────────────────────────────────────────
 
 // Explicit type annotation avoids TS2742 ("type cannot be named without reference to…")
@@ -163,7 +215,10 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
       key.startsWith("--renge-radius-") ||
       key.startsWith("--renge-duration-") ||
       key.startsWith("--renge-easing-") ||
-      key.startsWith("--renge-animation-")
+      key.startsWith("--renge-animation-") ||
+      key.startsWith("--renge-container-") ||
+      key.startsWith("--renge-col-min-") ||
+      key.startsWith("--renge-aspect-")
     ) {
       baseVars[key] = value;
     }
@@ -348,6 +403,101 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
 
   matchUtilities({ duration: (v) => ({ "transition-duration": v }) }, { values: durations });
   matchUtilities({ ease:     (v) => ({ "transition-timing-function": v }) }, { values: easings });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // § 8 — Layout utilities
+  //   Stack, Container, Grid (fixed + responsive auto-fit/fill), Flex, Aspect
+  //   Ratio. All dimensions derive from the same PHI / Fibonacci foundation as
+  //   every other Renge token.
+  //
+  //   Stack/Flex layout philosophy matches the @renge-ui/react Stack component:
+  //   direction is set by the class; gap is composed with gap-renge-* (§3).
+  //
+  //   Container widths: 200px × φⁿ — same proportional sequence, scaled for
+  //   viewport contexts (sm=524, md=847, lg=1371, xl=2218).
+  //
+  //   Grid columns: base-6 divisor set (2, 3, 4, 6) + 12-column extension;
+  //   auto-fit/auto-fill use column min-widths from Fibonacci[6..9] × 8px.
+  //
+  //   Aspect ratios: golden = φ ≈ 1.618 (34:21 Fibonacci approximation).
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Stack — direction-only flex containers
+  // Compose with gap-renge-* for spacing: class="stack gap-renge-4"
+  addUtilities({
+    ".stack":   { display: "flex", "flex-direction": "column" },
+    ".stack-h": { display: "flex", "flex-direction": "row" },
+  });
+
+  // Container — centered max-width wrappers
+  // container-renge-sm → max-width: 524px (200 × φ²)
+  // container-renge-md → max-width: 847px (200 × φ³)
+  // container-renge-lg → max-width: 1371px (200 × φ⁴)
+  // container-renge-xl → max-width: 2218px (200 × φ⁵)
+  matchUtilities(
+    {
+      "container-renge": (v) => ({
+        width: "100%",
+        "max-width": v,
+        "margin-left": "auto",
+        "margin-right": "auto",
+      }),
+    },
+    { values: containerSizes }
+  );
+
+  // Grid — fixed column counts (base-6 system)
+  // 2, 3, 4, 6 are the divisors of 6; 12 enables granular subdivision.
+  // grid-cols-renge-2 through grid-cols-renge-12
+  matchUtilities(
+    { "grid-cols": (v) => ({ "grid-template-columns": v }) },
+    { values: gridColCounts }
+  );
+
+  // Grid — responsive auto-fit (collapse columns when space is insufficient)
+  // Min-widths: Fibonacci[6..9] × 8px = [168, 272, 440, 712]px
+  // grid-cols-auto-fit-renge-xs through grid-cols-auto-fit-renge-lg
+  matchUtilities(
+    { "grid-cols-auto-fit": (v) => ({ "grid-template-columns": v }) },
+    { values: gridAutoFitCols }
+  );
+
+  // Grid — responsive auto-fill (preserve empty tracks)
+  // Same min-widths as auto-fit; use when track count must stay predictable.
+  // grid-cols-auto-fill-renge-xs through grid-cols-auto-fill-renge-lg
+  matchUtilities(
+    { "grid-cols-auto-fill": (v) => ({ "grid-template-columns": v }) },
+    { values: gridAutoFillCols }
+  );
+
+  // Flex — directional with built-in default gap and alignment
+  // Default gap = space-3 (12px = 3 × Fibonacci base) — Renge's standard stack rhythm.
+  // Override gap with gap-renge-*: class="flex-renge-row gap-renge-5"
+  addUtilities({
+    ".flex-renge-row": {
+      display: "flex",
+      "flex-direction": "row",
+      "align-items": "center",
+      gap: "var(--renge-space-3)",
+    },
+    ".flex-renge-col": {
+      display: "flex",
+      "flex-direction": "column",
+      "align-items": "stretch",
+      gap: "var(--renge-space-3)",
+    },
+  });
+
+  // Aspect ratios — PHI-derived and standard screen ratios
+  // aspect-renge-square   → 1:1
+  // aspect-renge-golden   → 1:φ = 1.618034 (landscape golden rectangle)
+  // aspect-renge-vertical → 1/φ = 0.618034 (portrait golden rectangle)
+  // aspect-renge-video    → 16:9 = 1.777778 (standard widescreen)
+  // aspect-renge-classic  → 4:3  = 1.333333 (legacy broadcast)
+  matchUtilities(
+    { "aspect": (v) => ({ "aspect-ratio": v }) },
+    { values: aspectRatioValues }
+  );
 });
 
 export default rengeV4Plugin;

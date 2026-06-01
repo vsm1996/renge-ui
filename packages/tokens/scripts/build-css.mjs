@@ -55,7 +55,10 @@ for (const [key, value] of Object.entries(theme.vars)) {
     key.startsWith("--renge-easing-") ||
     key.startsWith("--renge-size-") ||
     key.startsWith("--renge-animation-") ||
-    key.startsWith("--renge-palette-")
+    key.startsWith("--renge-palette-") ||
+    key.startsWith("--renge-container-") ||
+    key.startsWith("--renge-col-min-") ||
+    key.startsWith("--renge-aspect-")
   ) {
     baseVars[key] = value;
   }

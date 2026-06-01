@@ -121,6 +121,32 @@ export const rengeVars = {
     5:    "var(--renge-radius-5)",
     full: "var(--renge-radius-full)",
   },
+
+  /** Container max-widths — 200px × φⁿ (n = 2..5) */
+  container: {
+    sm:   "var(--renge-container-sm)",
+    md:   "var(--renge-container-md)",
+    lg:   "var(--renge-container-lg)",
+    xl:   "var(--renge-container-xl)",
+    full: "var(--renge-container-full)",
+  },
+
+  /** Column min-widths for auto-fit/auto-fill grids — Fibonacci[6..9] × 8px */
+  colMin: {
+    xs: "var(--renge-col-min-xs)",
+    sm: "var(--renge-col-min-sm)",
+    md: "var(--renge-col-min-md)",
+    lg: "var(--renge-col-min-lg)",
+  },
+
+  /** PHI-derived aspect ratios and standard screen ratios */
+  aspect: {
+    square:   "var(--renge-aspect-square)",
+    golden:   "var(--renge-aspect-golden)",
+    vertical: "var(--renge-aspect-vertical)",
+    video:    "var(--renge-aspect-video)",
+    classic:  "var(--renge-aspect-classic)",
+  },
 } as const;
 
 export type RengeVars = typeof rengeVars;
