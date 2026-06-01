@@ -4,6 +4,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Container, Stack } from "@renge-ui/react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -40,7 +41,7 @@ export function ComingSoon() {
         textAlign: "center",
       }}
     >
-      <div style={{ maxWidth: 640, margin: "0 auto" }}>
+      <Container px="0" style={{ maxWidth: 640 }}>
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
@@ -136,14 +137,13 @@ export function ComingSoon() {
           animate={inView ? "visible" : "hidden"}
           custom={0.35}
           variants={fadeUp}
-          style={{
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            gap: "var(--renge-space-3)",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
         >
+          <Stack
+            direction={isMobile ? "vertical" : "horizontal"}
+            gap="3"
+            justify="center"
+            align="center"
+          >
           <a
             href="/docs"
             style={{
@@ -194,8 +194,9 @@ export function ComingSoon() {
           >
             pnpm add @renge-ui/react
           </a>
+          </Stack>
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 }

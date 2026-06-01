@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { PHI, EASE_OUT } from "@/lib/phi";
+import { Container, Stack } from "@renge-ui/react";
 
 export function Footer() {
   const ref = useRef<HTMLElement>(null);
@@ -18,33 +19,22 @@ export function Footer() {
         borderTop: "1px solid var(--renge-color-border)",
       }}
     >
-      <div style={{
-        maxWidth: 1080,
-        margin: "0 auto",
-        display: "flex",
-        flexDirection: "column",
-        gap: "var(--renge-space-6)",
-      }}>
+      <Container px="0" style={{ maxWidth: 1080 }}>
+        <Stack direction="vertical" gap="6">
+
         {/* Top row */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_OUT }}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-            gap: "var(--renge-space-5)",
-          }}
         >
+          <Stack direction="horizontal" justify="between" align="start" gap="5" style={{ flexWrap: "wrap" }}>
           {/* Brand */}
-          <div>
+          <Stack direction="vertical" gap="2">
             <p style={{
               fontFamily: "var(--font-display)",
               fontSize: "var(--renge-font-size-2xl)",
               margin: 0,
-              marginBottom: "var(--renge-space-2)",
               letterSpacing: "-0.02em",
               opacity: 0.9,
             }}>
@@ -59,10 +49,10 @@ export function Footer() {
             }}>
               Part of the Soka Labs ecosystem.
             </p>
-          </div>
+          </Stack>
 
           {/* Links */}
-          <div style={{ display: "flex", gap: "var(--renge-space-5)", alignItems: "center" }}>
+          <Stack direction="horizontal" gap="5" align="center">
             <a
               href="https://github.com/vsm1996/renge-ui"
               target="_blank"
@@ -95,7 +85,8 @@ export function Footer() {
             >
               Docs
             </a>
-          </div>
+          </Stack>
+          </Stack>
         </motion.div>
 
         {/* Divider */}
@@ -106,14 +97,8 @@ export function Footer() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 1, delay: 0.2 }}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "var(--renge-space-4)",
-          }}
         >
+          <Stack direction="horizontal" justify="between" align="center" gap="4" style={{ flexWrap: "wrap" }}>
           <p style={{
             fontSize: "var(--renge-font-size-sm)",
             fontFamily: "var(--font-body)",
@@ -134,8 +119,10 @@ export function Footer() {
           }}>
             φ = {PHI.toFixed(10)}
           </div>
+          </Stack>
         </motion.div>
-      </div>
+        </Stack>
+      </Container>
     </footer>
   );
 }

@@ -4,6 +4,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { Container, Stack } from "@renge-ui/react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -242,7 +243,7 @@ export function GettingStarted() {
         borderTop: "1px solid var(--renge-color-border-subtle)",
       }}
     >
-      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+      <Container size="md" px="0">
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
@@ -282,12 +283,11 @@ export function GettingStarted() {
           custom={0.15}
           variants={fadeUp}
         >
-          <div style={{
-            display: "flex",
-            gap: "var(--renge-space-2)",
-            marginBottom: "var(--renge-space-4)",
-            flexWrap: "wrap",
-          }}>
+          <Stack
+            direction="horizontal"
+            gap="2"
+            style={{ flexWrap: "wrap", marginBottom: "var(--renge-space-4)" }}
+          >
             {OPTIONS.map((o) => (
               <button
                 key={o.id}
@@ -308,7 +308,7 @@ export function GettingStarted() {
                 {o.label}
               </button>
             ))}
-          </div>
+          </Stack>
 
           <p style={{
             fontSize: "var(--renge-font-size-sm)",
@@ -321,7 +321,7 @@ export function GettingStarted() {
           </p>
           <CodeBlock code={active.code} lang={active.lang} />
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { GOLDEN_ANGLE, EASE_OUT } from "@/lib/phi";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { Lotus } from "@/components/ui/Lotus";
+import { Stack } from "@renge-ui/react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -63,14 +64,13 @@ export function Hero() {
       <LotusBackground />
 
       {/* Content */}
-      <div
+      <Stack
+        direction="vertical"
+        align="center"
+        gap="6"
         style={{
           position: "relative",
           zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "var(--renge-space-6)",
           textAlign: "center",
           maxWidth: isMobile ? "100%" : 720,
         }}
@@ -196,7 +196,7 @@ export function Hero() {
         >
           φ° = {GOLDEN_ANGLE.toFixed(3)}°
         </motion.div>
-      </div>
+      </Stack>
     </section>
   );
 }

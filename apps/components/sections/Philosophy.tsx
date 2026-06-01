@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { PHI, EASE_OUT, FIBONACCI } from "@/lib/phi";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { Container, Grid, Stack } from "@renge-ui/react";
 
 // ============================================================================
 // PHI visualization — animated golden ratio bars
@@ -173,7 +174,7 @@ export function Philosophy() {
         borderBottom: "1px solid var(--renge-color-border-subtle)",
       }}
     >
-      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+      <Container px="0" style={{ maxWidth: 1080 }}>
         {/* Section header */}
         <motion.div
           initial="hidden"
@@ -205,11 +206,10 @@ export function Philosophy() {
         </motion.div>
 
         {/* Three columns */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(auto-fit, minmax(${isMobile ? "100%" : "280px"}, 1fr))`,
-          gap: "var(--renge-space-5)",
-        }}>
+        <Grid
+          columns={`repeat(auto-fit, minmax(${isMobile ? "100%" : "280px"}, 1fr))`}
+          gap="5"
+        >
           {principles.map((p, i) => (
             <motion.div
               key={p.id}
@@ -217,16 +217,18 @@ export function Philosophy() {
               animate={inView ? "visible" : "hidden"}
               custom={0.1 + i * 0.12}
               variants={fadeUp}
-              style={{
-                padding: "var(--renge-space-6)",
-                background: "var(--renge-color-bg)",
-                border: "1px solid var(--renge-color-border-subtle)",
-                borderRadius: "var(--renge-radius-2)",
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--renge-space-4)",
-              }}
             >
+              <Stack
+                direction="vertical"
+                gap="4"
+                style={{
+                  padding: "var(--renge-space-6)",
+                  background: "var(--renge-color-bg)",
+                  border: "1px solid var(--renge-color-border-subtle)",
+                  borderRadius: "var(--renge-radius-2)",
+                  height: "100%",
+                }}
+              >
               {/* Symbol */}
               <div style={{
                 fontFamily: "var(--font-display)",
@@ -276,10 +278,11 @@ export function Philosophy() {
               }}>
                 {p.body}
               </p>
+              </Stack>
             </motion.div>
           ))}
-        </div>
-      </div>
+        </Grid>
+      </Container>
     </section>
   );
 }
