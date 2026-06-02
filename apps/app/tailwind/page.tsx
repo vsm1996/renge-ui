@@ -1,102 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { CodeBlock, DocSection, UtilityTable, SectionLabel } from "@/components/ui/DocPrimitives";
+import { CodeBlock, DocSection, UtilityTable } from "@/components/ui/DocPrimitives";
 import { ProfileProvider } from "@/components/ui/ProfileToggle";
 import { Nav } from "@/components/ui/Nav";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-
-// ─── Visual demos (tailwind-page-specific) ───────────────────────────────────
-
-const PHI = 1.6180339887498949;
-
-function StackVisual() {
-  return (
-    <div style={{ display: "flex", gap: "var(--renge-space-6)", alignItems: "flex-start", flexWrap: "wrap" }}>
-      <div>
-        <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", margin: "0 0 var(--renge-space-2)" }}>stack</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-2)" }}>
-          {["Item 1", "Item 2", "Item 3"].map(l => (
-            <div key={l} style={{ padding: "var(--renge-space-2) var(--renge-space-4)", background: "var(--renge-color-accent-subtle)", borderRadius: "var(--renge-radius-2)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", fontFamily: "var(--font-body)" }}>{l}</div>
-          ))}
-        </div>
-      </div>
-      <div>
-        <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", margin: "0 0 var(--renge-space-2)" }}>stack-h</p>
-        <div style={{ display: "flex", flexDirection: "row", gap: "var(--renge-space-2)" }}>
-          {["A", "B", "C"].map(l => (
-            <div key={l} style={{ padding: "var(--renge-space-2) var(--renge-space-4)", background: "var(--renge-color-accent-subtle)", borderRadius: "var(--renge-radius-2)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", fontFamily: "var(--font-body)" }}>{l}</div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ContainerVisual() {
-  const steps = [
-    { key: "sm", px: 524,  pct: 23.6, exp: "φ²" },
-    { key: "md", px: 847,  pct: 38.2, exp: "φ³" },
-    { key: "lg", px: 1371, pct: 61.8, exp: "φ⁴" },
-    { key: "xl", px: 2218, pct: 100,  exp: "φ⁵" },
-  ];
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-3)" }}>
-      {steps.map(({ key, px, pct, exp }) => (
-        <div key={key} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-4)" }}>
-          <code style={{ width: 24, fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", flexShrink: 0 }}>{key}</code>
-          <div style={{ flex: 1, background: "var(--renge-color-bg-subtle)", borderRadius: "var(--renge-radius-full)", height: 10, overflow: "hidden" }}>
-            <div style={{ width: `${pct}%`, height: "100%", background: key === "lg" ? "var(--renge-color-accent)" : "var(--renge-color-accent-subtle)", borderRadius: "var(--renge-radius-full)", border: key === "lg" ? "none" : "1px solid var(--renge-color-accent)", opacity: key === "lg" ? 1 : 0.7 }} />
-          </div>
-          <span style={{ fontSize: "var(--renge-font-size-sm)", color: key === "lg" ? "var(--renge-color-accent)" : "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", whiteSpace: "nowrap" }}>200 × {exp} = {px}px</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function GridVisual() {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-4)" }}>
-      {[2, 3, 4, 6].map(cols => (
-        <div key={cols} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-4)" }}>
-          <code style={{ width: 32, fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", flexShrink: 0 }}>{cols}</code>
-          <div style={{ flex: 1, display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: "var(--renge-space-1)" }}>
-            {Array.from({ length: cols }).map((_, i) => (
-              <div key={i} style={{ height: 16, background: "var(--renge-color-accent-subtle)", borderRadius: "var(--renge-radius-1)", border: "1px solid var(--renge-color-accent)", opacity: 0.6 + (i / cols) * 0.4 }} />
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function AspectVisual() {
-  const steps = [
-    { key: "square",   ratio: 1,       label: "1:1",  note: "square" },
-    { key: "golden",   ratio: PHI,     label: "1:φ",  note: "golden" },
-    { key: "vertical", ratio: 1 / PHI, label: "φ:1",  note: "portrait" },
-    { key: "video",    ratio: 16 / 9,  label: "16:9", note: "video" },
-    { key: "classic",  ratio: 4 / 3,   label: "4:3",  note: "classic" },
-  ];
-  const baseH = 52;
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--renge-space-5)", alignItems: "flex-end" }}>
-      {steps.map(({ key, ratio, label, note }) => (
-        <div key={key} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--renge-space-2)" }}>
-          <div style={{ width: Math.round(baseH * ratio), height: baseH, background: key === "golden" ? "var(--renge-color-accent-subtle)" : "var(--renge-color-bg-subtle)", border: `1px solid ${key === "golden" ? "var(--renge-color-accent)" : "var(--renge-color-border)"}`, borderRadius: "var(--renge-radius-2)" }} />
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "var(--renge-font-size-sm)", color: key === "golden" ? "var(--renge-color-accent)" : "var(--renge-color-fg-subtle)", fontFamily: "var(--font-mono, monospace)" }}>{label}</div>
-            <div style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", opacity: 0.7 }}>{note}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
+import { StackVisual } from "./components/StackVisual";
+import { ContainerVisual } from "./components/ContainerVisual";
+import { GridVisual } from "./components/GridVisual";
+import { AspectVisual } from "./components/AspectVisual";
 
 export default function TailwindPage() {
   const isMobile = useBreakpoint();

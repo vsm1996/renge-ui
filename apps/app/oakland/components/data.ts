@@ -1,0 +1,178 @@
+export const PARKS = [
+  {
+    name: "Redwood Regional Park",
+    type: "Forest",
+    elevation: "1,619 ft peak",
+    description:
+      "A cathedral of second-growth coast redwoods. The tallest trees in the East Bay canopy reach 150 feet. Streams run cold year-round beneath them.",
+  },
+  {
+    name: "Joaquin Miller Park",
+    type: "Woodland",
+    elevation: "960 ft",
+    description:
+      "Named for the poet. Mixed eucalyptus and native oak-bay woodland. Madrone peels its bark every summer like clockwork.",
+  },
+  {
+    name: "Lake Merritt",
+    type: "Urban Tidal Lagoon",
+    elevation: "Sea level",
+    description:
+      "A saltwater tidal lagoon at the heart of the city. The oldest official wildlife refuge in North America, designated 1870.",
+  },
+];
+
+export const STATS = [
+  { value: "52", label: "parks & open spaces" },
+  { value: "7,700+", label: "acres of open space" },
+  { value: "12", label: "plant communities" },
+];
+
+export const DIFF_ROWS = [
+  {
+    property: "Space between cards",
+    arbitrary: "16px",
+    renge: "var(--renge-space-4) = 30px",
+    note: "5 × 6  (Fibonacci × base unit)",
+  },
+  {
+    property: "Section padding-top",
+    arbitrary: "48px",
+    renge: "var(--renge-space-7) = 126px",
+    note: "21 × 6  (Fibonacci × base unit)",
+  },
+  {
+    property: "Card padding",
+    arbitrary: "20px",
+    renge: "var(--renge-space-4) = 20px",
+    note: "same value, derived from the system",
+  },
+  {
+    property: "Gap inside card",
+    arbitrary: "12px",
+    renge: "var(--renge-space-3) = 12px",
+    note: "same value, derived from the system",
+  },
+  {
+    property: "Eyebrow font-size",
+    arbitrary: "11px",
+    renge: "var(--renge-font-size-xs) ≈ 11px",
+    note: "base × φ⁻²",
+  },
+  {
+    property: "Body font-size",
+    arbitrary: "14px",
+    renge: "var(--renge-font-size-base) ≈ 13px",
+    note: "base × φ⁻¹",
+  },
+  {
+    property: "Heading font-size",
+    arbitrary: "28px",
+    renge: "var(--renge-font-size-2xl) ≈ 34px",
+    note: "base × φ³",
+  },
+  {
+    property: "Line height (body)",
+    arbitrary: "1.5",
+    renge: "1.618",
+    note: "φ — the golden ratio",
+  },
+  {
+    property: "Eyebrow letter-spacing",
+    arbitrary: "0.08em",
+    renge: "0.12em",
+    note: "tuned to the type system",
+  },
+  {
+    property: "Card border-radius",
+    arbitrary: "8px",
+    renge: "var(--renge-radius-3)",
+    note: "from the radius scale",
+  },
+  {
+    property: "Accent color",
+    arbitrary: "#4a9a6a",
+    renge: "oklch(…) via profile token",
+    note: "perceptually uniform OKLCH",
+  },
+  {
+    property: "Display typeface",
+    arbitrary: "Georgia, serif",
+    renge: "DM Serif Display",
+    note: "chosen for PHI-proportioned letterforms",
+  },
+];
+
+export const A = {
+  fontDisplay: "Georgia, 'Times New Roman', serif",
+  fontBody: "system-ui, -apple-system, 'Helvetica Neue', sans-serif",
+  accent: "#4a9a6a",
+  accentBg: "#e8f3ec",
+  accentBorder: "#b8d9c4",
+  fg: "#1c1c1c",
+  fgMuted: "#6b7280",
+  fgSubtle: "#555",
+  bg: "#fafaf8",
+  bgSubtle: "#f3f3f0",
+  border: "#e0e0e0",
+  tracking: "0.08em",
+  spaceXs: "4px",
+  spaceSm: "8px",
+  spaceMd: "12px",
+  spaceLg: "16px",
+  spaceXl: "24px",
+  space2xl: "32px",
+  space3xl: "48px",
+  space4xl: "64px",
+  sizeXs: "11px",
+  sizeSm: "14px",
+  sizeMd: "15px",
+  sizeLg: "17px",
+  sizeXl: "20px",
+  size2xl: "28px",
+  size3xl: "36px",
+  size4xl: "44px",
+  radiusSm: "4px",
+  radiusMd: "8px",
+  radiusFull: "9999px",
+  lineBase: 1.5,
+  lineRelaxed: 1.6,
+};
+
+export const R = {
+  fontDisplay: "var(--font-display)",
+  fontBody: "var(--font-body)",
+  accent: "var(--renge-color-accent)",
+  accentBg: "color-mix(in oklch, var(--renge-color-accent) 10%, transparent)",
+  accentBorder: "color-mix(in oklch, var(--renge-color-accent) 25%, transparent)",
+  fg: "var(--renge-color-fg)",
+  fgMuted: "var(--renge-color-fg-muted)",
+  fgSubtle: "var(--renge-color-fg-subtle)",
+  bg: "var(--renge-color-bg)",
+  bgSubtle: "var(--renge-color-bg-subtle)",
+  border: "var(--renge-color-border-subtle)",
+  tracking: "0.12em",
+  spaceXs: "var(--renge-space-1)",
+  spaceSm: "var(--renge-space-2)",
+  spaceMd: "var(--renge-space-3)",
+  spaceLg: "var(--renge-space-4)",
+  spaceXl: "var(--renge-space-5)",
+  space2xl: "var(--renge-space-6)",
+  space3xl: "var(--renge-space-7)",
+  space4xl: "var(--renge-space-8)",
+  sizeXs: "var(--renge-font-size-xs)",
+  sizeSm: "var(--renge-font-size-sm)",
+  sizeMd: "var(--renge-font-size-base)",
+  sizeLg: "var(--renge-font-size-lg)",
+  sizeXl: "var(--renge-font-size-xl)",
+  size2xl: "var(--renge-font-size-2xl)",
+  size3xl: "var(--renge-font-size-3xl)",
+  size4xl: "var(--renge-font-size-4xl)",
+  radiusSm: "var(--renge-radius-1)",
+  radiusMd: "var(--renge-radius-3)",
+  radiusFull: "var(--renge-radius-full)",
+  lineBase: 1.618,
+  lineRelaxed: 1.7,
+};
+
+export type StyleMap = typeof A;
