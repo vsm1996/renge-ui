@@ -174,7 +174,7 @@ Each step is `FIBONACCI[n] × baseUnit`. Default baseUnit = 4px.
 |-------|-----------|---------------|
 | `--renge-space-0` | 0 | 0px |
 | `--renge-space-1` | 1 | 4px |
-| `--renge-space-2` | 1 | 4px |
+| `--renge-space-2` | 2 | 8px |
 | `--renge-space-3` | 3 | 12px |
 | `--renge-space-4` | 5 | 20px |
 | `--renge-space-5` | 8 | 32px |
@@ -420,7 +420,7 @@ const colors = getProfile('earth', 'dark');
 pnpm build       # compile to dist/
 pnpm dev         # watch mode
 pnpm typecheck   # tsc --noEmit
-pnpm test        # vitest run (105 tests)
+pnpm test        # vitest run (114 tests)
 ```
 
 ---

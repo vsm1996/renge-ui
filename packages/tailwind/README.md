@@ -139,7 +139,7 @@ Maps `--renge-space-{0–10}` (Fibonacci × base unit). Applies to all Tailwind 
 |---|---|---|
 | `renge-0` | `var(--renge-space-0)` | 0px |
 | `renge-1` | `var(--renge-space-1)` | 4px |
-| `renge-2` | `var(--renge-space-2)` | 4px |
+| `renge-2` | `var(--renge-space-2)` | 8px |
 | `renge-3` | `var(--renge-space-3)` | 12px |
 | `renge-4` | `var(--renge-space-4)` | 20px |
 | `renge-5` | `var(--renge-space-5)` | 32px |

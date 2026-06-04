@@ -1,6 +1,11 @@
 # @renge-ui/react
 
-React component primitives for the Renge design system. Components consume `@renge-ui/tokens` CSS custom properties via inline styles — no CSS-in-JS runtime, no class names.
+[![npm version](https://img.shields.io/npm/v/@renge-ui/react)](https://www.npmjs.com/package/@renge-ui/react)
+[![license](https://img.shields.io/npm/l/@renge-ui/react)](https://github.com/vsm1996/renge-ui/blob/main/LICENSE.md)
+
+44 React component primitives for the Renge design system. Components consume `@renge-ui/tokens` CSS custom properties via inline styles — no CSS-in-JS runtime, no class names, no specificity battles.
+
+---
 
 ## Install
 
@@ -8,11 +13,13 @@ React component primitives for the Renge design system. Components consume `@ren
 pnpm add @renge-ui/react
 ```
 
+---
+
 ## Setup
 
-### Static stylesheet (recommended — no React required)
+### Static stylesheet (recommended)
 
-The simplest setup. Import the pre-built CSS file once; use `RengeProvider` only if you need runtime profile switching.
+Import the pre-built CSS file once in your root layout. Works with SSR, static export, and any framework.
 
 ```tsx
 // app/layout.tsx
@@ -32,11 +39,15 @@ export default function Layout({ children }) {
 }
 ```
 
-No `dangerouslySetInnerHTML`. No hydration errors. The CSS file is resolved at build time by your bundler.
+### With `@renge-ui/tailwind` plugin (recommended for Tailwind users)
 
-### With `@renge-ui/tailwind` plugin
+The plugin injects all token CSS at build time — equivalent to the static stylesheet but with Tailwind utility classes included.
 
-The plugin injects all token CSS at build time — functionally equivalent to the static stylesheet but with Tailwind utility classes included.
+```css
+/* globals.css */
+@import "tailwindcss";
+@plugin "@renge-ui/tailwind/plugin";
+```
 
 ```tsx
 // app/layout.tsx
@@ -55,47 +66,42 @@ export default function Layout({ children }) {
 }
 ```
 
-```css
-/* globals.css */
-@import "tailwindcss";
-@plugin "@renge-ui/tailwind/plugin";
-```
-
 ### CSR only (no SSR)
 
-Set `injectCSS={true}` to inject the full CSS string into `<head>` at runtime via `useInsertionEffect`. Not SSR-safe — causes a style flash on server-rendered pages.
+Set `injectCSS` to inject the full CSS string into `<head>` at runtime. Not SSR-safe.
 
 ```tsx
 import { RengeProvider } from '@renge-ui/react';
 
 function App() {
   return (
-    <RengeProvider config={{ profile: 'ocean', mode: 'light' }} injectCSS>
+    <RengeProvider config={{ profile: 'ocean' }} injectCSS>
       <YourApp />
     </RengeProvider>
   );
 }
 ```
 
-### Provider Props
+---
+
+## `RengeProvider`
+
+Provides theme context and drives color profile/mode via `data-profile`/`data-mode` attributes.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `config` | `RengeThemeConfig` | `{}` | Theme configuration (see `@renge-ui/tokens`) |
-| `injectCSS` | `boolean` | `false` | Inject full CSS string into `<head>` at runtime. Set `true` for CSR-only apps without the Tailwind plugin. When `false`, syncs `data-profile`/`data-mode` attributes on `<html>` instead. |
+| `config` | `RengeThemeConfig` | `{}` | Theme configuration — see `@renge-ui/tokens` for all options |
+| `injectCSS` | `boolean` | `false` | Inject full theme CSS at runtime. Use for CSR-only apps. `false` syncs `data-profile`/`data-mode` attributes on `<html>` instead |
 
 ---
 
-## Components
+## `RengeStylesheet`
 
-### `RengeStylesheet`
-
-SSR-safe style injection. Renders a `<style>` tag with all Renge token CSS. Use this in your root layout instead of `injectCSS`.
+SSR-safe `<style>` tag injection. Use in `<head>` when you want server-generated token CSS without the Tailwind plugin.
 
 ```tsx
 import { RengeStylesheet } from '@renge-ui/react';
 
-// app/layout.tsx
 export default function Layout({ children }) {
   return (
     <html>
@@ -110,7 +116,7 @@ export default function Layout({ children }) {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `config` | `RengeThemeConfig` | `{}` | Theme configuration passed to `createRengeTheme()` |
+| `config` | `RengeThemeConfig` | `{}` | Passed to `createRengeTheme()` |
 
 ---
 
@@ -141,7 +147,10 @@ const theme = useRengeTheme({ profile: 'twilight', mode: 'dark' });
 
 ## Components
 
-All components use `forwardRef`, accept all standard HTML props for their underlying element, and allow style overrides via the `style` prop (applied last — overrides always win). Most support a polymorphic `as` prop to change the rendered element.
+All components:
+- Use `forwardRef` and accept all standard HTML props for their underlying element
+- Apply `style` last — the `style` prop always wins over component defaults
+- Accept a polymorphic `as` prop where noted
 
 ---
 
@@ -207,9 +216,59 @@ Page section with max-width constraint and auto-centering.
 | `center` | `boolean` | `true` |
 | `as` | `ElementType` | `'section'` |
 
+#### `Container`
+
+Max-width wrapper for centering content.
+
+```tsx
+<Container size="lg" px="5">
+  {children}
+</Container>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'lg'` |
+| `px` | `'0'–'8'` | `'4'` |
+
+Max widths: `sm` → 640px, `md` → 768px, `lg` → 1024px, `xl` → 1280px, `full` → 100%.
+
+#### `Spacer`
+
+Empty spacer that occupies a token-sized gap in a flex/grid layout.
+
+```tsx
+<Stack direction="horizontal">
+  <Logo />
+  <Spacer />
+  <NavLinks />
+</Stack>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `size` | `'1'–'10'` | — (fills available space) |
+| `axis` | `'horizontal' \| 'vertical'` | auto-detected from flex context |
+
+#### `AspectRatio`
+
+Constrains children to a fixed aspect ratio.
+
+```tsx
+<AspectRatio ratio={16 / 9}>
+  <img src="..." />
+</AspectRatio>
+```
+
+Default `ratio` is PHI (1.618). Pass any number.
+
+| Prop | Type | Default |
+|------|------|---------|
+| `ratio` | `number` | `1.618` (φ) |
+
 ---
 
-### Text
+### Typography
 
 #### `Text`
 
@@ -244,7 +303,21 @@ Semantic heading with automatic size defaults per level.
 | `size` | `'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl'` | auto (level-based) |
 | `color` | `'fg' \| 'fg-subtle' \| 'accent'` | `'fg'` |
 
-Default sizes: h1→3xl, h2→2xl, h3→xl, h4–h6→lg.
+Default sizes: h1 → 3xl · h2 → 2xl · h3 → xl · h4–h6 → lg.
+
+#### `Anchor`
+
+Styled link with underline and color variants.
+
+```tsx
+<Anchor href="/docs" variant="default">Read the docs</Anchor>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `variant` | `'default' \| 'subtle' \| 'plain'` | `'default'` |
+
+`default` — underline on hover, accent color · `subtle` — muted color, underline on hover · `plain` — no decoration, inherits color.
 
 ---
 
@@ -273,9 +346,8 @@ Content container with three visual variants.
 #### `Button`
 
 ```tsx
-<Button variant="outline" colorScheme="danger" size="sm">
-  Delete
-</Button>
+<Button variant="outline" colorScheme="danger" size="sm">Delete</Button>
+<Button fullWidth loading>Saving...</Button>
 ```
 
 | Prop | Type | Default |
@@ -284,6 +356,56 @@ Content container with three visual variants.
 | `variant` | `'solid' \| 'outline' \| 'ghost'` | `'solid'` |
 | `colorScheme` | `'accent' \| 'danger' \| 'success'` | `'accent'` |
 | `fullWidth` | `boolean` | `false` |
+
+#### `IconButton`
+
+Square button for icon-only actions. Requires an accessible `aria-label`.
+
+```tsx
+<IconButton aria-label="Close" size="sm" variant="ghost">
+  <XIcon />
+</IconButton>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `variant` | `'solid' \| 'outline' \| 'ghost'` | `'ghost'` |
+| `colorScheme` | `'accent' \| 'danger' \| 'success' \| 'neutral'` | `'neutral'` |
+
+#### `ButtonGroup` / `ButtonGroupItem`
+
+Groups related buttons with flush borders between them.
+
+```tsx
+<ButtonGroup>
+  <ButtonGroupItem>
+    <Button variant="outline">Day</Button>
+  </ButtonGroupItem>
+  <ButtonGroupItem>
+    <Button variant="outline">Week</Button>
+  </ButtonGroupItem>
+</ButtonGroup>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` |
+
+#### `CopyButton`
+
+Button that copies a value to the clipboard and shows a confirmation state.
+
+```tsx
+<CopyButton value="pnpm add @renge-ui/tokens" label="Copy" timeout={2000} />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `value` | `string` | required |
+| `label` | `string` | `'Copy'` |
+| `timeout` | `number` (ms) | `2000` |
+| `onCopy` | `(value: string) => void` | — |
 
 #### `Input`
 
@@ -297,17 +419,336 @@ Content container with three visual variants.
 | `state` | `'default' \| 'error' \| 'success'` | `'default'` |
 | `fullWidth` | `boolean` | `false` |
 
-Note: `Input` uses `Omit<ComponentPropsWithoutRef<'input'>, 'size'>` to shadow the native `size: number` attribute with the semantic size prop.
+Note: uses `Omit<ComponentPropsWithoutRef<'input'>, 'size'>` — the native `size` attribute is replaced by the semantic size prop.
 
-Focus ring is applied via `onFocus`/`onBlur` handlers (inline styles cannot target `:focus-visible`). The outline uses `--renge-color-border-focus`.
+#### `Select`
 
-#### `Chip`
-
-Small inline tag — dismissible or selectable.
+Styled native `<select>` element.
 
 ```tsx
-<Chip>Design systems</Chip>
+<Select size="md" state="default" fullWidth>
+  <option value="ocean">Ocean</option>
+  <option value="earth">Earth</option>
+</Select>
 ```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `state` | `'default' \| 'error' \| 'success'` | `'default'` |
+| `fullWidth` | `boolean` | `false` |
+
+#### `Textarea`
+
+Multi-line text input.
+
+```tsx
+<Textarea size="md" state="default" fullWidth placeholder="Notes..." />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `state` | `'default' \| 'error' \| 'success'` | `'default'` |
+| `fullWidth` | `boolean` | `false` |
+
+Min heights: `sm` → 80px · `md` → 120px · `lg` → 200px.
+
+#### `Checkbox`
+
+```tsx
+<Checkbox label="Accept terms" size="md" />
+<Checkbox indeterminate />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `label` | `string` | — |
+| `indeterminate` | `boolean` | `false` |
+
+Injects `@keyframes` for the check animation once at module load.
+
+#### `Radio` / `RadioGroup`
+
+```tsx
+<RadioGroup value={plan} onChange={setPlan} defaultValue="pro">
+  <Radio value="free" label="Free" />
+  <Radio value="pro" label="Pro" />
+  <Radio value="enterprise" label="Enterprise" />
+</RadioGroup>
+```
+
+**`RadioGroup` props:**
+
+| Prop | Type | Default |
+|------|------|---------|
+| `value` | `string` | — |
+| `defaultValue` | `string` | — |
+| `onChange` | `(value: string) => void` | — |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `disabled` | `boolean` | `false` |
+
+**`Radio` props:**
+
+| Prop | Type | Default |
+|------|------|---------|
+| `value` | `string` | required |
+| `label` | `string` | — |
+| `size` | `'sm' \| 'md' \| 'lg'` | inherited from group |
+
+The inner dot is sized at `outer / φ` — the golden proportion is visible in every instance.
+
+#### `Switch`
+
+Toggle switch. Track width:height ratio ≈ φ:1.
+
+```tsx
+<Switch label="Dark mode" labelPosition="right" />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `label` | `string` | — |
+| `labelPosition` | `'left' \| 'right'` | `'right'` |
+
+#### `Slider`
+
+Range input with optional φ-marker lines and value display.
+
+```tsx
+<Slider min={0} max={100} defaultValue={61.8} showPhiMarkers showValue label="Scale" />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `showPhiMarkers` | `boolean` | `false` |
+| `showValue` | `boolean` | `false` |
+| `label` | `string` | — |
+| `min` | `number` | `0` |
+| `max` | `number` | `100` |
+
+`showPhiMarkers` draws marker lines at 0.382 and 0.618 of the range.
+
+---
+
+### Forms
+
+#### `FormField`
+
+Label + input wrapper with consistent spacing and error state.
+
+```tsx
+<FormField label="Email" required>
+  <Input placeholder="you@example.com" />
+</FormField>
+```
+
+---
+
+### Navigation
+
+#### `Navbar`
+
+Navigation bar primitive with sticky positioning and border.
+
+```tsx
+<Navbar sticky border paddingX="5">
+  <Logo />
+  <Stack direction="horizontal" gap="4">
+    <a href="/docs">Docs</a>
+  </Stack>
+</Navbar>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `sticky` | `boolean` | `false` |
+| `border` | `boolean` | `true` |
+| `height` | `string` | `'56px'` |
+| `paddingX` | `'0'–'8'` | `'5'` |
+
+#### `Tabs` / `TabList` / `Tab` / `TabPanel`
+
+Accessible tab interface using controlled or uncontrolled value.
+
+```tsx
+<Tabs value={activeTab} onChange={setActiveTab}>
+  <TabList>
+    <Tab value="overview">Overview</Tab>
+    <Tab value="tokens">Tokens</Tab>
+  </TabList>
+  <TabPanel value="overview">Overview content</TabPanel>
+  <TabPanel value="tokens">Token content</TabPanel>
+</Tabs>
+```
+
+**`Tabs` props:**
+
+| Prop | Type | Default |
+|------|------|---------|
+| `value` | `string` | — (uncontrolled) |
+| `defaultValue` | `string` | — |
+| `onChange` | `(id: string) => void` | — |
+
+#### `Breadcrumb` / `BreadcrumbItem`
+
+```tsx
+<Breadcrumb separator="/">
+  <BreadcrumbItem href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem href="/docs">Docs</BreadcrumbItem>
+  <BreadcrumbItem>Tokens</BreadcrumbItem>
+</Breadcrumb>
+```
+
+**`Breadcrumb` props:**
+
+| Prop | Type | Default |
+|------|------|---------|
+| `separator` | `ReactNode` | `'/'` |
+
+#### `Pagination`
+
+Page number controls.
+
+```tsx
+<Pagination total={120} page={currentPage} onChange={setPage} />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `total` | `number` | required |
+| `page` | `number` | required |
+| `onChange` | `(page: number) => void` | required |
+| `pageSize` | `number` | `10` |
+
+---
+
+### Data Display
+
+#### `Table` / `TableHead` / `TableBody` / `TableFoot` / `TableRow` / `TableHeader` / `TableCell`
+
+```tsx
+<Table striped hoverable>
+  <TableHead>
+    <TableRow>
+      <TableHeader>Token</TableHeader>
+      <TableHeader>Value</TableHeader>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow>
+      <TableCell>--renge-space-4</TableCell>
+      <TableCell>20px</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+**`Table` props:**
+
+| Prop | Type | Default |
+|------|------|---------|
+| `striped` | `boolean` | `false` |
+| `hoverable` | `boolean` | `false` |
+
+#### `Tooltip`
+
+Floating label shown on hover/focus.
+
+```tsx
+<Tooltip content="Copy to clipboard" placement="top">
+  <Button>Copy</Button>
+</Tooltip>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `content` | `ReactNode` | required |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` |
+
+Note: uses `Omit<ComponentPropsWithoutRef<'div'>, 'content'>` — the native `content` attribute is replaced.
+
+#### `Accordion` / `AccordionItem`
+
+Collapsible sections. Supports single or multiple open items.
+
+```tsx
+<Accordion multiple defaultOpen={['setup']}>
+  <AccordionItem id="setup" title="Setup">
+    Installation details...
+  </AccordionItem>
+  <AccordionItem id="usage" title="Usage" disabled>
+    Coming soon
+  </AccordionItem>
+</Accordion>
+```
+
+**`Accordion` props:**
+
+| Prop | Type | Default |
+|------|------|---------|
+| `multiple` | `boolean` | `false` |
+| `defaultOpen` | `string \| string[]` | — |
+
+**`AccordionItem` props:**
+
+| Prop | Type | Default |
+|------|------|---------|
+| `id` | `string` | required |
+| `title` | `ReactNode` | required |
+| `disabled` | `boolean` | `false` |
+
+#### `Timeline` / `TimelineItem`
+
+Vertical sequence of events.
+
+```tsx
+<Timeline>
+  <TimelineItem status="completed" icon={<CheckIcon />}>First step done</TimelineItem>
+  <TimelineItem status="active">In progress</TimelineItem>
+  <TimelineItem status="pending">Upcoming</TimelineItem>
+</Timeline>
+```
+
+**`TimelineItem` props:**
+
+| Prop | Type | Default |
+|------|------|---------|
+| `status` | `'completed' \| 'active' \| 'pending'` | `'pending'` |
+| `icon` | `ReactNode` | — |
+
+#### `Skeleton`
+
+Loading placeholder with three shape variants.
+
+```tsx
+<Skeleton variant="text" style={{ width: 200 }} />
+<Skeleton variant="circular" style={{ width: 40, height: 40 }} />
+<Skeleton variant="rectangular" style={{ width: '100%', height: 120 }} />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `variant` | `'text' \| 'circular' \| 'rectangular'` | `'text'` |
+
+Injects the shimmer `@keyframes` once at module load.
+
+#### `Stat`
+
+Metric display with optional trend direction.
+
+```tsx
+<Stat label="Active users" value="1,284" trend="up" delta="+12%" />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `label` | `string` | required |
+| `value` | `string \| number` | required |
+| `trend` | `'up' \| 'down' \| 'neutral'` | — |
+| `delta` | `string` | — |
 
 ---
 
@@ -339,6 +780,28 @@ Alert message with status-driven color.
 |------|------|---------|
 | `status` | `'success' \| 'warning' \| 'danger' \| 'info'` | `'info'` |
 
+#### `Avatar`
+
+User avatar with fallback initials.
+
+```tsx
+<Avatar src="/photo.jpg" alt="Vanessa" size="lg" shape="circle" />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `shape` | `'circle' \| 'square'` | `'circle'` |
+
+#### `Chip`
+
+Small inline tag — dismissible or selectable.
+
+```tsx
+<Chip>Design systems</Chip>
+<Chip onRemove={() => {}}>Removable</Chip>
+```
+
 #### `Divider`
 
 ```tsx
@@ -354,7 +817,7 @@ Alert message with status-driven color.
 
 #### `Spinner`
 
-Loading indicator. Injects `@keyframes rengeSpinnerSpin` once at module load.
+Loading indicator.
 
 ```tsx
 <Spinner size="md" />
@@ -363,6 +826,8 @@ Loading indicator. Injects `@keyframes rengeSpinnerSpin` once at module load.
 | Prop | Type | Default |
 |------|------|---------|
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
+
+Injects `@keyframes rengeSpinnerSpin` once at module load.
 
 #### `Progress`
 
@@ -377,74 +842,89 @@ Progress bar.
 | `value` | `number` (0–100) | `0` |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
 
-#### `Avatar`
+---
 
-User avatar with size and shape options.
+### Feedback
+
+#### `Modal` / `ModalHeader` / `ModalBody` / `ModalFooter`
+
+Accessible dialog rendered via `createPortal`. Requires `'use client'`.
 
 ```tsx
-<Avatar src="/photo.jpg" alt="Vanessa" size="lg" shape="circle" />
+<Modal open={isOpen} onClose={() => setOpen(false)} size="md">
+  <ModalHeader>Confirm action</ModalHeader>
+  <ModalBody>Are you sure you want to delete this?</ModalBody>
+  <ModalFooter>
+    <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+    <Button colorScheme="danger">Delete</Button>
+  </ModalFooter>
+</Modal>
 ```
+
+**`Modal` props:**
 
 | Prop | Type | Default |
 |------|------|---------|
-| `size` | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
-| `shape` | `'circle' \| 'square'` | `'circle'` |
+| `open` | `boolean` | required |
+| `onClose` | `() => void` | required |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` |
+| `closeOnOverlayClick` | `boolean` | `true` |
 
----
+#### `ToastProvider` / `useToast`
 
-### Forms
-
-#### `FormField`
-
-Label + input wrapper with consistent spacing.
+Global toast notification system rendered via `createPortal`. Wrap your app in `ToastProvider`, then call `useToast()` anywhere inside.
 
 ```tsx
-<FormField label="Email" required>
-  <Input placeholder="you@example.com" />
-</FormField>
+// layout.tsx
+import { ToastProvider } from '@renge-ui/react';
+
+export default function Layout({ children }) {
+  return <ToastProvider>{children}</ToastProvider>;
+}
 ```
-
-#### `Stat`
-
-Metric display with optional trend direction.
 
 ```tsx
-<Stat label="Active users" value="1,284" trend="up" delta="+12%" />
+// anywhere inside ToastProvider
+import { useToast } from '@renge-ui/react';
+
+function SaveButton() {
+  const toast = useToast();
+
+  return (
+    <Button onClick={() => toast({ title: 'Saved', status: 'success', duration: 3000 })}>
+      Save
+    </Button>
+  );
+}
 ```
 
----
+**`useToast()` returns a function** with signature:
 
-### Navigation
-
-#### `Navbar`
-
-Navigation bar primitive. Handles sticky positioning and border.
-
-```tsx
-<Navbar sticky border paddingX="5">
-  <Logo />
-  <Stack direction="horizontal" gap="4">
-    <a href="/docs">Docs</a>
-  </Stack>
-</Navbar>
+```ts
+toast(options: ToastOptions): void
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `sticky` | `boolean` | `false` |
-| `border` | `boolean` | `true` |
-| `height` | `string` | `'56px'` |
-| `paddingX` | `'0'–'8'` | `'5'` |
+**`ToastOptions`:**
+
+| Field | Type | Default |
+|-------|------|---------|
+| `title` | `string` | required |
+| `description` | `string` | — |
+| `status` | `'default' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'default'` |
+| `duration` | `number` (ms) | `5000` |
+| `id` | `string` | auto-generated |
+
+Pass `duration: null` to make the toast persist until dismissed.
 
 ---
 
 ### Experimental
 
-These components are functional but not yet stabilized — APIs may change.
+These components are functional but not yet stabilized — APIs may change before v1.
 
 #### `EnergyRing`
 
-Animated pulsing ring. Useful for loading states or ambient indicators.
+Animated pulsing ring useful for loading states or ambient indicators.
 
 ```tsx
 <EnergyRing size={48} rate="slow" color="accent" />
@@ -460,71 +940,22 @@ Pulsing animation wrapper.
 
 #### `FlowField`
 
-Animated flow-field canvas visualization. Accepts energy intensity and color profile.
-
----
-
-## SSR / Static Export
-
-**Preferred:** import `@renge-ui/tokens/renge.css` — a static file that contains all profiles and is injected by the bundler at build time, with zero runtime cost and no hydration issues:
-
-```tsx
-// app/layout.tsx
-import '@renge-ui/tokens/renge.css';
-import { RengeProvider } from '@renge-ui/react';
-
-export default function Layout({ children }) {
-  return (
-    <html data-profile="ocean">
-      <body>
-        <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
-          {children}
-        </RengeProvider>
-      </body>
-    </html>
-  );
-}
-```
-
-**Alternative:** `<RengeStylesheet />` renders a `<style>` tag with token CSS — SSR-safe, no flash, but generates a single profile/mode at render time (no built-in multi-profile switching):
-
-```tsx
-import { RengeStylesheet, RengeProvider } from '@renge-ui/react';
-
-export default function Layout({ children }) {
-  return (
-    <html>
-      <head>
-        <RengeStylesheet config={{ profile: 'ocean', mode: 'light' }} />
-      </head>
-      <body>
-        <RengeProvider config={{ profile: 'ocean', mode: 'light' }}>
-          {children}
-        </RengeProvider>
-      </body>
-    </html>
-  );
-}
-```
-
-For dynamic profile switching with full Tailwind integration, use `@renge-ui/tailwind/plugin` — all profile variants are embedded at build time, switching is just a `data-profile` attribute change.
+Animated flow-field canvas visualization.
 
 ---
 
 ## Architecture
 
-Components have no opinions about class names, CSS files, or external stylesheets. Every visual decision is an inline `style` referencing a `--renge-*` CSS custom property. This means:
+Components have no opinions about class names or external stylesheets. Every visual decision is an inline `style` referencing a `--renge-*` CSS custom property.
 
-- Components work anywhere the token CSS is injected — React, Remix, Next.js, plain HTML.
-- Overrides are always via the `style` prop. No specificity battles.
-- Bundle output contains no CSS. Zero style conflicts with your existing stylesheet.
-
-The rendering chain is:
+- Components work anywhere the token CSS is injected — Next.js, Remix, Vite, plain HTML.
+- Overrides via `style` prop always win. No specificity battles.
+- Zero CSS in the bundle. No style conflicts with your existing stylesheet.
 
 ```
 createRengeTheme() → theme.css → injected into <head>
        ↓
-CSS custom properties on :root
+--renge-* CSS custom properties on :root / [data-profile]
        ↓
 Components read var(--renge-*) via inline styles
 ```
@@ -533,25 +964,26 @@ Components read var(--renge-*) via inline styles
 
 ## Trade-offs
 
-**No pseudo-class support.** Inline styles cannot target `:hover`, `:focus-visible`, `:disabled`, etc. This is the main limitation of the inline-styles approach. Workarounds:
+**No pseudo-class support.** Inline styles cannot target `:hover`, `:focus-visible`, `:disabled`. Focus rings use `onFocus`/`onBlur` JS handlers. Hover states must be added via the `style` prop + event handlers in your application layer, or via a parent CSS selector.
 
-- Focus rings use `onFocus`/`onBlur` JS handlers (see `Input`).
-- Hover states are not currently implemented in primitives — add them via the `style` prop + event handlers in your application layer, or override with a CSS class.
+**No CSS-level overrides.** You cannot write `.my-button { ... }` in a stylesheet to target a Renge component. Use the `style` prop or a wrapper element.
 
-**No class names means no CSS-level overrides.** You can't write `.my-button { ... }` to target a Renge component in a stylesheet. Use the `style` prop or wrap the component and override via a parent selector.
+**`Spinner`, `Checkbox`, `Skeleton`, `Tooltip`, `Slider` inject `@keyframes`** at module load via a module-level DOM insertion — once per import, not once per instance.
 
-**`Spinner` injects keyframes at module load** via a module-level DOM insertion. This happens once per import, regardless of how many `Spinner` instances are rendered. It is not part of the Renge theme CSS — it lives outside the token system because CSS custom properties cannot animate `transform`.
+**`Toast` and `Modal` require `'use client'`** (they use `createPortal`, `useState`, and browser APIs).
 
-**Single provider scope.** `RengeProvider` sets one theme for the entire subtree. If you need different themes in different parts of the tree, nest multiple `RengeProvider` instances — but note that the outermost provider's `injectCSS` behavior will apply globally unless scoped via the `selector` config option.
-
-**Experimental components have unstable APIs.** `EnergyRing`, `Pulse`, and `FlowField` are included but not covered by the stability guarantee. Their props will likely change before v1.
+**Experimental components** (`EnergyRing`, `Pulse`, `FlowField`) are not covered by the stability guarantee.
 
 ---
 
 ## Development
 
 ```bash
-pnpm build       # compile to dist/
+pnpm build       # compile to dist/ (CJS + ESM + .d.ts)
 pnpm dev         # watch mode
 pnpm typecheck   # tsc --noEmit
 ```
+
+---
+
+*Part of the [Renge design system](https://renge-ui.vercel.app). Built by Soka Labs. Proportion as a first principle.*
