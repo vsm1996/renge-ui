@@ -1,6 +1,6 @@
 export const TOP_LINKS = [
   { label: "Philosophy", href: "#philosophy" },
-  { label: "Example",    href: "/oakland"    },
+  { label: "Example",    href: "/example"    },
   { label: "Start",      href: "#start"      },
 ] as const;
 
