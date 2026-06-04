@@ -49,15 +49,10 @@ export function Hero() {
 
   return (
     <section
+      className="relative flex flex-col items-center justify-center overflow-hidden"
       style={{
-        position: "relative",
         minHeight: "100svh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         padding: `var(--renge-space-7) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
-        overflow: "hidden",
       }}
     >
       {/* Background lotus — parallax, low opacity */}
@@ -68,12 +63,7 @@ export function Hero() {
         direction="vertical"
         align="center"
         gap="6"
-        style={{
-          position: "relative",
-          zIndex: 1,
-          textAlign: "center",
-          width: "100%"
-        }}
+        className="relative z-10 text-center w-full"
       >
         {/* Lotus — the geometry before the words */}
         <motion.div
@@ -86,13 +76,10 @@ export function Hero() {
 
           {/* Golden angle label */}
           <p
+            className="mt-renge-3 text-renge-sm text-renge-accent opacity-70"
             style={{
-              marginTop: "var(--renge-space-3)",
-              fontSize: "var(--renge-font-size-sm)",
-              color: "var(--renge-color-accent)",
               fontFamily: "var(--font-body)",
               letterSpacing: "0.12em",
-              opacity: 0.7,
             }}
           >
             φ° = {GOLDEN_ANGLE.toFixed(3)}°
@@ -105,17 +92,14 @@ export function Hero() {
           animate="visible"
           custom={0.2}
           variants={fadeUp}
+          className="text-renge-fg font-normal m-0 w-full"
           style={{
             fontFamily: "var(--font-display)",
             fontSize: isMobile
               ? "clamp(var(--renge-font-size-lg), 9vw, var(--renge-font-size-xl))"
               : "clamp(var(--renge-font-size-xl), 6vw, var(--renge-font-size-2xl))",
             lineHeight: 1.15,
-            color: "var(--renge-color-fg)",
-            fontWeight: 400,
-            margin: 0,
             letterSpacing: "-0.02em",
-            width: "100%"
           }}
         >
           Proportion as a <br /> first principle.
@@ -127,12 +111,10 @@ export function Hero() {
           animate="visible"
           custom={0.35}
           variants={fadeUp}
+          className="text-renge-fg-subtle leading-renge-lg m-0"
           style={{
             fontSize: isMobile ? "var(--renge-font-size-base)" : "var(--renge-font-size-lg)",
-            color: "var(--renge-color-fg-subtle)",
-            lineHeight: "var(--renge-line-height-lg)",
             width: isMobile ? "100%" : "50%",
-            margin: 0,
             fontFamily: "var(--font-body)",
           }}
         >
@@ -149,20 +131,11 @@ export function Hero() {
         >
           <a
             href="#tokens"
+            className="inline-flex items-center gap-renge-2 py-renge-3 px-renge-5 rounded-renge-full border border-renge-accent text-renge-accent text-renge-sm no-underline uppercase"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "var(--renge-space-2)",
-              padding: "var(--renge-space-3) var(--renge-space-5)",
-              borderRadius: "var(--renge-radius-full)",
-              border: "1px solid var(--renge-color-accent)",
-              color: "var(--renge-color-accent)",
-              fontSize: "var(--renge-font-size-sm)",
               fontFamily: "var(--font-body)",
               letterSpacing: "0.08em",
-              textDecoration: "none",
               transition: "all 300ms var(--renge-easing-ease-out)",
-              textTransform: "uppercase",
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget;
@@ -185,15 +158,12 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
           transition={{ delay: 1.5, duration: 1 }}
+          className="absolute text-renge-sm text-renge-fg-subtle uppercase"
           style={{
-            position: "absolute",
             bottom: "var(--renge-space-6)",
             left: "50%",
             transform: "translateX(-50%)",
-            fontSize: "var(--renge-font-size-sm)",
-            color: "var(--renge-color-fg-subtle)",
             letterSpacing: "0.15em",
-            textTransform: "uppercase",
             fontFamily: "var(--font-body)",
           }}
         >

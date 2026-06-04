@@ -16,23 +16,25 @@ export function RadiusShowcase() {
     <div>
       <SectionLabel>Tokens / Radius</SectionLabel>
       <SubheadingH3>Border radius.</SubheadingH3>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--renge-space-5)", alignItems: "flex-end" }}>
+      <div className="flex flex-wrap gap-renge-5 items-end">
         {radiusSteps.map(({ key, px, fib }) => (
-          <div key={key} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--renge-space-2)" }}>
-            <div style={{
-              width: key === "full" ? 120 : 72,
-              height: 72,
-              background: "var(--renge-color-accent-subtle)",
-              border: "1px solid var(--renge-color-accent)",
-              borderRadius: key === "full" ? "var(--renge-radius-full)" : `var(--renge-radius-${key})`,
-            }} />
-            <div style={{
-              fontSize: "var(--renge-font-size-sm)",
-              color: "var(--renge-color-fg-subtle)",
-              fontFamily: "var(--font-mono, monospace)",
-              textAlign: "center",
-              letterSpacing: "0.04em",
-            }}>
+          <div key={key} className="flex flex-col items-center gap-renge-2">
+            <div
+              className="bg-renge-accent-subtle"
+              style={{
+                width: key === "full" ? 120 : 72,
+                height: 72,
+                border: "1px solid var(--renge-color-accent)",
+                borderRadius: key === "full" ? "var(--renge-radius-full)" : `var(--renge-radius-${key})`,
+              }}
+            />
+            <div
+              className="text-renge-sm text-renge-fg-subtle text-center"
+              style={{
+                fontFamily: "var(--font-mono, monospace)",
+                letterSpacing: "0.04em",
+              }}
+            >
               <div>radius.{key}</div>
               <div style={{ opacity: 0.7 }}>{fib ? `${px}px` : "pill"}</div>
             </div>

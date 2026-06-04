@@ -57,65 +57,56 @@ export function ColorShowcase() {
   return (
     <div>
       <SectionLabel>Tokens / Color</SectionLabel>
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginBottom: "var(--renge-space-5)",
-        flexWrap: "wrap",
-        gap: "var(--renge-space-3)",
-      }}>
+      <div className="flex items-center justify-between mb-renge-5 flex-wrap gap-renge-3">
         <SubheadingH3>Color profiles.</SubheadingH3>
         <ProfileToggle />
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-6)" }}>
+      <div className="flex flex-col gap-renge-6">
         {colorGroups.map(({ label, tokens }) => (
           <div key={label}>
-            <p style={{
-              fontSize: "var(--renge-font-size-sm)",
-              color: "var(--renge-color-fg-subtle)",
-              fontFamily: "var(--font-body)",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              fontWeight: 600,
-              margin: 0,
-              marginBottom: "var(--renge-space-3)",
-            }}>
+            <h4
+              className="text-renge-sm text-renge-fg-subtle uppercase font-semibold m-0 mb-renge-3"
+              style={{
+                fontFamily: "var(--font-body)",
+                letterSpacing: "0.1em",
+              }}
+            >
               {label}
-            </p>
+            </h4>
             <div style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
               gap: "var(--renge-space-3)",
             }}>
               {tokens.map(({ key, jsKey }) => (
-                <div key={key} style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-1)" }}>
-                  <div style={{
-                    height: 52,
-                    borderRadius: "var(--renge-radius-2)",
-                    background: `var(--renge-color-${key})`,
-                    border: "1px solid var(--renge-color-border-subtle)",
-                    transition: "background 600ms var(--renge-easing-ease-in-out)",
-                  }} />
-                  <p style={{
-                    fontSize: "var(--renge-font-size-sm)",
-                    color: "var(--renge-color-fg-subtle)",
-                    fontFamily: "var(--font-mono, monospace)",
-                    margin: 0,
-                    letterSpacing: "0.04em",
-                  }}>
+                <div key={key} className="flex flex-col gap-renge-1">
+                  <div
+                    className="rounded-renge-2 border border-renge-border-subtle"
+                    style={{
+                      height: 52,
+                      background: `var(--renge-color-${key})`,
+                      transition: "background 600ms var(--renge-easing-ease-in-out)",
+                    }}
+                  />
+                  <code
+                    className="text-renge-sm text-renge-fg-subtle m-0"
+                    style={{
+                      fontFamily: "var(--font-mono, monospace)",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
                     color.{jsKey}
-                  </p>
-                  <p style={{
-                    fontSize: "var(--renge-font-size-sm)",
-                    color: "var(--renge-color-fg-subtle)",
-                    fontFamily: "var(--font-mono, monospace)",
-                    margin: 0,
-                    letterSpacing: "0.02em",
-                    opacity: 0.7,
-                  }}>
+                  </code>
+                  <code
+                    className="text-renge-sm text-renge-fg-subtle m-0"
+                    style={{
+                      fontFamily: "var(--font-mono, monospace)",
+                      letterSpacing: "0.02em",
+                      opacity: 0.7,
+                    }}
+                  >
                     --renge-color-{key}
-                  </p>
+                  </code>
                 </div>
               ))}
             </div>

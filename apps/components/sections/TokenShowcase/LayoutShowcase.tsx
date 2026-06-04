@@ -31,7 +31,7 @@ export function LayoutShowcase() {
       <SectionLabel>Tokens / Layout</SectionLabel>
       <SubheadingH3>PHI-derived dimensions.</SubheadingH3>
 
-      <p style={{
+      <h4 style={{
         fontSize: "var(--renge-font-size-sm)",
         color: "var(--renge-color-fg-subtle)",
         fontFamily: "var(--font-body)",
@@ -42,7 +42,7 @@ export function LayoutShowcase() {
         marginBottom: "var(--renge-space-4)",
       }}>
         Container widths — 200px × φⁿ
-      </p>
+      </h4>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-3)", marginBottom: "var(--renge-space-7)" }}>
         {containerSteps.map(({ key, px, exp }) => (
           <div
@@ -54,7 +54,7 @@ export function LayoutShowcase() {
               flexDirection: isMobile ? "column" : "row",
             }}
           >
-            <div style={{
+            <code style={{
               width: 28,
               fontSize: "var(--renge-font-size-sm)",
               color: "var(--renge-color-fg-subtle)",
@@ -63,7 +63,7 @@ export function LayoutShowcase() {
               letterSpacing: "0.04em",
             }}>
               {key}
-            </div>
+            </code>
             <div style={{ flex: isMobile ? undefined : 1, minWidth: 0, width: isMobile ? "100%" : undefined }}>
               <div style={{
                 width: `${(px / maxPx) * 100}%`,
@@ -76,15 +76,15 @@ export function LayoutShowcase() {
               }} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 2, flexShrink: 0 }}>
-              <span style={{
+              <code style={{
                 fontSize: "var(--renge-font-size-sm)",
                 color: "var(--renge-color-fg-subtle)",
                 fontFamily: "var(--font-mono, monospace)",
                 letterSpacing: "0.04em",
               }}>
                 200 × φ{SUPERSCRIPTS[exp]} = {px}px
-              </span>
-              <span style={{
+              </code>
+              <code style={{
                 fontSize: "var(--renge-font-size-sm)",
                 color: "var(--renge-color-fg-subtle)",
                 fontFamily: "var(--font-mono, monospace)",
@@ -92,13 +92,13 @@ export function LayoutShowcase() {
                 opacity: 0.7,
               }}>
                 container.{key} · --renge-container-{key}
-              </span>
+              </code>
             </div>
           </div>
         ))}
       </div>
 
-      <p style={{
+      <h4 style={{
         fontSize: "var(--renge-font-size-sm)",
         color: "var(--renge-color-fg-subtle)",
         fontFamily: "var(--font-body)",
@@ -109,7 +109,7 @@ export function LayoutShowcase() {
         marginBottom: "var(--renge-space-4)",
       }}>
         Aspect ratios — φ-derived
-      </p>
+      </h4>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--renge-space-5)", alignItems: "flex-end" }}>
         {aspectSteps.map(({ key, ratio, label, note }) => (
           <div key={key} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--renge-space-2)" }}>
@@ -127,8 +127,8 @@ export function LayoutShowcase() {
               textAlign: "center",
               letterSpacing: "0.04em",
             }}>
-              <div style={{ color: key === "golden" ? "var(--renge-color-accent)" : undefined }}>{label}</div>
-              <div style={{ opacity: 0.7 }}>{note}</div>
+              <span style={{ color: key === "golden" ? "var(--renge-color-accent)" : undefined }}>{label}</span>
+              <span style={{ opacity: 0.7 }}>{note}</span>
             </div>
           </div>
         ))}

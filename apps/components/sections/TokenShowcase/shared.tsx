@@ -13,15 +13,13 @@ export const fadeUp = {
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p style={{
-      fontSize: "var(--renge-font-size-sm)",
-      color: "var(--renge-color-accent)",
-      letterSpacing: "0.2em",
-      textTransform: "uppercase",
-      fontFamily: "var(--font-body)",
-      margin: 0,
-      marginBottom: "var(--renge-space-3)",
-    }}>
+    <p
+      className="text-renge-sm text-renge-accent uppercase m-0 mb-renge-3"
+      style={{
+        letterSpacing: "0.2em",
+        fontFamily: "var(--font-body)",
+      }}
+    >
       {children}
     </p>
   );
@@ -29,15 +27,13 @@ export function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export function SubheadingH3({ children }: { children: React.ReactNode }) {
   return (
-    <h3 style={{
-      fontFamily: "var(--font-display)",
-      fontSize: "var(--renge-font-size-xl)",
-      color: "var(--renge-color-fg)",
-      fontWeight: 400,
-      margin: 0,
-      marginBottom: "var(--renge-space-5)",
-      letterSpacing: "-0.01em",
-    }}>
+    <h3
+      className="text-renge-xl text-renge-fg font-normal m-0 mb-renge-5"
+      style={{
+        fontFamily: "var(--font-display)",
+        letterSpacing: "-0.01em",
+      }}
+    >
       {children}
     </h3>
   );

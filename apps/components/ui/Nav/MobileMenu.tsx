@@ -37,7 +37,7 @@ export function MobileMenu({ isOpen, onClose, resolveHref }: MobileMenuProps) {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                fontSize: "var(--renge-font-size-base)",
+                fontSize: "var(--renge-font-size-sm)",
                 color: "var(--renge-color-fg-subtle)",
                 fontFamily: "var(--font-body)",
                 padding: "var(--renge-space-3) 0",
@@ -74,7 +74,7 @@ export function MobileMenu({ isOpen, onClose, resolveHref }: MobileMenuProps) {
                       onClick={() => { onClose(); setDocsOpen(false); }}
                       style={{
                         display: "block",
-                        fontSize: "var(--renge-font-size-base)",
+                        fontSize: "var(--renge-font-size-sm)",
                         color: "var(--renge-color-fg-subtle)",
                         textDecoration: "none",
                         fontFamily: "var(--font-body)",
@@ -95,7 +95,7 @@ export function MobileMenu({ isOpen, onClose, resolveHref }: MobileMenuProps) {
                 href={resolveHref(href)}
                 onClick={onClose}
                 style={{
-                  fontSize: "var(--renge-font-size-base)",
+                  fontSize: "var(--renge-font-size-sm)",
                   color: "var(--renge-color-fg-subtle)",
                   textDecoration: "none",
                   fontFamily: "var(--font-body)",

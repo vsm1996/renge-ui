@@ -35,7 +35,7 @@ export function TokenShowcase() {
         background: "var(--renge-color-bg)",
       }}
     >
-      <Container px="0" size="md">
+      <Container px="0" size="lg">
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}

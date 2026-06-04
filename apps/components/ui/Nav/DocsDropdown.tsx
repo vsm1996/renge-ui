@@ -27,7 +27,7 @@ export function DocsDropdown({ isOpen, onToggle, onClose }: DocsDropdownProps) {
       <button
         onClick={onToggle}
         style={{
-          fontSize: "var(--renge-font-size-sm)",
+          fontSize: "var(--renge-font-size-xs)",
           color: isOpen ? "var(--renge-color-fg)" : "var(--renge-color-fg-subtle)",
           background: "none",
           border: "none",

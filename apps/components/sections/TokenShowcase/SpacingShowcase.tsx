@@ -16,45 +16,47 @@ export function SpacingShowcase() {
     <div>
       <SectionLabel>Tokens / Spacing</SectionLabel>
       <SubheadingH3>Fibonacci spacing.</SubheadingH3>
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-3)" }}>
+      <div className="flex flex-col gap-renge-3">
         {fibSteps.map(({ step, px, fib }) => (
-          <div key={step} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-4)" }}>
-            <div style={{
-              width: 28,
-              fontSize: "var(--renge-font-size-sm)",
-              color: "var(--renge-color-fg-subtle)",
-              fontFamily: "var(--font-mono, monospace)",
-              flexShrink: 0,
-              letterSpacing: "0.04em",
-            }}>
-              {step}
-            </div>
-            <div style={{
-              width: Math.min(px, isMobile ? 120 : 280),
-              height: 8,
-              background: "var(--renge-color-accent)",
-              borderRadius: "var(--renge-radius-full)",
-              opacity: 0.5 + (step / 10) * 0.5,
-              flexShrink: 0,
-            }} />
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <span style={{
-                fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-subtle)",
+          <div key={step} className="flex items-center gap-renge-4">
+            <span
+              className="text-renge-sm text-renge-fg-subtle flex-shrink-0"
+              style={{
+                width: 28,
                 fontFamily: "var(--font-mono, monospace)",
                 letterSpacing: "0.04em",
-              }}>
+              }}
+            >
+              {step}
+            </span>
+            <div
+              className="bg-renge-accent rounded-renge-full flex-shrink-0"
+              style={{
+                width: Math.min(px, isMobile ? 120 : 280),
+                height: 8,
+                opacity: 0.5 + (step / 10) * 0.5,
+              }}
+            />
+            <div className="flex flex-col" style={{ gap: 2 }}>
+              <code
+                className="text-renge-sm text-renge-fg-subtle"
+                style={{
+                  fontFamily: "var(--font-mono, monospace)",
+                  letterSpacing: "0.04em",
+                }}
+              >
                 {fib} × 4 = {px}px
-              </span>
-              <span style={{
-                fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-subtle)",
-                fontFamily: "var(--font-mono, monospace)",
-                letterSpacing: "0.02em",
-                opacity: 0.7,
-              }}>
+              </code>
+              <code
+                className="text-renge-sm text-renge-fg-subtle"
+                style={{
+                  fontFamily: "var(--font-mono, monospace)",
+                  letterSpacing: "0.02em",
+                  opacity: 0.7,
+                }}
+              >
                 space[{step}] · --renge-space-{step}
-              </span>
+              </code>
             </div>
           </div>
         ))}

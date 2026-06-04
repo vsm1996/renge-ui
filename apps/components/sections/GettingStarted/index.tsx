@@ -31,38 +31,28 @@ export function GettingStarted() {
       id="start"
       style={{
         padding: `var(--renge-space-8) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
-        background: "var(--renge-color-bg-subtle)",
-        borderTop: "1px solid var(--renge-color-border-subtle)",
       }}
+      className="bg-renge-bg-subtle border-t border-renge-border-subtle"
     >
-      <Container size="md" px="0">
+      <Container size="lg" px="0">
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           custom={0}
           variants={fadeUp}
-          style={{ marginBottom: "var(--renge-space-7)" }}
+          className="mb-renge-7"
         >
           <p style={{
-            fontSize: "var(--renge-font-size-sm)",
-            color: "var(--renge-color-accent)",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
             fontFamily: "var(--font-body)",
-            margin: 0,
-            marginBottom: "var(--renge-space-3)",
-          }}>
+            letterSpacing: "0.2em",
+          }} className="text-renge-sm text-renge-accent uppercase m-0 mb-renge-3">
             Get started
           </p>
           <h2 style={{
             fontFamily: "var(--font-display)",
             fontSize: "clamp(var(--renge-font-size-xl), 4vw, var(--renge-font-size-2xl))",
-            color: "var(--renge-color-fg)",
-            fontWeight: 400,
-            margin: 0,
-            marginBottom: "var(--renge-space-5)",
             letterSpacing: "-0.02em",
-          }}>
+          }} className="text-renge-fg font-normal m-0 mb-renge-5">
             Install and consume.
           </h2>
           <CodeBlock code="pnpm add @renge-ui/tokens" />
@@ -77,7 +67,7 @@ export function GettingStarted() {
           <Stack
             direction="horizontal"
             gap="2"
-            style={{ flexWrap: "wrap", marginBottom: "var(--renge-space-4)" }}
+            className="flex-wrap mb-renge-4"
           >
             {OPTIONS.map((o) => (
               <button
@@ -102,12 +92,8 @@ export function GettingStarted() {
           </Stack>
 
           <p style={{
-            fontSize: "var(--renge-font-size-sm)",
-            color: "var(--renge-color-fg-subtle)",
             fontFamily: "var(--font-body)",
-            margin: 0,
-            marginBottom: "var(--renge-space-4)",
-          }}>
+          }} className="text-renge-sm text-renge-fg-subtle m-0 mb-renge-4">
             {active.description}
           </p>
           <CodeBlock code={active.code} />

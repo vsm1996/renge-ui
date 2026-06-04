@@ -52,15 +52,15 @@ export function TypeScaleShowcase() {
                   : "The ratios that appear in living things."}
               </span>
               <div style={{ display: "flex", flexDirection: "column", gap: 2, flexShrink: 0 }}>
-                <span style={{
+                <code style={{
                   fontSize: "var(--renge-font-size-sm)",
                   color: "var(--renge-color-fg-subtle)",
                   fontFamily: "var(--font-mono, monospace)",
                   letterSpacing: "0.04em",
                 }}>
                   {label} · {px}px
-                </span>
-                <span style={{
+                </code>
+                <code style={{
                   fontSize: "var(--renge-font-size-sm)",
                   color: "var(--renge-color-fg-subtle)",
                   fontFamily: "var(--font-mono, monospace)",
@@ -68,7 +68,7 @@ export function TypeScaleShowcase() {
                   opacity: 0.7,
                 }}>
                   fontSize.{label}
-                </span>
+                </code>
               </div>
             </div>
           );

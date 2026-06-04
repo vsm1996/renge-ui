@@ -12,7 +12,7 @@ import { MobileMenu } from "./MobileMenu";
 import { TOP_LINKS } from "./links";
 
 const linkStyle = {
-  fontSize: "var(--renge-font-size-sm)",
+  fontSize: "var(--renge-font-size-xs)",
   color: "var(--renge-color-fg-subtle)",
   textDecoration: "none",
   fontFamily: "var(--font-body)",
@@ -21,7 +21,7 @@ const linkStyle = {
 } as const;
 
 export function Nav() {
-  const isMobile = useBreakpoint();
+  const isMobile = useBreakpoint(1224);
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
@@ -59,7 +59,7 @@ export function Nav() {
           backdropFilter: "blur(0px)",
         }}
       >
-        <Container size="md" px={isMobile ? "4" : "5"} style={{ paddingTop: "var(--renge-space-3)", paddingBottom: "var(--renge-space-3)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Container size="lg" px={isMobile ? "4" : "0"} style={{ paddingTop: "var(--renge-space-3)", paddingBottom: "var(--renge-space-3)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <a href="/" style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-2)", textDecoration: "none", color: "var(--renge-color-fg)" }}>
             <Lotus size={26} animate={false} />
             <span style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-lg)", letterSpacing: "-0.01em" }}>

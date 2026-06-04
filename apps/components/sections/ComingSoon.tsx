@@ -34,12 +34,7 @@ export function ComingSoon() {
     <section
       ref={ref}
       id="react"
-      style={{
-        padding: `var(--renge-space-8) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
-        background: "var(--renge-color-bg)",
-        borderTop: "1px solid var(--renge-color-border-subtle)",
-        textAlign: "center",
-      }}
+      className={`bg-renge-bg border-t border-renge-border-subtle text-center ${isMobile ? "px-renge-4" : "px-renge-5"} py-renge-8`}
     >
       <Container px="0" style={{ maxWidth: 640 }}>
         <motion.div
@@ -47,18 +42,8 @@ export function ComingSoon() {
           animate={inView ? "visible" : "hidden"}
           custom={0}
           variants={fadeUp}
-          style={{
-            display: "inline-block",
-            padding: "var(--renge-space-2) var(--renge-space-4)",
-            background: "var(--renge-color-accent-subtle)",
-            borderRadius: "var(--renge-radius-full)",
-            fontSize: "var(--renge-font-size-sm)",
-            color: "var(--renge-color-accent)",
-            fontFamily: "var(--font-body)",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            marginBottom: "var(--renge-space-5)",
-          }}
+          className="inline-block px-renge-4 py-renge-2 bg-renge-accent-subtle rounded-renge-full text-renge-sm text-renge-accent uppercase mb-renge-5"
+          style={{ letterSpacing: "0.15em", fontFamily: "var(--font-body)" }}
         >
           Available now
         </motion.div>
@@ -68,13 +53,10 @@ export function ComingSoon() {
           animate={inView ? "visible" : "hidden"}
           custom={0.1}
           variants={fadeUp}
+          className="text-renge-fg font-normal m-0 mb-renge-4"
           style={{
             fontFamily: "var(--font-display)",
             fontSize: isMobile ? "clamp(28px, 8vw, 48px)" : "clamp(32px, 4vw, 56px)",
-            color: "var(--renge-color-fg)",
-            fontWeight: 400,
-            margin: 0,
-            marginBottom: "var(--renge-space-4)",
             letterSpacing: "-0.02em",
           }}
         >
@@ -86,46 +68,25 @@ export function ComingSoon() {
           animate={inView ? "visible" : "hidden"}
           custom={0.2}
           variants={fadeUp}
-          style={{
-            fontSize: "var(--renge-font-size-lg)",
-            color: "var(--renge-color-fg-subtle)",
-            lineHeight: "var(--renge-line-height-lg)",
-            margin: 0,
-            marginBottom: "var(--renge-space-6)",
-            fontFamily: "var(--font-body)",
-          }}
+          className="text-renge-lg text-renge-fg-subtle leading-renge-lg m-0 mb-renge-6"
+          style={{ fontFamily: "var(--font-body)" }}
         >
           21 React components built on the token system.
           Proportional. Accessible. Composable.
         </motion.p>
 
-        {/* Component chip grid */}
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           custom={0.25}
           variants={fadeUp}
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "var(--renge-space-2)",
-            justifyContent: "center",
-            marginBottom: "var(--renge-space-7)",
-          }}
+          className="flex flex-wrap gap-renge-2 justify-center mb-renge-7"
         >
           {COMPONENTS.map((name) => (
             <span
               key={name}
-              style={{
-                padding: "var(--renge-space-1) var(--renge-space-3)",
-                borderRadius: "var(--renge-radius-full)",
-                border: "1px solid var(--renge-color-border)",
-                fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-subtle)",
-                fontFamily: "var(--font-mono, monospace)",
-                letterSpacing: "0.02em",
-                background: "var(--renge-color-bg-subtle)",
-              }}
+              className="px-renge-3 py-renge-1 rounded-renge-full border border-renge-border text-renge-sm text-renge-fg-subtle bg-renge-bg-subtle"
+              style={{ fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.02em" }}
             >
               {name}
             </span>
@@ -138,62 +99,41 @@ export function ComingSoon() {
           custom={0.35}
           variants={fadeUp}
         >
-          <Stack
-            direction={isMobile ? "vertical" : "horizontal"}
-            gap="3"
-            justify="center"
-            align="center"
-          >
-          <a
-            href="/docs"
-            style={{
-              padding: "var(--renge-space-3) var(--renge-space-6)",
-              borderRadius: "var(--renge-radius-full)",
-              border: "none",
-              background: "var(--renge-color-accent)",
-              color: "var(--renge-color-fg-inverse)",
-              fontSize: "var(--renge-font-size-base)",
-              fontFamily: "var(--font-body)",
-              cursor: "pointer",
-              letterSpacing: "0.04em",
-              textDecoration: "none",
-              transition: "background 200ms var(--renge-easing-ease-out)",
-              display: "inline-block",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "var(--renge-color-accent-hover)")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "var(--renge-color-accent)")}
-          >
-            View components
-          </a>
-          <a
-            href="https://www.npmjs.com/package/@renge-ui/react"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              padding: "var(--renge-space-3) var(--renge-space-6)",
-              borderRadius: "var(--renge-radius-full)",
-              border: "1px solid var(--renge-color-border)",
-              background: "transparent",
-              color: "var(--renge-color-fg-subtle)",
-              fontSize: "var(--renge-font-size-base)",
-              fontFamily: "var(--font-mono, monospace)",
-              cursor: "pointer",
-              letterSpacing: "0.04em",
-              textDecoration: "none",
-              transition: "border-color 200ms var(--renge-easing-ease-out), color 200ms var(--renge-easing-ease-out)",
-              display: "inline-block",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--renge-color-accent)";
-              e.currentTarget.style.color = "var(--renge-color-fg)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "var(--renge-color-border)";
-              e.currentTarget.style.color = "var(--renge-color-fg-subtle)";
-            }}
-          >
-            pnpm add @renge-ui/react
-          </a>
+          <Stack direction={isMobile ? "vertical" : "horizontal"} gap="3" justify="center" align="center">
+            <a
+              href="/docs"
+              className="px-renge-4 py-renge-3 rounded-renge-full bg-renge-accent text-renge-fg-inverse text-renge-base inline-block no-underline cursor-pointer"
+              style={{
+                fontFamily: "var(--font-body)",
+                letterSpacing: "0.04em",
+                transition: "background 200ms var(--renge-easing-ease-out)",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "var(--renge-color-accent-hover)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "var(--renge-color-accent)")}
+            >
+              View components
+            </a>
+            <a
+              href="https://www.npmjs.com/package/@renge-ui/react"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-renge-4 py-renge-3 rounded-renge-full border border-renge-border text-renge-fg-subtle text-renge-base inline-block no-underline cursor-pointer"
+              style={{
+                fontFamily: "var(--font-mono, monospace)",
+                letterSpacing: "0.04em",
+                transition: "border-color 200ms var(--renge-easing-ease-out), color 200ms var(--renge-easing-ease-out)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "var(--renge-color-accent)";
+                e.currentTarget.style.color = "var(--renge-color-fg)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--renge-color-border)";
+                e.currentTarget.style.color = "var(--renge-color-fg-subtle)";
+              }}
+            >
+              pnpm add @renge-ui/react
+            </a>
           </Stack>
         </motion.div>
       </Container>

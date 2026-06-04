@@ -134,7 +134,7 @@ export function ProfileToggle() {
                 border: `1px solid ${active ? "var(--renge-color-accent)" : "var(--renge-color-border)"}`,
                 background: active ? "var(--renge-color-accent-subtle)" : "transparent",
                 color: active ? "var(--renge-color-accent)" : "var(--renge-color-fg-subtle)",
-                fontSize: "var(--renge-font-size-sm)",
+                fontSize: "var(--renge-font-size-xs)",
                 fontFamily: "var(--font-body)",
                 cursor: "pointer",
                 letterSpacing: "0.05em",

@@ -26,8 +26,7 @@ function EasingRow({ label, curve }: { label: string; curve: [number, number, nu
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-4)" }}>
-      <div style={{
-        width: "auto",
+      <code style={{
         fontSize: "var(--renge-font-size-sm)",
         color: "var(--renge-color-fg-subtle)",
         fontFamily: "var(--font-mono, monospace)",
@@ -35,7 +34,7 @@ function EasingRow({ label, curve }: { label: string; curve: [number, number, nu
         letterSpacing: "0.04em",
       }}>
         {label}
-      </div>
+      </code>
       <div ref={trackRef} style={{ flex: 1, position: "relative", height: 32 }}>
         <motion.div
           style={{

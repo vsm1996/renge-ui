@@ -52,39 +52,36 @@ export function Philosophy() {
     <section
       ref={ref}
       id="philosophy"
+      className="bg-renge-bg-subtle border-t border-b border-renge-border-subtle"
       style={{
         padding: `var(--renge-space-8) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
-        background: "var(--renge-color-bg-subtle)",
-        borderTop: "1px solid var(--renge-color-border-subtle)",
-        borderBottom: "1px solid var(--renge-color-border-subtle)",
       }}
     >
-      <Container px="0" size="md">
+      <Container px="0" size="lg">
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           custom={0}
           variants={fadeUp}
-          style={{ marginBottom: "var(--renge-space-7)", textAlign: "center" }}
+          className="mb-renge-7 text-center"
         >
-          <p style={{
-            fontSize: "var(--renge-font-size-xs)",
-            color: "var(--renge-color-accent)",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            fontFamily: "var(--font-body)",
-            marginBottom: "var(--renge-space-3)",
-          }}>
+          <p
+            className="text-renge-xs text-renge-accent uppercase mb-renge-3"
+            style={{
+              letterSpacing: "0.2em",
+              fontFamily: "var(--font-body)",
+            }}
+          >
             The argument
           </p>
-          <h2 style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(var(--renge-font-size-xl), 4vw, var(--renge-font-size-2xl))",
-            color: "var(--renge-color-fg)",
-            fontWeight: 400,
-            margin: 0,
-            letterSpacing: "-0.02em",
-          }}>
+          <h2
+            className="text-renge-fg font-normal m-0"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(var(--renge-font-size-xl), 4vw, var(--renge-font-size-2xl))",
+              letterSpacing: "-0.02em",
+            }}
+          >
             Why natural mathematics?
           </h2>
         </motion.div>
@@ -104,54 +101,43 @@ export function Philosophy() {
               <Stack
                 direction="vertical"
                 gap="4"
-                style={{
-                  padding: "var(--renge-space-6)",
-                  background: "var(--renge-color-bg)",
-                  border: "1px solid var(--renge-color-border-subtle)",
-                  borderRadius: "var(--renge-radius-2)",
-                  height: "100%",
-                }}
+                className="p-renge-6 bg-renge-bg border border-renge-border-subtle rounded-renge-2"
+                style={{ height: "100%" }}
               >
-                <div style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "var(--renge-font-size-3xl)",
-                  color: "var(--renge-color-accent)",
-                  lineHeight: 1,
-                  opacity: 0.6,
-                }}>
+                <p
+                  aria-hidden="true"
+                  className="text-renge-3xl text-renge-accent leading-none opacity-60 m-0"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
                   {p.symbol}
-                </div>
+                </p>
                 <div>
-                  <h3 style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "clamp(var(--renge-font-size-lg), 3vw, var(--renge-font-size-xl))",
-                    color: "var(--renge-color-fg)",
-                    fontWeight: 400,
-                    margin: 0,
-                    marginBottom: "var(--renge-space-1)",
-                  }}>
+                  <h3
+                    className="text-renge-fg font-normal m-0 mb-renge-1"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "clamp(var(--renge-font-size-lg), 3vw, var(--renge-font-size-xl))",
+                    }}
+                  >
                     {p.title}
                   </h3>
-                  <p style={{
-                    fontSize: "var(--renge-font-size-sm)",
-                    color: "var(--renge-color-accent)",
-                    fontFamily: "var(--font-mono, monospace)",
-                    margin: 0,
-                    letterSpacing: "0.05em",
-                  }}>
+                  <p
+                    className="text-renge-sm text-renge-accent m-0"
+                    style={{
+                      fontFamily: "var(--font-mono, monospace)",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
                     {p.subtitle}
                   </p>
                 </div>
                 <div style={{ minHeight: 60 }}>
                   <p.Viz />
                 </div>
-                <p style={{
-                  fontSize: "var(--renge-font-size-base)",
-                  color: "var(--renge-color-fg-subtle)",
-                  lineHeight: "var(--renge-line-height-base)",
-                  margin: 0,
-                  fontFamily: "var(--font-body)",
-                }}>
+                <p
+                  className="text-renge-base text-renge-fg-subtle leading-renge-base m-0"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
                   {p.body}
                 </p>
               </Stack>

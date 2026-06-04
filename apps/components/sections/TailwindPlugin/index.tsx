@@ -64,48 +64,34 @@ export function TailwindPlugin() {
       id="tailwind"
       style={{
         padding: `var(--renge-space-8) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"}`,
-        background: "var(--renge-color-bg)",
-        borderTop: "1px solid var(--renge-color-border-subtle)",
       }}
+      className="bg-renge-bg border-t border-renge-border-subtle"
     >
-      <Container px="0" size="md">
+      <Container px="0" size="lg">
         <motion.div
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           custom={0}
           variants={fadeUp}
-          style={{ marginBottom: "var(--renge-space-7)" }}
+          className="mb-renge-7"
         >
           <p style={{
-            fontSize: "var(--renge-font-size-sm)",
-            color: "var(--renge-color-accent)",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
             fontFamily: "var(--font-body)",
-            margin: 0,
-            marginBottom: "var(--renge-space-3)",
-          }}>
+            letterSpacing: "0.2em",
+          }} className="text-renge-sm text-renge-accent uppercase m-0 mb-renge-3">
             @renge-ui/tailwind
           </p>
           <h2 style={{
             fontFamily: "var(--font-display)",
             fontSize: "clamp(var(--renge-font-size-xl), 4vw, var(--renge-font-size-2xl))",
-            color: "var(--renge-color-fg)",
-            fontWeight: 400,
-            margin: 0,
-            marginBottom: "var(--renge-space-5)",
             letterSpacing: "-0.02em",
-          }}>
+          }} className="text-renge-fg font-normal m-0 mb-renge-5">
             Layout without compromise.
           </h2>
           <p style={{
-            fontSize: "var(--renge-font-size-lg)",
-            color: "var(--renge-color-fg-subtle)",
-            lineHeight: "var(--renge-line-height-lg)",
-            margin: 0,
-            maxWidth: "var(--renge-container-sm)",
             fontFamily: "var(--font-body)",
-          }}>
+            maxWidth: "var(--renge-container-sm)",
+          }} className="text-renge-lg text-renge-fg-subtle leading-renge-lg m-0">
             One plugin line. Every layout primitive derives from the same mathematical
             foundation as every spacing, color, and motion token.
           </p>
@@ -150,21 +136,12 @@ export function TailwindPlugin() {
             alignItems: "start",
           }}
         >
-          <div style={{
-            background: "var(--renge-color-bg-inverse)",
-            borderRadius: "var(--renge-radius-3)",
-            padding: "var(--renge-space-5)",
-            border: "1px solid var(--renge-color-border)",
-            overflow: "auto",
-          }}>
-            <pre style={{ margin: 0 }}>
+          <div className="bg-renge-bg-inverse rounded-renge-3 p-renge-5 border border-renge-border overflow-auto">
+            <pre className="m-0">
               <code style={{
                 fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
-                fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-inverse)",
                 lineHeight: "1.8",
-                display: "block",
-              }}>{`/* globals.css — one line */
+              }} className="text-renge-sm text-renge-fg-inverse block">{`/* globals.css — one line */
 @plugin "@renge-ui/tailwind/plugin";
 
 /* HTML — activate a color profile */
@@ -183,60 +160,34 @@ export function TailwindPlugin() {
             </pre>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-4)" }}>
+          <div className="flex flex-col gap-renge-4">
             <div>
               <p style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "var(--renge-font-size-sm)",
-                color: "var(--renge-color-fg-muted)",
                 letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                margin: 0,
-                marginBottom: "var(--renge-space-2)",
-              }}>
+              }} className="text-renge-sm text-renge-fg-muted uppercase m-0 mb-renge-2">
                 Install
               </p>
-              <div style={{
-                background: "var(--renge-color-bg-inverse)",
-                borderRadius: "var(--renge-radius-2)",
-                padding: "var(--renge-space-3) var(--renge-space-4)",
-                border: "1px solid var(--renge-color-border)",
-              }}>
+              <div className="bg-renge-bg-inverse rounded-renge-2 px-renge-4 py-renge-3 border border-renge-border">
                 <code style={{
                   fontFamily: "var(--font-mono, monospace)",
-                  fontSize: "var(--renge-font-size-sm)",
-                  color: "var(--renge-color-fg-inverse)",
-                  whiteSpace: "nowrap",
-                }}>
+                }} className="text-renge-sm text-renge-fg-inverse whitespace-nowrap">
                   pnpm add @renge-ui/tailwind
                 </code>
               </div>
             </div>
 
-            <div style={{
-              padding: "var(--renge-space-4)",
-              background: "var(--renge-color-bg-subtle)",
-              borderRadius: "var(--renge-radius-2)",
-              border: "1px solid var(--renge-color-border-subtle)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--renge-space-2)",
-            }}>
+            <div className="p-renge-4 bg-renge-bg-subtle rounded-renge-2 border border-renge-border-subtle flex flex-col gap-renge-2">
               {utilityList.map(([cls, note]) => (
-                <div key={cls} style={{ display: "flex", justifyContent: "space-between", gap: "var(--renge-space-4)" }}>
+                <div key={cls} className="flex justify-between gap-renge-4">
                   <code style={{
                     fontFamily: "var(--font-mono, monospace)",
-                    fontSize: "var(--renge-font-size-sm)",
-                    color: "var(--renge-color-accent)",
-                  }}>
+                  }} className="text-renge-sm text-renge-accent">
                     {cls}
                   </code>
                   <span style={{
                     fontFamily: "var(--font-body)",
-                    fontSize: "var(--renge-font-size-sm)",
-                    color: "var(--renge-color-fg-muted)",
-                    whiteSpace: "nowrap",
-                  }}>
+                  }} className="text-renge-sm text-renge-fg-muted whitespace-nowrap">
                     {note}
                   </span>
                 </div>
