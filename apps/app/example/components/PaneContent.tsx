@@ -11,7 +11,7 @@ export function PaneContent({ t }: { t: StyleMap }) {
       }}
     >
       {/* Hero */}
-      <div style={{ marginBottom: t.space3xl }}>
+      <div style={{ marginBlock: t.space3xl }}>
         <div
           style={{
             fontSize: t.sizeSm,
