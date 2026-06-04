@@ -15,7 +15,6 @@ export default function Home() {
       <main id="main">
         <Hero />
         <Philosophy />
-        <PhiInterstitial />
         <TokenShowcase />
         <GettingStarted />
         <ComingSoon />
