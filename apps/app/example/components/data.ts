@@ -32,14 +32,14 @@ export const DIFF_ROWS = [
   {
     property: "Space between cards",
     arbitrary: "16px",
-    renge: "var(--renge-space-4) = 30px",
-    note: "5 × 6  (Fibonacci × base unit)",
+    renge: "var(--renge-space-4) = 20px",
+    note: "5 × 4 (Fibonacci × base unit)",
   },
   {
     property: "Section padding-top",
     arbitrary: "48px",
-    renge: "var(--renge-space-7) = 126px",
-    note: "21 × 6  (Fibonacci × base unit)",
+    renge: "var(--renge-space-7) = 84px",
+    note: "21 × 4 (Fibonacci × base unit)",
   },
   {
     property: "Card padding",
@@ -56,20 +56,20 @@ export const DIFF_ROWS = [
   {
     property: "Eyebrow font-size",
     arbitrary: "11px",
-    renge: "var(--renge-font-size-xs) ≈ 11px",
-    note: "base × φ⁻²",
+    renge: "var(--renge-font-size-xs) ≈ 12.6px",
+    note: "16px × φ⁻⁰·⁵",
   },
   {
     property: "Body font-size",
     arbitrary: "14px",
-    renge: "var(--renge-font-size-base) ≈ 13px",
-    note: "base × φ⁻¹",
+    renge: "var(--renge-font-size-base) = 16px",
+    note: "16px base (φ⁰)",
   },
   {
     property: "Heading font-size",
     arbitrary: "28px",
-    renge: "var(--renge-font-size-2xl) ≈ 34px",
-    note: "base × φ³",
+    renge: "var(--renge-font-size-2xl) ≈ 67.8px",
+    note: "16px × φ³",
   },
   {
     property: "Line height (body)",
