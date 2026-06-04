@@ -44,6 +44,77 @@ export function AnimationsDocs() {
       </Callout>
 
       <Stack gap="3">
+        <Heading level={3} size="lg">Components with animation prop</Heading>
+        <Text as="p" color="fg-subtle" style={{ margin: 0 }}>
+          The <code>animation</code> prop is available on: <strong>Heading</strong>, <strong>Text</strong>, <strong>Card</strong>, <strong>Section</strong>, <strong>Button</strong>, <strong>IconButton</strong>. All other elements can use the CSS variable directly via the <code>style</code> prop.
+        </Text>
+        <Code>{`{/* animation prop — typed to AnimationName */}
+<Heading level={2} animation="breathe">Living proportion.</Heading>
+<Text size="lg" animation="float">Natural mathematics.</Text>
+<Card animation="bloom"><Text>Enters with bloom.</Text></Card>
+<Button animation="pulse">Subscribe</Button>
+
+{/* Any element — via CSS variable */}
+<div style={{ animation: "var(--renge-animation-spiral-in)" }}>
+  Custom element.
+</div>
+
+{/* Combine with duration tokens for speed control */}
+<div style={{
+  animation: "var(--renge-animation-float)",
+  animationDuration: "var(--renge-duration-7)",  // 2100ms — faster than default
+}}>
+  Faster float.
+</div>`}</Code>
+      </Stack>
+
+      <Stack gap="3">
+        <Heading level={3} size="lg">Easing tokens — --renge-easing-{"{curve}"}</Heading>
+        <Text as="p" color="fg-subtle" style={{ margin: 0 }}>
+          All control points derived from φ: A = 1/φ² ≈ 0.382, B = 1/φ ≈ 0.618. Use these on any CSS <code>transition</code> or <code>animation</code>.
+        </Text>
+        <div style={{ overflowX: "auto", borderRadius: "var(--renge-radius-2)", border: "1px solid var(--renge-color-border-subtle)" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr style={{ background: "var(--renge-color-bg-subtle)" }}>
+                {["Token", "Curve", "Use"].map(h => (
+                  <th key={h} style={{ padding: "var(--renge-space-2) var(--renge-space-4)", textAlign: "left", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {([
+                ["--renge-easing-linear",      "linear",                               "Progress bars, scrubbing"],
+                ["--renge-easing-ease-out",     "cubic-bezier(0.382, 1, 0.618, 1)",    "Entrances — fast start, slow settle"],
+                ["--renge-easing-ease-in",      "cubic-bezier(0.382, 0, 1, 0.618)",    "Exits — slow start, fast end"],
+                ["--renge-easing-ease-in-out",  "cubic-bezier(0.382, 0, 0.618, 1)",    "Balanced state transitions"],
+                ["--renge-easing-spring",       "cubic-bezier(0.382, 0.618, 0.618, 1.382)", "Playful overshoot"],
+              ] as [string, string, string][]).map(([tok, curve, use]) => (
+                <tr key={tok}>
+                  <td style={{ padding: "var(--renge-space-2) var(--renge-space-4)", fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", borderBottom: "1px solid var(--renge-color-border-subtle)", whiteSpace: "nowrap" }}>{tok}</td>
+                  <td style={{ padding: "var(--renge-space-2) var(--renge-space-4)", fontFamily: "var(--font-mono, monospace)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", borderBottom: "1px solid var(--renge-color-border-subtle)", whiteSpace: "nowrap" }}>{curve}</td>
+                  <td style={{ padding: "var(--renge-space-2) var(--renge-space-4)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{use}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Code>{`{/* Tailwind utility classes */}
+<div class="ease-renge-ease-out duration-renge-3 transition-all">
+  Entrances.
+</div>
+
+{/* CSS directly */}
+.my-element {
+  transition: transform var(--renge-duration-3) var(--renge-easing-ease-out);
+}
+
+{/* rengeVars — no string construction */}
+import { rengeVars } from "@renge-ui/tokens";
+style={{ transition: \`opacity \${rengeVars.duration[3]} \${rengeVars.easing.out}\` }}`}</Code>
+      </Stack>
+
+      <Stack gap="3">
         <Heading level={3} size="lg">Duration reference</Heading>
         <div style={{ overflowX: "auto", borderRadius: "var(--renge-radius-2)", border: "1px solid var(--renge-color-border-subtle)" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>

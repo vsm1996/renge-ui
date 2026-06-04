@@ -152,13 +152,13 @@ export function SectionDocs() {
 
 export function ContainerDocs() {
   return (
-    <ComponentSection id="container" title="Container" description="Centered max-width wrapper. Max-widths follow Fibonacci-proportioned breakpoints: 520, 768, 1024, 1440. Horizontal padding defaults to space-5 (32px = Fibonacci×8×4).">
+    <ComponentSection id="container" title="Container" description="Centered max-width wrapper. Each tier is 200px × φⁿ — every step is exactly the golden ratio wider than the last. Horizontal padding defaults to space-5 (32px).">
       <Demo label="Sizes (shown at reduced scale)">
         <Stack gap="3" style={{ width: "100%" }}>
           {([
-            { size: "sm" as const, label: "sm — 520px" },
-            { size: "md" as const, label: "md — 768px" },
-            { size: "lg" as const, label: "lg — 1024px (default)" },
+            { size: "sm" as const, label: "sm — 524px (200 × φ²)" },
+            { size: "md" as const, label: "md — 847px (200 × φ³)" },
+            { size: "lg" as const, label: "lg — 1371px (200 × φ⁴, default)" },
           ]).map(({ size, label }) => (
             <div key={size} style={{ border: "1px dashed var(--renge-color-border)", borderRadius: "var(--renge-radius-2)", padding: "var(--renge-space-2)" }}>
               <Container size={size} px="0" style={{ background: "var(--renge-color-accent-subtle)", borderRadius: "var(--renge-radius-1)", padding: "var(--renge-space-2)" }}>
@@ -183,7 +183,7 @@ export function ContainerDocs() {
   <Grid columns={3} gap="5">…</Grid>
 </Container>`}</Code>
       <PropsTable>
-        <PropRow name="size" type='"sm" | "md" | "lg" | "xl" | "full"' defaultVal='"lg"' desc="Max-width: 520 / 768 / 1024 / 1440 / 100%." />
+        <PropRow name="size" type='"sm" | "md" | "lg" | "xl" | "full"' defaultVal='"lg"' desc="Max-width: 524px (200×φ²) / 847px (200×φ³) / 1371px (200×φ⁴) / 2218px (200×φ⁵) / 100%." />
         <PropRow name="px" type='"0" – "6"' defaultVal='"5"' desc="Horizontal padding — Fibonacci spacing token." />
       </PropsTable>
     </ComponentSection>
