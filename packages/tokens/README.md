@@ -188,12 +188,12 @@ Growth is non-linear by design. Steps 1–4 are tight (4–20px). Steps 5–8 op
 
 ### Typography — `--renge-font-size-{size}` + `--renge-line-height-{size}`
 
-Formula: `typeBase × scaleRatio^n` where n ranges from −2 to +5.
+Formula: `typeBase × scaleRatio^n`. Steps use fractional exponents for finer gradation at the small end.
 
 | Token | Formula | Default |
 |-------|---------|---------|
-| `--renge-font-size-xs` | base × φ⁻² | ~6.1px |
-| `--renge-font-size-sm` | base × φ⁻¹ | ~9.9px |
+| `--renge-font-size-xs` | base × φ^(-0.5) | ~12.58px |
+| `--renge-font-size-sm` | base × φ^(-0.25) | ~14.19px |
 | `--renge-font-size-base` | base × φ⁰ | 16px |
 | `--renge-font-size-lg` | base × φ¹ | ~25.9px |
 | `--renge-font-size-xl` | base × φ² | ~41.9px |
@@ -406,7 +406,7 @@ const colors = getProfile('earth', 'dark');
 
 **Fibonacci spacing is non-linear.** `space-3` + `space-3` ≠ `space-4`. Design to the scale, not around it.
 
-**φ-typography produces extreme values at the edges.** `xs` (~6px) and `4xl` (~177px) are rarely useful as body text. The scale is designed for display headings. Stay between `sm` and `xl` for reading copy.
+**φ-typography produces extreme values at the large end.** `4xl` (~177px) is rarely useful as body text. The small end (`xs` ~11px, `sm` ~12.6px) uses fractional exponents for usable caption and label sizes. Stay between `xs` and `xl` for reading copy.
 
 **OKLCH requires modern browsers.** Chrome 111+, Firefox 113+, Safari 16.4+.
 

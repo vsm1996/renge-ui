@@ -19,7 +19,7 @@ export function Footer() {
         borderTop: "1px solid var(--renge-color-border)",
       }}
     >
-      <Container px="0" style={{ maxWidth: 1080 }}>
+      <Container px="0" size="md">
         <Stack direction="vertical" gap="6">
 
         {/* Top row */}

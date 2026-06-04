@@ -204,7 +204,7 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
   //   Animations/keyframes excluded — inject via @renge-ui/tokens if needed.
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const theme = createRengeTheme();
+  const theme = createRengeTheme({ baseUnit: 6 });
   const baseVars: Record<string, string> = {};
 
   for (const [key, value] of Object.entries(theme.vars)) {

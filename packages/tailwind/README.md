@@ -163,8 +163,8 @@ Maps `--renge-font-size-{xs–4xl}` (φ-based scale, 8 steps).
 
 | Class | CSS variable | Default |
 |---|---|---|
-| `text-renge-xs` | `var(--renge-font-size-xs)` | ~6.1px |
-| `text-renge-sm` | `var(--renge-font-size-sm)` | ~9.9px |
+| `text-renge-xs` | `var(--renge-font-size-xs)` | ~12.58px |
+| `text-renge-sm` | `var(--renge-font-size-sm)` | ~14.19px |
 | `text-renge-base` | `var(--renge-font-size-base)` | 16px |
 | `text-renge-lg` | `var(--renge-font-size-lg)` | ~25.9px |
 | `text-renge-xl` | `var(--renge-font-size-xl)` | ~41.9px |

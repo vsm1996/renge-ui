@@ -13,13 +13,13 @@ export interface ContainerProps extends ComponentPropsWithoutRef<'div'> {
   px?: '0' | '1' | '2' | '3' | '4' | '5' | '6';
 }
 
-// Fibonacci-derived max widths (roughly: 512, 768, 1024, 1440, unrestricted)
+// PHI-derived max widths — 200px × φⁿ — consumed from layout tokens CSS vars
 const MAX_WIDTH: Record<ContainerSize, string> = {
-  sm:   '520px',
-  md:   '768px',
-  lg:   '1024px',
-  xl:   '1440px',
-  full: '100%',
+  sm:   'var(--renge-container-sm)',   // 524px  (200 × φ²)
+  md:   'var(--renge-container-md)',   // 847px  (200 × φ³)
+  lg:   'var(--renge-container-lg)',   // 1371px (200 × φ⁴)
+  xl:   'var(--renge-container-xl)',   // 2218px (200 × φ⁵)
+  full: 'var(--renge-container-full)', // 100%
 };
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(

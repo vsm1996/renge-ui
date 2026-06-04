@@ -71,9 +71,9 @@ describe("createTypeScale", () => {
     expect(scale.lg.fontSize).toBe(`${16 * PHI}px`);
   });
 
-  it("sm is base × PHI^-1", () => {
+  it("sm is base × PHI^-0.25", () => {
     const scale = createTypeScale(16);
-    expect(scale.sm.fontSize).toBe(`${16 / PHI}px`);
+    expect(scale.sm.fontSize).toBe(`${16 * Math.pow(PHI, -0.25)}px`);
   });
 
   it("body line height is φ (1.618)", () => {
@@ -263,8 +263,8 @@ describe("createSpacingScale — precision", () => {
 describe("createTypeScale — precision", () => {
   it("outputs exact φ-derived sizes without rounding", () => {
     const scale = createTypeScale(16);
-    // xs = 16 * PHI^-2 — this is irrational, should not be rounded
-    const expected = 16 * Math.pow(PHI, -2);
+    // xs = 16 * PHI^-0.5 — irrational, should not be rounded
+    const expected = 16 * Math.pow(PHI, -0.5);
     expect(scale.xs.fontSize).toBe(`${expected}px`);
   });
 
@@ -284,12 +284,10 @@ describe("createTypeScale — precision", () => {
     expect(scale.xl.fontSize).toBe("64px"); // 16 * 2^2
   });
 
-  it("scale is symmetric: sm × ratio ≈ base, base × ratio ≈ lg", () => {
+  it("base × ratio ≈ lg (integer step symmetry holds)", () => {
     const scale = createTypeScale(16);
-    const sm = parseFloat(scale.sm.fontSize);
     const base = parseFloat(scale.base.fontSize);
     const lg = parseFloat(scale.lg.fontSize);
-    expect(sm * PHI).toBeCloseTo(base, 10);
     expect(base * PHI).toBeCloseTo(lg, 10);
   });
 });

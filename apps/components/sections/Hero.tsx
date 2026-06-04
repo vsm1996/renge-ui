@@ -72,7 +72,7 @@ export function Hero() {
           position: "relative",
           zIndex: 1,
           textAlign: "center",
-          maxWidth: isMobile ? "100%" : 720,
+          width: "100%"
         }}
       >
         {/* Lotus — the geometry before the words */}
@@ -107,15 +107,18 @@ export function Hero() {
           variants={fadeUp}
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: isMobile ? "clamp(36px, 9vw, 56px)" : "clamp(48px, 6vw, 80px)",
+            fontSize: isMobile
+              ? "clamp(var(--renge-font-size-lg), 9vw, var(--renge-font-size-xl))"
+              : "clamp(var(--renge-font-size-xl), 6vw, var(--renge-font-size-2xl))",
             lineHeight: 1.15,
             color: "var(--renge-color-fg)",
             fontWeight: 400,
             margin: 0,
             letterSpacing: "-0.02em",
+            width: "100%"
           }}
         >
-          Proportion as a first principle.
+          Proportion as a <br /> first principle.
         </motion.h1>
 
         {/* Subheadline */}
@@ -128,7 +131,7 @@ export function Hero() {
             fontSize: isMobile ? "var(--renge-font-size-base)" : "var(--renge-font-size-lg)",
             color: "var(--renge-color-fg-subtle)",
             lineHeight: "var(--renge-line-height-lg)",
-            maxWidth: 560,
+            width: isMobile ? "100%" : "50%",
             margin: 0,
             fontFamily: "var(--font-body)",
           }}

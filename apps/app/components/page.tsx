@@ -25,96 +25,96 @@ export default function DocsPage() {
 
   return (
     <ToastProvider>
-    <ProfileProvider>
-      <Nav />
+      <ProfileProvider>
+        <Nav />
 
-      <div style={{ maxWidth: 1260, margin: "0 auto", paddingLeft: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingRight: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingTop: "calc(52px + var(--renge-space-7))", paddingBottom: "var(--renge-space-8)", display: "flex", gap: "var(--renge-space-8)", alignItems: "flex-start" }}>
+        <div style={{ maxWidth: 1260, margin: "0 auto", paddingLeft: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingRight: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingTop: "calc(52px + var(--renge-space-7))", paddingBottom: "var(--renge-space-8)", display: "flex", gap: "var(--renge-space-8)", alignItems: "flex-start" }}>
 
-        {!isMobile && <Sidebar active={activeSection} />}
+          {!isMobile && <Sidebar active={activeSection} />}
 
-        <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--renge-space-8)" }}>
+          <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--renge-space-8)" }}>
 
-          <div style={{ paddingBottom: "var(--renge-space-6)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
-            <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-3)" }}>@renge-ui/react</p>
-            <Heading level={1} size="3xl" style={{ marginBottom: "var(--renge-space-4)", fontFamily: "var(--font-display)", fontWeight: 400, letterSpacing: "-0.02em" }}>Components</Heading>
-            <Text as="p" size="lg" color="fg-subtle" style={{ margin: 0, marginBottom: "var(--renge-space-5)", maxWidth: 560 }}>
-              44 components built on the token system. Proportional. Accessible. Composable. No class names — every style references a Renge CSS variable.
-            </Text>
-            <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap" }}>
-              <Code>{"pnpm add @renge-ui/tokens @renge-ui/react"}</Code>
-            </Stack>
-            <Stack direction="horizontal" gap="3" style={{ marginTop: "var(--renge-space-4)", flexWrap: "wrap" }}>
-              <Badge variant="neutral">forwardRef</Badge>
-              <Badge variant="neutral">inline styles</Badge>
-              <Badge variant="neutral">CSS custom properties</Badge>
-              <Badge variant="neutral">no class names</Badge>
-              <Badge variant="neutral">profile-reactive</Badge>
-            </Stack>
-          </div>
+            <div style={{ paddingBottom: "var(--renge-space-6)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
+              <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-3)" }}>@renge-ui/react</p>
+              <Heading level={1} size="3xl" style={{ marginBottom: "var(--renge-space-4)", fontFamily: "var(--font-display)", fontWeight: 400, letterSpacing: "-0.02em" }}>Components</Heading>
+              <Text as="p" size="lg" color="fg-subtle" style={{ margin: 0, marginBottom: "var(--renge-space-5)", maxWidth: 560 }}>
+                44 components built on the token system. Proportional. Accessible. Composable. No class names — every style references a Renge CSS variable.
+              </Text>
+              <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap" }}>
+                <Code>{"pnpm add @renge-ui/tokens @renge-ui/react"}</Code>
+              </Stack>
+              <Stack direction="horizontal" gap="3" style={{ marginTop: "var(--renge-space-4)", flexWrap: "wrap" }}>
+                <Badge variant="neutral">forwardRef</Badge>
+                <Badge variant="neutral">inline styles</Badge>
+                <Badge variant="neutral">CSS custom properties</Badge>
+                <Badge variant="neutral">no class names</Badge>
+                <Badge variant="neutral">profile-reactive</Badge>
+              </Stack>
+            </div>
 
-          {/* Layout */}
-          <StackDocs />
-          <GridDocs />
-          <SectionDocs />
-          <ContainerDocs />
-          <AspectRatioDocs />
-          <SpacerDocs />
+            {/* Layout */}
+            <StackDocs />
+            <GridDocs />
+            <SectionDocs />
+            <ContainerDocs />
+            <AspectRatioDocs />
+            <SpacerDocs />
 
-          {/* Typography */}
-          <HeadingDocs />
-          <TextDocs />
-          <DividerDocs />
-          <AnchorDocs />
+            {/* Typography */}
+            <HeadingDocs />
+            <TextDocs />
+            <DividerDocs />
+            <AnchorDocs />
 
-          {/* Data Input */}
-          <ButtonDocs />
-          <IconButtonDocs />
-          <ButtonGroupDocs />
-          <CopyButtonDocs />
-          <InputDocs />
-          <SelectDocs />
-          <CheckboxDocs />
-          <RadioDocs />
-          <SwitchDocs />
-          <TextareaDocs />
-          <SliderDocs />
-          <FormFieldDocs />
+            {/* Data Input */}
+            <ButtonDocs />
+            <IconButtonDocs />
+            <ButtonGroupDocs />
+            <CopyButtonDocs />
+            <InputDocs />
+            <SelectDocs />
+            <CheckboxDocs />
+            <RadioDocs />
+            <SwitchDocs />
+            <TextareaDocs />
+            <SliderDocs />
+            <FormFieldDocs />
 
-          {/* Display */}
-          <CardDocs />
-          <BadgeDocs />
-          <ChipDocs />
-          <AvatarDocs />
-          <StatDocs />
-          <TooltipDocs />
-          <SkeletonDocs />
+            {/* Display */}
+            <CardDocs />
+            <BadgeDocs />
+            <ChipDocs />
+            <AvatarDocs />
+            <StatDocs />
+            <TooltipDocs />
+            <SkeletonDocs />
 
-          {/* Data Display */}
-          <TableDocs />
-          <AccordionDocs />
-          <TimelineDocs />
+            {/* Data Display */}
+            <TableDocs />
+            <AccordionDocs />
+            <TimelineDocs />
 
-          {/* Feedback */}
-          <AlertDocs />
-          <SpinnerDocs />
-          <ProgressDocs />
-          <ToastDocs />
-          <ModalDocs />
+            {/* Feedback */}
+            <AlertDocs />
+            <SpinnerDocs />
+            <ProgressDocs />
+            <ToastDocs />
+            <ModalDocs />
 
-          {/* Navigation */}
-          <NavbarDocs />
-          <TabsDocs />
-          <BreadcrumbDocs />
-          <PaginationDocs />
+            {/* Navigation */}
+            <NavbarDocs />
+            <TabsDocs />
+            <BreadcrumbDocs />
+            <PaginationDocs />
 
-          {/* Data viz */}
-          <EnergyRingDocs />
-          <PulseDocs />
-          <FlowFieldDocs />
+            {/* Data viz */}
+            <EnergyRingDocs />
+            <PulseDocs />
+            <FlowFieldDocs />
 
-        </main>
-      </div>
-    </ProfileProvider>
+          </main>
+        </div>
+      </ProfileProvider>
     </ToastProvider>
   );
 }

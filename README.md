@@ -138,8 +138,8 @@ Font sizes scale by powers of the golden ratio from a 16px base. Small text cont
 
 | Token | Size | Line Height |
 |-------|------|-------------|
-| `--renge-font-size-xs` | ~6.1px | 1.5 |
-| `--renge-font-size-sm` | ~9.9px | 1.5 |
+| `--renge-font-size-xs` | ~12.58px | 1.618 |
+| `--renge-font-size-sm` | ~14.19px | 1.618 |
 | `--renge-font-size-base` | 16px | 1.6 |
 | `--renge-font-size-lg` | ~25.9px | 1.4 |
 | `--renge-font-size-xl` | ~41.9px | 1.3 |
