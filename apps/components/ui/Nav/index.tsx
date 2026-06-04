@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { Container } from "@renge-ui/react";
-import { ProfileToggle } from "../ProfileToggle";
+import { ProfileDropdown } from "../ProfileToggle";
 import { Lotus } from "../Lotus";
 import { DocsDropdown } from "./DocsDropdown";
 import { MobileMenu } from "./MobileMenu";
@@ -85,7 +85,7 @@ export function Nav() {
                   {label}
                 </a>
               ))}
-              <ProfileToggle />
+              <ProfileDropdown />
             </div>
           )}
 

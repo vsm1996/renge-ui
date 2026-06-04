@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 import { profiles } from "@renge-ui/tokens";
 import type { ProfileName, ProfileMode } from "@renge-ui/tokens";
 
@@ -107,6 +107,178 @@ const PROFILES: { id: ProfileName; label: string; description: string }[] = [
   { id: "fire", label: "Fire", description: "Ember. Active. Burning." },
   { id: "void", label: "Void", description: "Dark. Minimal. Still." },
 ];
+
+// ============================================================================
+// Dropdown variant — compact, for use in the Nav
+// ============================================================================
+
+export function ProfileDropdown() {
+  const { profile, mode, setProfile, setMode } = useProfile();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const current = PROFILES.find((p) => p.id === profile) ?? PROFILES[0];
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  return (
+    <div ref={ref} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-2)", position: "relative" }}>
+      {/* Trigger */}
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "var(--renge-space-2)",
+          padding: "var(--renge-space-2) var(--renge-space-3)",
+          borderRadius: "var(--renge-radius-full)",
+          border: `1px solid ${open ? "var(--renge-color-accent)" : "var(--renge-color-border)"}`,
+          background: open ? "var(--renge-color-accent-subtle)" : "transparent",
+          color: open ? "var(--renge-color-accent)" : "var(--renge-color-fg-subtle)",
+          fontSize: "var(--renge-font-size-xs)",
+          fontFamily: "var(--font-body)",
+          cursor: "pointer",
+          letterSpacing: "0.05em",
+          transition: "all 200ms var(--renge-easing-ease-out)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {current.label}
+        <span
+          style={{
+            fontSize: 9,
+            opacity: 0.6,
+            display: "inline-block",
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 200ms var(--renge-easing-ease-out)",
+          }}
+        >
+          ▾
+        </span>
+      </button>
+
+      {/* Dropdown panel */}
+      {open && (
+        <div
+          role="listbox"
+          aria-label="Color profile"
+          style={{
+            position: "absolute",
+            top: "calc(100% + var(--renge-space-2))",
+            right: 0,
+            background: "var(--renge-color-bg)",
+            border: "1px solid var(--renge-color-border-subtle)",
+            borderRadius: "var(--renge-radius-2)",
+            padding: "var(--renge-space-2)",
+            minWidth: 160,
+            zIndex: 200,
+            boxShadow: "0 8px 32px color-mix(in oklch, var(--renge-color-fg) 8%, transparent)",
+          }}
+        >
+          {PROFILES.map((p) => {
+            const active = profile === p.id;
+            return (
+              <button
+                key={p.id}
+                role="option"
+                aria-selected={active}
+                onClick={() => { setProfile(p.id); setOpen(false); }}
+                title={p.description}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "var(--renge-space-3)",
+                  width: "100%",
+                  padding: "var(--renge-space-2) var(--renge-space-3)",
+                  borderRadius: "var(--renge-radius-1)",
+                  border: "none",
+                  background: active ? "var(--renge-color-accent-subtle)" : "transparent",
+                  color: active ? "var(--renge-color-accent)" : "var(--renge-color-fg-subtle)",
+                  fontSize: "var(--renge-font-size-xs)",
+                  fontFamily: "var(--font-body)",
+                  cursor: "pointer",
+                  letterSpacing: "0.04em",
+                  textAlign: "left",
+                  transition: "background 150ms, color 150ms",
+                }}
+                onMouseEnter={(e) => {
+                  if (!active) {
+                    e.currentTarget.style.background = "var(--renge-color-bg-subtle)";
+                    e.currentTarget.style.color = "var(--renge-color-fg)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!active) {
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.color = "var(--renge-color-fg-subtle)";
+                  }
+                }}
+              >
+                <span style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: active ? "var(--renge-color-accent)" : "transparent",
+                  border: `1px solid ${active ? "var(--renge-color-accent)" : "var(--renge-color-border)"}`,
+                  flexShrink: 0,
+                }} />
+                {p.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Divider */}
+      <span style={{ width: 1, height: 16, background: "var(--renge-color-border-subtle)", flexShrink: 0 }} />
+
+      {/* Mode toggle */}
+      <button
+        onClick={() => setMode(mode === "light" ? "dark" : "light")}
+        aria-label={mode === "light" ? "Switch to dark mode" : "Switch to light mode"}
+        title={mode === "light" ? "Dark mode" : "Light mode"}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: 32,
+          height: 32,
+          borderRadius: "var(--renge-radius-full)",
+          border: "1px solid var(--renge-color-border)",
+          background: "transparent",
+          color: "var(--renge-color-fg-subtle)",
+          cursor: "pointer",
+          transition: "all 200ms var(--renge-easing-ease-out)",
+          flexShrink: 0,
+          fontSize: 14,
+          lineHeight: "1",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = "var(--renge-color-accent)";
+          e.currentTarget.style.color = "var(--renge-color-accent)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = "var(--renge-color-border)";
+          e.currentTarget.style.color = "var(--renge-color-fg-subtle)";
+        }}
+      >
+        {mode === "light" ? "☽" : "○"}
+      </button>
+    </div>
+  );
+}
+
+// ============================================================================
+// Radio group variant — for use in token showcase
+// ============================================================================
 
 export function ProfileToggle() {
   const { profile, mode, setProfile, setMode } = useProfile();
