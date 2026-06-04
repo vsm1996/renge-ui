@@ -7,6 +7,16 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 import { Container, Grid, Stack } from "@renge-ui/react";
 import { PhiViz, FibViz, PhyllotaxisViz } from "./visualizations";
 
+const cardEnter = {
+  hidden: { opacity: 0, y: 32, scale: 0.97 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.9, delay, ease: EASE_OUT },
+  }),
+};
+
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
   visible: (delay: number) => ({
@@ -96,7 +106,7 @@ export function Philosophy() {
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
               custom={0.1 + i * 0.12}
-              variants={fadeUp}
+              variants={cardEnter}
             >
               <Stack
                 direction="vertical"

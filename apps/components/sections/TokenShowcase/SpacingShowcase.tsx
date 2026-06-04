@@ -1,10 +1,14 @@
 "use client";
 
-import { FIBONACCI } from "@/lib/phi";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { FIBONACCI, EASE_OUT } from "@/lib/phi";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { SectionLabel, SubheadingH3 } from "./shared";
 
 export function SpacingShowcase() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-10%" });
   const isMobile = useBreakpoint();
   const fibSteps = FIBONACCI.slice(0, 8).map((fib, i) => ({
     step: i + 1,
@@ -13,7 +17,7 @@ export function SpacingShowcase() {
   }));
 
   return (
-    <div>
+    <div ref={ref}>
       <SectionLabel>Tokens / Spacing</SectionLabel>
       <SubheadingH3>Fibonacci spacing.</SubheadingH3>
       <div className="flex flex-col gap-renge-3">
@@ -29,13 +33,12 @@ export function SpacingShowcase() {
             >
               {step}
             </span>
-            <div
+            <motion.div
               className="bg-renge-accent rounded-renge-full flex-shrink-0"
-              style={{
-                width: Math.min(px, isMobile ? 120 : 280),
-                height: 8,
-                opacity: 0.5 + (step / 10) * 0.5,
-              }}
+              style={{ height: 8, opacity: 0.5 + (step / 10) * 0.5 }}
+              initial={{ width: 0 }}
+              animate={inView ? { width: Math.min(px, isMobile ? 120 : 280) } : { width: 0 }}
+              transition={{ duration: 0.9, delay: step * 0.07, ease: EASE_OUT }}
             />
             <div className="flex flex-col" style={{ gap: 2 }}>
               <code

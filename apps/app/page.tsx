@@ -2,6 +2,7 @@ import { ProfileProvider } from "@/components/ui/ProfileToggle";
 import { Nav } from "@/components/ui/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { Philosophy } from "@/components/sections/Philosophy";
+import { PhiInterstitial } from "@/components/sections/PhiInterstitial";
 import { TokenShowcase } from "@/components/sections/TokenShowcase";
 import { GettingStarted } from "@/components/sections/GettingStarted";
 import { ComingSoon } from "@/components/sections/ComingSoon";
@@ -14,6 +15,7 @@ export default function Home() {
       <main id="main">
         <Hero />
         <Philosophy />
+        <PhiInterstitial />
         <TokenShowcase />
         <GettingStarted />
         <ComingSoon />

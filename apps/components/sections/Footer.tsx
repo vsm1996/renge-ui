@@ -12,7 +12,7 @@ export function Footer() {
   return (
     <footer
       ref={ref}
-      className="py-renge-7 px-renge-5 bg-renge-fg-subtle text-renge-fg-inverse border-t border-renge-border"
+      className="py-renge-7 px-renge-5 bg-renge-bg-inverse text-renge-fg-inverse border-t border-renge-border"
     >
       <Container px="0" size="lg">
         <Stack direction="vertical" gap="6">
