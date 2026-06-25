@@ -16,7 +16,7 @@ Wrap your app with `RengeProvider` to enable theme context:
 
 ```vue
 <script setup lang="ts">
-import { RengeProvider } from '@renge-ui/vue';
+import RengeProvider from '@renge-ui/vue/dist/components/RengeProvider.vue';
 </script>
 
 <template>

@@ -16,7 +16,7 @@ Wrap your app with `RengeProvider` to enable theme management:
 
 ```svelte
 <script>
-  import { RengeProvider } from '@renge-ui/svelte';
+  import RengeProvider from '@renge-ui/svelte/dist/components/RengeProvider.svelte';
 </script>
 
 <RengeProvider profile="clear" mode="light">

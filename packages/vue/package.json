@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && cp -r src/components dist/",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit"
   },
