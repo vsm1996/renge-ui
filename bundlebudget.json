@@ -1,0 +1,17 @@
+{
+  "@renge-ui/tokens": {
+    "size": 63.67,
+    "budget": 75,
+    "description": "Token definitions and CSS variables"
+  },
+  "@renge-ui/react": {
+    "size": 145.74,
+    "budget": 160,
+    "description": "React components"
+  },
+  "@renge-ui/tailwind": {
+    "size": 8.06,
+    "budget": 20,
+    "description": "Tailwind CSS plugin"
+  }
+}

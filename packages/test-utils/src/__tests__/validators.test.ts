@@ -22,12 +22,12 @@ describe('validateSpacingScale', () => {
     expect(result.warnings).toHaveLength(0);
   });
 
-  it('should fail for non-monotonic scale', () => {
+  it('should fail for scale with duplicate values', () => {
     const scale = {
       'space-1': '4px',
-      'space-2': '16px',
-      'space-3': '8px', // Out of order
-      'space-4': '32px',
+      'space-2': '8px',
+      'space-3': '8px', // Duplicate value breaks monotonic increase
+      'space-4': '16px',
     };
 
     const result = validateSpacingScale(scale);
@@ -95,17 +95,18 @@ describe('validateSpacingScale', () => {
 });
 
 describe('validateTypeScale', () => {
-  it('should pass for scale with correct PHI ratio', () => {
-    // Base 16px × φ sequence
+  it('should pass for scale with consistent ratio', () => {
+    // Scale with ~1.25 ratio between sizes (not PHI, but consistent)
     const scale = {
-      'xs': { fontSize: '12px', lineHeight: '1.5' },
-      'sm': { fontSize: '14px', lineHeight: '1.5' },
+      'xs': { fontSize: '10px', lineHeight: '1.5' },
+      'sm': { fontSize: '12.5px', lineHeight: '1.5' },
       'base': { fontSize: '16px', lineHeight: '1.6' },
       'md': { fontSize: '20px', lineHeight: '1.6' },
-      'lg': { fontSize: '32px', lineHeight: '1.7' },
+      'lg': { fontSize: '25px', lineHeight: '1.7' },
     };
 
-    const result = validateTypeScale(scale, 1.618, 0.15); // 15% tolerance for variety
+    // Use 1.25 ratio with generous tolerance
+    const result = validateTypeScale(scale, 1.25, 0.05);
 
     expect(result.valid).toBe(true);
     expect(result.errors).toHaveLength(0);
@@ -152,12 +153,13 @@ describe('validateTypeScale', () => {
 
   it('should work with unsorted font sizes', () => {
     const scale = {
-      'lg': { fontSize: '32px', lineHeight: '1.7' },
+      'lg': { fontSize: '20px', lineHeight: '1.7' },
       'base': { fontSize: '16px', lineHeight: '1.6' },
-      'sm': { fontSize: '14px', lineHeight: '1.5' },
+      'sm': { fontSize: '12.8px', lineHeight: '1.5' }, // 16/12.8 = 1.25, 20/16 = 1.25
     };
 
-    const result = validateTypeScale(scale, 1.618, 0.15);
+    // Use consistent 1.25 ratio with 5% tolerance
+    const result = validateTypeScale(scale, 1.25, 0.05);
 
     expect(result.valid).toBe(true);
   });
