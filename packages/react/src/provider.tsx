@@ -1,8 +1,9 @@
-import { useMemo, useInsertionEffect, useEffect, type ReactNode } from 'react';
+import { useMemo, useInsertionEffect, useEffect, useState, type ReactNode } from 'react';
 import { createRengeTheme } from '@renge-ui/tokens';
 import type { RengeThemeConfig, RengeTheme } from '@renge-ui/tokens';
 import { RengeContext } from './context';
 export { useRenge } from './hooks';
+export { useRengeTheme as useRengeThemeHook, useRengeVar, useRengeVarValue } from './hooks';
 
 export interface RengeProviderProps {
   children: ReactNode;

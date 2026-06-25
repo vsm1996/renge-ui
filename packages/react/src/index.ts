@@ -1,8 +1,11 @@
 // packages/react/src/index.ts
 
 // Provider & hooks
-export { RengeProvider, useRenge, useRengeTheme } from './provider';
+export { RengeProvider } from './provider';
 export type { RengeProviderProps } from './provider';
+export { useRenge } from './hooks';
+export { useRengeTheme, useRengeVar, useRengeVarValue } from './hooks';
+export type { RengeThemeHookReturn, Mode } from './hooks/useRengeTheme';
 export { RengeStylesheet } from './stylesheet';
 export type { RengeStylesheetProps } from './stylesheet';
 

@@ -15,3 +15,4 @@ export {
   createColumnMinWidths,
   createAspectRatios,
 } from "./layout";
+export { createShadowScale } from "./shadows";

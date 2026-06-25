@@ -139,6 +139,15 @@ export const rengeVars = {
     lg: "var(--renge-col-min-lg)",
   },
 
+  /** Elevation shadows and focus indicators */
+  shadow: {
+    layer1: "var(--renge-shadow-layer-1)",
+    layer2: "var(--renge-shadow-layer-2)",
+    layer3: "var(--renge-shadow-layer-3)",
+    focus: "var(--renge-shadow-focus)",
+    inset: "var(--renge-shadow-inset)",
+  },
+
   /** PHI-derived aspect ratios and standard screen ratios */
   aspect: {
     square:   "var(--renge-aspect-square)",

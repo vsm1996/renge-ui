@@ -18,6 +18,7 @@ import {
   createContainerWidths,
   createColumnMinWidths,
   createAspectRatios,
+  createShadowScale,
 } from "./scales";
 import { createPaletteVars } from "./colors/palette";
 import { profiles, createSemanticColorVars } from "./colors/profiles";
@@ -67,6 +68,7 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   const easing = createEasingTokens();
   const radius = createRadiusScale(baseUnit, variance, random);
   const fractal = createFractalScale(baseUnit);
+  const shadows = createShadowScale();
   const containerWidths = createContainerWidths();
   const columnMinWidths = createColumnMinWidths();
   const aspectRatios = createAspectRatios();
@@ -105,6 +107,11 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   // Fractal size scale
   for (const [key, value] of Object.entries(fractal)) {
     vars[`--renge-size-${key}`] = value;
+  }
+
+  // Shadows (elevation layers + focus + inset)
+  for (const [key, value] of Object.entries(shadows)) {
+    vars[`--renge-shadow-${key}`] = value;
   }
 
   // Container widths (200px × φⁿ progression)
@@ -183,6 +190,7 @@ html {
     { prefix: "--renge-duration-", comment: "/* Motion - Duration */" },
     { prefix: "--renge-easing-", comment: "/* Motion - Easing */" },
     { prefix: "--renge-radius-", comment: "/* Border Radius */" },
+    { prefix: "--renge-shadow-", comment: "/* Shadows */" },
     { prefix: "--renge-size-", comment: "/* Fractal Size Scale */" },
     { prefix: "--renge-container-", comment: "/* Container Widths */" },
     { prefix: "--renge-col-min-", comment: "/* Column Min-Widths */" },

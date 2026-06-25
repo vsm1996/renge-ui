@@ -8,6 +8,7 @@ import {
   createAnimationVars,
   createAnimationKeyframesCSS,
   ANIMATION_NAMES,
+  createShadowScale,
 } from "../scales";
 import { createFractalScale, FRACTAL_STEPS } from "../index";
 import { PHI, FIBONACCI, seededRandom } from "../constants";
@@ -395,5 +396,54 @@ describe("createFractalScale", () => {
       const v8 = parseFloat(s8[String(i)]);
       expect(v8 / v4).toBeCloseTo(2, 1);
     }
+  });
+});
+
+describe("createShadowScale", () => {
+  it("produces 5 shadow keys", () => {
+    const scale = createShadowScale();
+    expect(Object.keys(scale)).toHaveLength(5);
+    expect(scale).toHaveProperty("layer-1");
+    expect(scale).toHaveProperty("layer-2");
+    expect(scale).toHaveProperty("layer-3");
+    expect(scale).toHaveProperty("focus");
+    expect(scale).toHaveProperty("inset");
+  });
+
+  it("layer-1 is most subtle", () => {
+    const scale = createShadowScale();
+    expect(scale["layer-1"]).toContain("0.05");
+  });
+
+  it("layer-2 is more pronounced than layer-1", () => {
+    const scale = createShadowScale();
+    expect(scale["layer-2"]).toContain("0.1");
+  });
+
+  it("layer-3 is strongest", () => {
+    const scale = createShadowScale();
+    expect(scale["layer-3"]).toContain("0.15");
+  });
+
+  it("focus shadow uses color reference", () => {
+    const scale = createShadowScale();
+    expect(scale["focus"]).toContain("--renge-color-accent-rgb");
+  });
+
+  it("inset shadow uses correct pattern", () => {
+    const scale = createShadowScale();
+    expect(scale["inset"]).toContain("inset");
+  });
+
+  it("all shadow values are valid CSS", () => {
+    const scale = createShadowScale();
+    Object.values(scale).forEach((val) => {
+      // Valid shadow format: should contain 'rgb', 'inset', or color ref
+      expect(
+        val.includes("rgb") ||
+        val.includes("--renge") ||
+        val.includes("inset")
+      ).toBe(true);
+    });
   });
 });
