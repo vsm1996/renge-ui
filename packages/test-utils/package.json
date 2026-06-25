@@ -1,7 +1,7 @@
 {
   "name": "@renge-ui/test-utils",
-  "version": "2.4.2",
-  "description": "Testing utilities and validators for the Renge design system — validate token scales, proportions, and contrast ratios.",
+  "version": "1.0.0",
+  "description": "Testing utilities and validators for the Renge design system — validate spacing scales, typography scales, and WCAG contrast ratios.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

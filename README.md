@@ -46,9 +46,12 @@ Components follow fractal design principles — a card at 200px and a card at 80
 
 | Package | Purpose | Status |
 |---------|---------|--------|
-| `@renge-ui/tokens` | Design tokens — spacing, typography, color, motion, radius, animation, phyllotaxis | ✅ v2.2 |
-| `@renge-ui/react` | 21 component primitives — layout, text, forms, navigation, status | ✅ v2.3 |
-| `@renge-ui/tailwind` | Tailwind CSS v3 preset + v4 plugin | ✅ v2.2 |
+| `@renge-ui/tokens` | Design tokens — spacing, typography, color, motion, radius, animation, z-index, dimensions, shadows | ✅ v2.5.0 |
+| `@renge-ui/react` | 50+ component primitives with hooks for theme switching — layout, text, forms, data, navigation, feedback | ✅ v3.4.0 |
+| `@renge-ui/tailwind` | Tailwind CSS v3 preset + v4 plugin | ✅ v2.6.0 |
+| `@renge-ui/vue` | Vue 3 composables + provider for theme management | ✅ v1.0.0 |
+| `@renge-ui/svelte` | Svelte 4+ stores + provider for theme management | ✅ v1.0.0 |
+| `@renge-ui/test-utils` | Validators for token scales, typography ratios, and contrast compliance | ✅ v1.0.0 |
 
 ---
 
@@ -110,6 +113,74 @@ import { RengeStylesheet, RengeProvider, Button, Stack } from '@renge-ui/react';
   </Stack>
 </RengeProvider>
 ```
+
+---
+
+## What's New in v2.5 / v3.4 / v1.0
+
+### New Token Scales
+
+**Z-Index Stacking Levels**
+
+Semantic stacking context to prevent z-index wars:
+
+```
+dropdown: 100
+sticky:   200
+fixed:    300
+modal:    400
+toast:    500
+```
+
+**Dimension Scale**
+
+Sizing constraints for width, height, min-width, and max-width:
+
+```
+Width:    auto, full, 100vw, container references (sm/md/lg/xl)
+Height:   Fibonacci-based (4px–220px) + viewport heights
+Min/Max:  Fibonacci scale for responsive constraints
+```
+
+### Framework Adapters
+
+**@renge-ui/vue** — Vue 3 composables for theme management:
+
+```ts
+const { profile, mode, switchProfile, switchMode } = useRengeTheme();
+```
+
+**@renge-ui/svelte** — Svelte stores for reactive theme switching:
+
+```ts
+import { profile, mode, switchProfile, switchMode } from '@renge-ui/svelte';
+```
+
+Both share the same token system and enable runtime theme switching across all frameworks.
+
+### Testing & Validation
+
+**@renge-ui/test-utils** — Validators for design correctness:
+
+- `validateSpacingScale` — Verify Fibonacci monotonicity and derivation
+- `validateTypeScale` — Check φ ratio between consecutive sizes
+- `validateContrastRatio` — Measure WCAG compliance
+
+### React Enhancements
+
+New hooks for dynamic theme switching:
+
+- `useRengeTheme()` — Access and switch profile/mode at runtime
+- `useRengeVar()` — Safe CSS variable resolution with fallbacks
+
+### Component Audit
+
+All 50+ React components now 100% token-compliant:
+
+- ✅ Zero hardcoded colors, spacing, or motion values
+- ✅ All animations use token durations and easings
+- ✅ Full TypeScript support with generics and composition patterns
+- ✅ SSR-safe with proper hydration handling
 
 ---
 
@@ -177,6 +248,18 @@ none → 0px
 1 → 4px  ·  2 → 8px  ·  3 → 12px  ·  4 → 20px  ·  5 → 32px
 full → 9999px
 ```
+
+### Shadows — Elevation & Focus
+
+Semantic shadow tokens for layering and interaction feedback:
+
+| Token | Use |
+|-------|-----|
+| `--renge-shadow-layer-1` | Subtle elevation (cards, modals) |
+| `--renge-shadow-layer-2` | Medium elevation (dropdowns, popovers) |
+| `--renge-shadow-layer-3` | High elevation (overlays, stacked modals) |
+| `--renge-shadow-focus` | Focus ring indicator |
+| `--renge-shadow-inset` | Inset shadow for depth |
 
 ---
 
