@@ -9,6 +9,8 @@ import {
   createAnimationKeyframesCSS,
   ANIMATION_NAMES,
   createShadowScale,
+  createZIndexScale,
+  createDimensionScale,
 } from "../scales";
 import { createFractalScale, FRACTAL_STEPS } from "../index";
 import { PHI, FIBONACCI, seededRandom } from "../constants";
@@ -445,5 +447,96 @@ describe("createShadowScale", () => {
         val.includes("inset")
       ).toBe(true);
     });
+  });
+});
+
+describe("createZIndexScale", () => {
+  it("produces 5 z-index keys", () => {
+    const scale = createZIndexScale();
+    expect(Object.keys(scale)).toHaveLength(5);
+  });
+
+  it("has expected semantic keys", () => {
+    const scale = createZIndexScale();
+    expect(scale).toHaveProperty("dropdown");
+    expect(scale).toHaveProperty("sticky");
+    expect(scale).toHaveProperty("fixed");
+    expect(scale).toHaveProperty("modal");
+    expect(scale).toHaveProperty("toast");
+  });
+
+  it("values are numeric strings", () => {
+    const scale = createZIndexScale();
+    Object.values(scale).forEach((val) => {
+      expect(/^\d+$/.test(val)).toBe(true);
+    });
+  });
+
+  it("values are in ascending order", () => {
+    const scale = createZIndexScale();
+    const values = Object.values(scale).map(Number);
+    for (let i = 1; i < values.length; i++) {
+      expect(values[i]).toBeGreaterThan(values[i - 1]);
+    }
+  });
+
+  it("dropdown is 100, sticky is 200, fixed is 300, modal is 400, toast is 500", () => {
+    const scale = createZIndexScale();
+    expect(scale["dropdown"]).toBe("100");
+    expect(scale["sticky"]).toBe("200");
+    expect(scale["fixed"]).toBe("300");
+    expect(scale["modal"]).toBe("400");
+    expect(scale["toast"]).toBe("500");
+  });
+});
+
+describe("createDimensionScale", () => {
+  it("produces width, height, minWidth, maxWidth objects", () => {
+    const scale = createDimensionScale(4);
+    expect(scale).toHaveProperty("width");
+    expect(scale).toHaveProperty("height");
+    expect(scale).toHaveProperty("minWidth");
+    expect(scale).toHaveProperty("maxWidth");
+  });
+
+  it("width has auto, full, screen, container refs", () => {
+    const scale = createDimensionScale(4);
+    expect(scale.width).toHaveProperty("auto");
+    expect(scale.width).toHaveProperty("full");
+    expect(scale.width).toHaveProperty("screen");
+    expect(scale.width.auto).toBe("auto");
+    expect(scale.width.full).toBe("100%");
+    expect(scale.width.screen).toBe("100vw");
+  });
+
+  it("height has auto, full, screen, and Fibonacci steps", () => {
+    const scale = createDimensionScale(4);
+    expect(scale.height).toHaveProperty("auto");
+    expect(scale.height).toHaveProperty("full");
+    expect(scale.height).toHaveProperty("screen");
+    expect(scale.height).toHaveProperty("1");
+    expect(scale.height["1"]).toBe("4px");
+  });
+
+  it("minWidth and maxWidth are Fibonacci-based", () => {
+    const scale = createDimensionScale(4);
+    expect(scale.minWidth).toHaveProperty("0");
+    expect(scale.minWidth).toHaveProperty("1");
+    expect(scale.minWidth["0"]).toBe("0px");
+    expect(scale.minWidth["1"]).toBe("4px");
+  });
+
+  it("maxWidth has none and full + Fibonacci values", () => {
+    const scale = createDimensionScale(4);
+    expect(scale.maxWidth).toHaveProperty("none");
+    expect(scale.maxWidth).toHaveProperty("full");
+    expect(scale.maxWidth.none).toBe("none");
+    expect(scale.maxWidth.full).toBe("100%");
+  });
+
+  it("scales proportionally with different baseUnit", () => {
+    const scale = createDimensionScale(8);
+    expect(scale.height["1"]).toBe("8px");
+    expect(scale.height["2"]).toBe("16px");
   });
 });

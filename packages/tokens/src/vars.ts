@@ -156,6 +156,76 @@ export const rengeVars = {
     video:    "var(--renge-aspect-video)",
     classic:  "var(--renge-aspect-classic)",
   },
+
+  /** Semantic z-index layers for stacking context */
+  zIndex: {
+    dropdown: "var(--renge-zindex-dropdown)",
+    sticky:   "var(--renge-zindex-sticky)",
+    fixed:    "var(--renge-zindex-fixed)",
+    modal:    "var(--renge-zindex-modal)",
+    toast:    "var(--renge-zindex-toast)",
+  },
+
+  /** Width dimension scale — responsive sizes + container refs */
+  width: {
+    auto:   "var(--renge-w-auto)",
+    full:   "var(--renge-w-full)",
+    screen: "var(--renge-w-screen)",
+    sm:     "var(--renge-w-sm)",
+    md:     "var(--renge-w-md)",
+    lg:     "var(--renge-w-lg)",
+    xl:     "var(--renge-w-xl)",
+    max:    "var(--renge-w-max)",
+  },
+
+  /** Height dimension scale — Fibonacci-based + viewport sizes */
+  height: {
+    auto:   "var(--renge-h-auto)",
+    full:   "var(--renge-h-full)",
+    screen: "var(--renge-h-screen)",
+    1:      "var(--renge-h-1)",
+    2:      "var(--renge-h-2)",
+    3:      "var(--renge-h-3)",
+    4:      "var(--renge-h-4)",
+    5:      "var(--renge-h-5)",
+    6:      "var(--renge-h-6)",
+    7:      "var(--renge-h-7)",
+    8:      "var(--renge-h-8)",
+    9:      "var(--renge-h-9)",
+    10:     "var(--renge-h-10)",
+  },
+
+  /** Min-width dimension scale */
+  minWidth: {
+    0:      "var(--renge-min-w-0)",
+    auto:   "var(--renge-min-w-auto)",
+    1:      "var(--renge-min-w-1)",
+    2:      "var(--renge-min-w-2)",
+    3:      "var(--renge-min-w-3)",
+    4:      "var(--renge-min-w-4)",
+    5:      "var(--renge-min-w-5)",
+    6:      "var(--renge-min-w-6)",
+    7:      "var(--renge-min-w-7)",
+    8:      "var(--renge-min-w-8)",
+    9:      "var(--renge-min-w-9)",
+    10:     "var(--renge-min-w-10)",
+  },
+
+  /** Max-width dimension scale */
+  maxWidth: {
+    none: "var(--renge-max-w-none)",
+    full: "var(--renge-max-w-full)",
+    1:    "var(--renge-max-w-1)",
+    2:    "var(--renge-max-w-2)",
+    3:    "var(--renge-max-w-3)",
+    4:    "var(--renge-max-w-4)",
+    5:    "var(--renge-max-w-5)",
+    6:    "var(--renge-max-w-6)",
+    7:    "var(--renge-max-w-7)",
+    8:    "var(--renge-max-w-8)",
+    9:    "var(--renge-max-w-9)",
+    10:   "var(--renge-max-w-10)",
+  },
 } as const;
 
 export type RengeVars = typeof rengeVars;

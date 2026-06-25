@@ -19,6 +19,8 @@ import {
   createColumnMinWidths,
   createAspectRatios,
   createShadowScale,
+  createZIndexScale,
+  createDimensionScale,
 } from "./scales";
 import { createPaletteVars } from "./colors/palette";
 import { profiles, createSemanticColorVars } from "./colors/profiles";
@@ -69,6 +71,8 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   const radius = createRadiusScale(baseUnit, variance, random);
   const fractal = createFractalScale(baseUnit);
   const shadows = createShadowScale();
+  const zIndex = createZIndexScale();
+  const dimensions = createDimensionScale(baseUnit);
   const containerWidths = createContainerWidths();
   const columnMinWidths = createColumnMinWidths();
   const aspectRatios = createAspectRatios();
@@ -112,6 +116,31 @@ export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
   // Shadows (elevation layers + focus + inset)
   for (const [key, value] of Object.entries(shadows)) {
     vars[`--renge-shadow-${key}`] = value;
+  }
+
+  // Z-Index (stacking context levels)
+  for (const [key, value] of Object.entries(zIndex)) {
+    vars[`--renge-zindex-${key}`] = value;
+  }
+
+  // Width dimensions
+  for (const [key, value] of Object.entries(dimensions.width)) {
+    vars[`--renge-w-${key}`] = value;
+  }
+
+  // Height dimensions
+  for (const [key, value] of Object.entries(dimensions.height)) {
+    vars[`--renge-h-${key}`] = value;
+  }
+
+  // Min-width dimensions
+  for (const [key, value] of Object.entries(dimensions.minWidth)) {
+    vars[`--renge-min-w-${key}`] = value;
+  }
+
+  // Max-width dimensions
+  for (const [key, value] of Object.entries(dimensions.maxWidth)) {
+    vars[`--renge-max-w-${key}`] = value;
   }
 
   // Container widths (200px × φⁿ progression)

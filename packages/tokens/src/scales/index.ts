@@ -16,3 +16,7 @@ export {
   createAspectRatios,
 } from "./layout";
 export { createShadowScale } from "./shadows";
+export { createZIndexScale } from "./z-index";
+export type { ZIndexToken } from "./z-index";
+export { createDimensionScale } from "./dimensions";
+export type { DimensionScale } from "./dimensions";
