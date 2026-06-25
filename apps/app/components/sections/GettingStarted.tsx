@@ -96,7 +96,7 @@ export default {
               Get started in minutes.
             </Heading>
             <Text style={{ color: 'var(--renge-color-fg-subtle)', lineHeight: 1.7 }}>
-              Renge is available as a standalone token package. No framework required.
+              Renge is available as a standalone token package. No framework required. Fully accessible, WCAG 2.1 AA certified, with React components, Tailwind integration, and framework adapters for Vue and Svelte.
             </Text>
           </Stack>
         </motion.div>

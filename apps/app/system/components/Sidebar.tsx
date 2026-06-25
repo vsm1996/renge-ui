@@ -4,6 +4,7 @@ const NAV_SECTIONS = [
   { label: "Reference", items: [
     { id: "tokens",     label: "Token API" },
     { id: "animations", label: "Animations" },
+    { id: "accessibility", label: "Accessibility" },
     { id: "patterns",   label: "Patterns" },
   ]},
 ];

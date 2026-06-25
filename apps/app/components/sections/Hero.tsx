@@ -260,6 +260,26 @@ export function Hero() {
             Explore the system →
           </a>
         </motion.div>
+
+        {/* Accessibility Highlight */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          style={{
+            paddingTop: 'var(--renge-space-3)',
+            borderTop: '1px solid var(--renge-color-border-subtle)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--renge-space-2)', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              ✨ WCAG 2.1 AA Certified
+            </span>
+            <span style={{ color: 'var(--renge-color-fg-muted)', fontSize: 'var(--renge-font-size-xs)' }}>
+              44×44px touch targets • 4.5:1 contrast • Keyboard navigable
+            </span>
+          </div>
+        </motion.div>
       </Stack>
 
       {/* Scroll indicator */}

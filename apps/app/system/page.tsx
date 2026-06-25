@@ -7,6 +7,7 @@ import { Nav } from "@/components/ui/Nav";
 import { TokensDocs } from "./components/TokensDocs";
 import { AnimationsDocs } from "./components/AnimationsDocs";
 import { PatternsDocs } from "./components/PatternsDocs";
+import { AccessibilityDocs } from "./components/AccessibilityDocs";
 import { Sidebar } from "./components/Sidebar";
 
 export default function SystemPage() {
@@ -31,6 +32,7 @@ export default function SystemPage() {
 
           <TokensDocs />
           <AnimationsDocs />
+          <AccessibilityDocs />
           <PatternsDocs />
 
         </main>
