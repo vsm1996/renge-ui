@@ -232,7 +232,8 @@ export function TokenShowcase() {
                     padding: 'var(--renge-space-3)',
                     borderRadius: 'var(--renge-radius-2)',
                     background: hoveredEasing === easing.name ? 'var(--renge-color-bg-subtle)' : 'transparent',
-                    border: `1px solid ${hoveredEasing === easing.name ? 'var(--renge-color-border)' : 'transparent'}`,
+                    border: `3px solid ${hoveredEasing === easing.name ? 'var(--renge-color-border-focus)' : 'transparent'}`,
+                    outline: hoveredEasing === easing.name ? `2px dashed var(--renge-color-accent)` : 'none',
                     transition: 'all var(--renge-duration-1) var(--renge-easing-ease-out)',
                   }}
                 >

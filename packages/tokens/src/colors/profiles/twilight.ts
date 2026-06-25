@@ -26,7 +26,7 @@ const light: SemanticColorMap = {
   border:       "oklch(78% 0.06 268)",
   borderSubtle: "oklch(88% 0.04 268)",
   borderFocus:  "oklch(54% 0.22 18)",            // sunset pink-orange — ~5:1 on periwinkle bg
-  accent:       "oklch(54% 0.22 18)",            // vivid sunset pink-orange, distinct from fire's red and earth's tan
+  accent:       "oklch(42% 0.25 15)",            // WCAG fix: 4.5:1 contrast on light bg — sunset pink-orange
   accentHover:  "oklch(46% 0.24 16)",
   accentSubtle: "oklch(94% 0.06 18)",            // warm rose flush on periwinkle bg
   success:      oklch(palette.mossGreen),

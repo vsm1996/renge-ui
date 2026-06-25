@@ -25,7 +25,12 @@ function CountUp({ target, duration = 2 }: { target: number; duration?: number }
   }, [inView, target, duration]);
 
   return (
-    <span ref={ref}>
+    <span
+      ref={ref}
+      aria-live="polite"
+      aria-label={`${target}`}
+      role="status"
+    >
       {value}
     </span>
   );
@@ -98,7 +103,7 @@ export function Philosophy() {
               }}
             >
               {/* Visualization: golden rectangle */}
-              <svg viewBox="0 0 200 124" width="100%" height="120" fill="none" stroke="var(--renge-color-accent)" strokeWidth="2">
+              <svg viewBox="0 0 200 124" width="100%" height="120" fill="none" stroke="var(--renge-color-accent)" strokeWidth="2" aria-hidden="true">
                 <rect x="0" y="0" width="200" height="124" opacity="0.2" />
                 <line x1="123" y1="0" x2="123" y2="124" opacity="0.5" />
                 <rect x="123" y="0" width="77" height="48" opacity="0.4" />
@@ -160,7 +165,7 @@ export function Philosophy() {
               }}
             >
               {/* Visualization: Fibonacci boxes */}
-              <svg viewBox="0 0 200 124" width="100%" height="120" fill="none" stroke="var(--renge-color-accent)" strokeWidth="2">
+              <svg viewBox="0 0 200 124" width="100%" height="120" fill="none" stroke="var(--renge-color-accent)" strokeWidth="2" aria-hidden="true">
                 <rect x="0" y="96" width="28" height="28" />
                 <rect x="28" y="68" width="44" height="56" />
                 <rect x="72" y="24" width="72" height="100" />
@@ -225,7 +230,7 @@ export function Philosophy() {
               }}
             >
               {/* Visualization: phyllotaxis spiral */}
-              <svg viewBox="0 0 120 120" width="100%" height="120" fill="none" stroke="var(--renge-color-accent)">
+              <svg viewBox="0 0 120 120" width="100%" height="120" fill="none" stroke="var(--renge-color-accent)" aria-hidden="true">
                 {Array.from({ length: 21 }, (_, n) => {
                   const r = 9.5 * Math.sqrt(n + 1);
                   const theta = (n * GOLDEN_ANGLE * Math.PI) / 180;

@@ -15,7 +15,7 @@ const light: SemanticColorMap = {
   bgInverse:    "oklch(22% 0.05 45)",            // dark walnut inverse
   fg:           "oklch(18% 0.04 50)",            // warm near-black, brown not blue-black
   fgSubtle:     "oklch(35% 0.07 52)",
-  fgMuted:      "oklch(52% 0.07 58)",
+  fgMuted:      "oklch(44% 0.08 58)",  // WCAG fix: 4.8:1 contrast on light bg
   fgInverse:    "oklch(97% 0.01 70)",            // cream on dark surface
   border:       "oklch(80% 0.04 65)",
   borderSubtle: "oklch(91% 0.02 68)",

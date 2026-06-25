@@ -58,6 +58,21 @@ export function Hero() {
       }}
       id="hero"
     >
+      {/* Page title for screen readers — visually hidden */}
+      <h1 style={{
+        position: 'absolute',
+        width: '1px',
+        height: '1px',
+        padding: 0,
+        margin: '-1px',
+        overflow: 'hidden',
+        clip: 'rect(0,0,0,0)',
+        whiteSpace: 'nowrap',
+        border: 0,
+      }}>
+        Renge — Proportion as a First Principle
+      </h1>
+
       {/* Background PHI rectangle geometry */}
       <div
         style={{
@@ -73,6 +88,7 @@ export function Hero() {
         <svg
           ref={svgRef}
           viewBox="0 0 1000 616"
+          aria-hidden="true"
           style={{
             width: '90%',
             maxWidth: '900px',
@@ -202,8 +218,11 @@ export function Hero() {
           <a
             href="#philosophy"
             style={{
-              display: 'inline-block',
-              padding: 'var(--renge-space-3) var(--renge-space-5)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 'var(--renge-space-4) var(--renge-space-6)',
+              minHeight: '44px',  // WCAG 2.5.5: Touch target minimum
               borderRadius: 'var(--renge-radius-full)',
               border: '1px solid var(--renge-color-accent)',
               background: 'var(--renge-color-accent)',
@@ -214,6 +233,20 @@ export function Hero() {
               cursor: 'pointer',
               textDecoration: 'none',
               transition: 'all var(--renge-duration-2) var(--renge-easing-ease-out)',
+            }}
+            onClick={(e) => {
+              // Focus management for accessibility
+              setTimeout(() => {
+                const hash = new URL(e.currentTarget.href).hash.slice(1);
+                const target = document.getElementById(hash);
+                if (target) {
+                  target.setAttribute('tabindex', '-1');
+                  target.focus();
+                  target.addEventListener('blur', () => {
+                    target.removeAttribute('tabindex');
+                  }, { once: true });
+                }
+              }, 0);
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.opacity = '0.85';

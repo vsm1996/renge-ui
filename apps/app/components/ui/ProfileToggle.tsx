@@ -50,9 +50,13 @@ export function ProfileToggle() {
             key={value}
             onClick={() => setProfile(value)}
             style={{
-              padding: 'var(--renge-space-1) var(--renge-space-3)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 'var(--renge-space-1)',
+              padding: 'var(--renge-space-3) var(--renge-space-4)',
+              minHeight: '44px',  // WCAG 2.5.5: Touch target minimum
               borderRadius: 'var(--renge-radius-full)',
-              border: `1px solid ${profile === value ? 'var(--renge-color-border-focus)' : 'var(--renge-color-border)'}`,
+              border: `2px solid ${profile === value ? 'var(--renge-color-accent)' : 'var(--renge-color-border)'}`,
               background: profile === value ? 'var(--renge-color-bg-subtle)' : 'transparent',
               color: profile === value ? 'var(--renge-color-accent)' : 'var(--renge-color-fg-muted)',
               fontSize: 'var(--renge-font-size-xs)',
@@ -62,6 +66,11 @@ export function ProfileToggle() {
             }}
           >
             {label}
+            {profile === value && (
+              <span aria-hidden="true" style={{ marginLeft: 'var(--renge-space-1)' }}>
+                ✓
+              </span>
+            )}
           </button>
         ))}
       </Stack>

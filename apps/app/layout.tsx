@@ -3,6 +3,7 @@ import { DM_Serif_Display, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { generateMobileSpacingCSS } from "@/lib/tokens";
 import { FloatingControls } from "@/components/ui/FloatingControls";
+import { SkipLink } from "@/components/ui/SkipLink";
 import "./globals.css";
 
 const dmSerifDisplay = DM_Serif_Display({
@@ -80,7 +81,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
+        <SkipLink />
+        <main id="main">
+          {children}
+        </main>
         <FloatingControls />
         <Analytics />
       </body>

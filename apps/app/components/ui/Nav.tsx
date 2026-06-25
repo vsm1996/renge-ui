@@ -1,9 +1,19 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Stack, Text } from '@renge-ui/react';
 import Link from 'next/link';
 
 export function Nav() {
+  const [activeHash, setActiveHash] = useState('');
+
+  useEffect(() => {
+    setActiveHash(window.location.hash);
+    const handleHashChange = () => setActiveHash(window.location.hash);
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   return (
     <nav
       style={{
@@ -41,8 +51,10 @@ export function Nav() {
               <a
                 key={href}
                 href={href}
+                aria-label={`Go to ${label} section`}
+                aria-current={activeHash === href ? 'page' : undefined}
                 style={{
-                  color: 'var(--renge-color-fg-muted)',
+                  color: activeHash === href ? 'var(--renge-color-accent)' : 'var(--renge-color-fg-muted)',
                   textDecoration: 'none',
                   fontSize: 'var(--renge-font-size-sm)',
                   fontFamily: 'var(--font-body)',
@@ -52,7 +64,9 @@ export function Nav() {
                   (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-accent)';
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-fg-muted)';
+                  if (activeHash !== href) {
+                    (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-fg-muted)';
+                  }
                 }}
               >
                 {label}
