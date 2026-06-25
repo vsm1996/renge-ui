@@ -24,7 +24,7 @@ export function ComparisonSlider() {
           WebkitUserSelect: "none",
           borderRadius: "var(--renge-radius-3)",
           border: "1px solid var(--renge-color-border)",
-          boxShadow: "0 4px 32px oklch(0% 0 0 / 0.06)",
+          boxShadow: "var(--renge-shadow-layer-1)",
         }}
         onMouseDown={(e) => startDrag(e.clientX)}
         onTouchStart={(e) => startDrag(e.touches[0].clientX)}
@@ -54,21 +54,21 @@ export function ComparisonSlider() {
             left: "var(--renge-space-4)",
             pointerEvents: "none",
             opacity: merged > 12 ? 1 : 0,
-            transition: "opacity 180ms",
+            transition: `opacity var(--renge-duration-2) var(--renge-easing-ease-out)`,
           }}
         >
           <div
             style={{
-              background: "rgba(10,10,10,0.55)",
+              background: "rgba(0,0,0,0.55)",
               backdropFilter: "blur(10px)",
               WebkitBackdropFilter: "blur(10px)",
-              color: "#fff",
-              fontSize: "11px",
+              color: "var(--renge-color-bg)",
+              fontSize: "var(--renge-fontSize-xs)",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              padding: "4px 12px",
-              borderRadius: "9999px",
-              fontFamily: "system-ui, sans-serif",
+              padding: "var(--renge-space-1) var(--renge-space-3)",
+              borderRadius: "var(--renge-radius-full)",
+              fontFamily: "var(--font-body)",
               fontWeight: 600,
             }}
           >
@@ -84,7 +84,7 @@ export function ComparisonSlider() {
             right: "var(--renge-space-4)",
             pointerEvents: "none",
             opacity: merged < 88 ? 1 : 0,
-            transition: "opacity 180ms",
+            transition: `opacity var(--renge-duration-2) var(--renge-easing-ease-out)`,
           }}
         >
           <div
@@ -112,8 +112,8 @@ export function ComparisonSlider() {
             bottom: 0,
             left: `${merged}%`,
             width: 2,
-            background: "#fff",
-            boxShadow: "0 0 0 1px rgba(0,0,0,0.08), 0 0 16px rgba(0,0,0,0.12)",
+            background: "var(--renge-color-bg)",
+            boxShadow: "var(--renge-shadow-layer-2)",
             transform: "translateX(-50%)",
             pointerEvents: "none",
           }}
@@ -128,7 +128,7 @@ export function ComparisonSlider() {
               width: 44,
               height: 44,
               borderRadius: "50%",
-              background: "#fff",
+              background: "var(--renge-color-bg)",
               boxShadow: "0 2px 16px rgba(0,0,0,0.16), 0 0 0 2px rgba(0,0,0,0.06)",
               display: "flex",
               alignItems: "center",
@@ -140,7 +140,7 @@ export function ComparisonSlider() {
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
                 d="M6 9H12M6 9L4 7M6 9L4 11M12 9L14 7M12 9L14 11"
-                stroke="#888"
+                stroke="var(--renge-color-fg-muted)"
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -218,7 +218,7 @@ export function ComparisonSlider() {
                   Math.abs(merged - pct) < 1
                     ? "var(--renge-color-accent)"
                     : "var(--renge-color-border)",
-                transition: "background 200ms",
+                transition: `background var(--renge-duration-2) var(--renge-easing-ease-out)`,
                 flexShrink: 0,
               }}
             />
@@ -230,7 +230,7 @@ export function ComparisonSlider() {
                     ? "var(--renge-color-accent)"
                     : "var(--renge-color-fg-muted)",
                 fontFamily: "'JetBrains Mono', monospace",
-                transition: "color 200ms",
+                transition: `color var(--renge-duration-2) var(--renge-easing-ease-out)`,
               }}
             >
               {label}

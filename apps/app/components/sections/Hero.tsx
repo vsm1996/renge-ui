@@ -19,7 +19,7 @@ export function Hero() {
       if (length) {
         (path as SVGPathElement).style.strokeDasharray = `${length}`;
         (path as SVGPathElement).style.strokeDashoffset = `${length}`;
-        (path as SVGPathElement).style.animation = `drawPath 2s ease-in-out 0.5s forwards`;
+        (path as SVGPathElement).style.animation = `drawPath 2100ms cubic-bezier(0.382, 0, 0.618, 1) 500ms forwards`;
       }
     });
 
@@ -122,7 +122,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.382, 0, 0.168, 1] }}
+          transition={{ duration: 0.8, ease: [0.382, 0, 0.618, 1] }}
         >
           <Text
             size="xs"
@@ -142,7 +142,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.382, 0, 0.168, 1], delay: 0.2 }}
+          transition={{ duration: 1, ease: [0.382, 0, 0.618, 1], delay: 0.2 }}
         >
           <Heading
             level={1}
@@ -161,7 +161,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.382, 0, 0.168, 1], delay: 0.4 }}
+          transition={{ duration: 0.9, ease: [0.382, 0, 0.618, 1], delay: 0.4 }}
         >
           <Text
             size="lg"

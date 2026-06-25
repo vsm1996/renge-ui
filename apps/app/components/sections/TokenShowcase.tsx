@@ -261,10 +261,10 @@ export function TokenShowcase() {
                           }}
                           style={{
                             position: 'absolute',
-                            width: '8px',
+                            width: 'var(--renge-space-2)',
                             height: '100%',
                             background: 'var(--renge-color-accent)',
-                            borderRadius: '2px',
+                            borderRadius: 'var(--renge-radius-1)',
                             top: 0,
                             left: 0,
                           }}

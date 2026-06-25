@@ -11,7 +11,7 @@ export function FadeIn({ children, delay = 0 }: { children: React.ReactNode; del
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: [0.382, 0, 0.168, 1], delay }}
+      transition={{ duration: 0.5, ease: [0.382, 0, 0.618, 1], delay }}
     >
       {children}
     </motion.div>

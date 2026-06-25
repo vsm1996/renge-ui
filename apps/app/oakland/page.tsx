@@ -212,7 +212,7 @@ function FadeIn({
       ref={ref}
       initial={{ opacity: 0, y }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: [0.382, 0, 0.168, 1], delay }}
+      transition={{ duration: 0.7, ease: [0.382, 0, 0.618, 1], delay }}
     >
       {children}
     </motion.div>
@@ -299,7 +299,7 @@ function PhyllotaxisFlora() {
                     ? { opacity: hovered && hovered !== plant.id ? 0.15 : 0.9 }
                     : { opacity: 0 }
                 }
-                transition={{ duration: 0.4, delay: n * 0.018, ease: [0.382, 0, 0.168, 1] }}
+                transition={{ duration: 0.4, delay: n * 0.018, ease: [0.382, 0, 0.618, 1] }}
                 style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHovered(plant.id)}
                 onMouseLeave={() => setHovered(null)}
@@ -973,7 +973,7 @@ function PlantCard({ plant }: { plant: (typeof PLANTS)[0] }) {
         <motion.div
           initial={false}
           animate={{ height: expanded ? "auto" : 0, opacity: expanded ? 1 : 0 }}
-          transition={{ duration: 0.3, ease: [0.382, 0, 0.168, 1] }}
+          transition={{ duration: 0.3, ease: [0.382, 0, 0.618, 1] }}
           style={{ overflow: "hidden" }}
         >
           <div
@@ -1114,7 +1114,7 @@ export default function OaklandPage() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.382, 0, 0.168, 1], delay: 0.2 }}
+              transition={{ duration: 1, ease: [0.382, 0, 0.618, 1], delay: 0.2 }}
             >
               <Text
                 size="sm"
@@ -1143,7 +1143,7 @@ export default function OaklandPage() {
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.382, 0, 0.168, 1], delay: 0.5 }}
+              transition={{ duration: 0.9, ease: [0.382, 0, 0.618, 1], delay: 0.5 }}
             >
               <Text
                 size="lg"

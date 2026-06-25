@@ -28,7 +28,7 @@ export function Sidebar({ active }: { active: string }) {
                   color: active === item.id ? "var(--renge-color-accent)" : "var(--renge-color-fg-subtle)",
                   background: active === item.id ? "var(--renge-color-accent-subtle)" : "transparent",
                   textDecoration: "none",
-                  transition: "all 150ms",
+                  transition: `all var(--renge-duration-2) var(--renge-easing-ease-out)`,
                 }}>
                   {item.label}
                 </a>

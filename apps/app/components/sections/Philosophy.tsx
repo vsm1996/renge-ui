@@ -49,7 +49,7 @@ export function Philosophy() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.382, 0, 0.168, 1] }}
+          transition={{ duration: 0.8, ease: [0.382, 0, 0.618, 1] }}
         >
           <Stack gap="3" style={{ maxWidth: '48rem' }}>
             <Text
@@ -86,7 +86,7 @@ export function Philosophy() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.382, 0, 0.168, 1] }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.382, 0, 0.618, 1] }}
           >
             <Stack
               gap="4"
@@ -148,7 +148,7 @@ export function Philosophy() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.382, 0, 0.168, 1] }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.382, 0, 0.618, 1] }}
           >
             <Stack
               gap="4"
@@ -213,7 +213,7 @@ export function Philosophy() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.382, 0, 0.168, 1] }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.382, 0, 0.618, 1] }}
           >
             <Stack
               gap="4"

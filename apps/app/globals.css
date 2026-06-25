@@ -70,15 +70,15 @@ body {
   font-family: "Outfit", system-ui, sans-serif;
   font-size: var(--renge-font-size-base);
   line-height: var(--renge-line-height-base);
-  transition: background-color 600ms var(--renge-easing-ease-in-out),
-              color 600ms var(--renge-easing-ease-in-out);
+  transition: background-color var(--renge-duration-5) var(--renge-easing-ease-in-out),
+              color var(--renge-duration-5) var(--renge-easing-ease-in-out);
 }
 
 /* Profile transition — everything color-related transitions smoothly */
 [data-profile] * {
-  transition: background-color 600ms var(--renge-easing-ease-in-out),
-              color 400ms var(--renge-easing-ease-in-out),
-              border-color 400ms var(--renge-easing-ease-in-out);
+  transition: background-color var(--renge-duration-5) var(--renge-easing-ease-in-out),
+              color var(--renge-duration-3) var(--renge-easing-ease-in-out),
+              border-color var(--renge-duration-3) var(--renge-easing-ease-in-out);
 }
 
 /* Selection */
