@@ -47,8 +47,8 @@ Components follow fractal design principles — a card at 200px and a card at 80
 | Package | Purpose | Status |
 |---------|---------|--------|
 | `@renge-ui/tokens` | Design tokens — spacing, typography, color, motion, radius, animation, z-index, dimensions, shadows | ✅ v2.5.0 |
-| `@renge-ui/react` | 50+ component primitives with hooks for theme switching — layout, text, forms, data, navigation, feedback | ✅ v3.4.0 |
-| `@renge-ui/tailwind` | Tailwind CSS v3 preset + v4 plugin | ✅ v2.6.0 |
+| `@renge-ui/react` | 44+ component primitives with hooks for theme switching — WCAG 2.1 AA compliant | ✅ v3.5.0 |
+| `@renge-ui/tailwind` | Tailwind CSS v3 preset + v4 plugin with accessibility enhancements | ✅ v2.7.0 |
 | `@renge-ui/vue` | Vue 3 composables + provider for theme management | ✅ v1.0.0 |
 | `@renge-ui/svelte` | Svelte 4+ stores + provider for theme management | ✅ v1.0.0 |
 | `@renge-ui/test-utils` | Validators for token scales, typography ratios, and contrast compliance | ✅ v1.0.0 |
