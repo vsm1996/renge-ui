@@ -142,7 +142,7 @@ export function Nav() {
                       { label: 'System', href: '/system' },
                       { label: 'Accessibility', href: '/system#accessibility' },
                     ].map(({ label, href }) => (
-                      <Link
+                      <a
                         key={href}
                         href={href}
                         style={{
@@ -166,7 +166,7 @@ export function Nav() {
                         onClick={() => setDocsOpen(false)}
                       >
                         {label}
-                      </Link>
+                      </a>
                     ))}
 
                     <div style={{ height: '1px', background: 'var(--renge-color-border-subtle)', margin: 'var(--renge-space-1) 0' }} />
@@ -180,7 +180,7 @@ export function Nav() {
                       { label: 'Vue', href: '/vue' },
                       { label: 'Svelte', href: '/svelte' },
                     ].map(({ label, href }) => (
-                      <Link
+                      <a
                         key={href}
                         href={href}
                         style={{
@@ -204,7 +204,7 @@ export function Nav() {
                         onClick={() => setDocsOpen(false)}
                       >
                         {label}
-                      </Link>
+                      </a>
                     ))}
 
                     <div style={{ height: '1px', background: 'var(--renge-color-border-subtle)', margin: 'var(--renge-space-1) 0' }} />
@@ -212,7 +212,7 @@ export function Nav() {
                     <div style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, padding: 'var(--renge-space-2) var(--renge-space-3)', opacity: 0.7 }}>
                       Testing
                     </div>
-                    <Link
+                    <a
                       href="/test-utils"
                       style={{
                         color: 'var(--renge-color-fg-muted)',
@@ -235,7 +235,7 @@ export function Nav() {
                       onClick={() => setDocsOpen(false)}
                     >
                       Test Utils
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
