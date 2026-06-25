@@ -62,13 +62,16 @@ export function DocsDropdown({ isOpen, onToggle, onClose }: DocsDropdownProps) {
               position: "absolute",
               top: "calc(100% + var(--renge-space-3))",
               right: 0,
-              minWidth: 240,
+              width: 560,
               background: "color-mix(in oklch, var(--renge-color-bg) 96%, transparent)",
               backdropFilter: "blur(20px)",
               border: "1px solid var(--renge-color-border-subtle)",
               borderRadius: "var(--renge-radius-3)",
               padding: "var(--renge-space-2)",
               boxShadow: "0 8px 32px color-mix(in oklch, var(--renge-color-bg-inverse) 10%, transparent)",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "var(--renge-space-2)",
             }}
           >
             {DOCS_LINKS.map(({ label, href, desc }) => (
@@ -86,10 +89,10 @@ export function DocsDropdown({ isOpen, onToggle, onClose }: DocsDropdownProps) {
                 onMouseEnter={e => (e.currentTarget.style.background = "var(--renge-color-bg-subtle)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
               >
-                <div style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", fontFamily: "var(--font-body)", marginBottom: 2 }}>
+                <div style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", fontFamily: "var(--font-body)", marginBottom: 2, fontWeight: 500 }}>
                   {label}
                 </div>
-                <div style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.02em" }}>
+                <div style={{ fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.01em", lineHeight: 1.4 }}>
                   {desc}
                 </div>
               </a>
