@@ -10,6 +10,15 @@ const TYPE_SIZES = [9.9, 12.6, 16, 25.9, 41.9, 67.8, 109.7, 177.4];
 const TYPE_KEYS = ['xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl', '4xl'];
 const PHI = 1.618033988749895;
 
+// Parse cubic-bezier string to Framer Motion easing array
+const parseCubicBezier = (path: string): [number, number, number, number] => {
+  const match = path.match(/cubic-bezier\(([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)\)/);
+  if (match) {
+    return [parseFloat(match[1]), parseFloat(match[2]), parseFloat(match[3]), parseFloat(match[4])];
+  }
+  return [0.25, 0.1, 0.25, 1]; // fallback to ease-in-out
+};
+
 export function TokenShowcase() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-200px' });
@@ -256,7 +265,7 @@ export function TokenShowcase() {
                           animate={{ left: '100%' }}
                           transition={{
                             duration: 1.5,
-                            ease: easing.path as any,
+                            ease: parseCubicBezier(easing.path),
                             repeat: Infinity,
                             repeatType: 'mirror',
                           }}
