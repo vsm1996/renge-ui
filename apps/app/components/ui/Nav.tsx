@@ -1,17 +1,30 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Stack, Text } from '@renge-ui/react';
 import Link from 'next/link';
 
 export function Nav() {
   const [activeHash, setActiveHash] = useState('');
+  const [docsOpen, setDocsOpen] = useState(false);
+  const docsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setActiveHash(window.location.hash);
     const handleHashChange = () => setActiveHash(window.location.hash);
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (docsRef.current && !docsRef.current.contains(event.target as Node)) {
+        setDocsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
@@ -73,6 +86,161 @@ export function Nav() {
               </a>
             ))}
           </Stack>
+
+          {/* Documentation Dropdown */}
+          <div style={{ position: 'relative' }} ref={docsRef}>
+            <button
+              onClick={() => setDocsOpen(!docsOpen)}
+              aria-label="Documentation menu"
+              aria-expanded={docsOpen}
+              style={{
+                color: 'var(--renge-color-fg-muted)',
+                fontSize: 'var(--renge-font-size-sm)',
+                fontFamily: 'var(--font-body)',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'var(--renge-space-1)',
+                transition: 'color var(--renge-duration-1) var(--renge-easing-ease-out)',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-accent)';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-fg-muted)';
+              }}
+            >
+              Docs
+              <span style={{ fontSize: 'var(--renge-font-size-xs)', opacity: 0.7 }}>▼</span>
+            </button>
+
+            {docsOpen && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 'calc(100% + var(--renge-space-2))',
+                  right: 0,
+                  background: 'var(--renge-color-bg)',
+                  border: '1px solid var(--renge-color-border-subtle)',
+                  borderRadius: 'var(--renge-radius-2)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                  zIndex: 50,
+                  minWidth: '200px',
+                  overflow: 'hidden',
+                }}
+              >
+                <div style={{ padding: 'var(--renge-space-2)' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-1)' }}>
+                    <div style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, padding: 'var(--renge-space-2) var(--renge-space-3)', opacity: 0.7 }}>
+                      System
+                    </div>
+                    {[
+                      { label: 'Tokens', href: '/tokens' },
+                      { label: 'System', href: '/system' },
+                      { label: 'Accessibility', href: '/system#accessibility' },
+                    ].map(({ label, href }) => (
+                      <Link
+                        key={href}
+                        href={href}
+                        style={{
+                          color: 'var(--renge-color-fg-muted)',
+                          textDecoration: 'none',
+                          fontSize: 'var(--renge-font-size-sm)',
+                          fontFamily: 'var(--font-body)',
+                          padding: 'var(--renge-space-2) var(--renge-space-3)',
+                          borderRadius: 'var(--renge-radius-1)',
+                          transition: 'all var(--renge-duration-1) var(--renge-easing-ease-out)',
+                          display: 'block',
+                        }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.background = 'var(--renge-color-bg-subtle)';
+                          (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-accent)';
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.background = 'transparent';
+                          (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-fg-muted)';
+                        }}
+                        onClick={() => setDocsOpen(false)}
+                      >
+                        {label}
+                      </Link>
+                    ))}
+
+                    <div style={{ height: '1px', background: 'var(--renge-color-border-subtle)', margin: 'var(--renge-space-1) 0' }} />
+
+                    <div style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, padding: 'var(--renge-space-2) var(--renge-space-3)', opacity: 0.7 }}>
+                      Components & Libraries
+                    </div>
+                    {[
+                      { label: 'React', href: '/components' },
+                      { label: 'Tailwind', href: '/tailwind' },
+                      { label: 'Vue', href: '/vue' },
+                      { label: 'Svelte', href: '/svelte' },
+                    ].map(({ label, href }) => (
+                      <Link
+                        key={href}
+                        href={href}
+                        style={{
+                          color: 'var(--renge-color-fg-muted)',
+                          textDecoration: 'none',
+                          fontSize: 'var(--renge-font-size-sm)',
+                          fontFamily: 'var(--font-body)',
+                          padding: 'var(--renge-space-2) var(--renge-space-3)',
+                          borderRadius: 'var(--renge-radius-1)',
+                          transition: 'all var(--renge-duration-1) var(--renge-easing-ease-out)',
+                          display: 'block',
+                        }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.background = 'var(--renge-color-bg-subtle)';
+                          (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-accent)';
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.background = 'transparent';
+                          (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-fg-muted)';
+                        }}
+                        onClick={() => setDocsOpen(false)}
+                      >
+                        {label}
+                      </Link>
+                    ))}
+
+                    <div style={{ height: '1px', background: 'var(--renge-color-border-subtle)', margin: 'var(--renge-space-1) 0' }} />
+
+                    <div style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, padding: 'var(--renge-space-2) var(--renge-space-3)', opacity: 0.7 }}>
+                      Testing
+                    </div>
+                    <Link
+                      href="/test-utils"
+                      style={{
+                        color: 'var(--renge-color-fg-muted)',
+                        textDecoration: 'none',
+                        fontSize: 'var(--renge-font-size-sm)',
+                        fontFamily: 'var(--font-body)',
+                        padding: 'var(--renge-space-2) var(--renge-space-3)',
+                        borderRadius: 'var(--renge-radius-1)',
+                        transition: 'all var(--renge-duration-1) var(--renge-easing-ease-out)',
+                        display: 'block',
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.background = 'var(--renge-color-bg-subtle)';
+                        (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-accent)';
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.background = 'transparent';
+                        (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-fg-muted)';
+                      }}
+                      onClick={() => setDocsOpen(false)}
+                    >
+                      Test Utils
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
           <a
             href="https://github.com/anthropics/renge"
