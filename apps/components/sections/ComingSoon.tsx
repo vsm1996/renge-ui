@@ -101,7 +101,7 @@ export function ComingSoon() {
         >
           <Stack direction={isMobile ? "vertical" : "horizontal"} gap="3" justify="center" align="center">
             <a
-              href="/docs"
+              href="/components"
               className="px-renge-4 py-renge-3 rounded-renge-full bg-renge-accent text-renge-fg-inverse text-renge-base inline-block no-underline cursor-pointer"
               style={{
                 fontFamily: "var(--font-body)",
