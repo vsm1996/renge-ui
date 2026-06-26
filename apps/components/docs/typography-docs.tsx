@@ -3,9 +3,9 @@
 // Typography Docs — component documentation.
 
 import {
-  Text, Heading, Divider, Anchor, Stack, Button,
+  Text, Heading, Divider, Anchor, Stack,
 } from "@renge-ui/react";
-import { PropRow, PropsTable, Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
+import { PropRow, PropsTable, Demo, Code, ComponentSection } from "@/components/ui/DocPrimitives";
 
 export function HeadingDocs() {
   return (

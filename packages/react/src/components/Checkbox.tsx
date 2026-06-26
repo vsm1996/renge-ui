@@ -47,7 +47,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const isChecked = isControlled ? checked : internalChecked;
 
     const px = SIZE_PX[size];
-    const r = px / 2;
 
     const boxStyle: CSSProperties = {
       width: px,

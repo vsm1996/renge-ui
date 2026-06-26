@@ -62,7 +62,7 @@ export function TokenExplorer() {
   const [activeTab, setActiveTab] = useState<TokenCategory>('spacing');
   const [searchTerm, setSearchTerm] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
-  const { profile } = useProfile();
+  useProfile();
 
   const filteredTokens = TOKENS[activeTab].filter((token) =>
     token.key.toLowerCase().includes(searchTerm.toLowerCase()) ||

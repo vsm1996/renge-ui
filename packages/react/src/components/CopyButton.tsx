@@ -41,7 +41,7 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
         setCopied(true);
         onCopy?.(value);
         setTimeout(() => setCopied(false), timeout);
-      } catch (err) {
+      } catch {
         // Fallback for non-secure contexts
         const el = document.createElement('textarea');
         el.value = value;

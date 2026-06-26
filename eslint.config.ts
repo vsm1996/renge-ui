@@ -7,6 +7,8 @@ export default tseslint.config(
     ignores: [
       "**/dist/**",
       "**/node_modules/**",
+      "**/.next/**",
+      "**/.turbo/**",
       "**/*.js",
       "**/*.mjs",
       "**/*.cjs",
@@ -24,6 +26,10 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      // Intentional SSR-mount flags, DOM measurement, and external-store
+      // subscriptions are correct React but flagged by this rule. Keep them
+      // visible as warnings (same pragmatic stance as no-explicit-any below).
+      "react-hooks/set-state-in-effect": "warn",
     },
   },
 

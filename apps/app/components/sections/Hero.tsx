@@ -14,7 +14,7 @@ export function Hero() {
 
     // Animate the spiral drawing
     const paths = svgRef.current.querySelectorAll('path, circle, line, rect');
-    paths.forEach((path, i) => {
+    paths.forEach((path) => {
       const length = (path as SVGPathElement).getTotalLength?.() ?? 0;
       if (length) {
         (path as SVGPathElement).style.strokeDasharray = `${length}`;

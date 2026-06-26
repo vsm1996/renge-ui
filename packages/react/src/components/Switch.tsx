@@ -4,7 +4,6 @@
 // every instance). The thumb slides with spring easing.
 
 import { forwardRef, useState, type ComponentPropsWithoutRef, type CSSProperties } from 'react';
-import { PHI } from '@renge-ui/tokens';
 
 export type SwitchSize = 'sm' | 'md' | 'lg';
 

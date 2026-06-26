@@ -5,9 +5,8 @@
 import { useState } from "react";
 import {
   Button, Input, Select, Checkbox, Radio, RadioGroup, Switch, Textarea, Slider,
-  FormField, Stack, Text, Badge, IconButton, ButtonGroup, CopyButton, Card,
+  FormField, Stack, Text, IconButton, ButtonGroup, CopyButton, Card,
 } from "@renge-ui/react";
-import { PHI } from "@renge-ui/tokens";
 import { PropRow, PropsTable, Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
 
 export function ButtonDocs() {

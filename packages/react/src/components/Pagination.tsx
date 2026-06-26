@@ -89,7 +89,7 @@ const PageBtn = ({
 );
 
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
-  function Pagination({ total, page, onChange, siblings = 1, showEdges = true, style, ...props }, ref) {
+  function Pagination({ total, page, onChange, siblings = 1, showEdges: _showEdges = true, style, ...props }, ref) {
     const pages = getPages(total, page, siblings);
 
     return (

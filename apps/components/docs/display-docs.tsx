@@ -4,7 +4,7 @@
 
 import { useState } from "react";
 import {
-  Card, Badge, Chip, Avatar, Stat, Tooltip, Skeleton, Stack, Text, Heading, Button,
+  Card, Badge, Chip, Avatar, Stat, Tooltip, Skeleton, Stack, Text, Button,
 } from "@renge-ui/react";
 import { PropRow, PropsTable, Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
 
