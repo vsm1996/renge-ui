@@ -79,22 +79,6 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/petals:
-    dependencies:
-      '@renge-ui/tokens':
-        specifier: ^2.6.1
-        version: link:../tokens
-    devDependencies:
-      tsup:
-        specifier: ^8.5.1
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.15)(typescript@5.9.3)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^3.0.0
-        version: 3.2.4(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)
-
   packages/react:
     dependencies:
       '@renge-ui/tokens':
@@ -876,6 +860,12 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
+
+  '@renge-ui/petals@1.0.0':
+    resolution: {integrity: sha512-LUU7hX6LGvNpLiaz9/nW0IofuW6rXCirrn9mw3akfRbr0miXmhgppfo7otOViiNs4PlsGgj3w5FwAFtxTbmSgQ==}
+
+  '@renge-ui/tokens@2.6.1':
+    resolution: {integrity: sha512-tZgiBaCFm4GwNh8I48MrpzqyEaqWikBZ83QO+/30d2pWbq2zp1nkqCk+wH0HH0COXTupxLbsT9yDOTYqcFJ2Tg==}
 
   '@rollup/rollup-android-arm-eabi@4.59.0':
     resolution: {integrity: sha512-upnNBkA6ZH2VKGcBj9Fyl9IGNPULcjXRlg0LLeaioQWueH30p6IXtJEbKAgvyv+mJaMxSm1l6xwDXYjpEMiLMg==}
@@ -2678,6 +2668,12 @@ snapshots:
 
   '@next/swc-win32-x64-msvc@16.1.6':
     optional: true
+
+  '@renge-ui/petals@1.0.0':
+    dependencies:
+      '@renge-ui/tokens': 2.6.1
+
+  '@renge-ui/tokens@2.6.1': {}
 
   '@rollup/rollup-android-arm-eabi@4.59.0':
     optional: true
