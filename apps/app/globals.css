@@ -15,7 +15,7 @@
 @theme {
   /* Fonts */
   --font-display: "DM Serif Display", Georgia, serif;
-  --font-body: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
   /* Colors mapped from Renge semantic vars */
@@ -67,7 +67,7 @@ html {
 body {
   background-color: var(--renge-color-bg);
   color: var(--renge-color-fg);
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   font-size: var(--renge-font-size-base);
   line-height: var(--renge-line-height-base);
   transition: background-color var(--renge-duration-5) var(--renge-easing-ease-in-out),
