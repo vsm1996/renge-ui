@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/vue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vue 3 composables and components for the Renge design system.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -37,7 +37,7 @@
   },
   "packageManager": "pnpm@10.30.2",
   "dependencies": {
-    "@renge-ui/tokens": "^2.4.0"
+    "@renge-ui/tokens": "^2.6.1"
   },
   "peerDependencies": {
     "vue": "^3.0.0"

@@ -104,8 +104,8 @@ importers:
   packages/svelte:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.4.0
-        version: 2.4.0
+        specifier: ^2.6.1
+        version: link:../tokens
     devDependencies:
       svelte:
         specifier: ^4.2.20
@@ -166,8 +166,8 @@ importers:
   packages/vue:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.4.0
-        version: 2.4.0
+        specifier: ^2.6.1
+        version: link:../tokens
     devDependencies:
       tsup:
         specifier: ^8.5.1
@@ -857,9 +857,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
-
-  '@renge-ui/tokens@2.4.0':
-    resolution: {integrity: sha512-iY33sTmrFPPDv3DPCUR1+g3hMjjHQf+hqfe2hICPjOZ/lJoQhlf8cGDArwDx0xyMU+nZbA/Mnnu52lnkJF48/A==}
 
   '@rollup/rollup-android-arm-eabi@4.59.0':
     resolution: {integrity: sha512-upnNBkA6ZH2VKGcBj9Fyl9IGNPULcjXRlg0LLeaioQWueH30p6IXtJEbKAgvyv+mJaMxSm1l6xwDXYjpEMiLMg==}
@@ -2662,8 +2659,6 @@ snapshots:
 
   '@next/swc-win32-x64-msvc@16.1.6':
     optional: true
-
-  '@renge-ui/tokens@2.4.0': {}
 
   '@rollup/rollup-android-arm-eabi@4.59.0':
     optional: true
