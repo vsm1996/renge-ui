@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/tailwind",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "Tailwind CSS preset and plugin for the Renge design system — maps --renge-* CSS custom properties to utility classes with Tailwind v4 plugin support.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
