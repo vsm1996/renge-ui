@@ -1,5 +1,3 @@
-"use client";
-
 export function PetalsVisual() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-6)" }}>

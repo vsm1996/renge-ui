@@ -1,5 +1,3 @@
-"use client";
-
 export function SpacingVisual() {
   const spacings = ["1", "2", "3", "4", "5", "6", "7", "8"];
 

@@ -1,5 +1,3 @@
-"use client";
-
 export function ColorPaletteVisual() {
   const colors = [
     { name: "accent", class: "bg-accent" },

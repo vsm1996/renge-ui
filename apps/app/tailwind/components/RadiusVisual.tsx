@@ -1,5 +1,3 @@
-"use client";
-
 export function RadiusVisual() {
   const radii = ["none", "1", "2", "3", "4", "5", "full"];
 

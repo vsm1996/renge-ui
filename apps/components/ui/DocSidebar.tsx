@@ -1,26 +1,21 @@
 import { Stack } from "@renge-ui/react";
 
-const NAV_SECTIONS = [
-  { label: "Token System", items: [
-    { id: "installation", label: "Getting Started" },
-    { id: "spacing", label: "Spacing" },
-    { id: "typography", label: "Typography" },
-    { id: "colors", label: "Colors" },
-    { id: "radius", label: "Border Radius" },
-    { id: "zindex", label: "Z-Index" },
-    { id: "motion", label: "Motion" },
-    { id: "other", label: "Other Categories" },
-  ]},
-  { label: "Integration", items: [
-    { id: "frameworks", label: "Framework Support" },
-  ]},
-];
+export type SidebarSection = {
+  label: string;
+  items: { id: string; label: string }[];
+};
 
-export function TokensSidebar() {
+export function DocSidebar({
+  sections,
+  footerLinks = [],
+}: {
+  sections: SidebarSection[];
+  footerLinks?: { href: string; label: string }[];
+}) {
   return (
     <aside style={{ width: 180, flexShrink: 0, position: "sticky", top: "calc(52px + var(--renge-space-4))" }}>
       <div style={{ height: "calc(100vh - 52px - var(--renge-space-4))", overflowY: "auto", display: "flex", flexDirection: "column", gap: "var(--renge-space-5)", paddingBottom: "var(--renge-space-5)" }}>
-        {NAV_SECTIONS.map(section => (
+        {sections.map(section => (
           <div key={section.label}>
             <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontFamily: "var(--font-body)", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 600, margin: 0, marginBottom: "var(--renge-space-2)" }}>
               {section.label}
@@ -45,11 +40,15 @@ export function TokensSidebar() {
           </div>
         ))}
 
-        <div style={{ paddingTop: "var(--renge-space-4)", borderTop: "1px solid var(--renge-color-border-subtle)", display: "flex", flexDirection: "column", gap: "var(--renge-space-2)" }}>
-          <a href="/" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", textDecoration: "none" }}>Home →</a>
-          <a href="/components" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", textDecoration: "none" }}>Components →</a>
-          <a href="/tailwind" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", textDecoration: "none" }}>Tailwind →</a>
-        </div>
+        {footerLinks.length > 0 && (
+          <div style={{ paddingTop: "var(--renge-space-4)", borderTop: "1px solid var(--renge-color-border-subtle)", display: "flex", flexDirection: "column", gap: "var(--renge-space-2)" }}>
+            {footerLinks.map(link => (
+              <a key={link.href} href={link.href} style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", textDecoration: "none" }}>
+                {link.label} →
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </aside>
   );

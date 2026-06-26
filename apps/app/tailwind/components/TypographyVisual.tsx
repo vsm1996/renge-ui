@@ -1,5 +1,3 @@
-"use client";
-
 export function TypographyVisual() {
   const sizes = ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl"];
   const sizeLabels: Record<string, string> = {

@@ -1,9 +1,8 @@
 "use client";
 
 import { CodeBlock, DocSection, UtilityTable } from "@/components/ui/DocPrimitives";
-import { ProfileProvider } from "@/components/ui/ProfileToggle";
-import { Nav } from "@/components/ui/Nav";
-import { useBreakpoint } from "@/lib/useBreakpoint";
+import { DocPageLayout } from "@/components/ui/DocPageLayout";
+import { DocSidebar, type SidebarSection } from "@/components/ui/DocSidebar";
 import { StackVisual } from "./components/StackVisual";
 import { ContainerVisual } from "./components/ContainerVisual";
 import { GridVisual } from "./components/GridVisual";
@@ -13,27 +12,28 @@ import { SpacingVisual } from "./components/SpacingVisual";
 import { TypographyVisual } from "./components/TypographyVisual";
 import { RadiusVisual } from "./components/RadiusVisual";
 import { PetalsVisual } from "./components/PetalsVisual";
-import { TailwindSidebar } from "./Sidebar";
+
+const TAILWIND_NAV: SidebarSection[] = [
+  { label: "Getting Started", items: [
+    { id: "setup", label: "Installation" },
+    { id: "color-profiles", label: "Color System" },
+  ]},
+  { label: "Build", items: [
+    { id: "petals", label: "Semantic Petals" },
+    { id: "best-practices", label: "Best Practices" },
+  ]},
+  { label: "Reference", items: [
+    { id: "utilities", label: "Utility Reference" },
+    { id: "layout", label: "Layout Primitives" },
+  ]},
+];
 
 export default function TailwindPage() {
-  const isMobile = useBreakpoint();
-
   return (
-    <ProfileProvider>
-      <Nav />
-      <div style={{
-        maxWidth: 1260,
-        margin: "0 auto",
-        padding: `calc(52px + var(--renge-space-8)) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"} var(--renge-space-9)`,
-        display: "flex",
-        gap: "var(--renge-space-8)",
-        alignItems: "flex-start",
-        overflowX: "clip",
-      }}>
-
-        {!isMobile && <TailwindSidebar />}
-
-        <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--renge-space-9)" }}>
+    <DocPageLayout sidebar={<DocSidebar sections={TAILWIND_NAV} footerLinks={[
+      { href: "/tokens", label: "Tokens" },
+      { href: "/components", label: "Components" },
+    ]} />}>
 
         {/* Hero */}
         <header style={{ paddingBottom: "var(--renge-space-7)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
@@ -873,9 +873,6 @@ ease-renge-elastic-in, ease-renge-elastic-out
             onMouseLeave={e => (e.currentTarget.style.color = "var(--renge-color-fg-subtle)")}
           >React Components →</a>
         </footer>
-
-        </main>
-      </div>
-    </ProfileProvider>
+    </DocPageLayout>
   );
 }

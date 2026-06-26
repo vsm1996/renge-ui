@@ -1,32 +1,35 @@
 "use client";
 
 import { Stack, Text, Heading, Badge } from "@renge-ui/react";
-import { ProfileProvider } from "@/components/ui/ProfileToggle";
-import { Nav } from "@/components/ui/Nav";
 import { CodeBlock, DocSection, UtilityTable } from "@/components/ui/DocPrimitives";
-import { useBreakpoint } from "@/lib/useBreakpoint";
-import { TokensSidebar } from "./Sidebar";
+import { DocPageLayout } from "@/components/ui/DocPageLayout";
+import { DocSidebar, type SidebarSection } from "@/components/ui/DocSidebar";
+
+const TOKEN_NAV: SidebarSection[] = [
+  { label: "Token System", items: [
+    { id: "installation", label: "Getting Started" },
+    { id: "spacing", label: "Spacing" },
+    { id: "typography", label: "Typography" },
+    { id: "colors", label: "Colors" },
+    { id: "radius", label: "Border Radius" },
+    { id: "zindex", label: "Z-Index" },
+    { id: "motion", label: "Motion" },
+    { id: "other", label: "Other Categories" },
+  ]},
+  { label: "Integration", items: [
+    { id: "frameworks", label: "Framework Support" },
+  ]},
+];
 
 export default function TokensPage() {
-  const isMobile = useBreakpoint();
   const PHI = 1.618033988749895;
 
   return (
-    <ProfileProvider>
-      <Nav />
-      <div style={{
-        maxWidth: 1260,
-        margin: "0 auto",
-        padding: `calc(52px + var(--renge-space-8)) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"} var(--renge-space-9)`,
-        display: "flex",
-        gap: "var(--renge-space-8)",
-        alignItems: "flex-start",
-        overflowX: "clip",
-      }}>
-
-        {!isMobile && <TokensSidebar />}
-
-        <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--renge-space-9)" }}>
+    <DocPageLayout sidebar={<DocSidebar sections={TOKEN_NAV} footerLinks={[
+      { href: "/", label: "Home" },
+      { href: "/components", label: "Components" },
+      { href: "/tailwind", label: "Tailwind" },
+    ]} />}>
 
         {/* Hero */}
         <header style={{ paddingBottom: "var(--renge-space-7)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
@@ -697,9 +700,6 @@ export default {
             onMouseLeave={e => (e.currentTarget.style.color = "var(--renge-color-fg-subtle)")}
           >Tailwind →</a>
         </footer>
-
-        </main>
-      </div>
-    </ProfileProvider>
+    </DocPageLayout>
   );
 }

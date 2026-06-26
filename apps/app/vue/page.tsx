@@ -1,23 +1,30 @@
 "use client";
 
 import { Stack, Text, Heading, Badge } from "@renge-ui/react";
-import { ProfileProvider } from "@/components/ui/ProfileToggle";
-import { Nav } from "@/components/ui/Nav";
 import { CodeBlock, DocSection } from "@/components/ui/DocPrimitives";
-import { useBreakpoint } from "@/lib/useBreakpoint";
-import { VueSidebar } from "./Sidebar";
+import { DocPageLayout } from "@/components/ui/DocPageLayout";
+import { DocSidebar, type SidebarSection } from "@/components/ui/DocSidebar";
+
+const VUE_NAV: SidebarSection[] = [
+  { label: "Overview", items: [
+    { id: "overview", label: "About" },
+    { id: "setup", label: "Setup" },
+  ]},
+  { label: "API Reference", items: [
+    { id: "api", label: "useRengeTheme()" },
+    { id: "tokens", label: "Tokens" },
+  ]},
+  { label: "Patterns", items: [
+    { id: "patterns", label: "Real-World Examples" },
+  ]},
+];
 
 export default function VuePage() {
-  const isMobile = useBreakpoint();
-
   return (
-    <ProfileProvider>
-      <Nav />
-      <div style={{ maxWidth: 1260, margin: "0 auto", paddingLeft: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingRight: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingTop: "calc(52px + var(--renge-space-7))", paddingBottom: "var(--renge-space-8)", display: "flex", gap: "var(--renge-space-8)", alignItems: "flex-start", overflowX: "clip" }}>
-
-        {!isMobile && <VueSidebar />}
-
-        <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--renge-space-8)" }}>
+    <DocPageLayout sidebar={<DocSidebar sections={VUE_NAV} footerLinks={[
+      { href: "/svelte", label: "Svelte Stores" },
+      { href: "/components", label: "React Components" },
+    ]} />}>
 
           {/* Hero */}
           <header style={{ paddingBottom: "var(--renge-space-7)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
@@ -686,8 +693,6 @@ import { PHI, FIBONACCI, GOLDEN_ANGLE } from '@renge-ui/vue';
               </Text>
             </Stack>
           </div>
-        </main>
-      </div>
-    </ProfileProvider>
+    </DocPageLayout>
   );
 }

@@ -2,14 +2,32 @@
 
 import { useState } from "react";
 import { Stack, Text, Heading } from "@renge-ui/react";
-import { ProfileProvider } from "@/components/ui/ProfileToggle";
-import { Nav } from "@/components/ui/Nav";
 import { ComponentSection, Demo, CodeBlock } from "@/components/ui/DocPrimitives";
-import { useBreakpoint } from "@/lib/useBreakpoint";
-import { Sidebar } from "./Sidebar";
+import { DocPageLayout } from "@/components/ui/DocPageLayout";
+import { DocSidebar, type SidebarSection } from "@/components/ui/DocSidebar";
+
+const COMPONENT_NAV: SidebarSection[] = [
+  { label: "Components", items: [
+    { id: "layout", label: "Layout" },
+    { id: "typography", label: "Typography" },
+    { id: "surfaces", label: "Surfaces" },
+    { id: "interactive", label: "Interactive" },
+    { id: "form-inputs", label: "Form Inputs" },
+    { id: "advanced-inputs", label: "Advanced Inputs" },
+    { id: "data-display", label: "Data Display" },
+    { id: "tables-lists", label: "Tables & Lists" },
+    { id: "navigation", label: "Navigation" },
+    { id: "feedback", label: "Feedback & Status" },
+    { id: "popovers-menus", label: "Popovers & Menus" },
+    { id: "drawers", label: "Drawers & Overlays" },
+    { id: "progress", label: "Progress & Steps" },
+    { id: "display", label: "Display & Content" },
+    { id: "accessibility", label: "Accessibility" },
+    { id: "data-viz", label: "Data Visualization" },
+  ]},
+];
 
 export default function ComponentsPage() {
-  const isMobile = useBreakpoint();
   const [rating, setRating] = useState(0);
   const [numberValue, setNumberValue] = useState(5);
   const [tags, setTags] = useState<string[]>([]);
@@ -23,13 +41,10 @@ export default function ComponentsPage() {
   ];
 
   return (
-    <ProfileProvider>
-      <Nav />
-      <div style={{ maxWidth: 1260, margin: "0 auto", paddingLeft: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingRight: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingTop: "calc(52px + var(--renge-space-7))", paddingBottom: "var(--renge-space-8)", display: "flex", gap: "var(--renge-space-8)", alignItems: "flex-start", overflowX: "clip" }}>
-
-        {!isMobile && <Sidebar active="layout" />}
-
-        <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--renge-space-8)" }}>
+    <DocPageLayout sidebar={<DocSidebar sections={COMPONENT_NAV} footerLinks={[
+      { href: "/", label: "Home" },
+      { href: "/tailwind", label: "Tailwind" },
+    ]} />}>
 
           {/* Hero */}
           <header style={{ paddingBottom: "var(--renge-space-7)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
@@ -426,8 +441,6 @@ export default function ComponentsPage() {
             </Text>
           </div>
 
-        </main>
-      </div>
-    </ProfileProvider>
+    </DocPageLayout>
   );
 }
