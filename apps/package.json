@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@renge-ui/petals": "workspace:*",
     "@renge-ui/react": "workspace:*",
     "@renge-ui/tailwind": "workspace:*",
     "@renge-ui/tokens": "workspace:*",

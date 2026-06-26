@@ -138,36 +138,47 @@ export function Nav() {
                       System
                     </div>
                     {[
-                      { label: 'Tokens', href: '/tokens' },
-                      { label: 'System', href: '/system' },
-                      { label: 'Accessibility', href: '/system#accessibility' },
-                    ].map(({ label, href }) => (
-                      <a
-                        key={href}
-                        href={href}
-                        style={{
-                          color: 'var(--renge-color-fg-muted)',
-                          textDecoration: 'none',
-                          fontSize: 'var(--renge-font-size-sm)',
-                          fontFamily: 'var(--font-body)',
-                          padding: 'var(--renge-space-2) var(--renge-space-3)',
-                          borderRadius: 'var(--renge-radius-1)',
-                          transition: 'all var(--renge-duration-1) var(--renge-easing-ease-out)',
-                          display: 'block',
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.background = 'var(--renge-color-bg-subtle)';
-                          (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-accent)';
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.background = 'transparent';
-                          (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-fg-muted)';
-                        }}
-                        onClick={() => setDocsOpen(false)}
-                      >
-                        {label}
-                      </a>
-                    ))}
+                      { label: 'Tokens', href: '/tokens', angle: 0 },
+                      { label: 'Petals', href: '/petals', angle: 137.5 },
+                      { label: 'System', href: '/system', angle: 275 },
+                      { label: 'Accessibility', href: '/system#accessibility', angle: 137.5 },
+                    ].map(({ label, href, angle }, idx) => {
+                      const isLarge = typeof window !== 'undefined' && window.innerWidth > 768;
+                      const radians = (angle * Math.PI) / 180;
+                      const distance = isLarge ? 4 : 0; // phyllotaxis radius (only on desktop)
+                      const offsetX = distance * Math.cos(radians);
+                      const offsetY = distance * Math.sin(radians);
+
+                      return (
+                        <a
+                          key={href}
+                          href={href}
+                          style={{
+                            color: 'var(--renge-color-fg-muted)',
+                            textDecoration: 'none',
+                            fontSize: 'var(--renge-font-size-sm)',
+                            fontFamily: 'var(--font-body)',
+                            padding: 'var(--renge-space-2) var(--renge-space-3)',
+                            borderRadius: 'var(--renge-radius-1)',
+                            transition: 'all var(--renge-duration-1) var(--renge-easing-ease-out)',
+                            display: 'block',
+                            transform: isLarge ? `translate(${offsetX}px, ${offsetY}px) rotate(${angle}deg)` : 'none',
+                            opacity: 0.9 + idx * 0.02,
+                          }}
+                          onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLElement).style.background = 'var(--renge-color-bg-subtle)';
+                            (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-accent)';
+                          }}
+                          onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLElement).style.background = 'transparent';
+                            (e.currentTarget as HTMLElement).style.color = 'var(--renge-color-fg-muted)';
+                          }}
+                          onClick={() => setDocsOpen(false)}
+                        >
+                          {label}
+                        </a>
+                      );
+                    })}
 
                     <div style={{ height: '1px', background: 'var(--renge-color-border-subtle)', margin: 'var(--renge-space-1) 0' }} />
 
