@@ -4,8 +4,8 @@
 
 import { useState } from "react";
 import {
-  Alert, Spinner, Progress, ToastProvider, useToast, Modal, ModalHeader, ModalBody,
-  ModalFooter, Stack, Text, Heading, Button, Badge, Card, Input,
+  Alert, Spinner, Progress, useToast, Modal, ModalHeader, ModalBody,
+  ModalFooter, Stack, Text, Heading, Button,
 } from "@renge-ui/react";
 import { PropRow, PropsTable, Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
 

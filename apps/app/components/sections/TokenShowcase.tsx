@@ -22,7 +22,7 @@ const parseCubicBezier = (path: string): [number, number, number, number] => {
 export function TokenShowcase() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-200px' });
-  const { profile } = useProfile();
+  useProfile();
   const [hoveredEasing, setHoveredEasing] = useState<string | null>(null);
 
   const easings = [

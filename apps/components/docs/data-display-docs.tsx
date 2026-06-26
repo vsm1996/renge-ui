@@ -4,9 +4,9 @@
 
 import {
   Table, TableHead, TableBody, TableRow, TableHeader, TableCell,
-  Accordion, AccordionItem, Timeline, TimelineItem, Stack, Text, Heading, Badge, Button,
+  Accordion, AccordionItem, Timeline, TimelineItem, Badge,
 } from "@renge-ui/react";
-import { PropRow, PropsTable, Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
+import { PropRow, PropsTable, Demo, Code, ComponentSection } from "@/components/ui/DocPrimitives";
 
 export function TableDocs() {
   const plants = [

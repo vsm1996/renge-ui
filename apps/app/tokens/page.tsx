@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Stack, Text, Heading, Badge } from "@renge-ui/react";
 import { ProfileProvider } from "@/components/ui/ProfileToggle";
 import { Nav } from "@/components/ui/Nav";

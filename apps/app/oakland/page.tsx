@@ -707,11 +707,11 @@ const PARK_SVGS: Record<string, React.FC> = {
         );
       })}
       {/* Fern understory */}
-      {[20,60,100,140,180,220,260].map((x,i)=>(
+      {[20,60,100,140,180,220,260].map((x)=>(
         <path key={x} d={`M${x},95 Q${x-8},88 ${x-14},82 M${x},95 Q${x+8},87 ${x+12},80`} opacity={0.3} />
       ))}
       {/* Light rays through canopy */}
-      {[70,140,210].map((x,i)=>(
+      {[70,140,210].map((x)=>(
         <line key={x} x1={x} y1={15} x2={x+10} y2={95} strokeDasharray="3,8" opacity={0.08} strokeWidth={8} />
       ))}
     </svg>
@@ -729,7 +729,7 @@ const PARK_SVGS: Record<string, React.FC> = {
         {x:145, y:58, r:25},
         {x:200, y:65, r:20},
         {x:250, y:70, r:17},
-      ].map(({x,y,r},i) => (
+      ].map(({x,y,r}) => (
         <g key={x}>
           {/* Trunk */}
           <path d={`M${x},95 Q${x-2},${y+r*0.3} ${x},${y+r*0.1}`} strokeWidth={1.2} />
@@ -741,7 +741,7 @@ const PARK_SVGS: Record<string, React.FC> = {
         </g>
       ))}
       {/* Madrone — smooth lighter trunk */}
-      {[120,230].map((x,i)=>(
+      {[120,230].map((x)=>(
         <g key={`m${x}`}>
           <path d={`M${x},95 Q${x+3},80 ${x-2},65`} strokeWidth={0.9} strokeDasharray="0" />
           <path d={`M${x-2},65 Q${x-15},55 ${x-20},45`} />
@@ -751,7 +751,7 @@ const PARK_SVGS: Record<string, React.FC> = {
         </g>
       ))}
       {/* Wildflowers */}
-      {[50,90,160,220].map((x,i)=>(
+      {[50,90,160,220].map((x)=>(
         <g key={`f${x}`}>
           <line x1={x} y1={95} x2={x} y2={88} strokeWidth={0.5} />
           <circle cx={x} cy={87} r={2} opacity={0.6} />
@@ -783,13 +783,13 @@ const PARK_SVGS: Record<string, React.FC> = {
       {[
         {x:100,h:18},{x:108,h:28},{x:116,h:22},{x:125,h:35},{x:134,h:25},
         {x:142,h:40},{x:150,h:28},{x:158,h:22},{x:165,h:30},{x:172,h:18},
-      ].map(({x,h},i)=>(
+      ].map(({x,h})=>(
         <rect key={x} x={x-4} y={28-h} width={8} height={h} opacity={0.1} rx={1} fill="currentColor" stroke="none" />
       ))}
       {/* Heron */}
       <path d="M170,60 Q172,56 175,58 Q173,54 170,52 Q168,54 167,58 Q169,57 170,60" opacity={0.4} />
       {/* Light on water */}
-      {[80,130,180].map((x,i)=>(
+      {[80,130,180].map((x)=>(
         <line key={x} x1={x} y1={55} x2={x+5} y2={65} strokeDasharray="1,4" opacity={0.15} strokeWidth={3} />
       ))}
     </svg>
@@ -824,7 +824,7 @@ const PARK_SVGS: Record<string, React.FC> = {
         <path key={x} d={`M${x},${30+i*5} Q${x+4},${27+i*5} ${x+8},${30+i*5}`} opacity={0.3} />
       ))}
       {/* Distant shipping container cranes — Oakland landmark */}
-      {[200,220,238].map((x,i)=>(
+      {[200,220,238].map((x)=>(
         <g key={x} opacity={0.12}>
           <line x1={x} y1={68} x2={x} y2={28} />
           <line x1={x-12} y1={32} x2={x+8} y2={32} />
@@ -851,7 +851,7 @@ const PARK_SVGS: Record<string, React.FC> = {
       <path d="M60,95 Q90,85 120,90 Q150,95 180,88 Q210,82 220,95" strokeWidth={1.5} opacity={0.4} />
       <path d="M62,97 Q92,88 122,93 Q152,97 182,91 Q212,85 222,97" opacity={0.15} strokeDasharray="4,3" />
       {/* Oak canopy over creek */}
-      {[85,115,145,170,198].map((x,i)=>(
+      {[85,115,145,170,198].map((x)=>(
         <g key={x}>
           <path d={`M${x},95 Q${x-1},80 ${x},70`} strokeWidth={0.9} />
           <path d={`M${x},70 Q${x-20},60 ${x-25},50 M${x},70 Q${x+18},58 ${x+22},48`} />
@@ -861,14 +861,14 @@ const PARK_SVGS: Record<string, React.FC> = {
         </g>
       ))}
       {/* Canyon bottom vegetation */}
-      {[70,100,130,160,195,215].map((x,i)=>(
+      {[70,100,130,160,195,215].map((x)=>(
         <g key={`v${x}`} opacity={0.4}>
           <path d={`M${x},95 Q${x-5},87 ${x-8},80`} />
           <path d={`M${x},95 Q${x+4},87 ${x+6},82`} />
         </g>
       ))}
       {/* Dappled light spots */}
-      {[90,140,185].map((x,i)=>(
+      {[90,140,185].map((x)=>(
         <ellipse key={x} cx={x} cy={88} rx={8} ry={4} opacity={0.06} fill="currentColor" stroke="none" />
       ))}
     </svg>

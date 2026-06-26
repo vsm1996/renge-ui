@@ -17,7 +17,7 @@ export interface ButtonGroupProps extends ComponentPropsWithoutRef<'div'> {
 
 export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
   function ButtonGroup(
-    { orientation = 'horizontal', radius = '2', attached = true, style, children, ...props },
+    { orientation = 'horizontal', radius = '2', attached: _attached = true, style, children, ...props },
     ref
   ) {
     const radiusVal = `var(--renge-radius-${radius})`;
@@ -60,29 +60,13 @@ export interface ButtonGroupItemProps extends ComponentPropsWithoutRef<'div'> {
 }
 
 export function ButtonGroupItem({
-  position,
-  orientation = 'horizontal',
-  radius = '2',
+  position: _position,
+  orientation: _orientation = 'horizontal',
+  radius: _radius = '2',
   style,
   children,
   ...props
 }: ButtonGroupItemProps) {
-  const r = `var(--renge-radius-${radius})`;
-  const isH = orientation === 'horizontal';
-  const none = '0px';
-
-  const radiusCSS = (() => {
-    if (position === 'only') return { borderRadius: r };
-    if (position === 'first') return isH
-      ? { borderTopLeftRadius: r, borderBottomLeftRadius: r, borderTopRightRadius: none, borderBottomRightRadius: none }
-      : { borderTopLeftRadius: r, borderTopRightRadius: r, borderBottomLeftRadius: none, borderBottomRightRadius: none };
-    if (position === 'last') return isH
-      ? { borderTopLeftRadius: none, borderBottomLeftRadius: none, borderTopRightRadius: r, borderBottomRightRadius: r }
-      : { borderTopLeftRadius: none, borderTopRightRadius: none, borderBottomLeftRadius: r, borderBottomRightRadius: r };
-    // middle
-    return { borderRadius: none };
-  })();
-
   return (
     <div style={{ display: 'contents', ...style }} {...props}>
       {children}

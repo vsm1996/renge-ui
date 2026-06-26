@@ -21,12 +21,6 @@ import { useEffect, useState } from 'react';
  * ```
  */
 export function useRengeVar(varName: string, fallback: string = 'inherit'): string {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   // Normalize var name to include '--' prefix
   const normalizedVarName = varName.startsWith('--') ? varName : `--${varName}`;
 

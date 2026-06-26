@@ -3,7 +3,7 @@
 // Breadcrumb trail. Each item is separated by a subtle chevron.
 // The gap between items uses space-2 (8px = Fib2 × baseUnit).
 
-import { forwardRef, type ComponentPropsWithoutRef, type ReactNode, type CSSProperties } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
 
 export interface BreadcrumbProps extends ComponentPropsWithoutRef<'nav'> {
   children: ReactNode;
@@ -75,7 +75,7 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
 );
 
 export const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
-  function BreadcrumbItem({ current = false, href, style, children, ...props }, ref) {
+  function BreadcrumbItem({ current = false, href, children }, _ref) {
     return (
       <span
         style={{

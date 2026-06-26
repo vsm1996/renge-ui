@@ -5,7 +5,7 @@
 import {
   EnergyRing, Pulse, FlowField, Stack, Text,
 } from "@renge-ui/react";
-import { PropRow, PropsTable, Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
+import { PropRow, PropsTable, Demo, Code, ComponentSection } from "@/components/ui/DocPrimitives";
 
 export function EnergyRingDocs() {
   return (

@@ -22,7 +22,6 @@ export interface TimelineItemProps {
 }
 
 const DOT_SIZE = 12; // --renge-space-3 equivalent, Fibonacci×3
-const LINE_OFFSET = DOT_SIZE / 2; // centers the connector line on the dot
 
 const statusColor: Record<TimelineItemStatus, string> = {
   completed: 'var(--renge-color-success)',

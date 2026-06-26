@@ -35,12 +35,6 @@ export interface SkeletonProps extends ComponentPropsWithoutRef<'div'> {
   animated?: boolean;
 }
 
-const LINE_HEIGHTS = [
-  'var(--renge-space-3)',  // Fib 3 = 12px
-  'var(--renge-space-3)',
-  'var(--renge-space-2)',  // Last line shorter — natural paragraph feel
-];
-
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
   function Skeleton(
     { variant = 'rectangular', width, height, lines = 3, animated = true, style, ...props },

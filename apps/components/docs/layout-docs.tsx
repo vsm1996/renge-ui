@@ -3,10 +3,10 @@
 // Layout Docs — component documentation.
 
 import {
-  Stack, Grid, Section, Container, AspectRatio, Spacer, Text, Heading, Badge,
+  Stack, Grid, Section, Container, AspectRatio, Spacer, Text, Badge,
 } from "@renge-ui/react";
 import { PHI } from "@renge-ui/tokens";
-import { PropRow, PropsTable, Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
+import { PropRow, PropsTable, Demo, Code, ComponentSection } from "@/components/ui/DocPrimitives";
 
 export function StackDocs() {
   return (

@@ -9,7 +9,7 @@
  * When pulse=true, the ring breathes at a rate tuned to the energy level.
  */
 
-import { forwardRef, useEffect, type ComponentPropsWithoutRef } from "react";
+import { forwardRef, type ComponentPropsWithoutRef } from "react";
 
 // ============================================================================
 // Keyframe injection (module-level, runs once)

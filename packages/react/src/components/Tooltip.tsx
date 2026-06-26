@@ -37,13 +37,6 @@ const placementStyles = (placement: TooltipPlacement): CSSProperties => {
   }
 };
 
-const originTransforms: Record<TooltipPlacement, string> = {
-  top:    '--4px',
-  bottom: '4px',
-  left:   '0px',
-  right:  '0px',
-};
-
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   function Tooltip({ content, placement = 'top', delay = 0, style, children, ...props }, ref) {
     const [visible, setVisible] = useState(false);

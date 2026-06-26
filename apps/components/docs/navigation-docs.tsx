@@ -4,9 +4,9 @@
 
 import { useState } from "react";
 import {
-  Navbar, Tabs, TabList, Tab, TabPanel, Breadcrumb, BreadcrumbItem, Pagination, Stack, Text, Badge, Button,
+  Navbar, Tabs, TabList, Tab, TabPanel, Breadcrumb, BreadcrumbItem, Pagination, Stack, Text, Badge,
 } from "@renge-ui/react";
-import { PropRow, PropsTable, Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
+import { PropRow, PropsTable, Demo, Code, ComponentSection } from "@/components/ui/DocPrimitives";
 
 export function NavbarDocs() {
   return (

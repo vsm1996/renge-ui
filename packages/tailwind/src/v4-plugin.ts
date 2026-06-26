@@ -34,7 +34,6 @@ import {
   createRengeTheme,
   profiles,
   createSemanticColorVars,
-  createAnimationVars,
   createAnimationKeyframesCSS,
 } from "@renge-ui/tokens";
 import type { ProfileName } from "@renge-ui/tokens";
