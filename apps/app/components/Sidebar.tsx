@@ -2,12 +2,22 @@ import { Stack } from "@renge-ui/react";
 
 const NAV_SECTIONS = [
   { label: "Components", items: [
-    { id: "input-selection", label: "Input & Selection" },
+    { id: "layout", label: "Layout" },
+    { id: "typography", label: "Typography" },
+    { id: "surfaces", label: "Surfaces" },
+    { id: "interactive", label: "Interactive" },
+    { id: "form-inputs", label: "Form Inputs" },
+    { id: "advanced-inputs", label: "Advanced Inputs" },
+    { id: "data-display", label: "Data Display" },
+    { id: "tables-lists", label: "Tables & Lists" },
+    { id: "navigation", label: "Navigation" },
+    { id: "feedback", label: "Feedback & Status" },
     { id: "popovers-menus", label: "Popovers & Menus" },
     { id: "drawers", label: "Drawers & Overlays" },
     { id: "progress", label: "Progress & Steps" },
     { id: "display", label: "Display & Content" },
     { id: "accessibility", label: "Accessibility" },
+    { id: "data-viz", label: "Data Visualization" },
   ]},
 ];
 
