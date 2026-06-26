@@ -79,7 +79,7 @@ importers:
   packages/react:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.6.0
+        specifier: ^2.6.1
         version: link:../tokens
     devDependencies:
       '@types/react':
@@ -120,7 +120,7 @@ importers:
   packages/tailwind:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.6.0
+        specifier: ^2.6.1
         version: link:../tokens
       tailwindcss:
         specifier: '>=3.0.0 <6.0.0'
@@ -139,7 +139,7 @@ importers:
   packages/test-utils:
     devDependencies:
       '@renge-ui/tokens':
-        specifier: ^2.6.0
+        specifier: ^2.6.1
         version: link:../tokens
       tsup:
         specifier: ^8.5.1

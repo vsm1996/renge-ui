@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/test-utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Testing utilities and validators for the Renge design system — validate spacing scales, typography scales, and WCAG contrast ratios.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -40,7 +40,7 @@
   },
   "packageManager": "pnpm@10.30.2",
   "devDependencies": {
-    "@renge-ui/tokens": "^2.6.0",
+    "@renge-ui/tokens": "^2.6.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "vitest": "^3.0.0"
