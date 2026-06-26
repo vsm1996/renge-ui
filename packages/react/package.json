@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/react",
-  "version": "3.5.1",
+  "version": "3.6.0",
   "description": "React component primitives for the Renge design system with dynamic theme switching.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -37,7 +37,7 @@
   },
   "packageManager": "pnpm@10.30.2",
   "dependencies": {
-    "@renge-ui/tokens": "^2.5.0"
+    "@renge-ui/tokens": "^2.6.0"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
