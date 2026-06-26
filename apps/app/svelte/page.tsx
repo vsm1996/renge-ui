@@ -152,23 +152,6 @@ export default function SveltePage() {
 </script>`} />
             </div>
 
-            <div>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-lg)", color: "var(--renge-color-fg)", fontWeight: 400, margin: 0, marginBottom: "var(--renge-space-3)", letterSpacing: "-0.01em" }}>
-                scale
-              </h3>
-              <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", margin: 0, marginBottom: "var(--renge-space-4)" }}>
-                Base unit in pixels (0.5–16 range). Affects all spacing, type, and radius scales. Default is 4px.
-              </p>
-              <CodeBlock code={`<script>
-  import { scale } from '@renge-ui/svelte';
-
-  // Current scale
-  Base unit: {$scale}px
-
-  // Update (affects all spacing, type, radius)
-  scale.set(6);
-</script>`} />
-            </div>
           </Stack>
         </DocSection>
 
