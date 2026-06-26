@@ -93,9 +93,13 @@ describe("createRengeTheme", () => {
     expect(ocean.vars["--renge-space-4"]).toBe(earth.vars["--renge-space-4"]);
   });
 
-  it("custom baseUnit scales spacing", () => {
+  it("custom baseUnit becomes the calc fallback for spacing", () => {
     const theme = createRengeTheme({ baseUnit: 8 });
-    expect(theme.vars["--renge-space-1"]).toBe("8px");
-    expect(theme.vars["--renge-space-2"]).toBe("16px");
+    expect(theme.vars["--renge-space-1"]).toBe(
+      "calc(1 * var(--renge-base-unit, 8px))"
+    );
+    expect(theme.vars["--renge-space-2"]).toBe(
+      "calc(2 * var(--renge-base-unit, 8px))"
+    );
   });
 });

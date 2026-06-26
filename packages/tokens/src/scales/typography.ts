@@ -38,10 +38,13 @@ export function createTypeScale(
 ): Record<string, TypeToken> {
   const scale: Record<string, TypeToken> = {};
 
+  // The exponential ratio multipliers are constants at build time; only the
+  // base size is a runtime variable, so type scales with --renge-base-size:
+  //   calc(<ratio^exp> * var(--renge-base-size, <base>px))
   for (const step of TYPE_STEPS) {
-    const size = base * Math.pow(ratio, step.exp);
+    const multiplier = Math.pow(ratio, step.exp).toFixed(4);
     scale[step.key] = {
-      fontSize: `${size}px`,
+      fontSize: `calc(${multiplier} * var(--renge-base-size, ${base}px))`,
       lineHeight: step.lh,
     };
   }

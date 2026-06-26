@@ -15,6 +15,18 @@ import {
 import { createFractalScale, FRACTAL_STEPS } from "../index";
 import { PHI, FIBONACCI, seededRandom } from "../constants";
 
+/**
+ * Extract the build-time multiplier from a calc-based token value.
+ * Spacing/radius/dimension/type tokens are emitted as
+ *   `calc(<multiplier> * var(--renge-base-..., <fallback>px))`
+ * so ordering/ratio assertions compare the fixed multiplier. Literal px
+ * values (e.g. "0px", "9999px") fall back to parseFloat.
+ */
+const coeff = (value: string): number => {
+  const match = value.match(/^calc\(\s*([\d.]+)\s*\*/);
+  return match ? parseFloat(match[1]) : parseFloat(value);
+};
+
 describe("createSpacingScale", () => {
   it("produces 11 keys (0–10)", () => {
     const scale = createSpacingScale(4);
@@ -26,18 +38,20 @@ describe("createSpacingScale", () => {
     expect(scale["0"]).toBe("0px");
   });
 
-  it("matches Fibonacci × baseUnit for default baseUnit=4", () => {
+  it("emits calc(fib * var(--renge-base-unit)) for default baseUnit=4", () => {
     const scale = createSpacingScale(4);
     FIBONACCI.forEach((fib, i) => {
-      expect(scale[String(i + 1)]).toBe(`${fib * 4}px`);
+      expect(scale[String(i + 1)]).toBe(
+        `calc(${fib} * var(--renge-base-unit, 4px))`
+      );
     });
   });
 
-  it("scales proportionally with a different baseUnit", () => {
+  it("encodes the baseUnit as the calc fallback", () => {
     const scale = createSpacingScale(8);
-    expect(scale["1"]).toBe("8px");
-    expect(scale["2"]).toBe("16px");
-    expect(scale["4"]).toBe("40px"); // FIBONACCI[3]=5, 5×8=40
+    expect(scale["1"]).toBe("calc(1 * var(--renge-base-unit, 8px))");
+    expect(scale["2"]).toBe("calc(2 * var(--renge-base-unit, 8px))");
+    expect(scale["4"]).toBe("calc(5 * var(--renge-base-unit, 8px))"); // FIBONACCI[3]=5
   });
 });
 
@@ -55,9 +69,11 @@ describe("createTypeScale", () => {
     expect(scale).toHaveProperty("4xl");
   });
 
-  it("base size is exactly typeBase", () => {
+  it("base size multiplier is 1 over var(--renge-base-size)", () => {
     const scale = createTypeScale(16);
-    expect(scale.base.fontSize).toBe("16px");
+    expect(scale.base.fontSize).toBe(
+      "calc(1.0000 * var(--renge-base-size, 16px))"
+    );
   });
 
   it("each step includes fontSize and lineHeight", () => {
@@ -65,18 +81,24 @@ describe("createTypeScale", () => {
     for (const token of Object.values(scale)) {
       expect(token).toHaveProperty("fontSize");
       expect(token).toHaveProperty("lineHeight");
-      expect(token.fontSize).toMatch(/^\d+(\.\d+)?px$/);
+      expect(token.fontSize).toMatch(
+        /^calc\([\d.]+ \* var\(--renge-base-size, \d+px\)\)$/
+      );
     }
   });
 
-  it("lg is base × PHI", () => {
+  it("lg multiplier is PHI over var(--renge-base-size)", () => {
     const scale = createTypeScale(16);
-    expect(scale.lg.fontSize).toBe(`${16 * PHI}px`);
+    expect(scale.lg.fontSize).toBe(
+      `calc(${PHI.toFixed(4)} * var(--renge-base-size, 16px))`
+    );
   });
 
-  it("sm is base × PHI^-0.25", () => {
+  it("sm multiplier is PHI^-0.25 over var(--renge-base-size)", () => {
     const scale = createTypeScale(16);
-    expect(scale.sm.fontSize).toBe(`${16 * Math.pow(PHI, -0.25)}px`);
+    expect(scale.sm.fontSize).toBe(
+      `calc(${Math.pow(PHI, -0.25).toFixed(4)} * var(--renge-base-size, 16px))`
+    );
   });
 
   it("body line height is φ (1.618)", () => {
@@ -177,22 +199,24 @@ describe("createRadiusScale", () => {
     expect(Object.keys(scale)).toHaveLength(7);
   });
 
-  it("matches FIBONACCI[0..4] × baseUnit", () => {
+  it("emits calc(fib * var(--renge-base-unit)) for FIBONACCI[0..4]", () => {
     const scale = createRadiusScale(4);
     const first5 = FIBONACCI.slice(0, 5);
     first5.forEach((fib, i) => {
-      expect(scale[String(i + 1)]).toBe(`${fib * 4}px`);
+      expect(scale[String(i + 1)]).toBe(
+        `calc(${fib} * var(--renge-base-unit, 4px))`
+      );
     });
   });
 
-  it("radius-1 is 4px with default baseUnit", () => {
+  it("radius-1 multiplier is 1 with default baseUnit fallback", () => {
     const scale = createRadiusScale(4);
-    expect(scale["1"]).toBe("4px");
+    expect(scale["1"]).toBe("calc(1 * var(--renge-base-unit, 4px))");
   });
 
-  it("radius-3 is 12px with default baseUnit", () => {
+  it("radius-3 multiplier is 3 with default baseUnit fallback", () => {
     const scale = createRadiusScale(4);
-    expect(scale["3"]).toBe("12px");
+    expect(scale["3"]).toBe("calc(3 * var(--renge-base-unit, 4px))");
   });
 });
 
@@ -237,69 +261,75 @@ describe("createAnimationVars", () => {
 });
 
 describe("createSpacingScale — precision", () => {
-  it("outputs exact Fibonacci × baseUnit without rounding", () => {
+  it("preserves the exact Fibonacci multiplier in the calc expression", () => {
     const scale = createSpacingScale(3);
-    // 3 × 5 = 15, 3 × 13 = 39 — should be exact, not rounded
-    expect(scale["4"]).toBe("15px");
-    expect(scale["6"]).toBe("39px");
+    // FIBONACCI[3]=5, FIBONACCI[5]=13 — multipliers stay exact, base is runtime
+    expect(scale["4"]).toBe("calc(5 * var(--renge-base-unit, 3px))");
+    expect(scale["6"]).toBe("calc(13 * var(--renge-base-unit, 3px))");
   });
 
-  it("spacing values are strictly increasing", () => {
+  it("spacing multipliers are strictly increasing", () => {
     const scale = createSpacingScale(4);
     for (let i = 1; i < 10; i++) {
-      const curr = parseFloat(scale[String(i)]);
-      const next = parseFloat(scale[String(i + 1)]);
+      const curr = coeff(scale[String(i)]);
+      const next = coeff(scale[String(i + 1)]);
       expect(next).toBeGreaterThan(curr);
     }
   });
 
-  it("variance produces non-integer values (no rounding)", () => {
+  it("variance produces non-integer multipliers (no rounding)", () => {
     const rng = seededRandom("precision-test");
     const scale = createSpacingScale(4, 0.1, rng);
-    const values = FIBONACCI.map((_, i) => parseFloat(scale[String(i + 1)]));
-    // With variance, at least some values should have decimal parts
+    const values = FIBONACCI.map((_, i) => coeff(scale[String(i + 1)]));
+    // With variance, at least some multipliers should have decimal parts
     const hasDecimals = values.some((v) => v !== Math.round(v));
     expect(hasDecimals).toBe(true);
   });
 });
 
 describe("createTypeScale — precision", () => {
-  it("outputs exact φ-derived sizes without rounding", () => {
+  it("encodes the φ-derived multiplier to 4 decimals", () => {
     const scale = createTypeScale(16);
-    // xs = 16 * PHI^-0.5 — irrational, should not be rounded
-    const expected = 16 * Math.pow(PHI, -0.5);
-    expect(scale.xs.fontSize).toBe(`${expected}px`);
+    // xs = PHI^-0.5 multiplier, base size is runtime
+    const expected = Math.pow(PHI, -0.5).toFixed(4);
+    expect(scale.xs.fontSize).toBe(
+      `calc(${expected} * var(--renge-base-size, 16px))`
+    );
   });
 
-  it("font sizes are strictly increasing from xs to 4xl", () => {
+  it("font multipliers are strictly increasing from xs to 4xl", () => {
     const keys = ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl"];
     const scale = createTypeScale(16);
     for (let i = 0; i < keys.length - 1; i++) {
-      const curr = parseFloat(scale[keys[i]].fontSize);
-      const next = parseFloat(scale[keys[i + 1]].fontSize);
+      const curr = coeff(scale[keys[i]].fontSize);
+      const next = coeff(scale[keys[i + 1]].fontSize);
       expect(next).toBeGreaterThan(curr);
     }
   });
 
   it("custom ratio is used instead of PHI", () => {
     const scale = createTypeScale(16, 2);
-    expect(scale.lg.fontSize).toBe("32px"); // 16 * 2^1
-    expect(scale.xl.fontSize).toBe("64px"); // 16 * 2^2
+    expect(scale.lg.fontSize).toBe(
+      "calc(2.0000 * var(--renge-base-size, 16px))"
+    ); // 2^1
+    expect(scale.xl.fontSize).toBe(
+      "calc(4.0000 * var(--renge-base-size, 16px))"
+    ); // 2^2
   });
 
   it("base × ratio ≈ lg (integer step symmetry holds)", () => {
     const scale = createTypeScale(16);
-    const base = parseFloat(scale.base.fontSize);
-    const lg = parseFloat(scale.lg.fontSize);
-    expect(base * PHI).toBeCloseTo(lg, 10);
+    const base = coeff(scale.base.fontSize);
+    const lg = coeff(scale.lg.fontSize);
+    expect(base * PHI).toBeCloseTo(lg, 3);
   });
 });
 
 describe("createRadiusScale — precision", () => {
-  it("outputs exact values without rounding", () => {
+  it("variance produces non-integer multipliers (no rounding)", () => {
     const rng = seededRandom("radius-prec");
     const scale = createRadiusScale(4, 0.1, rng);
-    const values = FIBONACCI.slice(0, 5).map((_, i) => parseFloat(scale[String(i + 1)]));
+    const values = FIBONACCI.slice(0, 5).map((_, i) => coeff(scale[String(i + 1)]));
     const hasDecimals = values.some((v) => v !== Math.round(v));
     expect(hasDecimals).toBe(true);
   });
@@ -448,6 +478,21 @@ describe("createShadowScale", () => {
       ).toBe(true);
     });
   });
+
+  it("elevation layers scale via calc(--renge-base-unit)", () => {
+    const scale = createShadowScale(4);
+    // layer-1 offset = FIBONACCI[0]=1, blur = FIBONACCI[1]=2
+    expect(scale["layer-1"]).toContain("calc(1 * var(--renge-base-unit, 4px))");
+    expect(scale["layer-1"]).toContain("calc(2 * var(--renge-base-unit, 4px))");
+    // layer-3 offset = FIBONACCI[2]=3, blur = FIBONACCI[3]=5
+    expect(scale["layer-3"]).toContain("calc(3 * var(--renge-base-unit, 4px))");
+    expect(scale["layer-3"]).toContain("calc(5 * var(--renge-base-unit, 4px))");
+  });
+
+  it("encodes the baseUnit as the calc fallback", () => {
+    const scale = createShadowScale(6);
+    expect(scale["layer-1"]).toContain("var(--renge-base-unit, 6px)");
+  });
 });
 
 describe("createZIndexScale", () => {
@@ -515,7 +560,7 @@ describe("createDimensionScale", () => {
     expect(scale.height).toHaveProperty("full");
     expect(scale.height).toHaveProperty("screen");
     expect(scale.height).toHaveProperty("1");
-    expect(scale.height["1"]).toBe("4px");
+    expect(scale.height["1"]).toBe("calc(1 * var(--renge-base-unit, 4px))");
   });
 
   it("minWidth and maxWidth are Fibonacci-based", () => {
@@ -523,7 +568,7 @@ describe("createDimensionScale", () => {
     expect(scale.minWidth).toHaveProperty("0");
     expect(scale.minWidth).toHaveProperty("1");
     expect(scale.minWidth["0"]).toBe("0px");
-    expect(scale.minWidth["1"]).toBe("4px");
+    expect(scale.minWidth["1"]).toBe("calc(1 * var(--renge-base-unit, 4px))");
   });
 
   it("maxWidth has none and full + Fibonacci values", () => {
@@ -534,9 +579,9 @@ describe("createDimensionScale", () => {
     expect(scale.maxWidth.full).toBe("100%");
   });
 
-  it("scales proportionally with different baseUnit", () => {
+  it("encodes the baseUnit as the calc fallback", () => {
     const scale = createDimensionScale(8);
-    expect(scale.height["1"]).toBe("8px");
-    expect(scale.height["2"]).toBe("16px");
+    expect(scale.height["1"]).toBe("calc(1 * var(--renge-base-unit, 8px))");
+    expect(scale.height["2"]).toBe("calc(2 * var(--renge-base-unit, 8px))");
   });
 });

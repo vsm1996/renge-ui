@@ -14,21 +14,25 @@
 
 import { FIBONACCI } from '../constants';
 
-export function createShadowScale(): Record<string, string> {
-  // Fibonacci × 4px: [4, 8, 12, 20, ...]
-  const y1 = FIBONACCI[0] * 4; // 4px
-  const blur1 = FIBONACCI[1] * 4; // 8px
+export function createShadowScale(baseUnit: number = 4): Record<string, string> {
+  // Fibonacci × baseUnit, calc-based so the base unit is a runtime variable:
+  //   calc(<fib> * var(--renge-base-unit, <baseUnit>px))
+  // Default (baseUnit: 4) offsets/blurs: [4, 8, 12, 20]px.
+  const len = (mult: number) => `calc(${mult} * var(--renge-base-unit, ${baseUnit}px))`;
 
-  const y2 = FIBONACCI[1] * 4; // 8px
-  const blur2 = FIBONACCI[2] * 4; // 12px
+  const y1 = len(FIBONACCI[0]); // 1× → 4px @ base 4
+  const blur1 = len(FIBONACCI[1]); // 2× → 8px
 
-  const y3 = FIBONACCI[2] * 4; // 12px
-  const blur3 = FIBONACCI[3] * 4; // 20px
+  const y2 = len(FIBONACCI[1]); // 2× → 8px
+  const blur2 = len(FIBONACCI[2]); // 3× → 12px
+
+  const y3 = len(FIBONACCI[2]); // 3× → 12px
+  const blur3 = len(FIBONACCI[3]); // 5× → 20px
 
   return {
-    'layer-1': `0 ${y1}px ${blur1}px rgb(0 0 0 / 0.05)`,
-    'layer-2': `0 ${y2}px ${blur2}px rgb(0 0 0 / 0.1)`,
-    'layer-3': `0 ${y3}px ${blur3}px rgb(0 0 0 / 0.15)`,
+    'layer-1': `0 ${y1} ${blur1} rgb(0 0 0 / 0.05)`,
+    'layer-2': `0 ${y2} ${blur2} rgb(0 0 0 / 0.1)`,
+    'layer-3': `0 ${y3} ${blur3} rgb(0 0 0 / 0.15)`,
     'focus': `0 0 0 3px rgb(var(--renge-color-accent-rgb) / 0.5)`,
     'inset': `inset 0 1px 2px rgb(0 0 0 / 0.05)`,
   };

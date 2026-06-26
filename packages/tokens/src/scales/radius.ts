@@ -3,6 +3,10 @@
  *
  * Fibonacci × baseUnit for border radius.
  * Includes none (0) and full (pill) as bookends.
+ *
+ * Numeric steps are calc-based so the base unit is a runtime variable:
+ *   calc(<fib> * var(--renge-base-unit, <baseUnit>px))
+ * The none/full bookends remain fixed (0px / pill).
  */
 
 import { FIBONACCI, applyVariance } from "../constants";
@@ -18,11 +22,11 @@ export function createRadiusScale(
   };
 
   FIBONACCI.slice(0, 5).forEach((fib, index) => {
-    let value = fib * baseUnit;
+    let multiplier: number = fib;
     if (variance > 0 && random) {
-      value = applyVariance(value, variance, random);
+      multiplier = applyVariance(multiplier, variance, random);
     }
-    scale[String(index + 1)] = `${value}px`;
+    scale[String(index + 1)] = `calc(${multiplier} * var(--renge-base-unit, ${baseUnit}px))`;
   });
 
   return scale;
