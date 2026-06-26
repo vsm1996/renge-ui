@@ -36,7 +36,7 @@ export default function DocsPage() {
 
             <div style={{ paddingBottom: "var(--renge-space-6)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
               <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-3)" }}>@renge-ui/react</p>
-              <Heading level={1} size="3xl" style={{ marginBottom: "var(--renge-space-4)", fontFamily: "var(--font-display)", fontWeight: 400, letterSpacing: "-0.02em" }}>Components</Heading>
+              <Heading level={1} style={{ marginBottom: "var(--renge-space-4)", fontFamily: "var(--font-display)", fontWeight: 400, letterSpacing: "-0.02em", fontSize: "clamp(var(--renge-font-size-xl), 7vw, var(--renge-font-size-3xl))", lineHeight: "var(--renge-line-height-3xl)", overflowWrap: "break-word" }}>Components</Heading>
               <Text as="p" size="lg" color="fg-subtle" style={{ margin: 0, marginBottom: "var(--renge-space-5)", maxWidth: 560 }}>
                 44 components built on the token system. Proportional. Accessible. Composable. No class names — every style references a Renge CSS variable. 100% WCAG 2.1 AA compliant.
               </Text>
