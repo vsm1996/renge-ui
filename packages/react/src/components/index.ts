@@ -102,3 +102,45 @@ export { ButtonGroup, ButtonGroupItem } from './ButtonGroup';
 export type { ButtonGroupProps, ButtonGroupItemProps } from './ButtonGroup';
 export { CopyButton } from './CopyButton';
 export type { CopyButtonProps } from './CopyButton';
+
+// ─── High-Priority Components ─────────────────────────────────────────────────
+export { Combobox } from './Combobox';
+export type { ComboboxProps } from './Combobox';
+export { Popover } from './Popover';
+export type { PopoverProps } from './Popover';
+export { DropdownMenu } from './DropdownMenu';
+export type { DropdownMenuProps } from './DropdownMenu';
+export { Drawer } from './Drawer';
+export type { DrawerProps } from './Drawer';
+export { NumberInput } from './NumberInput';
+export type { NumberInputProps } from './NumberInput';
+export { DatePicker } from './DatePicker';
+export type { DatePickerProps } from './DatePicker';
+
+// ─── Medium-Priority Components ────────────────────────────────────────────────
+export { CommandPalette } from './CommandPalette';
+export type { CommandPaletteProps, CommandItem } from './CommandPalette';
+export { MultiSelect } from './MultiSelect';
+export type { MultiSelectProps } from './MultiSelect';
+export { TagInput } from './TagInput';
+export type { TagInputProps } from './TagInput';
+export { Stepper } from './Stepper';
+export type { StepperProps } from './Stepper';
+export { CodeBlock } from './CodeBlock';
+export type { CodeBlockProps } from './CodeBlock';
+export { ScrollArea } from './ScrollArea';
+export type { ScrollAreaProps } from './ScrollArea';
+
+// ─── Lower-Priority Components ─────────────────────────────────────────────────
+export { HoverCard } from './HoverCard';
+export type { HoverCardProps } from './HoverCard';
+export { ContextMenu } from './ContextMenu';
+export type { ContextMenuProps, ContextMenuItem } from './ContextMenu';
+export { Rating } from './Rating';
+export type { RatingProps } from './Rating';
+export { KBD } from './KBD';
+export type { KBDProps } from './KBD';
+export { VisuallyHidden } from './VisuallyHidden';
+export type { VisuallyHiddenProps } from './VisuallyHidden';
+export { SkipLink } from './SkipLink';
+export type { SkipLinkProps } from './SkipLink';

@@ -33,6 +33,12 @@ export {
   FormField,
   // Data Viz
   EnergyRing, Pulse, FlowField,
+  // High-Priority Components
+  Combobox, Popover, DropdownMenu, Drawer, NumberInput, DatePicker,
+  // Medium-Priority Components
+  CommandPalette, MultiSelect, TagInput, Stepper, CodeBlock, ScrollArea,
+  // Lower-Priority Components
+  HoverCard, ContextMenu, Rating, KBD, VisuallyHidden, SkipLink,
 } from './components';
 
 export type {
@@ -81,6 +87,27 @@ export type {
   IconButtonProps, IconButtonSize, IconButtonVariant, IconButtonColorScheme,
   ButtonGroupProps, ButtonGroupItemProps,
   CopyButtonProps,
+  // High-Priority Components
+  ComboboxProps,
+  PopoverProps,
+  DropdownMenuProps,
+  DrawerProps,
+  NumberInputProps,
+  DatePickerProps,
+  // Medium-Priority Components
+  CommandPaletteProps, CommandItem,
+  MultiSelectProps,
+  TagInputProps,
+  StepperProps,
+  CodeBlockProps,
+  ScrollAreaProps,
+  // Lower-Priority Components
+  HoverCardProps,
+  ContextMenuProps, ContextMenuItem,
+  RatingProps,
+  KBDProps,
+  VisuallyHiddenProps,
+  SkipLinkProps,
 } from './components';
 
 // Re-export tokens for convenience
