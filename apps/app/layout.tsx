@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Outfit } from "next/font/google";
+import { DM_Serif_Display, Cormorant_Garamond } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { generateMobileSpacingCSS } from "@/lib/tokens";
 import { FloatingControls } from "@/components/ui/FloatingControls";
@@ -13,7 +13,8 @@ const dmSerifDisplay = DM_Serif_Display({
   display: "swap",
 });
 
-const outfit = Outfit({
+const cormorantGaramond = Cormorant_Garamond({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
@@ -63,7 +64,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSerifDisplay.variable} ${outfit.variable}`}
+      className={`${dmSerifDisplay.variable} ${cormorantGaramond.variable}`}
       data-profile="ocean"
       data-mode="light"
       suppressHydrationWarning

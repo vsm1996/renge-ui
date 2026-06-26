@@ -18,7 +18,10 @@
   "scripts": {
     "build": "tsup && cp -r src/components dist/",
     "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
   },
   "keywords": [
     "design-system",
@@ -43,8 +46,15 @@
     "svelte": "^4.0.0"
   },
   "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.1.0",
+    "@testing-library/svelte": "^4.0.5",
+    "@testing-library/user-event": "^14.5.1",
+    "@vitest/ui": "^1.6.0",
+    "jsdom": "^24.1.0",
     "svelte": "^4.2.20",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^5.4.0",
+    "vitest": "^1.6.0"
   }
 }
