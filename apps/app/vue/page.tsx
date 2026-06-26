@@ -127,7 +127,6 @@ const { profile, mode, switchProfile, switchMode } = useRengeTheme();
               <CodeBlock code={`const {
   profile,  // ref<'ocean' | 'earth' | 'twilight' | 'fire' | 'void' | 'leaf'>
   mode,     // ref<'light' | 'dark'>
-  scale,    // ref<number> — base unit scale (4px–8px)
 } = useRengeTheme();`} />
             </div>
 
@@ -139,6 +138,15 @@ const { profile, mode, switchProfile, switchMode } = useRengeTheme();
   switchProfile(newProfile: string),  // Set color profile
   switchMode(newMode: 'light' | 'dark'),  // Set light/dark mode
 } = useRengeTheme();`} />
+            </div>
+
+            <div style={{ padding: "var(--renge-space-4)", backgroundColor: "color-mix(in oklch, var(--renge-color-accent) 5%, transparent)", borderRadius: "var(--renge-radius-1)", border: "1px solid var(--renge-color-border-subtle)" }}>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-lg)", color: "var(--renge-color-fg)", fontWeight: 400, margin: 0, marginBottom: "var(--renge-space-2)", letterSpacing: "-0.01em" }}>
+                🔜 Coming Soon: switchScale
+              </h3>
+              <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", margin: 0 }}>
+                Runtime base unit scaling. Requires calc-based token regeneration to maintain mathematical integrity. When ready, switchScale will allow responsive spacing that scales proportionally across all tokens.
+              </p>
             </div>
 
             <div>
