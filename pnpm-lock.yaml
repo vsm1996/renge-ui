@@ -79,6 +79,22 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/petals:
+    dependencies:
+      '@renge-ui/tokens':
+        specifier: ^2.6.1
+        version: link:../tokens
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.15)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.0.0
+        version: 3.2.4(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)
+
   packages/react:
     dependencies:
       '@renge-ui/tokens':
