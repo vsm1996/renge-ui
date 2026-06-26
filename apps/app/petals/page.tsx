@@ -26,7 +26,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
           fontSize: 'var(--renge-font-size-xs)',
           fontFamily: 'monospace',
           color: 'var(--renge-color-fg-subtle)',
-          margin: 0,
+          margin: '0 0 var(--renge-space-3) 0',
           overflow: 'auto',
         }}>
           {JSON.stringify(tokens, null, 2)}
@@ -59,7 +59,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
           fontSize: 'var(--renge-font-size-xs)',
           fontFamily: 'monospace',
           color: 'var(--renge-color-fg-subtle)',
-          margin: 0,
+          margin: '0 0 var(--renge-space-3) 0',
           overflow: 'auto',
         }}>
           {JSON.stringify(tokens, null, 2)}
@@ -90,7 +90,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
           fontSize: 'var(--renge-font-size-xs)',
           fontFamily: 'monospace',
           color: 'var(--renge-color-fg-subtle)',
-          margin: 0,
+          margin: '0 0 var(--renge-space-3) 0',
           overflow: 'auto',
         }}>
           {JSON.stringify(tokens, null, 2)}
@@ -117,7 +117,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
             fontSize: 'var(--renge-font-size-xs)',
             fontFamily: 'monospace',
             color: 'var(--renge-color-fg-subtle)',
-            margin: 0,
+            margin: '0 0 var(--renge-space-3) 0',
             overflow: 'auto',
           }}>
             {JSON.stringify(tokens, null, 2)}
@@ -144,7 +144,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
           fontSize: 'var(--renge-font-size-xs)',
           fontFamily: 'monospace',
           color: 'var(--renge-color-fg-subtle)',
-          margin: 0,
+          margin: '0 0 var(--renge-space-3) 0',
           overflow: 'auto',
         }}>
           {JSON.stringify(tokens, null, 2)}
@@ -171,7 +171,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
             fontSize: 'var(--renge-font-size-xs)',
             fontFamily: 'monospace',
             color: 'var(--renge-color-fg-subtle)',
-            margin: 0,
+            margin: '0 0 var(--renge-space-3) 0',
             overflow: 'auto',
           }}>
             {JSON.stringify(tokens, null, 2)}
@@ -197,7 +197,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
             fontSize: 'var(--renge-font-size-xs)',
             fontFamily: 'monospace',
             color: 'var(--renge-color-fg-subtle)',
-            margin: 0,
+            margin: '0 0 var(--renge-space-3) 0',
             overflow: 'auto',
           }}>
             {JSON.stringify(tokens, null, 2)}
@@ -225,7 +225,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
             fontSize: 'var(--renge-font-size-xs)',
             fontFamily: 'monospace',
             color: 'var(--renge-color-fg-subtle)',
-            margin: 0,
+            margin: '0 0 var(--renge-space-3) 0',
             overflow: 'auto',
           }}>
             {JSON.stringify(tokens, null, 2)}
@@ -244,7 +244,7 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       fontSize: 'var(--renge-font-size-xs)',
       fontFamily: 'monospace',
       color: 'var(--renge-color-fg-subtle)',
-      margin: 0,
+      margin: '0 0 var(--renge-space-3) 0',
       overflow: 'auto',
     }}>
       {JSON.stringify(tokens, null, 2)}
@@ -273,7 +273,7 @@ export default function PetalsPage() {
             lineHeight: 'var(--renge-line-height-lg)',
             color: 'var(--renge-color-fg-muted)',
             maxWidth: '60ch',
-            margin: 0,
+            margin: '0 0 var(--renge-space-3) 0',
           }}>
             Semantic composition patterns for Renge. Pre-made combinations of tokens for typography, spacing, cards, and UI patterns — bridging tokens and components without prescribing logic.
           </p>
