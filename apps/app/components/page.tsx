@@ -6,6 +6,7 @@ import { ProfileProvider } from "@/components/ui/ProfileToggle";
 import { Nav } from "@/components/ui/Nav";
 import { ComponentSection, Demo, CodeBlock } from "@/components/ui/DocPrimitives";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { Sidebar } from "./Sidebar";
 
 export default function ComponentsPage() {
   const isMobile = useBreakpoint();
@@ -24,14 +25,11 @@ export default function ComponentsPage() {
   return (
     <ProfileProvider>
       <Nav />
-      <div style={{
-        maxWidth: 900,
-        margin: "0 auto",
-        padding: `calc(52px + var(--renge-space-8)) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"} var(--renge-space-9)`,
-        display: "flex",
-        flexDirection: "column",
-        gap: "var(--renge-space-9)",
-      }}>
+      <div style={{ maxWidth: 1260, margin: "0 auto", paddingLeft: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingRight: isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)", paddingTop: "calc(52px + var(--renge-space-7))", paddingBottom: "var(--renge-space-8)", display: "flex", gap: "var(--renge-space-8)", alignItems: "flex-start", overflowX: "clip" }}>
+
+        {!isMobile && <Sidebar active="input-selection" />}
+
+        <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--renge-space-8)" }}>
 
         {/* Hero */}
         <header style={{ paddingBottom: "var(--renge-space-7)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
@@ -466,10 +464,11 @@ export default function ComponentsPage() {
         <div style={{ padding: "var(--renge-space-6)", background: "var(--renge-color-bg-subtle)", borderRadius: "var(--renge-radius-3)", border: "1px solid var(--renge-color-border-subtle)" }}>
           <Heading level={2} size="lg" style={{ marginBottom: "var(--renge-space-3)" }}>Full Reference</Heading>
           <Text as="p" color="fg-subtle" style={{ margin: 0 }}>
-            All 60+ components are fully typed with TypeScript, support standard HTML props, and use Renge tokens exclusively. See the <a href="/react" style={{ color: "var(--renge-color-accent)", textDecoration: "underline" }}>@renge-ui/react README</a> for complete API documentation.
+            All 60+ components are fully typed with TypeScript, support standard HTML props, and use Renge tokens exclusively. See the <a href="https://www.npmjs.com/package/@renge-ui/react" style={{ color: "var(--renge-color-accent)", textDecoration: "underline" }} target="_blank" rel="noopener noreferrer">@renge-ui/react npm package</a> or <a href="https://github.com/vsm1996/renge-ui/blob/main/packages/react/README.md" style={{ color: "var(--renge-color-accent)", textDecoration: "underline" }} target="_blank" rel="noopener noreferrer">GitHub README</a> for complete API documentation.
           </Text>
         </div>
 
+        </main>
       </div>
     </ProfileProvider>
   );
