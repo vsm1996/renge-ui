@@ -157,16 +157,16 @@ export default function SveltePage() {
                 scale
               </h3>
               <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", margin: 0, marginBottom: "var(--renge-space-4)" }}>
-                Base unit scale multiplier (typically 1–2x for 4px–8px base).
+                Base unit in pixels (0.5–16 range). Affects all spacing, type, and radius scales. Default is 4px.
               </p>
               <CodeBlock code={`<script>
   import { scale } from '@renge-ui/svelte';
 
   // Current scale
-  Base: {$scale}x
+  Base unit: {$scale}px
 
   // Update (affects all spacing, type, radius)
-  scale.set(1.5);
+  scale.set(6);
 </script>`} />
             </div>
           </Stack>
@@ -177,7 +177,7 @@ export default function SveltePage() {
           id="functions"
           label="Helpers"
           title="Convenience functions"
-          description="These functions update stores and persist to localStorage."
+          description="These functions update the theme store and DOM. Persistence to localStorage is your responsibility — use the patterns below."
         >
           <Stack gap="6">
             <div>
@@ -187,7 +187,7 @@ export default function SveltePage() {
               <CodeBlock code={`<script>
   import { switchProfile } from '@renge-ui/svelte';
 
-  // Change profile and persist to localStorage
+  // Change profile (update store + DOM)
   <button on:click={() => switchProfile('twilight')}>
     Twilight Mode
   </button>
@@ -218,24 +218,34 @@ export default function SveltePage() {
           description="Real-world examples of theme switching in Svelte apps."
         >
           <Stack gap="6">
+            <div style={{ padding: "var(--renge-space-4)", backgroundColor: "color-mix(in oklch, var(--renge-color-accent) 5%, transparent)", borderRadius: "var(--renge-radius-1)", border: "1px solid var(--renge-color-border-subtle)" }}>
+              <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", margin: 0 }}>
+                <strong>localStorage contract:</strong> Helpers like <code style={{ fontFamily: "var(--font-mono, monospace)" }}>switchProfile()</code> update the store and DOM. To survive page reload, you're responsible for saving to localStorage and loading on startup.
+              </p>
+            </div>
+
             <div>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-lg)", color: "var(--renge-color-fg)", fontWeight: 400, margin: 0, marginBottom: "var(--renge-space-3)", letterSpacing: "-0.01em" }}>
-                Auto-Load from localStorage
+                Persist and Restore Theme
               </h3>
               <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", margin: 0, marginBottom: "var(--renge-space-4)" }}>
-                Load persisted theme on app startup (e.g., in +layout.svelte).
+                Save changes to localStorage and restore on app startup (e.g., in +layout.svelte).
               </p>
               <CodeBlock code={`<script>
   import { onMount } from 'svelte';
   import { profile, mode } from '@renge-ui/svelte';
 
   onMount(() => {
+    // Restore from localStorage on mount
     const savedProfile = localStorage.getItem('renge-profile');
     const savedMode = localStorage.getItem('renge-mode');
-
     if (savedProfile) profile.set(savedProfile);
     if (savedMode) mode.set(savedMode);
   });
+
+  // Save to localStorage whenever theme changes
+  $: localStorage.setItem('renge-profile', $profile);
+  $: localStorage.setItem('renge-mode', $mode);
 </script>`} />
             </div>
 

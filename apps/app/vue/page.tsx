@@ -138,7 +138,7 @@ const { profile, mode, switchProfile, switchMode } = useRengeTheme();
               <CodeBlock code={`const {
   switchProfile(newProfile: string),  // Set color profile
   switchMode(newMode: 'light' | 'dark'),  // Set light/dark mode
-  switchScale(newScale: number),  // Set base unit scale
+  switchScale(newScale: number),  // Set base unit (0.5–16); throws on out-of-bounds
 } = useRengeTheme();`} />
             </div>
 
@@ -229,6 +229,33 @@ onMounted(() => {
 
             <div>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-lg)", color: "var(--renge-color-fg)", fontWeight: 400, margin: 0, marginBottom: "var(--renge-space-3)", letterSpacing: "-0.01em" }}>
+                Dynamic Scale Adjustment
+              </h3>
+              <CodeBlock code={`<template>
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <label for="scale-input">Base Unit Scale:</label>
+    <input
+      id="scale-input"
+      type="range"
+      min="0.5"
+      max="16"
+      step="0.5"
+      :value="scale"
+      @change="(e) => switchScale(parseFloat(e.target.value))"
+    />
+    <span>{{ scale }}px</span>
+  </div>
+</template>
+
+<script setup>
+import { useRengeTheme } from '@renge-ui/vue';
+
+const { scale, switchScale } = useRengeTheme();
+</script>`} />
+            </div>
+
+            <div>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-lg)", color: "var(--renge-color-fg)", fontWeight: 400, margin: 0, marginBottom: "var(--renge-space-3)", letterSpacing: "-0.01em" }}>
                 Global Provide/Inject
               </h3>
               <CodeBlock code={`// main.js
@@ -236,10 +263,10 @@ import { createApp } from 'vue';
 import { useRengeTheme } from '@renge-ui/vue';
 
 const app = createApp(App);
-const { profile, mode, switchProfile, switchMode } = useRengeTheme();
+const { profile, mode, scale, switchProfile, switchMode, switchScale } = useRengeTheme();
 
 app.provide('rengeTheme', {
-  profile, mode, switchProfile, switchMode
+  profile, mode, scale, switchProfile, switchMode, switchScale
 });
 
 // In any child component:
