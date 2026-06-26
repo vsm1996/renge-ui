@@ -11,8 +11,13 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
   if (categoryName === 'typography') {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
-        <div style={tokens as any}>
-          The quick brown fox jumps over the lazy dog
+        <div style={{
+          ...tokens,
+          overflow: 'hidden',
+          wordBreak: 'break-word',
+          hyphens: 'auto'
+        } as any}>
+          The quick brown fox
         </div>
         <pre style={{
           background: 'var(--renge-color-bg)',
@@ -284,6 +289,9 @@ export default function PetalsPage() {
           }}>
             Why Petals?
           </h2>
+          <p style={{ fontSize: 'var(--renge-font-size-base)', lineHeight: 'var(--renge-line-height-base)', marginBottom: 'var(--renge-space-3)', fontStyle: 'italic', color: 'var(--renge-color-accent)' }}>
+            "Every lotus blooms one petal at a time. These are Renge's. Pre-composed token combinations that sit between the math and the markup."
+          </p>
           <p style={{ fontSize: 'var(--renge-font-size-base)', lineHeight: 'var(--renge-line-height-base)', marginBottom: 'var(--renge-space-2)' }}>
             Renge tokens are orthogonal — each scale (spacing, color, typography) stands alone. This is powerful for fine-grained control, but consumers often compose the same token combinations repeatedly.
           </p>
