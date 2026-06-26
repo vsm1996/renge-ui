@@ -66,10 +66,12 @@ export default function TokensPage() {
           }}>
             15+ token categories derived from natural mathematics. CSS custom properties, JavaScript objects, Tailwind preset, and framework adapters. Zero dependencies. WCAG 2.1 AA certified.
           </p>
-          <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap" }}>
+          <Stack gap="4">
             <CodeBlock code={`pnpm add @renge-ui/tokens`} />
-            <Badge variant="neutral">v2.5.0</Badge>
-            <Badge variant="neutral">WCAG 2.1 AA</Badge>
+            <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap", alignItems: "center" }}>
+              <Badge variant="neutral">v2.5.0</Badge>
+              <Badge variant="neutral">WCAG 2.1 AA</Badge>
+            </Stack>
           </Stack>
         </header>
 
