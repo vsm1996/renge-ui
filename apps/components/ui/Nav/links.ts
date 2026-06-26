@@ -6,6 +6,7 @@ export const TOP_LINKS = [
 
 export const DOCS_LINKS = [
   { label: "Tokens",     href: "/#tokens",            desc: "@renge-ui/tokens — CSS custom properties"     },
+  { label: "Petals",     href: "/petals",             desc: "@renge-ui/petals — Semantic compositions"     },
   { label: "Tailwind",   href: "/tailwind",           desc: "@renge-ui/tailwind — Utility classes"         },
   { label: "Components", href: "/components",         desc: "@renge-ui/react — React components"           },
   { label: "Vue",        href: "/vue",                desc: "@renge-ui/vue — Vue 3 components"             },
