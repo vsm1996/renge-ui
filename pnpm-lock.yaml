@@ -33,7 +33,7 @@ importers:
   apps:
     dependencies:
       '@renge-ui/petals':
-        specifier: workspace:*
+        specifier: ^1.0.0
         version: link:../packages/petals
       '@renge-ui/react':
         specifier: workspace:*
