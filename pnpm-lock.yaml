@@ -34,7 +34,7 @@ importers:
     dependencies:
       '@renge-ui/petals':
         specifier: ^1.0.0
-        version: link:../packages/petals
+        version: 1.0.0
       '@renge-ui/react':
         specifier: workspace:*
         version: link:../packages/react
