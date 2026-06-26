@@ -27,6 +27,7 @@
  *             grid-cols-renge-2, grid-cols-renge-3, grid-cols-renge-4, grid-cols-renge-6, grid-cols-renge-12 …
  *             grid-cols-auto-fit-renge-sm, grid-cols-auto-fill-renge-md …
  *             aspect-renge-square, aspect-renge-golden, aspect-renge-vertical …
+ *   Petals    petal-typography-displayLarge, petal-spacing-comfortable, petal-card-surfaceComfortable …
  */
 
 import plugin from "tailwindcss/plugin";
@@ -37,6 +38,7 @@ import {
   createAnimationKeyframesCSS,
 } from "@renge-ui/tokens";
 import type { ProfileName } from "@renge-ui/tokens";
+import { petals } from "@renge-ui/petals";
 
 // ─── Token value maps ──────────────────────────────────────────────────────────
 // These are the discriminator values passed to matchUtilities.
@@ -497,6 +499,23 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
     { "aspect": (v) => ({ "aspect-ratio": v }) },
     { values: aspectRatioValues }
   );
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // § 12 — Petals — Semantic composition utilities
+  //   Pre-made combinations of tokens (typography, spacing, cards, interactive)
+  //   Usage: class="petal-typography-displayLarge petal-card-surfaceComfortable"
+  //   Supports all Tailwind variants: hover:, dark:, md:, etc.
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const petalUtilities: Record<string, Record<string, string>> = {};
+  for (const [categoryName, categoryPetals] of Object.entries(petals)) {
+    for (const [petalName, petal] of Object.entries(categoryPetals)) {
+      const className = `.petal-${categoryName}-${petalName}`;
+      petalUtilities[className] = petal.tokens;
+    }
+  }
+
+  addUtilities(petalUtilities);
 });
 
 export default rengeV4Plugin;
