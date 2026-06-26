@@ -77,6 +77,35 @@ describe('validateSpacingScale', () => {
     expect(result.errors).toHaveLength(0);
   });
 
+  it('should validate calc-based runtime-scaled tokens', () => {
+    // Generated spacing tokens scale via a runtime CSS variable; the
+    // build-time multiplier is the comparable magnitude.
+    const scale = {
+      'space-1': 'calc(1 * var(--renge-base-unit, 4px))',
+      'space-2': 'calc(2 * var(--renge-base-unit, 4px))',
+      'space-3': 'calc(3 * var(--renge-base-unit, 4px))',
+      'space-4': 'calc(5 * var(--renge-base-unit, 4px))',
+    };
+
+    const result = validateSpacingScale(scale);
+
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should fail for calc tokens with duplicate multipliers', () => {
+    const scale = {
+      'space-1': 'calc(1 * var(--renge-base-unit, 4px))',
+      'space-2': 'calc(2 * var(--renge-base-unit, 4px))',
+      'space-3': 'calc(2 * var(--renge-base-unit, 4px))', // duplicate
+    };
+
+    const result = validateSpacingScale(scale);
+
+    expect(result.valid).toBe(false);
+    expect(result.errors[0]).toMatch(/not monotonically increasing/);
+  });
+
   it('should handle Fibonacci-based spacing', () => {
     const scale = {
       'fib-0': '0px',

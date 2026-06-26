@@ -31,10 +31,15 @@ export function validateSpacingScale(
   const errors: string[] = [];
   const warnings: string[] = [];
 
-  // Parse values and sort numerically
+  // Parse values and sort numerically.
+  // Tokens may be literal pixels ("8px") or calc-based, where the base unit is
+  // a runtime variable ("calc(2 * var(--renge-base-unit, 4px))"). For the latter
+  // the build-time multiplier is the comparable magnitude: every step shares the
+  // same base unit, so multiplier ordering matches rendered-size ordering.
   const values = Object.entries(scale)
     .map(([key, val]) => {
-      const px = parseFloat(val);
+      const calc = val.match(/^calc\(\s*([\d.]+)\s*\*/);
+      const px = calc ? parseFloat(calc[1]) : parseFloat(val);
       return { key, val, px, isValid: !isNaN(px) };
     })
     .sort((a, b) => a.px - b.px);

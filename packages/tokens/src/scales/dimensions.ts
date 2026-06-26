@@ -8,11 +8,13 @@ export interface DimensionScale {
 }
 
 export function createDimensionScale(baseUnit: number = 4): DimensionScale {
-  // Helper: Fibonacci-based sizing
+  // Helper: Fibonacci-based sizing.
+  // calc-based so the base unit is a runtime variable:
+  //   calc(<fib> * var(--renge-base-unit, <unit>px))
   const fibonacciScaled = (unit: number): Record<string, string> => {
     const scale: Record<string, string> = { "0": "0px" };
     FIBONACCI.forEach((fib, i) => {
-      scale[String(i + 1)] = `${fib * unit}px`;
+      scale[String(i + 1)] = `calc(${fib} * var(--renge-base-unit, ${unit}px))`;
     });
     return scale;
   };

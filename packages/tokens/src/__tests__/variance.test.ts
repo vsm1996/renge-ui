@@ -2,11 +2,20 @@ import { describe, it, expect } from "vitest";
 import { createRengeTheme } from "../index";
 import { FIBONACCI } from "../index";
 
+// Extract the build-time multiplier from a calc-based spacing token:
+//   calc(<multiplier> * var(--renge-base-unit, <fallback>px))
+const coeff = (value: string): number => {
+  const match = value.match(/^calc\(\s*([\d.]+)\s*\*/);
+  return match ? parseFloat(match[1]) : parseFloat(value);
+};
+
 describe("variance system", () => {
-  it("variance=0 produces exact Fibonacci spacing values", () => {
+  it("variance=0 produces exact Fibonacci spacing multipliers", () => {
     const theme = createRengeTheme({ variance: 0 });
     FIBONACCI.forEach((fib, i) => {
-      expect(theme.vars[`--renge-space-${i + 1}`]).toBe(`${fib * 4}px`);
+      expect(theme.vars[`--renge-space-${i + 1}`]).toBe(
+        `calc(${fib} * var(--renge-base-unit, 4px))`
+      );
     });
   });
 
@@ -29,10 +38,13 @@ describe("variance system", () => {
   });
 
   it("variance>0 produces values different from exact Fibonacci", () => {
+    const exact = createRengeTheme({ variance: 0 });
     const theme = createRengeTheme({ variance: 0.2, varianceSeed: "drift" });
-    // At least one value should differ from the exact calculation
+    // At least one multiplier should differ from the exact (un-varied) token
     const anyDrifted = FIBONACCI.some(
-      (fib, i) => theme.vars[`--renge-space-${i + 1}`] !== `${fib * 4}px`
+      (_, i) =>
+        theme.vars[`--renge-space-${i + 1}`] !==
+        exact.vars[`--renge-space-${i + 1}`]
     );
     expect(anyDrifted).toBe(true);
   });
@@ -52,11 +64,11 @@ describe("variance system", () => {
   it("variance stays within bounds (spacing drift ≤ variance × 2)", () => {
     const variance = 0.1;
     const theme = createRengeTheme({ variance, varianceSeed: "bounds-test" });
+    // Drift is now applied to the multiplier; the base unit cancels out.
     FIBONACCI.forEach((fib, i) => {
-      const exact = fib * 4;
-      const actual = parseFloat(theme.vars[`--renge-space-${i + 1}`]);
-      const maxDrift = exact * variance;
-      expect(Math.abs(actual - exact)).toBeLessThanOrEqual(maxDrift + 0.01); // 0.01 for rounding
+      const actual = coeff(theme.vars[`--renge-space-${i + 1}`]);
+      const maxDrift = fib * variance;
+      expect(Math.abs(actual - fib)).toBeLessThanOrEqual(maxDrift + 0.01); // 0.01 for rounding
     });
   });
 
