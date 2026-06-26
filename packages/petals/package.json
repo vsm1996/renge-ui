@@ -1,0 +1,50 @@
+{
+  "name": "@renge-ui/petals",
+  "version": "1.0.0",
+  "description": "Semantic composition patterns for Renge — pre-made combinations of tokens for typography, spacing, cards, and UI patterns.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "design-system",
+    "petals",
+    "composition",
+    "patterns",
+    "tokens",
+    "golden-ratio"
+  ],
+  "author": "Vanessa Martin",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vsm1996/renge-ui"
+  },
+  "packageManager": "pnpm@10.30.2",
+  "dependencies": {
+    "@renge-ui/tokens": "^2.6.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^3.0.0"
+  }
+}
