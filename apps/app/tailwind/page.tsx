@@ -8,6 +8,11 @@ import { StackVisual } from "./components/StackVisual";
 import { ContainerVisual } from "./components/ContainerVisual";
 import { GridVisual } from "./components/GridVisual";
 import { AspectVisual } from "./components/AspectVisual";
+import { ColorPaletteVisual } from "./components/ColorPaletteVisual";
+import { SpacingVisual } from "./components/SpacingVisual";
+import { TypographyVisual } from "./components/TypographyVisual";
+import { RadiusVisual } from "./components/RadiusVisual";
+import { PetalsVisual } from "./components/PetalsVisual";
 import { TailwindSidebar } from "./Sidebar";
 
 export default function TailwindPage() {
@@ -168,6 +173,12 @@ export default function TailwindPage() {
 <button class="bg-renge-accent hover:bg-renge-accent-hover text-renge-fg-inverse">
   Action
 </button>`} />
+              <div style={{ marginTop: "var(--renge-space-4)" }}>
+                <p style={{ fontSize: "var(--renge-font-size-xs)", fontWeight: 600, color: "var(--renge-color-fg)", marginBottom: "var(--renge-space-3)" }}>
+                  Color palette demo:
+                </p>
+                <ColorPaletteVisual />
+              </div>
             </div>
 
             <div>
@@ -382,6 +393,12 @@ export default function TailwindPage() {
 <input class="petal-composition-textField" placeholder="Text input" />
 <span class="petal-composition-badge">Label</span>
 <span class="petal-composition-chip">Dismissible ×</span>`} />
+              <div style={{ marginTop: "var(--renge-space-4)" }}>
+                <p style={{ fontSize: "var(--renge-font-size-xs)", fontWeight: 600, color: "var(--renge-color-fg)", marginBottom: "var(--renge-space-3)" }}>
+                  Petals in action:
+                </p>
+                <PetalsVisual />
+              </div>
             </div>
 
             <div>
@@ -550,6 +567,12 @@ w-renge-*, h-renge-*, min-w-renge-*, max-w-renge-*, min-h-renge-*
 
 <!-- Values: 0px, 4px, 8px, 12px, 20px, 32px, 52px, 84px, 136px, 220px -->
 <div class="p-renge-4 m-renge-3 gap-renge-5">...</div>`} />
+              <div style={{ marginTop: "var(--renge-space-4)" }}>
+                <p style={{ fontSize: "var(--renge-font-size-xs)", fontWeight: 600, color: "var(--renge-color-fg)", marginBottom: "var(--renge-space-3)" }}>
+                  Spacing scale demo:
+                </p>
+                <SpacingVisual />
+              </div>
             </div>
 
             <div>
@@ -599,6 +622,12 @@ font-normal, font-semibold, font-bold
 
 <h1 class="text-renge-3xl leading-renge-xs font-bold">Title</h1>
 <p class="text-renge-base leading-renge-base">Body</p>`} />
+              <div style={{ marginTop: "var(--renge-space-4)" }}>
+                <p style={{ fontSize: "var(--renge-font-size-xs)", fontWeight: 600, color: "var(--renge-color-fg)", marginBottom: "var(--renge-space-3)" }}>
+                  Typography scale demo (PHI ratio):
+                </p>
+                <TypographyVisual />
+              </div>
             </div>
 
             <div>
@@ -618,6 +647,12 @@ rounded-tl-renge-*, rounded-tr-renge-*, rounded-br-renge-*, rounded-bl-renge-*
 
 <div class="rounded-renge-2">Card</div>
 <div class="rounded-renge-full">Pill</div>`} />
+              <div style={{ marginTop: "var(--renge-space-4)" }}>
+                <p style={{ fontSize: "var(--renge-font-size-xs)", fontWeight: 600, color: "var(--renge-color-fg)", marginBottom: "var(--renge-space-3)" }}>
+                  Border radius scale demo:
+                </p>
+                <RadiusVisual />
+              </div>
             </div>
 
             <div>
