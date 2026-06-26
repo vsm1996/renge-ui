@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/react",
-  "version": "3.6.1",
+  "version": "3.7.0",
   "description": "React component primitives for the Renge design system with dynamic theme switching.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

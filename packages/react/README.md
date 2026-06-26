@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@renge-ui/react)](https://www.npmjs.com/package/@renge-ui/react)
 [![license](https://img.shields.io/npm/l/@renge-ui/react)](https://github.com/vsm1996/renge-ui/blob/main/LICENSE.md)
 
-44 React component primitives for the Renge design system. Components consume `@renge-ui/tokens` CSS custom properties via inline styles — no CSS-in-JS runtime, no class names, no specificity battles.
+60+ React component primitives for the Renge design system. Components consume `@renge-ui/tokens` CSS custom properties via inline styles — no CSS-in-JS runtime, no class names, no specificity battles.
 
 ---
 
@@ -915,6 +915,351 @@ toast(options: ToastOptions): void
 | `id` | `string` | auto-generated |
 
 Pass `duration: null` to make the toast persist until dismissed.
+
+---
+
+### Input & Selection
+
+#### `Combobox`
+
+Searchable dropdown with filtering, richer than a native select.
+
+```tsx
+<Combobox 
+  options={[
+    { label: 'React', value: 'react' },
+    { label: 'Vue', value: 'vue' },
+  ]}
+  value={selected}
+  onChange={setSelected}
+  placeholder="Search frameworks..."
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `options` | `Array<{ label: string; value: string }>` | `[]` |
+| `value` | `string` | — |
+| `onChange` | `(value: string) => void` | — |
+| `placeholder` | `string` | — |
+| `isOpen` | `boolean` | — |
+| `onOpenChange` | `(open: boolean) => void` | — |
+
+#### `MultiSelect`
+
+Select multiple values from a list. Renders selected values as removable tags.
+
+```tsx
+<MultiSelect
+  options={[{ label: 'Option 1', value: '1' }]}
+  values={selected}
+  onChange={setSelected}
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `options` | `Array<{ label: string; value: string }>` | `[]` |
+| `values` | `string[]` | `[]` |
+| `onChange` | `(values: string[]) => void` | — |
+
+#### `TagInput`
+
+Controlled tag input for adding/removing tags. Press Enter or comma to add.
+
+```tsx
+<TagInput
+  tags={tags}
+  onChange={setTags}
+  placeholder="Add tags..."
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `tags` | `string[]` | `[]` |
+| `onChange` | `(tags: string[]) => void` | — |
+| `placeholder` | `string` | `'Add tags...'` |
+
+#### `NumberInput`
+
+Controlled number input with increment/decrement buttons.
+
+```tsx
+<NumberInput
+  value={count}
+  onChange={setCount}
+  min={0}
+  max={100}
+  step={1}
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `value` | `number` | — |
+| `onChange` | `(value: number) => void` | — |
+| `min` | `number` | — |
+| `max` | `number` | — |
+| `step` | `number` | `1` |
+
+#### `DatePicker`
+
+Calendar-based date picker with month/year navigation.
+
+```tsx
+<DatePicker
+  value={date}
+  onChange={setDate}
+  min="2024-01-01"
+  max="2025-12-31"
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `value` | `string (YYYY-MM-DD)` | — |
+| `onChange` | `(value: string) => void` | — |
+| `min` | `string` | — |
+| `max` | `string` | — |
+
+---
+
+### Popovers & Menus
+
+#### `Popover`
+
+Positioned floating content — richer than Tooltip, appears on click. Supports all four sides.
+
+```tsx
+<Popover
+  trigger={<Button>Open</Button>}
+  content={<div>Popover content</div>}
+  side="bottom"
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `trigger` | `ReactNode` | — |
+| `content` | `ReactNode` | — |
+| `isOpen` | `boolean` | — |
+| `onOpenChange` | `(open: boolean) => void` | — |
+| `side` | `'top' \| 'right' \| 'bottom' \| 'left'` | `'bottom'` |
+
+#### `DropdownMenu`
+
+Dropdown menu with trigger + list of items. Closes on selection.
+
+```tsx
+<DropdownMenu
+  trigger={<Button>Menu</Button>}
+  items={[
+    { label: 'Edit', onClick: () => {} },
+    { label: 'Delete', onClick: () => {} },
+  ]}
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `trigger` | `ReactNode` | — |
+| `items` | `Array<{ label: string; onClick?: () => void }>` | `[]` |
+| `isOpen` | `boolean` | — |
+| `onOpenChange` | `(open: boolean) => void` | — |
+
+#### `ContextMenu`
+
+Right-click menu. Returns menu items on context event.
+
+```tsx
+<ContextMenu items={[{ label: 'Copy', onClick: handleCopy }]}>
+  <div>Right-click me</div>
+</ContextMenu>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `items` | `Array<{ label: string; onClick?: () => void }>` | `[]` |
+| `children` | `ReactNode` | — |
+
+#### `CommandPalette`
+
+Keyboard-first command menu. Arrow keys navigate, Enter selects, Escape closes.
+
+```tsx
+<CommandPalette
+  isOpen={open}
+  onClose={() => setOpen(false)}
+  items={[
+    { id: '1', label: 'Save', description: 'Ctrl+S', onSelect: save },
+    { id: '2', label: 'Open', description: 'Ctrl+O', onSelect: open },
+  ]}
+  placeholder="Type a command..."
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `items` | `CommandItem[]` | `[]` |
+| `isOpen` | `boolean` | — |
+| `onClose` | `() => void` | — |
+| `placeholder` | `string` | `'Type a command...'` |
+
+#### `HoverCard`
+
+Similar to Popover but triggers on hover instead of click. Non-interactive content only.
+
+```tsx
+<HoverCard
+  trigger={<Button>Hover me</Button>}
+  content={<div>Card content</div>}
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `trigger` | `ReactNode` | — |
+| `content` | `ReactNode` | — |
+
+---
+
+### Drawers & Overlays
+
+#### `Drawer`
+
+Slide-in panel from any edge. Locks scroll on body.
+
+```tsx
+<Drawer
+  isOpen={open}
+  onClose={() => setOpen(false)}
+  side="right"
+>
+  Drawer content
+</Drawer>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `isOpen` | `boolean` | — |
+| `onClose` | `() => void` | — |
+| `side` | `'left' \| 'right' \| 'top' \| 'bottom'` | `'right'` |
+| `children` | `ReactNode` | — |
+
+---
+
+### Progress & Steps
+
+#### `Stepper`
+
+Multi-step process indicator with optional descriptions.
+
+```tsx
+<Stepper
+  steps={[
+    { label: 'Details', description: 'Enter your info' },
+    { label: 'Payment', description: 'Add payment method' },
+    { label: 'Confirm', description: 'Review and submit' },
+  ]}
+  currentStep={current}
+  onStepChange={setCurrent}
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `steps` | `Array<{ label: string; description?: string }>` | required |
+| `currentStep` | `number` | `0` |
+| `onStepChange` | `(step: number) => void` | — |
+
+---
+
+### Display & Content
+
+#### `CodeBlock`
+
+Displays code in a styled pre/code block. Supports inline mode.
+
+```tsx
+<CodeBlock code={`const x = 1;`} language="typescript" />
+<CodeBlock code="npm install" inline />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `code` | `string` | — |
+| `language` | `string` | — |
+| `inline` | `boolean` | `false` |
+
+#### `ScrollArea`
+
+Custom scrollbar styling with smooth scroll behavior.
+
+```tsx
+<ScrollArea style={{ height: 300 }}>
+  {/* Long content here */}
+</ScrollArea>
+```
+
+Styled scrollbar with Renge colors. Full CSS custom property support.
+
+#### `KBD`
+
+Displays keyboard shortcuts in a styled kbd element.
+
+```tsx
+<KBD keys={['Ctrl', 'K']} />
+// or
+<KBD>Ctrl+K</KBD>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `keys` | `string[]` | — |
+
+#### `Rating`
+
+Star rating input. Displays filled/empty stars.
+
+```tsx
+<Rating value={rating} onChange={setRating} max={5} />
+<Rating value={3} readonly />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `value` | `number` | `0` |
+| `onChange` | `(value: number) => void` | — |
+| `max` | `number` | `5` |
+| `readonly` | `boolean` | `false` |
+
+---
+
+### Accessibility Utilities
+
+#### `VisuallyHidden`
+
+Screen reader-only content. Hidden from visual display but available to assistive tech.
+
+```tsx
+<VisuallyHidden>Skip to main content</VisuallyHidden>
+```
+
+No props. Standard HTML attributes apply.
+
+#### `SkipLink`
+
+Keyboard-accessible skip-to-main-content link. Appears on focus.
+
+```tsx
+<SkipLink href="#main" label="Skip to main content" />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `href` | `string` | `'#main'` |
+| `label` | `string` | `'Skip to main content'` |
 
 ---
 
