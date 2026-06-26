@@ -8,6 +8,7 @@ import { StackVisual } from "./components/StackVisual";
 import { ContainerVisual } from "./components/ContainerVisual";
 import { GridVisual } from "./components/GridVisual";
 import { AspectVisual } from "./components/AspectVisual";
+import { TailwindSidebar } from "./Sidebar";
 
 export default function TailwindPage() {
   const isMobile = useBreakpoint();
@@ -16,13 +17,18 @@ export default function TailwindPage() {
     <ProfileProvider>
       <Nav />
       <div style={{
-        maxWidth: 900,
+        maxWidth: 1260,
         margin: "0 auto",
         padding: `calc(52px + var(--renge-space-8)) ${isMobile ? "var(--renge-space-4)" : "var(--renge-space-5)"} var(--renge-space-9)`,
         display: "flex",
-        flexDirection: "column",
-        gap: "var(--renge-space-9)",
+        gap: "var(--renge-space-8)",
+        alignItems: "flex-start",
+        overflowX: "clip",
       }}>
+
+        {!isMobile && <TailwindSidebar />}
+
+        <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--renge-space-9)" }}>
 
         {/* Hero */}
         <header style={{ paddingBottom: "var(--renge-space-7)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
@@ -99,6 +105,29 @@ export default function TailwindPage() {
 </script>`} />
             </div>
 
+            <div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Available profiles</h4>
+              <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", margin: "0 0 var(--renge-space-3) 0" }}>
+                Each profile is a complete color system with light and dark variants.
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "var(--renge-space-3)" }}>
+                {[
+                  { name: "ocean", hex: "#5B7FB7", label: "Cool periwinkle" },
+                  { name: "earth", hex: "#8B6F47", label: "Warm parchment" },
+                  { name: "twilight", hex: "#6B5B95", label: "Dusk transition" },
+                  { name: "fire", hex: "#C86B47", label: "Warm embers" },
+                  { name: "void", hex: "#1A1F3A", label: "Deep space" },
+                  { name: "leaf", hex: "#4A7C59", label: "Natural green" },
+                ].map(profile => (
+                  <div key={profile.name} style={{ textAlign: "center" }}>
+                    <div style={{ width: "100%", height: "80px", background: profile.hex, borderRadius: "var(--renge-radius-2)", marginBottom: "var(--renge-space-2)" }} />
+                    <p style={{ fontSize: "var(--renge-font-size-sm)", fontWeight: 600, margin: "0 0 var(--renge-space-1) 0", color: "var(--renge-color-fg)" }}>{profile.name}</p>
+                    <p style={{ fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-subtle)", margin: 0 }}>{profile.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div style={{
               padding: "var(--renge-space-3)",
               background: "var(--renge-color-bg-subtle)",
@@ -106,8 +135,91 @@ export default function TailwindPage() {
               border: "1px solid var(--renge-color-border-subtle)",
             }}>
               <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", margin: 0, lineHeight: "var(--renge-line-height-base)" }}>
-                <strong>Available profiles:</strong> ocean (default) · earth · twilight · fire · void · leaf. Each has light and dark variants.
+                <strong>Note:</strong> Tailwind v4 plugin is recommended. For v3, use <code style={{ fontFamily: "var(--font-mono, monospace)" }}>@renge-ui/tailwind</code> directly as a preset in tailwind.config.js.
               </p>
+            </div>
+          </div>
+        </DocSection>
+
+        {/* Color Profiles Reference */}
+        <DocSection
+          id="color-profiles"
+          label="Color System"
+          title="Six worlds with semantic tokens."
+          description="Each profile includes 22 semantic color tokens for backgrounds, text, borders, states, and accents. All WCAG 2.1 AA certified."
+        >
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-5)" }}>
+            <div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 500, margin: "0 0 var(--renge-space-3) 0" }}>Semantic color tokens</h4>
+              <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", margin: "0 0 var(--renge-space-3) 0" }}>
+                Use semantic colors instead of hardcoding hex values. They automatically adapt to the active profile and dark mode.
+              </p>
+              <CodeBlock code={`/* Don't use hardcoded colors */
+.button {
+  background: #5B7FB7;  /* ❌ breaks when profile changes */
+}
+
+/* Use semantic tokens instead */
+.button {
+  background: var(--renge-color-accent);        /* ✅ profile-reactive */
+}
+
+/* Tailwind equivalents */
+<button class="bg-renge-accent hover:bg-renge-accent-hover text-renge-fg-inverse">
+  Action
+</button>`} />
+            </div>
+
+            <div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 500, margin: "0 0 var(--renge-space-3) 0" }}>22 semantic color tokens</h4>
+              <UtilityTable rows={[
+                ["bg-renge-bg", "Document background", "Adapts to profile + mode"],
+                ["bg-renge-bg-subtle", "Subtle background layer", "Slightly elevated"],
+                ["bg-renge-bg-muted", "Muted background", "Further elevated"],
+                ["bg-renge-bg-inverse", "Inverse of primary bg", "For code blocks"],
+                ["text-renge-fg", "Primary text color", "High contrast"],
+                ["text-renge-fg-subtle", "Secondary text", "Lower contrast"],
+                ["text-renge-fg-muted", "Tertiary text", "Minimal contrast"],
+                ["text-renge-fg-inverse", "Inverse text", "For dark backgrounds"],
+                ["border-renge-border", "Default border color", "Standard dividers"],
+                ["border-renge-border-subtle", "Subtle border", "Minimal emphasis"],
+                ["border-renge-border-focus", "Focus ring color", "Keyboard navigation"],
+                ["bg-renge-accent", "Primary accent", "CTA, highlights"],
+                ["bg-renge-accent-hover", "Hover state accent", "Interactive feedback"],
+                ["bg-renge-accent-subtle", "Subtle accent background", "Soft highlight"],
+                ["text-renge-success", "Success status color", "WCAG AA compliant"],
+                ["text-renge-warning", "Warning status color", "WCAG AA compliant"],
+                ["text-renge-danger", "Error/danger color", "WCAG AA compliant"],
+                ["text-renge-info", "Informational color", "WCAG AA compliant"],
+              ]} />
+            </div>
+
+            <div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 500, margin: "0 0 var(--renge-space-3) 0" }}>Real-world profile usage</h4>
+              <CodeBlock code={`<!-- Example: Ocean profile (cool, professional) -->
+<html data-profile="ocean">
+  <!-- Periwinkle accent, cool neutrals -->
+</html>
+
+<!-- Example: Earth profile (warm, natural) -->
+<html data-profile="earth">
+  <!-- Warm tan accent, earthy neutrals -->
+</html>
+
+<!-- Example: Dark mode with Twilight -->
+<html data-profile="twilight" data-mode="dark">
+  <!-- All colors invert automatically -->
+</html>
+
+<!-- Switch profiles dynamically -->
+<script>
+  function setTheme(profile, mode) {
+    document.documentElement.dataset.profile = profile;  // 'ocean', 'earth', 'twilight', etc.
+    document.documentElement.dataset.mode = mode;        // 'light' or 'dark'
+  }
+
+  setTheme('fire', 'dark');  // Warm embers in dark mode
+</script>`} />
             </div>
           </div>
         </DocSection>
@@ -237,30 +349,26 @@ export default function TailwindPage() {
             </div>
 
             <div>
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Petal categories</h4>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>23 petals across 6 categories</h4>
               <CodeBlock code={`<!-- Typography: 8 levels from display to label -->
 <h1 class="petal-typography-displayLarge">Hero headline</h1>
 <h2 class="petal-typography-headingLarge">Section title</h2>
-<p  class="petal-typography-bodyRegular">Paragraph</p>
-<span class="petal-typography-labelXs">UI label</span>
+<h3 class="petal-typography-headingMedium">Subsection</h3>
+<h4 class="petal-typography-headingSmall">Sub-subsection</h4>
+<p class="petal-typography-bodyLarge">Large paragraph</p>
+<p class="petal-typography-bodyRegular">Standard paragraph</p>
+<p class="petal-typography-bodySmall">Small body text</p>
+<span class="petal-typography-labelXs">UI label, <code>, <small></span>
 
-<!-- Spacing: 4 comfortable levels -->
-<div class="petal-spacing-generous">
-  Generous padding + gap (space-5 + gap-4)
-</div>
-<div class="petal-spacing-comfortable">
-  Natural rhythm (space-4 + gap-3) — default for most UIs
-</div>
-<div class="petal-spacing-compact">
-  Tight but breathable (space-3 + gap-2)
-</div>
-<div class="petal-spacing-condensed">
-  Minimal spacing (space-2 + gap-1) — dense UIs
-</div>
+<!-- Spacing: 4 comfort levels for padding/gap -->
+<div class="petal-spacing-generous">Generous padding + gap</div>
+<div class="petal-spacing-comfortable">Natural rhythm (default)</div>
+<div class="petal-spacing-compact">Tight but breathable</div>
+<div class="petal-spacing-condensed">Minimal spacing</div>
 
 <!-- Cards: 4 surface levels with shadow and radius -->
 <div class="petal-card-surfaceGenerous">Full featured</div>
-<div class="petal-card-surfaceComfortable">Standard</div>
+<div class="petal-card-surfaceComfortable">Standard (most used)</div>
 <div class="petal-card-surfaceCompact">Tight</div>
 <div class="petal-card-surfaceMinimal">Subtle</div>
 
@@ -268,7 +376,7 @@ export default function TailwindPage() {
 <button class="petal-interactive-buttonLarge">Primary action</button>
 <button class="petal-interactive-buttonMedium">Standard</button>
 <button class="petal-interactive-buttonSmall">Compact</button>
-<div class="petal-interactive-focus">Focus ring</div>
+<div class="petal-interactive-focus">Focus ring (copy to any elem)</div>
 
 <!-- Compositions: Pre-styled form elements -->
 <input class="petal-composition-textField" placeholder="Text input" />
@@ -277,21 +385,59 @@ export default function TailwindPage() {
             </div>
 
             <div>
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Building a button with petals</h4>
-              <CodeBlock code={`<!-- Start with interactive petal (padding, radius, transition) -->
-<!-- Add color and hover state -->
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Petal reference table</h4>
+              <UtilityTable rows={[
+                ["petal-typography-displayLarge", "font-size: 110px, line-height: 1.2, tracking: -0.02em", "Hero/title"],
+                ["petal-typography-headingLarge", "font-size: 68px, line-height: 1.2", "H2 / section title"],
+                ["petal-typography-headingMedium", "font-size: 42px, line-height: 1.4", "H3 / subsection"],
+                ["petal-typography-headingSmall", "font-size: 26px, line-height: 1.4", "H4 / emphasis"],
+                ["petal-typography-bodyLarge", "font-size: 18px, line-height: 1.6", "Lead paragraph"],
+                ["petal-typography-bodyRegular", "font-size: 16px, line-height: 1.6", "Body text (default)"],
+                ["petal-typography-bodySmall", "font-size: 14px, line-height: 1.6", "Small body"],
+                ["petal-typography-labelXs", "font-size: 12px, line-height: 1.4, uppercase", "Labels, small UI"],
+                ["petal-spacing-generous", "p: space-5 (32px), gap: space-4 (20px)", "Spacious UIs"],
+                ["petal-spacing-comfortable", "p: space-4 (20px), gap: space-3 (12px)", "Standard rhythm"],
+                ["petal-spacing-compact", "p: space-3 (12px), gap: space-2 (8px)", "Dense UIs"],
+                ["petal-spacing-condensed", "p: space-2 (8px), gap: space-1 (4px)", "Very tight"],
+                ["petal-card-surfaceGenerous", "p: space-5, shadow-5, radius-3", "Featured cards"],
+                ["petal-card-surfaceComfortable", "p: space-4, shadow-3, radius-3", "Standard cards"],
+                ["petal-card-surfaceCompact", "p: space-3, shadow-2, radius-2", "Compact cards"],
+                ["petal-card-surfaceMinimal", "p: space-2, shadow-1, radius-2", "Subtle surfaces"],
+                ["petal-interactive-buttonLarge", "p: space-3 space-5, radius-2, transition", "Large CTAs"],
+                ["petal-interactive-buttonMedium", "p: space-2 space-4, radius-2, transition", "Standard buttons"],
+                ["petal-interactive-buttonSmall", "p: space-1 space-3, radius-2, transition", "Icon/compact"],
+                ["petal-interactive-focus", "ring-2, ring-color-border-focus, radius-1", "Keyboard focus"],
+                ["petal-composition-textField", "p: space-2 space-3, border, radius-2", "Text inputs"],
+                ["petal-composition-badge", "p: space-1 space-2, radius-full, font-size-xs", "Labels"],
+                ["petal-composition-chip", "p: space-1 space-2, radius-full, bg-accent-subtle", "Tags/chips"],
+              ]} />
+            </div>
+
+            <div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Building buttons with petals</h4>
+              <CodeBlock code={`<!-- Primary button: petal + accent color -->
 <button class="petal-interactive-buttonMedium bg-renge-accent text-renge-bg hover:bg-renge-accent-hover focus:ring-2 ring-renge-border-focus">
   Save changes
 </button>
 
-<!-- Variant: secondary button -->
+<!-- Secondary button: petal + subtle colors -->
 <button class="petal-interactive-buttonMedium bg-renge-bg-subtle text-renge-fg hover:bg-renge-bg-muted border border-renge-border">
   Cancel
 </button>
 
-<!-- Small button with petals + custom tokens -->
-<button class="petal-interactive-buttonSmall bg-renge-danger text-renge-bg hover:bg-renge-danger">
+<!-- Danger button: petal + danger color -->
+<button class="petal-interactive-buttonMedium bg-renge-danger text-renge-bg hover:opacity-90">
   Delete
+</button>
+
+<!-- Small compact button -->
+<button class="petal-interactive-buttonSmall bg-renge-accent text-renge-bg">
+  Add
+</button>
+
+<!-- Large, full-width button -->
+<button class="petal-interactive-buttonLarge w-full bg-renge-accent text-renge-bg">
+  Continue
 </button>`} />
             </div>
 
@@ -382,94 +528,117 @@ export default function TailwindPage() {
         {/* Utility Categories */}
         <DocSection
           id="utilities"
-          label="Utility categories"
-          title="Everything at a glance."
-          description="Complete reference of all available utility classes organized by category."
+          label="Utility reference"
+          title="Complete class reference."
+          description="All available utility classes organized by category. Mix and match for infinite combinations."
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-5)" }}>
             <div>
               <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Spacing (Fibonacci × 4px, steps 0–10)</h4>
-              <CodeBlock code={`<!-- Padding -->
-p-renge-0, p-renge-1, p-renge-2, ..., p-renge-10
-px-renge-*, py-renge-*, pt-renge-*, pr-renge-*, pb-renge-*, pl-renge-*
+              <CodeBlock code={`<!-- Padding: p-, px-, py-, pt-, pr-, pb-, pl- -->
+p-renge-0 through p-renge-10
+px-renge-*, py-renge-*, pt-renge-*, etc.
 
 <!-- Margin -->
-m-renge-*, mx-renge-*, my-renge-*, mt-renge-*, mr-renge-*, mb-renge-*, ml-renge-*
+m-renge-*, mx-renge-*, my-renge-*, mt-renge-*, etc.
 
-<!-- Gap -->
+<!-- Gap (flex/grid) -->
 gap-renge-*, gap-x-renge-*, gap-y-renge-*
 
 <!-- Width & Height -->
 w-renge-*, h-renge-*, min-w-renge-*, max-w-renge-*, min-h-renge-*
 
-<!-- Example values -->
-0px, 4px, 8px, 12px, 20px, 32px, 52px, 84px, 136px, 220px`} />
+<!-- Values: 0px, 4px, 8px, 12px, 20px, 32px, 52px, 84px, 136px, 220px -->
+<div class="p-renge-4 m-renge-3 gap-renge-5">...</div>`} />
             </div>
 
             <div>
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Colors (22 semantic tokens, profile-reactive)</h4>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Colors (22 semantic tokens)</h4>
               <CodeBlock code={`<!-- Backgrounds -->
 bg-renge-bg, bg-renge-bg-subtle, bg-renge-bg-muted, bg-renge-bg-inverse
 
-<!-- Foregrounds (text) -->
+<!-- Text (foreground) -->
 text-renge-fg, text-renge-fg-subtle, text-renge-fg-muted, text-renge-fg-inverse
 
 <!-- Borders -->
 border-renge-border, border-renge-border-subtle, border-renge-border-focus
 
-<!-- Accent & states -->
-text-renge-accent, bg-renge-accent, bg-renge-accent-hover, bg-renge-accent-subtle
-text-renge-success, text-renge-warning, text-renge-danger
+<!-- Accent (primary) -->
+bg-renge-accent, bg-renge-accent-hover, bg-renge-accent-subtle
 
-<!-- Ring/focus -->
-ring-renge-border-focus`} />
+<!-- Status -->
+text-renge-success, text-renge-warning, text-renge-danger, text-renge-info
+
+<!-- Focus ring -->
+ring-renge-border-focus
+
+<div class="bg-renge-bg text-renge-fg border border-renge-border">
+  <button class="bg-renge-accent text-renge-bg hover:bg-renge-accent-hover">
+    CTA
+  </button>
+</div>`} />
             </div>
 
             <div>
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Typography (PHI scale, base × φⁿ)</h4>
-              <CodeBlock code={`<!-- Font size -->
-text-renge-xs, text-renge-sm, text-renge-base, text-renge-lg, text-renge-xl
-text-renge-2xl, text-renge-3xl, text-renge-4xl
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Typography (PHI scale)</h4>
+              <CodeBlock code={`<!-- Font size: text-renge-xs through text-renge-4xl -->
+text-renge-xs   (10px)
+text-renge-sm   (13px)
+text-renge-base (16px)
+text-renge-lg   (26px)
+text-renge-xl   (42px)
+text-renge-2xl  (68px)
+text-renge-3xl  (110px)
+text-renge-4xl  (177px)
 
 <!-- Line height -->
-leading-renge-xs, leading-renge-sm, leading-renge-base, ..., leading-renge-4xl`} />
+leading-renge-xs through leading-renge-4xl
+
+<!-- Font weight (standard Tailwind) -->
+font-normal, font-semibold, font-bold
+
+<h1 class="text-renge-3xl leading-renge-xs font-bold">Title</h1>
+<p class="text-renge-base leading-renge-base">Body</p>`} />
             </div>
 
             <div>
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Radius (Fibonacci × baseUnit = 4px)</h4>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Radius (Fibonacci × 4px)</h4>
               <CodeBlock code={`<!-- Rounded corners -->
-rounded-renge-0, rounded-renge-1, rounded-renge-2, rounded-renge-3, rounded-renge-4, rounded-renge-5
-rounded-renge-full (pill shape)
+rounded-renge-0 (0px)
+rounded-renge-1 (4px)
+rounded-renge-2 (8px)
+rounded-renge-3 (12px)
+rounded-renge-4 (20px)
+rounded-renge-5 (32px)
+rounded-renge-full (pill)
 
 <!-- Directional -->
 rounded-t-renge-*, rounded-r-renge-*, rounded-b-renge-*, rounded-l-renge-*
 rounded-tl-renge-*, rounded-tr-renge-*, rounded-br-renge-*, rounded-bl-renge-*
 
-<!-- Example values -->
-0px, 4px, 8px, 12px, 20px, 32px, ...`} />
+<div class="rounded-renge-2">Card</div>
+<div class="rounded-renge-full">Pill</div>`} />
             </div>
 
             <div>
               <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Motion (Fibonacci × 100ms, 10 easing curves)</h4>
-              <CodeBlock code={`<!-- Duration -->
-duration-renge-1, duration-renge-2, ..., duration-renge-10
-(100ms, 100ms, 200ms, 300ms, 500ms, 800ms, 1300ms, 2100ms, 3400ms, 5500ms)
+              <CodeBlock code={`<!-- Duration: duration-renge-1 through duration-renge-10 -->
+duration-renge-1   (100ms)
+duration-renge-2   (100ms)
+duration-renge-3   (200ms)
+duration-renge-4   (300ms)
+duration-renge-5   (500ms)
+/* ... through ... */
+duration-renge-10  (5500ms)
 
 <!-- Easing -->
 ease-renge-linear, ease-renge-ease-in, ease-renge-ease-out, ease-renge-ease-in-out
-ease-renge-spring (lively), ease-renge-cubic-bezier-*`} />
-            </div>
+ease-renge-spring, ease-renge-bounce, ease-renge-back-in, ease-renge-back-out
+ease-renge-elastic-in, ease-renge-elastic-out
 
-            <div>
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Petals (23 semantic compositions)</h4>
-              <CodeBlock code={`<!-- All petal utilities follow petal-[category]-[name] pattern -->
-petal-typography-displayLarge, petal-typography-headingMedium, ...
-petal-spacing-generous, petal-spacing-comfortable, ...
-petal-card-surfaceComfortable, petal-card-surfaceMinimal, ...
-petal-interactive-buttonMedium, petal-interactive-buttonSmall, ...
-petal-composition-textField, petal-composition-badge, petal-composition-chip
-
-<!-- Full list at /petals -->`} />
+<div class="transition-all duration-renge-3 ease-renge-ease-out">
+  Smooth animation
+</div>`} />
             </div>
           </div>
         </DocSection>
@@ -660,16 +829,17 @@ petal-composition-textField, petal-composition-badge, petal-composition-chip
 
         {/* Footer nav */}
         <footer style={{ paddingTop: "var(--renge-space-6)", borderTop: "1px solid var(--renge-color-border-subtle)", display: "flex", gap: "var(--renge-space-4)", flexWrap: "wrap" }}>
-          <a href="/" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontFamily: "var(--font-body)", textDecoration: "none" }}
+          <a href="/tokens" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontFamily: "var(--font-body)", textDecoration: "none" }}
             onMouseEnter={e => (e.currentTarget.style.color = "var(--renge-color-fg)")}
             onMouseLeave={e => (e.currentTarget.style.color = "var(--renge-color-fg-subtle)")}
           >← Tokens</a>
-          <a href="/docs" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontFamily: "var(--font-body)", textDecoration: "none" }}
+          <a href="/components" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontFamily: "var(--font-body)", textDecoration: "none" }}
             onMouseEnter={e => (e.currentTarget.style.color = "var(--renge-color-fg)")}
             onMouseLeave={e => (e.currentTarget.style.color = "var(--renge-color-fg-subtle)")}
           >React Components →</a>
         </footer>
 
+        </main>
       </div>
     </ProfileProvider>
   );
