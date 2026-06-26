@@ -1,13 +1,257 @@
-import { petals } from '@renge-ui/petals';
+'use client';
 
-export const metadata = {
-  title: 'Petals — Renge',
-  description: 'Semantic composition patterns for Renge — pre-made combinations of tokens for typography, spacing, cards, and UI patterns.',
-};
+import { petals } from '@renge-ui/petals';
+import { ProfileProvider } from '@/components/ui/ProfileToggle';
+import { Nav } from '@/components/ui/Nav';
+
+function PetalPreview({ categoryName, petalName, petal }: { categoryName: string; petalName: string; petal: any }) {
+  const tokens = petal.tokens;
+
+  // Typography preview
+  if (categoryName === 'typography') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+        <div style={tokens as any}>
+          The quick brown fox jumps over the lazy dog
+        </div>
+        <pre style={{
+          background: 'var(--renge-color-bg)',
+          padding: 'var(--renge-space-2)',
+          borderRadius: 'var(--renge-radius-1)',
+          fontSize: 'var(--renge-font-size-xs)',
+          fontFamily: 'monospace',
+          color: 'var(--renge-color-fg-subtle)',
+          margin: 0,
+          overflow: 'auto',
+        }}>
+          {JSON.stringify(tokens, null, 2)}
+        </pre>
+      </div>
+    );
+  }
+
+  // Spacing preview
+  if (categoryName === 'spacing') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+        <div style={{
+          background: 'var(--renge-color-accent)',
+          opacity: 0.2,
+          borderRadius: 'var(--renge-radius-1)',
+          ...tokens
+        } as any}>
+          <div style={{ color: 'var(--renge-color-fg-subtle)', fontSize: 'var(--renge-font-size-xs)' }}>
+            Item 1
+          </div>
+          <div style={{ color: 'var(--renge-color-fg-subtle)', fontSize: 'var(--renge-font-size-xs)' }}>
+            Item 2
+          </div>
+        </div>
+        <pre style={{
+          background: 'var(--renge-color-bg)',
+          padding: 'var(--renge-space-2)',
+          borderRadius: 'var(--renge-radius-1)',
+          fontSize: 'var(--renge-font-size-xs)',
+          fontFamily: 'monospace',
+          color: 'var(--renge-color-fg-subtle)',
+          margin: 0,
+          overflow: 'auto',
+        }}>
+          {JSON.stringify(tokens, null, 2)}
+        </pre>
+      </div>
+    );
+  }
+
+  // Cards preview
+  if (categoryName === 'cards') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+        <div style={{
+          background: 'var(--renge-color-bg-subtle)',
+          ...tokens
+        } as any}>
+          <div style={{ fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)', marginBottom: 'var(--renge-space-2)' }}>
+            Card Title
+          </div>
+          <div style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-muted)' }}>
+            This is a card with the {petalName} surface styling.
+          </div>
+        </div>
+        <pre style={{
+          background: 'var(--renge-color-bg)',
+          padding: 'var(--renge-space-2)',
+          borderRadius: 'var(--renge-radius-1)',
+          fontSize: 'var(--renge-font-size-xs)',
+          fontFamily: 'monospace',
+          color: 'var(--renge-color-fg-subtle)',
+          margin: 0,
+          overflow: 'auto',
+        }}>
+          {JSON.stringify(tokens, null, 2)}
+        </pre>
+      </div>
+    );
+  }
+
+  // Interactive preview (buttons & focus)
+  if (categoryName === 'interactive') {
+    if (petalName === 'focus') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+          <div style={{
+            width: '100%',
+            height: '40px',
+            background: 'var(--renge-color-bg-subtle)',
+            ...tokens
+          } as any} />
+          <pre style={{
+            background: 'var(--renge-color-bg)',
+            padding: 'var(--renge-space-2)',
+            borderRadius: 'var(--renge-radius-1)',
+            fontSize: 'var(--renge-font-size-xs)',
+            fontFamily: 'monospace',
+            color: 'var(--renge-color-fg-subtle)',
+            margin: 0,
+            overflow: 'auto',
+          }}>
+            {JSON.stringify(tokens, null, 2)}
+          </pre>
+        </div>
+      );
+    }
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+        <button style={{
+          background: 'var(--renge-color-accent)',
+          color: 'var(--renge-color-bg)',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: 'var(--renge-font-size-sm)',
+          ...tokens
+        } as any}>
+          {petal.label}
+        </button>
+        <pre style={{
+          background: 'var(--renge-color-bg)',
+          padding: 'var(--renge-space-2)',
+          borderRadius: 'var(--renge-radius-1)',
+          fontSize: 'var(--renge-font-size-xs)',
+          fontFamily: 'monospace',
+          color: 'var(--renge-color-fg-subtle)',
+          margin: 0,
+          overflow: 'auto',
+        }}>
+          {JSON.stringify(tokens, null, 2)}
+        </pre>
+      </div>
+    );
+  }
+
+  // Compositions preview
+  if (categoryName === 'compositions') {
+    if (petalName === 'textField') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+          <input type="text" placeholder="Input field" style={{
+            width: '100%',
+            color: 'var(--renge-color-fg)',
+            background: 'var(--renge-color-bg-subtle)',
+            ...tokens
+          } as any} />
+          <pre style={{
+            background: 'var(--renge-color-bg)',
+            padding: 'var(--renge-space-2)',
+            borderRadius: 'var(--renge-radius-1)',
+            fontSize: 'var(--renge-font-size-xs)',
+            fontFamily: 'monospace',
+            color: 'var(--renge-color-fg-subtle)',
+            margin: 0,
+            overflow: 'auto',
+          }}>
+            {JSON.stringify(tokens, null, 2)}
+          </pre>
+        </div>
+      );
+    }
+    if (petalName === 'badge') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+          <span style={{
+            display: 'inline-block',
+            background: 'var(--renge-color-accent)',
+            color: 'var(--renge-color-bg)',
+            ...tokens
+          } as any}>
+            Badge
+          </span>
+          <pre style={{
+            background: 'var(--renge-color-bg)',
+            padding: 'var(--renge-space-2)',
+            borderRadius: 'var(--renge-radius-1)',
+            fontSize: 'var(--renge-font-size-xs)',
+            fontFamily: 'monospace',
+            color: 'var(--renge-color-fg-subtle)',
+            margin: 0,
+            overflow: 'auto',
+          }}>
+            {JSON.stringify(tokens, null, 2)}
+          </pre>
+        </div>
+      );
+    }
+    if (petalName === 'chip') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 'var(--renge-space-1)',
+            background: 'var(--renge-color-accent)',
+            color: 'var(--renge-color-bg)',
+            ...tokens
+          } as any}>
+            Chip ×
+          </div>
+          <pre style={{
+            background: 'var(--renge-color-bg)',
+            padding: 'var(--renge-space-2)',
+            borderRadius: 'var(--renge-radius-1)',
+            fontSize: 'var(--renge-font-size-xs)',
+            fontFamily: 'monospace',
+            color: 'var(--renge-color-fg-subtle)',
+            margin: 0,
+            overflow: 'auto',
+          }}>
+            {JSON.stringify(tokens, null, 2)}
+          </pre>
+        </div>
+      );
+    }
+  }
+
+  // Fallback
+  return (
+    <pre style={{
+      background: 'var(--renge-color-bg)',
+      padding: 'var(--renge-space-2)',
+      borderRadius: 'var(--renge-radius-1)',
+      fontSize: 'var(--renge-font-size-xs)',
+      fontFamily: 'monospace',
+      color: 'var(--renge-color-fg-subtle)',
+      margin: 0,
+      overflow: 'auto',
+    }}>
+      {JSON.stringify(tokens, null, 2)}
+    </pre>
+  );
+}
 
 export default function PetalsPage() {
   return (
-    <main style={{ padding: 'var(--renge-space-8) var(--renge-space-4)' }}>
+    <ProfileProvider>
+      <Nav />
+      <main style={{ padding: 'var(--renge-space-8) var(--renge-space-4)' }}>
       <section style={{ maxWidth: 'var(--renge-container-lg)', margin: '0 auto' }}>
         {/* Header */}
         <div style={{ marginBottom: 'var(--renge-space-8)' }}>
@@ -64,7 +308,7 @@ export default function PetalsPage() {
 
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
                 gap: 'var(--renge-space-4)',
               }}>
                 {Object.entries(categoryPetals).map(([petalName, petal]) => (
@@ -90,24 +334,20 @@ export default function PetalsPage() {
                       fontSize: 'var(--renge-font-size-sm)',
                       lineHeight: 'var(--renge-line-height-sm)',
                       color: 'var(--renge-color-fg-muted)',
-                      margin: '0 0 var(--renge-space-2) 0',
+                      margin: '0 0 var(--renge-space-3) 0',
                     }}>
                       {petal.description}
                     </p>
 
-                    {/* Token Display */}
-                    <pre style={{
+                    {/* Visual Preview */}
+                    <div style={{
+                      marginBottom: 'var(--renge-space-3)',
+                      padding: 'var(--renge-space-3)',
                       background: 'var(--renge-color-bg)',
-                      padding: 'var(--renge-space-2)',
-                      borderRadius: 'var(--renge-radius-1)',
-                      fontSize: 'var(--renge-font-size-xs)',
-                      fontFamily: 'monospace',
-                      color: 'var(--renge-color-fg-subtle)',
-                      overflow: 'auto',
-                      margin: 0,
+                      borderRadius: 'var(--renge-radius-2)',
                     }}>
-                      {JSON.stringify(petal.tokens, null, 2)}
-                    </pre>
+                      <PetalPreview categoryName={categoryName} petalName={petalName} petal={petal} />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -170,6 +410,7 @@ const styles = {
           </ul>
         </div>
       </section>
-    </main>
+      </main>
+    </ProfileProvider>
   );
 }
