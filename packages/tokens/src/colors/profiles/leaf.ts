@@ -41,7 +41,7 @@ const light: SemanticColorMap = {
 };
 
 const dark: SemanticColorMap = {
-  bg:           "oklch(12% 0.06 135)",           // dark forest floor
+  bg:           "oklch(16% 0.06 135)",           // dark forest floor — lightened slightly for better readability
   bgSubtle:     "oklch(18% 0.08 135)",
   bgMuted:      "oklch(26% 0.07 135)",
   bgInverse:    "oklch(97% 0.01 130)",           // near-white inverse
