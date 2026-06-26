@@ -48,11 +48,11 @@ const dark: SemanticColorMap = {
   accent:       "oklch(78% 0.24 42)",            // amber-ochre on dark soil
   accentHover:  "oklch(70% 0.22 42)",
   accentSubtle: "oklch(30% 0.12 42)",
-  success:      oklch(palette.leafGreen),
+  success:      "oklch(78% 0.24 122)",           // WCAG fix: brighter leaf for 4.5:1 on dark bg
   successSubtle:"oklch(25% 0.08 130)",
   warning:      "oklch(80% 0.20 50)",
   warningSubtle:"oklch(28% 0.08 50)",
-  danger:       oklch(palette.cranberryRed),
+  danger:       "oklch(68% 0.20 2)",             // WCAG fix: brighter red for 4.5:1 on dark bg
   dangerSubtle: "oklch(26% 0.08 10)",
   info:         oklch(palette.skyBlue),
   infoSubtle:   "oklch(26% 0.06 210)",

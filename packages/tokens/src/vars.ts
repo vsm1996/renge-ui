@@ -100,6 +100,7 @@ export const rengeVars = {
     7: "var(--renge-duration-7)",
     8: "var(--renge-duration-8)",
     9: "var(--renge-duration-9)",
+    10: "var(--renge-duration-10)",
   },
 
   /** Easing curves */

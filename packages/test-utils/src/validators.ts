@@ -132,17 +132,17 @@ export function validateTypeScale(
 
 /**
  * Validate WCAG contrast ratio between two colors.
- * Stub implementation — full version requires OKLCH to RGB conversion.
+ * Supports OKLCH color space with OKLCH→RGB→luminance conversion.
  *
  * Contrast ratio formula (WCAG 2.0):
  * - L1 = relative luminance of lighter color
  * - L2 = relative luminance of darker color
  * - Contrast = (L1 + 0.05) / (L2 + 0.05)
  *
- * @param foreground - Color value (hex, rgb, oklch, or named color)
- * @param background - Color value (hex, rgb, oklch, or named color)
+ * @param foreground - Color value (oklch format, e.g., "oklch(70% 0.1 10)")
+ * @param background - Color value (oklch format, e.g., "oklch(90% 0.05 10)")
  * @param minRatio - Minimum acceptable contrast ratio (default: 4.5 for WCAG AA normal text)
- * @returns ValidationResult (stub: always valid, to be extended)
+ * @returns ValidationResult with errors if contrast is below minRatio
  *
  * @example
  * const result = validateContrastRatio(
@@ -159,21 +159,35 @@ export function validateContrastRatio(
   const errors: string[] = [];
   const warnings: string[] = [];
 
-  // TODO: Implement full OKLCH/RGB conversion and luminance calculation
-  // For now, this is a stub that always passes.
-  // Full implementation would:
-  // 1. Parse foreground/background into OKLCH or RGB
-  // 2. Convert to RGB if needed
-  // 3. Calculate relative luminance: 0.2126*R + 0.7152*G + 0.0722*B
-  // 4. Compute contrast ratio: (lighter + 0.05) / (darker + 0.05)
-  // 5. Compare to minRatio
-
   if (!foreground || !background) {
     errors.push("Foreground and background colors are required");
+    return { valid: false, errors, warnings };
   }
 
   if (minRatio < 1) {
     errors.push(`Minimum contrast ratio must be >= 1, got ${minRatio}`);
+    return { valid: false, errors, warnings };
+  }
+
+  // Parse OKLCH colors and convert to RGB, then calculate luminance
+  const fgLuminance = parseLuminance(foreground);
+  const bgLuminance = parseLuminance(background);
+
+  if (fgLuminance === null || bgLuminance === null) {
+    errors.push(`Invalid color format. Expected oklch(L% C H), got "${foreground}" and "${background}"`);
+    return { valid: false, errors, warnings };
+  }
+
+  // Calculate WCAG contrast ratio
+  const lighter = Math.max(fgLuminance, bgLuminance);
+  const darker = Math.min(fgLuminance, bgLuminance);
+  const contrastRatio = (lighter + 0.05) / (darker + 0.05);
+
+  if (contrastRatio < minRatio) {
+    errors.push(
+      `Contrast ratio ${contrastRatio.toFixed(2)} is below minimum ${minRatio.toFixed(2)} ` +
+      `(foreground: ${foreground}, background: ${background})`
+    );
   }
 
   return {
@@ -181,4 +195,69 @@ export function validateContrastRatio(
     errors,
     warnings,
   };
+}
+
+/**
+ * Parse color and return relative luminance (0–1)
+ * Supports OKLCH format: oklch(L% C H)
+ */
+function parseLuminance(colorStr: string): number | null {
+  // Try OKLCH format first
+  const oklchMatch = colorStr.match(/oklch\s*\(\s*([\d.]+)%?\s+([.\d]+)\s+([.\d]+)\s*\)/);
+  if (oklchMatch) {
+    return oklchToLuminance(
+      parseFloat(oklchMatch[1]) / 100,
+      parseFloat(oklchMatch[2]),
+      parseFloat(oklchMatch[3])
+    );
+  }
+
+  // Fallback: unsupported format
+  return null;
+}
+
+/**
+ * Convert OKLCH color to relative luminance
+ * @param L - Lightness (0–1)
+ * @param C - Chroma
+ * @param H - Hue (0–360)
+ */
+function oklchToLuminance(L: number, C: number, H: number): number {
+  // Convert OKLCH to OKLab
+  const hRad = (H * Math.PI) / 180;
+  const a = C * Math.cos(hRad);
+  const b = C * Math.sin(hRad);
+
+  // Convert OKLab to linear sRGB
+  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+
+  const l = l_ * l_ * l_;
+  const m = m_ * m_ * m_;
+  const s = s_ * s_ * s_;
+
+  const r = 4.0767416621 * l - 3.3077363322 * m + 0.2309101289 * s;
+  const g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193761 * s;
+  const b_ = -0.0041960771 * l - 0.7034186147 * m + 1.7076147010 * s;
+
+  // Linearize RGB values for luminance calculation
+  const lr = linearize(r);
+  const lg = linearize(g);
+  const lb = linearize(b_);
+
+  // WCAG relative luminance formula
+  return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb;
+}
+
+/**
+ * Apply gamma linearization for luminance calculation
+ * Converts sRGB to linear RGB values
+ */
+function linearize(c: number): number {
+  c = Math.max(0, Math.min(1, c)); // clamp to 0–1
+  if (c <= 0.04045) {
+    return c / 12.92;
+  }
+  return Math.pow((c + 0.055) / 1.055, 2.4);
 }

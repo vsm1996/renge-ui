@@ -138,6 +138,9 @@ importers:
 
   packages/test-utils:
     devDependencies:
+      '@renge-ui/tokens':
+        specifier: ^2.6.0
+        version: link:../tokens
       tsup:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.15)(typescript@5.9.3)

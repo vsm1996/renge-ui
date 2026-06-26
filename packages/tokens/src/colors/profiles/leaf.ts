@@ -51,8 +51,8 @@ const dark: SemanticColorMap = {
   fgInverse:    "oklch(12% 0.06 135)",
   border:       "oklch(26% 0.06 135)",
   borderSubtle: "oklch(20% 0.04 135)",
-  borderFocus:  "oklch(62% 0.22 130)",           // vivid forest green on dark bg
-  accent:       "oklch(62% 0.22 130)",           // fresh leaf green — L=62 pops on dark
+  borderFocus:  "oklch(75% 0.22 130)",           // WCAG fix: brighter green for 4.5:1
+  accent:       "oklch(75% 0.22 130)",           // WCAG fix: brighter leaf green for 4.5:1 on dark forest floor
   accentHover:  "oklch(70% 0.20 130)",
   accentSubtle: "oklch(20% 0.10 130)",
   success:      oklch(palette.seaFoam),

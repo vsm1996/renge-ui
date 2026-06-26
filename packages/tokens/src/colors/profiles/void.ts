@@ -52,7 +52,7 @@ const dark: SemanticColorMap = {
   successSubtle:"oklch(14% 0.06 170)",
   warning:      oklch(palette.wheatYellow),
   warningSubtle:"oklch(14% 0.05 60)",
-  danger:       oklch(palette.cranberryRed),
+  danger:       "oklch(72% 0.20 2)",             // WCAG fix: brighter red for 4.5:1 on near-black bg
   dangerSubtle: "oklch(14% 0.06 0)",
   info:         oklch(palette.skyGrey),
   infoSubtle:   "oklch(14% 0.03 210)",

@@ -219,16 +219,29 @@ describe('validateContrastRatio', () => {
     expect(result.warnings).toBeDefined();
   });
 
-  it('should currently always pass (stub implementation)', () => {
+  it('should validate sufficient contrast', () => {
+    // oklch(0% 0 0) = black, oklch(100% 0 0) = white, contrast = 21
+    const result = validateContrastRatio(
+      'oklch(0% 0 0)',
+      'oklch(100% 0 0)',
+      4.5
+    );
+
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should fail for insufficient contrast', () => {
+    // oklch(70% 0.1 10) vs oklch(90% 0.05 10), contrast ≈ 3.22 < 4.5
     const result = validateContrastRatio(
       'oklch(70% 0.1 10)',
       'oklch(90% 0.05 10)',
       4.5
     );
 
-    // Stub implementation passes (to be extended)
-    expect(result.valid).toBe(true);
-    expect(result.errors).toHaveLength(0);
+    expect(result.valid).toBe(false);
+    expect(result.errors.length).toBeGreaterThan(0);
+    expect(result.errors.some((e) => e.includes('Contrast ratio'))).toBe(true);
   });
 
   it('should reject missing colors', () => {
@@ -251,8 +264,8 @@ describe('validateContrastRatio', () => {
 
   it('should accept reasonable minRatio values', () => {
     const result = validateContrastRatio(
-      '#000000',
-      '#FFFFFF',
+      'oklch(0% 0 0)',
+      'oklch(100% 0 0)',
       4.5 // WCAG AA
     );
 

@@ -44,15 +44,15 @@ const dark: SemanticColorMap = {
   fgInverse:    "oklch(10% 0.04 25)",
   border:       "oklch(30% 0.10 30)",
   borderSubtle: "oklch(20% 0.07 27)",
-  borderFocus:  oklch(palette.sunsetOrange),
-  accent:       oklch(palette.sunsetOrange),     // burning orange on dark char
+  borderFocus:  "oklch(70% 0.20 40)",            // WCAG fix: brighter amber for 4.5:1
+  accent:       "oklch(70% 0.20 40)",            // WCAG fix: brighter orange on dark char for 4.5:1
   accentHover:  "oklch(68% 0.22 36)",
   accentSubtle: "oklch(20% 0.10 30)",
   success:      oklch(palette.seaFoam),
   successSubtle:"oklch(18% 0.08 170)",
   warning:      oklch(palette.honeyYellow),
   warningSubtle:"oklch(20% 0.08 52)",
-  danger:       oklch(palette.autumnRed),
+  danger:       "oklch(68% 0.22 10)",             // WCAG fix: brighter red for 4.5:1 on dark bg
   dangerSubtle: "oklch(18% 0.10 10)",
   info:         oklch(palette.riverBlue),
   infoSubtle:   "oklch(18% 0.06 200)",

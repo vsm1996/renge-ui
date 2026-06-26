@@ -19,8 +19,8 @@ const light: SemanticColorMap = {
   fgInverse:    oklch(palette.snowWhite),
   border:       "oklch(80% 0.02 210)",
   borderSubtle: "oklch(90% 0.01 210)",
-  borderFocus:  oklch(palette.skyBlue),
-  accent:       oklch(palette.skyBlue),
+  borderFocus:  "oklch(60% 0.12 210)",           // darker sky blue — 4.5:1 on white
+  accent:       "oklch(60% 0.12 210)",          // WCAG fix: darker blue for 4.5:1 on white
   accentHover:  oklch(palette.riverBlue),
   accentSubtle: "oklch(92% 0.04 210)",
   success:      oklch(palette.mossGreen),
