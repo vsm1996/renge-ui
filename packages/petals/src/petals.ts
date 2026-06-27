@@ -377,7 +377,7 @@ export const navigation: PetalGroup = {
     label: 'Navbar Root',
     description: 'Top navigation bar — horizontal padding and bottom border',
     tokens: {
-      padding: 'var(--renge-space-2) var(--renge-space-5)',
+      padding: 'var(--renge-space-3) var(--renge-space-5)',
       borderBottom: '1px solid var(--renge-color-border-subtle)',
       backgroundColor: 'var(--renge-color-bg)',
     },
@@ -405,10 +405,11 @@ export const navigation: PetalGroup = {
     label: 'Menu Item',
     description: 'Vertical menu entry — comfortable padding with hover transition',
     tokens: {
-      padding: 'var(--renge-space-2) var(--renge-space-3)',
+      padding: 'var(--renge-space-2) var(--renge-space-4)',
       borderRadius: 'var(--renge-radius-2)',
       fontSize: 'var(--renge-font-size-sm)',
       lineHeight: 'var(--renge-line-height-sm)',
+      color: 'var(--renge-color-fg)',
       transition: `background-color var(--renge-duration-1) var(--renge-easing-ease-out)`,
     },
   },
@@ -469,9 +470,9 @@ export const navigation: PetalGroup = {
   },
   bottomNavItem: {
     label: 'Bottom Nav Item',
-    description: 'Mobile bottom tab — condensed padding, subdued color',
+    description: 'Mobile bottom tab — generous touch target, subdued color',
     tokens: {
-      padding: 'var(--renge-space-2) var(--renge-space-3)',
+      padding: 'var(--renge-space-3) var(--renge-space-4)',
       fontSize: 'var(--renge-font-size-xs)',
       lineHeight: 'var(--renge-line-height-xs)',
       color: 'var(--renge-color-fg-subtle)',
@@ -482,6 +483,7 @@ export const navigation: PetalGroup = {
     label: 'Steps Item',
     description: 'Step indicator label — condensed type beside progress node',
     tokens: {
+      padding: 'var(--renge-space-1) var(--renge-space-2)',
       fontSize: 'var(--renge-font-size-xs)',
       lineHeight: 'var(--renge-line-height-xs)',
       color: 'var(--renge-color-fg-subtle)',

@@ -77,7 +77,7 @@ function TokenJSON({ tokens }: { tokens: Record<string, string> }) {
 
 function PreviewWrap({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ padding: 'var(--renge-space-3)', background: 'var(--renge-color-bg)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)' }}>
+    <div style={{ padding: 'var(--renge-space-4)', background: 'var(--renge-color-bg)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)', overflow: 'hidden', minWidth: 0 }}>
       {children}
     </div>
   );
@@ -90,11 +90,12 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
 
   // ── typography ──
   if (categoryName === 'typography') {
+    const isDisplay = petalName.startsWith('display');
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
         <PreviewWrap>
-          <div style={{ ...tokens as any, overflow: 'hidden', wordBreak: 'break-word' }}>
-            The quick brown fox
+          <div style={{ ...tokens as any, overflow: 'hidden', wordBreak: 'break-word', maxHeight: isDisplay ? '4.5rem' : undefined, color: 'var(--renge-color-fg)' }}>
+            {isDisplay ? 'Renge' : petalName.startsWith('heading') ? 'Heading text' : 'The quick brown fox jumps over the lazy dog'}
           </div>
         </PreviewWrap>
         <TokenJSON tokens={tokens} />
@@ -309,14 +310,20 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
     }
     if (petalName === 'navItem' || petalName === 'navItemActive') {
       const isActive = petalName === 'navItemActive';
+      const baseStyle = petals.navigation.navItem.tokens as React.CSSProperties;
+      const activeStyle = petals.navigation.navItemActive.tokens as React.CSSProperties;
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
-            <div style={{ display: 'flex', gap: 'var(--renge-space-2)' }}>
-              <span style={{ ...tokens as any, cursor: 'pointer' }}>Home</span>
-              <span style={{ ...tokens as any, cursor: 'pointer', opacity: isActive ? 1 : 0.5 }}>
-                {isActive ? 'Active Page' : 'About'}
-              </span>
+            <div style={{ display: 'flex', gap: 'var(--renge-space-1)', flexWrap: 'wrap' as const }}>
+              {['Home', 'Docs', 'Petals', 'GitHub'].map((label, i) => {
+                const isThisActive = isActive && i === 2;
+                return (
+                  <a key={label} style={{ ...baseStyle, ...(isThisActive ? activeStyle : {}), display: 'inline-block', cursor: 'pointer', textDecoration: 'none', color: isThisActive ? 'var(--renge-color-accent)' : 'var(--renge-color-fg)' }}>
+                    {label}
+                  </a>
+                );
+              })}
             </div>
           </PreviewWrap>
           <TokenJSON tokens={tokens} />
@@ -324,15 +331,20 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       );
     }
     if (petalName === 'menuItem' || petalName === 'menuItemActive') {
+      const baseStyle = petals.navigation.menuItem.tokens as React.CSSProperties;
+      const activeStyle = petals.navigation.menuItemActive.tokens as React.CSSProperties;
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-1)' }}>
-              {['Profile', 'Settings', 'Sign out'].map((label, i) => (
-                <div key={label} style={{ ...tokens as any, cursor: 'pointer', opacity: petalName === 'menuItemActive' && i !== 1 ? 0.5 : 1 }}>
-                  {label}
-                </div>
-              ))}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: 'var(--renge-space-1)', background: 'var(--renge-color-bg-subtle)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)' }}>
+              {['Profile', 'Settings', 'Sign out'].map((label, i) => {
+                const isThisActive = petalName === 'menuItemActive' && i === 1;
+                return (
+                  <div key={label} style={{ ...baseStyle, ...(isThisActive ? activeStyle : {}), cursor: 'pointer' }}>
+                    {label}
+                  </div>
+                );
+              })}
             </div>
           </PreviewWrap>
           <TokenJSON tokens={tokens} />
@@ -340,19 +352,20 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       );
     }
     if (petalName === 'tabItem' || petalName === 'tabItemActive') {
+      const baseStyle = petals.navigation.tabItem.tokens as React.CSSProperties;
+      const activeStyle = petals.navigation.tabItemActive.tokens as React.CSSProperties;
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
             <div style={{ display: 'flex', borderBottom: '1px solid var(--renge-color-border-subtle)' }}>
-              {['Overview', 'Petals', 'API'].map((label, i) => (
-                <span key={label} style={{
-                  ...tokens as any,
-                  cursor: 'pointer',
-                  opacity: (petalName === 'tabItemActive' ? i === 1 : i === 0) ? 1 : 0.5,
-                }}>
-                  {label}
-                </span>
-              ))}
+              {['Overview', 'Petals', 'API'].map((label, i) => {
+                const isThisActive = petalName === 'tabItemActive' ? i === 1 : i === 0;
+                return (
+                  <div key={label} style={{ ...baseStyle, ...(isThisActive ? activeStyle : {}), cursor: 'pointer', color: isThisActive ? 'var(--renge-color-accent)' : 'var(--renge-color-fg-subtle)' }}>
+                    {label}
+                  </div>
+                );
+              })}
             </div>
           </PreviewWrap>
           <TokenJSON tokens={tokens} />
@@ -363,11 +376,11 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--renge-space-2)' }}>
+            <nav style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' as const, gap: 'var(--renge-space-1)' }}>
               {['Home', '/', 'Docs', '/', 'Petals'].map((seg, i) => (
-                <span key={i} style={{ ...tokens as any }}>{seg}</span>
+                <span key={i} style={{ ...tokens as any, cursor: seg !== '/' ? 'pointer' : 'default', color: i === 4 ? 'var(--renge-color-fg)' : 'var(--renge-color-fg-subtle)' }}>{seg}</span>
               ))}
-            </div>
+            </nav>
           </PreviewWrap>
           <TokenJSON tokens={tokens} />
         </div>
@@ -375,21 +388,20 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
     }
     if (petalName === 'paginationItem' || petalName === 'paginationItemActive') {
       const isActive = petalName === 'paginationItemActive';
+      const baseStyle = petals.navigation.paginationItem.tokens as React.CSSProperties;
+      const activeStyle = petals.navigation.paginationItemActive.tokens as React.CSSProperties;
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
-            <div style={{ display: 'flex', gap: 'var(--renge-space-1)', alignItems: 'center' }}>
-              {['←', '1', '2', '3', '→'].map((n, i) => (
-                <button key={n} style={{
-                  ...tokens as any,
-                  cursor: 'pointer',
-                  border: '1px solid var(--renge-color-border-subtle)',
-                  background: isActive && i === 2 ? 'var(--renge-color-accent)' : 'transparent',
-                  color: isActive && i === 2 ? 'var(--renge-color-fg-inverse)' : 'inherit',
-                }}>
-                  {n}
-                </button>
-              ))}
+            <div style={{ display: 'flex', gap: 'var(--renge-space-1)', alignItems: 'center', flexWrap: 'wrap' as const }}>
+              {['←', '1', '2', '3', '→'].map((n, i) => {
+                const isThisActive = isActive && i === 2;
+                return (
+                  <button key={n} style={{ ...baseStyle, ...(isThisActive ? activeStyle : {}), cursor: 'pointer', border: '1px solid var(--renge-color-border-subtle)', background: isThisActive ? 'var(--renge-color-accent)' : 'transparent', color: isThisActive ? 'var(--renge-color-fg-inverse)' : 'var(--renge-color-fg)', textAlign: 'center' as const }}>
+                    {n}
+                  </button>
+                );
+              })}
             </div>
           </PreviewWrap>
           <TokenJSON tokens={tokens} />
@@ -400,10 +412,10 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
-            <div style={{ display: 'flex', justifyContent: 'space-around', borderTop: '1px solid var(--renge-color-border-subtle)' }}>
-              {['Home', 'Search', 'Profile'].map(label => (
-                <div key={label} style={{ ...tokens as any, display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-                  <span>○</span>
+            <div style={{ display: 'flex', justifyContent: 'space-around', borderTop: '1px solid var(--renge-color-border-subtle)', background: 'var(--renge-color-bg-subtle)', borderRadius: '0 0 var(--renge-radius-2) var(--renge-radius-2)' }}>
+              {['Home', 'Search', 'Profile'].map((label, i) => (
+                <div key={label} style={{ ...tokens as any, display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', color: i === 0 ? 'var(--renge-color-accent)' : 'var(--renge-color-fg-subtle)' }}>
+                  <span style={{ fontSize: 'var(--renge-font-size-base)', lineHeight: 1 }}>{i === 0 ? '⌂' : i === 1 ? '⌕' : '◎'}</span>
                   <span>{label}</span>
                 </div>
               ))}
@@ -417,11 +429,14 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
         <PreviewWrap>
-          <div style={{ display: 'flex', gap: 'var(--renge-space-4)', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
             {['Account', 'Plan', 'Payment'].map((step, i) => (
-              <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 'var(--renge-space-1)' }}>
-                <div style={{ width: 20, height: 20, borderRadius: '50%', background: i === 0 ? 'var(--renge-color-accent)' : 'var(--renge-color-bg-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: i === 0 ? 'var(--renge-color-fg-inverse)' : 'var(--renge-color-fg-subtle)' }}>{i + 1}</div>
-                <span style={{ ...tokens as any }}>{step}</span>
+              <div key={step} style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--renge-space-1)', flex: 1 }}>
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: i === 0 ? 'var(--renge-color-accent)' : 'var(--renge-color-bg-muted)', border: `2px solid ${i === 0 ? 'var(--renge-color-accent)' : 'var(--renge-color-border)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 600, color: i === 0 ? 'var(--renge-color-fg-inverse)' : 'var(--renge-color-fg-subtle)', flexShrink: 0 }}>{i + 1}</div>
+                  <span style={{ ...tokens as any, textAlign: 'center' as const }}>{step}</span>
+                </div>
+                {i < 2 && <div style={{ height: 1, background: 'var(--renge-color-border-subtle)', flex: 1, marginTop: '-12px', marginLeft: '-4px', marginRight: '-4px' }} />}
               </div>
             ))}
           </div>
@@ -765,9 +780,9 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
-            <div style={{ padding: 'var(--renge-space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-1)' }}>
-              <div style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-subtle)' }}>MONTHLY REVENUE</div>
-              <div style={{ fontSize: 'var(--renge-font-size-3xl)', lineHeight: '1.1', color: 'var(--renge-color-fg)' }}>$24,890</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-1)' }}>
+              <div style={{ fontSize: 'var(--renge-font-size-xs)', letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: 'var(--renge-color-fg-subtle)' }}>Monthly Revenue</div>
+              <div style={{ fontSize: 'var(--renge-font-size-2xl)', lineHeight: '1.1', fontWeight: 600, color: 'var(--renge-color-fg)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' as const }}>$24,890</div>
               <div style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-success)' }}>↑ 12% from last month</div>
             </div>
           </PreviewWrap>
@@ -1061,7 +1076,7 @@ export default function PetalsPage() {
     <DocPageLayout sidebar={<DocSidebar sections={SIDEBAR_NAV} footerLinks={[{ href: '/components', label: 'React Components' }, { href: '/system', label: 'Token System' }]} />}>
 
       {/* ── Overview ── */}
-      <section id="overview">
+      <section id="overview" style={{ scrollMarginTop: 'calc(52px + var(--renge-space-6))' }}>
         <div style={{ marginBottom: 'var(--renge-space-4)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--renge-space-3)', marginBottom: 'var(--renge-space-3)', flexWrap: 'wrap' as const }}>
             <span style={{ padding: 'var(--renge-space-1) var(--renge-space-2)', borderRadius: 'var(--renge-radius-full)', background: 'var(--renge-color-accent-subtle)', color: 'var(--renge-color-accent)', fontSize: 'var(--renge-font-size-xs)', fontFamily: 'monospace' }}>
@@ -1088,7 +1103,7 @@ export default function PetalsPage() {
       </section>
 
       {/* ── Usage ── */}
-      <section id="usage">
+      <section id="usage" style={{ scrollMarginTop: 'calc(52px + var(--renge-space-6))' }}>
         <h2 style={{ fontSize: 'var(--renge-font-size-2xl)', lineHeight: 'var(--renge-line-height-2xl)', color: 'var(--renge-color-fg)', margin: '0 0 var(--renge-space-5) 0' }}>
           Usage
         </h2>
@@ -1145,7 +1160,7 @@ const sheet = Object.entries(petals.navigation.navItem.tokens)
       </section>
 
       {/* ── Why Petals? ── */}
-      <section id="philosophy">
+      <section id="philosophy" style={{ scrollMarginTop: 'calc(52px + var(--renge-space-6))' }}>
         <h2 style={{ fontSize: 'var(--renge-font-size-2xl)', lineHeight: 'var(--renge-line-height-2xl)', color: 'var(--renge-color-fg)', margin: '0 0 var(--renge-space-4) 0' }}>
           Why Petals?
         </h2>
@@ -1183,7 +1198,7 @@ const sheet = Object.entries(petals.navigation.navItem.tokens)
       {Object.entries(petals).map(([categoryName, categoryPetals]) => {
         const meta = CATEGORY_META[categoryName] ?? { title: categoryName, desc: '' };
         return (
-          <section key={categoryName} id={categoryName}>
+          <section key={categoryName} id={categoryName} style={{ scrollMarginTop: 'calc(52px + var(--renge-space-6))' }}>
             <div style={{ marginBottom: 'var(--renge-space-5)' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--renge-space-3)', marginBottom: 'var(--renge-space-2)', flexWrap: 'wrap' as const }}>
                 <h2 style={{ fontSize: 'var(--renge-font-size-2xl)', lineHeight: 'var(--renge-line-height-2xl)', color: 'var(--renge-color-fg)', margin: 0 }}>
@@ -1200,9 +1215,9 @@ const sheet = Object.entries(petals.navigation.navItem.tokens)
               )}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 'var(--renge-space-4)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 'var(--renge-space-4)' }}>
               {Object.entries(categoryPetals).map(([petalName, petal]) => (
-                <div key={petalName} style={{ padding: 'var(--renge-space-4)', borderRadius: 'var(--renge-radius-3)', border: '1px solid var(--renge-color-border-subtle)', background: 'color-mix(in oklch, var(--renge-color-bg) 97%, var(--renge-color-accent))' }}>
+                <div key={petalName} style={{ padding: 'var(--renge-space-4)', borderRadius: 'var(--renge-radius-3)', border: '1px solid var(--renge-color-border-subtle)', background: 'color-mix(in oklch, var(--renge-color-bg) 97%, var(--renge-color-accent))', minWidth: 0, overflow: 'hidden' }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--renge-space-2)', marginBottom: 'var(--renge-space-2)' }}>
                     <h3 style={{ fontSize: 'var(--renge-font-size-base)', fontWeight: 600, color: 'var(--renge-color-fg)', margin: 0 }}>
                       {petal.label}
