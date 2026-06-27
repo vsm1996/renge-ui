@@ -8,7 +8,7 @@ const PHI = 1.618033988749895;
 const GOLDEN_ANGLE = 360 / (PHI * PHI);
 
 function CountUp({ target, duration = 2 }: { target: number; duration?: number }) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
   const [value, setValue] = useState(0);
 
@@ -37,7 +37,7 @@ function CountUp({ target, duration = 2 }: { target: number; duration?: number }
 }
 
 export function Philosophy() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-200px' });
 
   return (
