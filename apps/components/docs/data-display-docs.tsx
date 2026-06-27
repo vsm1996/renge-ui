@@ -141,9 +141,15 @@ export function TimelineDocs() {
           />
           <TimelineItem
             title="@renge-ui/vue"
-            description="Vue 3 component port. Not started."
-            timestamp="TBD"
-            status="pending"
+            description="Vue 3 port shipped. useRengeTheme composable + full token integration."
+            timestamp="Jun 2026"
+            status="completed"
+          />
+          <TimelineItem
+            title="@renge-ui/svelte"
+            description="Svelte port shipped. profile/mode stores + SvelteKit support."
+            timestamp="Jun 2026"
+            status="completed"
           />
         </Timeline>
       </Demo>
@@ -162,9 +168,9 @@ export function TimelineDocs() {
   />
   <TimelineItem
     title="Vue port"
-    description="Coming soon."
-    timestamp="TBD"
-    status="pending"
+    description="Shipped. useRengeTheme composable."
+    timestamp="Jun 2026"
+    status="completed"
   />
 </Timeline>`}</Code>
       <PropsTable>

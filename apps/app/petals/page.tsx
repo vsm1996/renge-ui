@@ -1093,6 +1093,12 @@ export default function PetalsPage() {
           Usage
         </h2>
 
+        <pre style={{ ...codeStyle, padding: 'var(--renge-space-4)', borderRadius: 'var(--renge-radius-3)', marginBottom: 'var(--renge-space-4)', border: '1px solid var(--renge-color-border-subtle)' }}>
+{`pnpm add @renge-ui/petals
+# or
+npm install @renge-ui/petals`}
+        </pre>
+
         <pre style={{ ...codeStyle, padding: 'var(--renge-space-4)', borderRadius: 'var(--renge-radius-3)', marginBottom: 'var(--renge-space-5)', border: '1px solid var(--renge-color-border-subtle)' }}>
 {`import { petals } from '@renge-ui/petals';
 

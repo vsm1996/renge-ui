@@ -178,6 +178,42 @@ export function DocSection({ id, label, title, description, children }: {
   );
 }
 
+// ─── Keyboard interactions table ─────────────────────────────────────────────
+
+export function KeyboardRow({ keys, action }: { keys: string[]; action: string }) {
+  return (
+    <tr>
+      <td style={{ padding: "var(--renge-space-2) var(--renge-space-4)", borderBottom: "1px solid var(--renge-color-border-subtle)", whiteSpace: "nowrap" as const }}>
+        <div style={{ display: "flex", gap: "var(--renge-space-1)", flexWrap: "wrap" as const }}>
+          {keys.map((k) => (
+            <kbd key={k} style={{ display: "inline-block", padding: "1px var(--renge-space-2)", borderRadius: "var(--renge-radius-1)", border: "1px solid var(--renge-color-border)", background: "var(--renge-color-bg-subtle)", fontSize: "var(--renge-font-size-xs)", fontFamily: "var(--font-mono, monospace)", color: "var(--renge-color-fg)", lineHeight: 1.6, boxShadow: "0 1px 0 var(--renge-color-border)" }}>{k}</kbd>
+          ))}
+        </div>
+      </td>
+      <td style={{ padding: "var(--renge-space-2) var(--renge-space-4)", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", borderBottom: "1px solid var(--renge-color-border-subtle)" }}>{action}</td>
+    </tr>
+  );
+}
+
+export function KeyboardTable({ children }: { children: React.ReactNode }) {
+  return (
+    <div>
+      <p style={{ fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-subtle)", letterSpacing: "0.08em", textTransform: "uppercase" as const, fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>Keyboard</p>
+      <div style={{ overflowX: "auto", borderRadius: "var(--renge-radius-2)", border: "1px solid var(--renge-color-border-subtle)" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ background: "var(--renge-color-bg-subtle)" }}>
+              <th style={{ padding: "var(--renge-space-2) var(--renge-space-4)", textAlign: "left", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase" as const, borderBottom: "1px solid var(--renge-color-border-subtle)", width: "40%" }}>Key</th>
+              <th style={{ padding: "var(--renge-space-2) var(--renge-space-4)", textAlign: "left", fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase" as const, borderBottom: "1px solid var(--renge-color-border-subtle)" }}>Action</th>
+            </tr>
+          </thead>
+          <tbody>{children}</tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 // ─── Label ────────────────────────────────────────────────────────────────────
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {

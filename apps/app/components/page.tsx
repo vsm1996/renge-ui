@@ -14,7 +14,7 @@ import {
   Spinner, Progress, FormField, KBD, CopyButton,
   Pagination, Stepper, AspectRatio,
 } from "@renge-ui/react";
-import { ComponentSection, Demo, CodeBlock, PropsTable, PropRow } from "@/components/ui/DocPrimitives";
+import { ComponentSection, Demo, CodeBlock, PropsTable, PropRow, KeyboardTable, KeyboardRow } from "@/components/ui/DocPrimitives";
 import { DocPageLayout } from "@/components/ui/DocPageLayout";
 import { DocSidebar, type SidebarSection } from "@/components/ui/DocSidebar";
 
@@ -313,6 +313,11 @@ export default function ComponentsPage() {
               <PropRow name="fullWidth" type="boolean" defaultVal="false" desc="Stretch button to fill its container" />
               <PropRow name="disabled" type="boolean" defaultVal="false" desc="Prevents interaction, reduces opacity" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Enter", "Space"]} action="Activate the button" />
+              <KeyboardRow keys={["Tab"]} action="Move focus to next focusable element" />
+              <KeyboardRow keys={["Shift", "Tab"]} action="Move focus to previous focusable element" />
+            </KeyboardTable>
           </div>
 
           {/* IconButton */}
@@ -337,6 +342,9 @@ export default function ComponentsPage() {
               <PropRow name="size" type='"sm" | "md" | "lg"' defaultVal='"md"' desc="Square dimension" />
               <PropRow name="variant" type='"solid" | "outline" | "ghost"' defaultVal='"ghost"' desc="Visual style" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Enter", "Space"]} action="Activate the button" />
+            </KeyboardTable>
           </div>
 
           {/* CopyButton */}
@@ -358,6 +366,9 @@ export default function ComponentsPage() {
               <PropRow name="successLabel" type="string" defaultVal='"Copied!"' desc="Label shown after successful copy" />
               <PropRow name="timeout" type="number" defaultVal="2100" desc="ms before reverting to default label" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Enter", "Space"]} action="Copy text to clipboard" />
+            </KeyboardTable>
           </div>
 
           {/* ButtonGroup */}
@@ -423,6 +434,10 @@ export default function ComponentsPage() {
               <PropRow name="fullWidth" type="boolean" defaultVal="false" desc="Stretches input to fill container" />
               <PropRow name="disabled" type="boolean" defaultVal="false" desc="Prevents interaction" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Tab"]} action="Focus the input" />
+              <KeyboardRow keys={["Enter"]} action="Submit enclosing form" />
+            </KeyboardTable>
           </div>
 
           {/* Select */}
@@ -455,6 +470,11 @@ export default function ComponentsPage() {
               <PropRow name="fullWidth" type="boolean" defaultVal="false" desc="Stretches to fill container" />
               <PropRow name="disabled" type="boolean" defaultVal="false" desc="Prevents interaction" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["↑", "↓"]} action="Navigate between options" />
+              <KeyboardRow keys={["Enter", "Space"]} action="Open dropdown / select focused option" />
+              <KeyboardRow keys={["Escape"]} action="Close dropdown without selecting" />
+            </KeyboardTable>
           </div>
 
           {/* Textarea */}
@@ -506,6 +526,9 @@ export default function ComponentsPage() {
               <PropRow name="disabled" type="boolean" defaultVal="false" desc="Prevents interaction" />
               <PropRow name="onChange" type="() => void" defaultVal="—" desc="Called on user toggle" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Space"]} action="Toggle checked / unchecked" />
+            </KeyboardTable>
           </div>
 
           {/* Switch */}
@@ -531,6 +554,9 @@ export default function ComponentsPage() {
               <PropRow name="disabled" type="boolean" defaultVal="false" desc="Prevents interaction" />
               <PropRow name="onChange" type="() => void" defaultVal="—" desc="Called on user toggle" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Space"]} action="Toggle on / off" />
+            </KeyboardTable>
           </div>
 
           {/* RadioGroup */}
@@ -558,6 +584,10 @@ export default function ComponentsPage() {
               <PropRow name="onChange" type="(value: string) => void" defaultVal="—" desc="Called when selection changes" />
               <PropRow name="direction" type='"vertical" | "horizontal"' defaultVal='"vertical"' desc="Layout direction" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["↑", "↓", "←", "→"]} action="Move selection through radio options" />
+              <KeyboardRow keys={["Space"]} action="Select the focused radio" />
+            </KeyboardTable>
           </div>
 
           {/* Slider */}
@@ -590,6 +620,12 @@ export default function ComponentsPage() {
               <PropRow name="step" type="number" defaultVal="1" desc="Increment step" />
               <PropRow name="onChange" type="(value: number) => void" defaultVal="—" desc="Called on change" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["←", "↓"]} action="Decrease value by one step" />
+              <KeyboardRow keys={["→", "↑"]} action="Increase value by one step" />
+              <KeyboardRow keys={["Home"]} action="Jump to minimum" />
+              <KeyboardRow keys={["End"]} action="Jump to maximum" />
+            </KeyboardTable>
           </div>
 
           {/* FormField */}
@@ -655,6 +691,10 @@ export default function ComponentsPage() {
               <PropRow name="step" type="number" defaultVal="1" desc="Increment amount" />
               <PropRow name="onChange" type="(value: number) => void" defaultVal="—" desc="Called on change" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["↑"]} action="Increment by step" />
+              <KeyboardRow keys={["↓"]} action="Decrement by step" />
+            </KeyboardTable>
           </div>
 
           {/* TagInput */}
@@ -678,6 +718,10 @@ export default function ComponentsPage() {
               <PropRow name="onChange" type="(tags: string[]) => void" defaultVal="—" desc="Called on add or remove" />
               <PropRow name="placeholder" type="string" defaultVal='"Add tags…"' desc="Input placeholder text" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Enter", ","]} action="Add current input text as a tag" />
+              <KeyboardRow keys={["Backspace"]} action="Remove last tag when input is empty" />
+            </KeyboardTable>
           </div>
 
           {/* Rating */}
@@ -700,6 +744,12 @@ export default function ComponentsPage() {
               <PropRow name="readonly" type="boolean" defaultVal="false" desc="Disables interaction when true" />
               <PropRow name="onChange" type="(value: number) => void" defaultVal="—" desc="Called on star click" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["←"]} action="Decrease rating" />
+              <KeyboardRow keys={["→"]} action="Increase rating" />
+              <KeyboardRow keys={["Home"]} action="Set to minimum" />
+              <KeyboardRow keys={["End"]} action="Set to maximum" />
+            </KeyboardTable>
           </div>
 
         </Stack>
@@ -900,6 +950,10 @@ export default function ComponentsPage() {
               <PropRow name="multiple" type="boolean" defaultVal="false" desc="Allow multiple items open simultaneously" />
               <PropRow name="value" type="string | string[]" defaultVal="—" desc="Controlled open item id(s)" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Tab"]} action="Move focus between accordion headers" />
+              <KeyboardRow keys={["Enter", "Space"]} action="Toggle the focused item open/closed" />
+            </KeyboardTable>
           </div>
 
           {/* Skeleton */}
@@ -1024,6 +1078,12 @@ export default function ComponentsPage() {
               <PropRow name="value" type="string" defaultVal="—" desc="Active tab (controlled)" />
               <PropRow name="onChange" type="(id: string) => void" defaultVal="—" desc="Called when active tab changes" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["←", "→"]} action="Move focus between tab triggers" />
+              <KeyboardRow keys={["Home"]} action="Focus the first tab" />
+              <KeyboardRow keys={["End"]} action="Focus the last tab" />
+              <KeyboardRow keys={["Tab"]} action="Move focus into the active tab panel" />
+            </KeyboardTable>
           </div>
 
           {/* Breadcrumb */}
@@ -1068,6 +1128,10 @@ export default function ComponentsPage() {
               <PropRow name="siblings" type="number" defaultVal="1" desc="Pages shown either side of the active page" />
               <PropRow name="onChange" type="(page: number) => void" defaultVal="—" desc="Called on page click" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Tab"]} action="Move between page buttons" />
+              <KeyboardRow keys={["Enter", "Space"]} action="Navigate to the focused page" />
+            </KeyboardTable>
           </div>
 
         </Stack>
@@ -1158,6 +1222,11 @@ export default function ComponentsPage() {
               <PropRow name="onClose" type="() => void" defaultVal="—" desc="Called when backdrop clicked or Escape pressed" />
               <PropRow name="size" type='"sm" | "md" | "lg"' defaultVal='"md"' desc="Max-width of the dialog" />
             </PropsTable>
+            <KeyboardTable>
+              <KeyboardRow keys={["Tab"]} action="Move focus forward through dialog elements (trapped inside modal)" />
+              <KeyboardRow keys={["Shift", "Tab"]} action="Move focus backward through dialog elements" />
+              <KeyboardRow keys={["Escape"]} action="Close the modal" />
+            </KeyboardTable>
           </div>
 
         </Stack>
