@@ -1,6 +1,8 @@
 "use client";
 
-import { ProfileToggle } from "@/components/ui/ProfileToggle";
+import { getProfile } from "@renge-ui/tokens";
+import type { SemanticColorMap } from "@renge-ui/tokens";
+import { ProfileToggle, useProfile } from "@/components/ui/ProfileToggle";
 import { SectionLabel, SubheadingH3 } from "./shared";
 
 const colorGroups = [
@@ -54,6 +56,9 @@ const colorGroups = [
 ];
 
 export function ColorShowcase() {
+  const { profile, mode } = useProfile();
+  const colorValues: SemanticColorMap = getProfile(profile, mode);
+
   return (
     <div>
       <SectionLabel>Tokens / Color</SectionLabel>
@@ -78,37 +83,53 @@ export function ColorShowcase() {
               gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
               gap: "var(--renge-space-3)",
             }}>
-              {tokens.map(({ key, jsKey }) => (
-                <div key={key} className="flex flex-col gap-renge-1">
-                  <div
-                    className="rounded-renge-2 border border-renge-border-subtle"
-                    style={{
-                      height: 52,
-                      background: `var(--renge-color-${key})`,
-                      transition: "background 600ms var(--renge-easing-ease-in-out)",
-                    }}
-                  />
-                  <code
-                    className="text-renge-sm text-renge-fg-subtle m-0"
-                    style={{
-                      fontFamily: "var(--font-mono, monospace)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    color.{jsKey}
-                  </code>
-                  <code
-                    className="text-renge-sm text-renge-fg-subtle m-0"
-                    style={{
-                      fontFamily: "var(--font-mono, monospace)",
-                      letterSpacing: "0.02em",
-                      opacity: 0.7,
-                    }}
-                  >
-                    --renge-color-{key}
-                  </code>
-                </div>
-              ))}
+              {tokens.map(({ key, jsKey }) => {
+                const oklchValue = colorValues[jsKey as keyof SemanticColorMap] ?? "";
+                return (
+                  <div key={key} className="flex flex-col gap-renge-1">
+                    <div
+                      className="rounded-renge-2 border border-renge-border-subtle"
+                      style={{
+                        height: 52,
+                        background: `var(--renge-color-${key})`,
+                        transition: "background 600ms var(--renge-easing-ease-in-out)",
+                      }}
+                    />
+                    <code
+                      className="text-renge-sm text-renge-fg-subtle m-0"
+                      style={{
+                        fontFamily: "var(--font-mono, monospace)",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      color.{jsKey}
+                    </code>
+                    <code
+                      className="text-renge-sm text-renge-fg-subtle m-0"
+                      style={{
+                        fontFamily: "var(--font-mono, monospace)",
+                        letterSpacing: "0.02em",
+                        opacity: 0.7,
+                      }}
+                    >
+                      --renge-color-{key}
+                    </code>
+                    {oklchValue && (
+                      <code
+                        className="text-renge-sm m-0"
+                        style={{
+                          fontFamily: "var(--font-mono, monospace)",
+                          letterSpacing: "0.02em",
+                          opacity: 0.5,
+                          fontSize: "0.72em",
+                        }}
+                      >
+                        {oklchValue}
+                      </code>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}

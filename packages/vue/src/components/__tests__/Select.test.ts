@@ -27,8 +27,8 @@ describe('Select', () => {
 
   it('applies state styles', () => {
     const wrapper = mount(Select, { props: { state: 'success' } })
-    const styles = window.getComputedStyle(wrapper.find('select').element)
-    expect(styles.borderColor).toBeTruthy()
+    const style = wrapper.find('select').element.style.border
+    expect(style).toContain('var(--renge-color-success)')
   })
 
   it('supports disabled', () => {

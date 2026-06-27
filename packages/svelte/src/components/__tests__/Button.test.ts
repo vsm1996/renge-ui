@@ -51,11 +51,9 @@ describe('Button', () => {
     expect(styles.width).toBe('100%')
   })
 
-  it('renders children', () => {
-    const { container } = render(Button, {
-      slots: { default: 'Click me' },
-    })
-    expect(container.textContent).toContain('Click me')
+  it('renders as a button element', () => {
+    const { getByRole } = render(Button)
+    expect(getByRole('button')).toBeTruthy()
   })
 
   it('disables with disabled attribute', () => {

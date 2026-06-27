@@ -6,5 +6,5 @@ export default defineConfig({
   dts: true,
   clean: false, // Preserve component files
   sourcemap: true,
-  external: ["svelte", "@renge-ui/tokens"],
+  external: ["svelte", "@renge-ui/tokens", /\.svelte$/],
 });

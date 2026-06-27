@@ -231,7 +231,7 @@ export interface RengeThemeContext extends RengeThemeState {
             <Stack gap="6">
               <div style={{ padding: "var(--renge-space-4)", backgroundColor: "color-mix(in oklch, var(--renge-color-accent) 5%, transparent)", borderRadius: "var(--renge-radius-1)", border: "1px solid var(--renge-color-border-subtle)" }}>
                 <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", margin: 0 }}>
-                  <strong>localStorage contract:</strong> Methods update the store and DOM. To persist across page reloads, save to localStorage and load on mount.
+                  <strong>localStorage contract:</strong> <code>switchProfile</code> and <code>switchMode</code> update the reactive ref and apply CSS to the DOM immediately. They do <em>not</em> automatically persist to localStorage or read from it on mount. You are responsible for calling them with stored values in <code>onMounted</code> and writing back in a <code>watch</code>. The examples below show the full pattern.
                 </p>
               </div>
 

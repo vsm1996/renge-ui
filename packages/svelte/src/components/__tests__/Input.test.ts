@@ -29,7 +29,7 @@ describe('Input', () => {
   it('applies state styles', () => {
     const { getByRole } = render(Input, { props: { state: 'error' } })
     const input = getByRole('textbox')
-    expect(input.style.borderColor).toContain('danger')
+    expect(input.getAttribute('style')).toContain('var(--renge-color-danger)')
   })
 
   it('handles focus/blur', async () => {

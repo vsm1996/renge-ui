@@ -22,4 +22,3 @@ export interface PetalGroup {
   [key: string]: PetalComposition;
 }
 
-export type PetalCategory = 'typography' | 'spacing' | 'cards' | 'surfaces' | 'interactive';

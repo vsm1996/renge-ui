@@ -333,7 +333,7 @@ export default function SveltePage() {
             <Stack gap="6">
               <div style={{ padding: "var(--renge-space-4)", backgroundColor: "color-mix(in oklch, var(--renge-color-accent) 5%, transparent)", borderRadius: "var(--renge-radius-1)", border: "1px solid var(--renge-color-border-subtle)" }}>
                 <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", margin: 0 }}>
-                  <strong>localStorage contract:</strong> Helper functions update the store and DOM. To survive page reload, save to localStorage and load on startup.
+                  <strong>localStorage contract:</strong> <code>switchProfile</code> and <code>switchMode</code> update the Svelte store and apply CSS to the DOM immediately. They do <em>not</em> automatically persist to localStorage or read from it on startup. You are responsible for reading stored values in <code>onMount</code> and writing on change. The examples below show the full pattern.
                 </p>
               </div>
 

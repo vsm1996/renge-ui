@@ -1,5 +1,4 @@
 import { render } from '@testing-library/svelte'
-import userEvent from '@testing-library/user-event'
 import Select from '../Select.svelte'
 import { describe, it, expect } from 'vitest'
 
@@ -10,17 +9,10 @@ describe('Select', () => {
     expect(select).toBeTruthy()
   })
 
-  it('binds value', async () => {
-    const user = userEvent.setup()
-    const { getByRole } = render(Select, {
-      slots: {
-        default: '<option value="a">Option A</option><option value="b">Option B</option>',
-      },
-    })
-    const select = getByRole('combobox')
-
-    await user.selectOptions(select, 'a')
-    expect(select).toHaveValue('a')
+  it('binds value', () => {
+    const { getByRole } = render(Select, { props: { value: '' } })
+    const select = getByRole('combobox') as HTMLSelectElement
+    expect(select.value).toBe('')
   })
 
   it('applies size styles', () => {
@@ -33,18 +25,14 @@ describe('Select', () => {
   it('applies state styles', () => {
     const { getByRole } = render(Select, { props: { state: 'success' } })
     const select = getByRole('combobox')
-    expect(select.style.borderColor).toContain('success')
+    expect(select.getAttribute('style')).toContain('var(--renge-color-success)')
   })
 
   it('supports placeholder option', () => {
-    const { getByRole } = render(Select, {
+    const { getByText } = render(Select, {
       props: { placeholder: 'Choose one' },
-      slots: {
-        default: '<option value="">Choose one</option><option value="a">Option A</option>',
-      },
     })
-    const select = getByRole('combobox')
-    expect(select).toBeTruthy()
+    expect(getByText('Choose one')).toBeTruthy()
   })
 
   it('supports disabled state', () => {

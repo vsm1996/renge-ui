@@ -24,8 +24,8 @@ describe('Input', () => {
 
   it('applies state styles', () => {
     const wrapper = mount(Input, { props: { state: 'error' } })
-    const styles = window.getComputedStyle(wrapper.find('input').element)
-    expect(styles.borderColor).toBeTruthy()
+    const style = wrapper.find('input').element.style.border
+    expect(style).toContain('var(--renge-color-danger)')
   })
 
   it('handles focus/blur', async () => {

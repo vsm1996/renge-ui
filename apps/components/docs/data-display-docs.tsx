@@ -156,7 +156,7 @@ export function TimelineDocs() {
   />
   <TimelineItem
     title="React components"
-    description="21 components added."
+    description="44 components added."
     timestamp="Feb 2025"
     status="active"
   />

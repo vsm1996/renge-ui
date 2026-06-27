@@ -52,6 +52,26 @@ const TOKENS = {
     { key: 'color-warning', value: 'Warning', formula: 'Profile-dependent', category: 'Semantic Color' },
     { key: 'color-danger', value: 'Danger', formula: 'Profile-dependent', category: 'Semantic Color' },
   ],
+  radius: [
+    { key: 'radius-none', value: '0px',    formula: '0 × base-unit',          category: 'Radius' },
+    { key: 'radius-1',    value: '4px',    formula: 'Fib[1] × 4px = 4px',    category: 'Radius' },
+    { key: 'radius-2',    value: '8px',    formula: 'Fib[2] × 4px = 8px',    category: 'Radius' },
+    { key: 'radius-3',    value: '12px',   formula: 'Fib[3] × 4px = 12px',   category: 'Radius' },
+    { key: 'radius-4',    value: '20px',   formula: 'Fib[4] × 4px = 20px',   category: 'Radius' },
+    { key: 'radius-5',    value: '32px',   formula: 'Fib[5] × 4px = 32px',   category: 'Radius' },
+    { key: 'radius-full', value: '9999px', formula: 'Pill / infinite radius', category: 'Radius' },
+  ],
+  layout: [
+    { key: 'container-sm',     value: '524px',     formula: '200 × φ² — prose / sidebar',           category: 'Container' },
+    { key: 'container-md',     value: '847px',     formula: '200 × φ³ — comfortable reading',        category: 'Container' },
+    { key: 'container-lg',     value: '1371px',    formula: '200 × φ⁴ — full desktop layout',        category: 'Container' },
+    { key: 'container-xl',     value: '2218px',    formula: '200 × φ⁵ — ultra-wide / dashboard',     category: 'Container' },
+    { key: 'aspect-square',    value: '1',         formula: '1:1 — equal dimensions',                category: 'Aspect Ratio' },
+    { key: 'aspect-golden',    value: '1.618034',  formula: '1:φ — golden rectangle (34:21 Fib)',     category: 'Aspect Ratio' },
+    { key: 'aspect-vertical',  value: '0.618034',  formula: 'φ:1 — portrait golden (21:34 Fib)',      category: 'Aspect Ratio' },
+    { key: 'aspect-video',     value: '1.777778',  formula: '16:9 — widescreen standard',             category: 'Aspect Ratio' },
+    { key: 'aspect-classic',   value: '1.333333',  formula: '4:3 — legacy broadcast',                 category: 'Aspect Ratio' },
+  ],
 };
 
 type TokenCategory = keyof typeof TOKENS;
@@ -250,6 +270,44 @@ export function TokenExplorer() {
                         boxShadow: `var(--renge-${token.key})`,
                       }}
                     />
+                  ) : token.category === 'Radius' ? (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div
+                        style={{
+                          width: '64px',
+                          height: '40px',
+                          background: 'var(--renge-color-accent-subtle)',
+                          border: '1px solid var(--renge-color-accent)',
+                          borderRadius: `var(--renge-${token.key})`,
+                          flexShrink: 0,
+                        }}
+                      />
+                    </div>
+                  ) : token.category === 'Aspect Ratio' ? (
+                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '40px' }}>
+                      <div
+                        style={{
+                          height: '36px',
+                          width: `${Math.min(parseFloat(token.value) * 24, 64)}px`,
+                          background: 'var(--renge-color-accent-subtle)',
+                          border: '1px solid var(--renge-color-accent)',
+                          borderRadius: 'var(--renge-radius-1)',
+                          flexShrink: 0,
+                        }}
+                      />
+                      <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-muted)', fontFamily: 'monospace' }}>
+                        {parseFloat(token.value) >= 1 ? `${token.value}:1` : `1:${(1 / parseFloat(token.value)).toFixed(3)}`}
+                      </span>
+                    </div>
+                  ) : token.category === 'Container' ? (
+                    <div style={{ position: 'relative', height: '12px', background: 'var(--renge-color-bg-muted)', borderRadius: 'var(--renge-radius-full)', overflow: 'hidden' }}>
+                      <div style={{
+                        position: 'absolute', left: 0, top: 0, height: '100%',
+                        borderRadius: 'var(--renge-radius-full)',
+                        background: 'var(--renge-color-accent)',
+                        width: token.key.includes('sm') ? '24%' : token.key.includes('md') ? '38%' : token.key.includes('lg') ? '62%' : '100%',
+                      }} />
+                    </div>
                   ) : null}
 
                   <Stack gap="1" direction="horizontal" align="center" style={{ justifyContent: 'space-between' }}>

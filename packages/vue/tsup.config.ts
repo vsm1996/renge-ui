@@ -6,5 +6,5 @@ export default defineConfig({
   dts: true,
   clean: false, // Preserve component files
   sourcemap: true,
-  external: ["vue", "@renge-ui/tokens"],
+  external: ["vue", "@renge-ui/tokens", /\.vue$/],
 });
