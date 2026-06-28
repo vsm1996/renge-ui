@@ -64,7 +64,7 @@ export default function TestUtilsPage() {
             <Stack gap="4">
               <CodeBlock code={`pnpm add -D @renge-ui/test-utils vitest`} />
               <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap", alignItems: "center" }}>
-                  <Badge variant="neutral">v1.0.0</Badge>
+                  <Badge variant="neutral">v1.0.2</Badge>
                 <Badge variant="neutral">Framework agnostic</Badge>
                 <a href="https://github.com/soka-labs/renge/tree/main/packages/test-utils" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", textDecoration: "none" }}>GitHub →</a>
                 <a href="https://npmjs.com/package/@renge-ui/test-utils" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", textDecoration: "none" }}>npm →</a>

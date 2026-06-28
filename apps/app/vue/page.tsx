@@ -64,7 +64,7 @@ export default function VuePage() {
             <Stack gap="4">
               <CodeBlock code={`pnpm add @renge-ui/vue @renge-ui/tokens`} />
               <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap", alignItems: "center" }}>
-                <Badge variant="neutral">v1.0.0</Badge>
+                <Badge variant="neutral">v1.1.0</Badge>
                 <Badge variant="neutral">Vue 3+</Badge>
                 <a href="https://github.com/soka-labs/renge/tree/main/packages/vue" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", textDecoration: "none" }}>GitHub →</a>
                 <a href="https://npmjs.com/package/@renge-ui/vue" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", textDecoration: "none" }}>npm →</a>

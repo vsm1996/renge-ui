@@ -888,6 +888,10 @@ export default function ComponentsPage() {
                       ["@renge-ui/tokens", "2.6.1", "stable"],
                       ["@renge-ui/react", "3.7.0", "stable"],
                       ["@renge-ui/tailwind", "2.9.0", "stable"],
+                      ["@renge-ui/petals", "1.1.0", "stable"],
+                      ["@renge-ui/vue", "1.1.0", "stable"],
+                      ["@renge-ui/svelte", "1.1.0", "stable"],
+                      ["@renge-ui/test-utils", "1.0.2", "stable"],
                     ].map(([pkg, ver, status], i) => (
                       <TableRow key={i} index={i}>
                         <TableCell><code style={{ fontFamily: "var(--font-mono)", fontSize: "var(--renge-font-size-sm)" }}>{pkg}</code></TableCell>
