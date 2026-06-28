@@ -117,7 +117,7 @@ export function Philosophy() {
                 <p
                   aria-hidden="true"
                   className="text-renge-3xl text-renge-accent leading-none opacity-60 m-0"
-                  style={{ fontFamily: "var(--font-display)" }}
+                  style={{ fontFamily: "var(--font-display)", display: "inline-block", animation: "var(--renge-animation-breathe)" }}
                 >
                   {p.symbol}
                 </p>

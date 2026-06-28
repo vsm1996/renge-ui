@@ -237,12 +237,13 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
   // Split on @keyframes boundaries and inject each block individually
   const keyframeBlocks = keyframesCSS.split(/(?=@keyframes )/).filter(Boolean);
   for (const block of keyframeBlocks) {
-    const match = block.match(/^@keyframes\s+([\w-]+)\s*\{([\s\S]*)\}$/);
+    const match = block.match(/^@keyframes\s+([\w-]+)\s*\{([\s\S]*)\}\s*$/);
     if (!match) continue;
     const [, name, body] = match;
     // Parse keyframe stops into CSS-in-JS object
+    // The pattern handles comma-separated selectors like "0%, 100%" in a single stop
     const stops: Record<string, Record<string, string>> = {};
-    const stopPattern = /([\d.]+%|from|to)\s*\{([^}]*)\}/g;
+    const stopPattern = /((?:[\d.]+%|from|to)(?:\s*,\s*(?:[\d.]+%|from|to))*)\s*\{([^}]*)\}/g;
     let m: RegExpExecArray | null;
     while ((m = stopPattern.exec(body)) !== null) {
       const [, stop, props] = m;
@@ -252,7 +253,9 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
         if (colon === -1) continue;
         declarations[decl.slice(0, colon).trim()] = decl.slice(colon + 1).trim();
       }
-      stops[stop] = declarations;
+      for (const selector of stop.split(',').map((s) => s.trim())) {
+        stops[selector] = declarations;
+      }
     }
     if (Object.keys(stops).length > 0) {
       addBase({ [`@keyframes ${name}`]: stops as never });

@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     description: "useRengeTheme composable and token integration for Vue 3.",
     url: "https://renge-ui.vercel.app/vue",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vue — Renge",
+    description: "Renge for Vue 3. useRengeTheme composable, switchProfile, switchMode — full design token integration with Composition API.",
+  },
   alternates: { canonical: "https://renge-ui.vercel.app/vue" },
 };
 

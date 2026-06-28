@@ -1,30 +1,54 @@
+import React from "react";
 import { Stack, Text, Heading, Badge, Card } from "@renge-ui/react";
 import { Demo, Code, Callout, ComponentSection } from "@/components/ui/DocPrimitives";
 
 export function AnimationsDocs() {
   return (
     <ComponentSection id="animations" title="Animations" description="15 named animations derived from the token system. Apply via the animation prop on any component, or directly via the CSS variable.">
-      <Demo label="All 15 tokens">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "var(--renge-space-3)", width: "100%" }}>
-          {[
-            "vortex-reveal", "helix-rise", "sacred-fade", "spiral-in",
-            "morph-fade-in", "bloom", "pulse", "vibrate",
-            "wave", "breathe", "fall", "float",
-            "float-wave", "pulse-color-shift", "swelling",
-          ].map(name => (
-            <div key={name} style={{ padding: "var(--renge-space-2) var(--renge-space-3)", borderRadius: "var(--renge-radius-2)", border: "1px solid var(--renge-color-border-subtle)", background: "var(--renge-color-bg)" }}>
-              <Text size="sm" style={{ fontFamily: "var(--font-mono, monospace)" }}>{name}</Text>
-            </div>
-          ))}
+      <Demo label="All 15 tokens — live" noHover>
+        {/* Override duration tokens for demo speed: 2s instead of 5.5s/8.9s */}
+        <div style={{ '--renge-duration-9': '2s', '--renge-duration-10': '3s' } as React.CSSProperties}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "var(--renge-space-3)", width: "100%" }}>
+            {([
+              "vortex-reveal", "helix-rise", "sacred-fade", "spiral-in",
+              "morph-fade-in", "bloom", "pulse", "vibrate",
+              "wave", "breathe", "fall", "float",
+              "float-wave", "pulse-color-shift", "swelling",
+            ] as const).map(name => (
+              <div
+                key={name}
+                style={{
+                  padding: "var(--renge-space-3) var(--renge-space-3)",
+                  borderRadius: "var(--renge-radius-2)",
+                  border: "1px solid var(--renge-color-border-subtle)",
+                  background: "var(--renge-color-bg)",
+                  animation: `var(--renge-animation-${name})`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minHeight: "56px",
+                }}
+              >
+                <Text size="sm" style={{ fontFamily: "var(--font-mono, monospace)", textAlign: "center" }}>{name}</Text>
+              </div>
+            ))}
+          </div>
         </div>
       </Demo>
-      <Demo label="Live examples">
-        <Heading level={3} animation="breathe">breathe</Heading>
-        <Text size="lg" animation="float">float</Text>
-        <span style={{ animation: "var(--renge-animation-pulse)" }}><Badge variant="accent">pulse</Badge></span>
-        <Card variant="outlined" padding="3" animation="bloom">
-          <Text size="sm">bloom</Text>
-        </Card>
+      <Demo label="Live examples" noHover>
+        {/* Override tokens for visible demo durations */}
+        <div style={{ '--renge-duration-9': '2.5s', '--renge-duration-10': '4s', display: "flex", flexDirection: "column", gap: "var(--renge-space-4)", alignItems: "flex-start", width: "100%" } as React.CSSProperties}>
+          <Heading level={3} animation="breathe">breathe</Heading>
+          <Text size="lg" animation="float">float</Text>
+          <span style={{ animation: "var(--renge-animation-pulse)" }}><Badge variant="accent">pulse</Badge></span>
+          <Card variant="outlined" padding="3" animation="bloom" style={{ animation: "var(--renge-animation-bloom)" }}>
+            <Text size="sm">bloom</Text>
+          </Card>
+          <Heading level={3} animation="wave" style={{ color: "var(--renge-color-accent)" }}>wave</Heading>
+          <span style={{ display: "inline-block", animation: "var(--renge-animation-swelling)" }}>
+            <Badge variant="neutral">swelling</Badge>
+          </span>
+        </div>
       </Demo>
       <Code>{`{/* animation prop — available on Heading, Text, Card, Section, Badge, and more */}
 <Heading level={2} animation="breathe">Living proportion.</Heading>

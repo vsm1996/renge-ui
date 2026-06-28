@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     description: "Complete CSS custom property reference — spacing, color, typography, motion, radius, and layout.",
     url: "https://renge-ui.vercel.app/tokens",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tokens — Renge",
+    description: "The complete Renge token reference. PHI, Fibonacci, and phyllotaxis made into CSS custom properties.",
+  },
   alternates: { canonical: "https://renge-ui.vercel.app/tokens" },
 };
 

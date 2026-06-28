@@ -70,13 +70,16 @@ export function UtilityTable({ rows }: { rows: [string, string, string][] }) {
 
 // ─── Demo block ───────────────────────────────────────────────────────────────
 
-export function Demo({ children, label }: { children: React.ReactNode; label?: string }) {
+export function Demo({ children, label, noHover }: { children: React.ReactNode; label?: string; noHover?: boolean }) {
   return (
     <div>
       {label && (
         <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-subtle)", fontFamily: "var(--font-body)", letterSpacing: "0.08em", textTransform: "uppercase", margin: 0, marginBottom: "var(--renge-space-2)" }}>{label}</p>
       )}
-      <div style={{ padding: "var(--renge-space-4)", background: "var(--renge-color-bg-subtle)", borderRadius: "var(--renge-radius-2)", border: "1px solid var(--renge-color-border-subtle)", display: "flex", flexWrap: "wrap", gap: "var(--renge-space-4)", alignItems: "flex-start", overflowX: "auto", minWidth: 0 }}>
+      <div
+        data-renge-demo={noHover ? undefined : "true"}
+        style={{ padding: "var(--renge-space-4)", background: "var(--renge-color-bg-subtle)", borderRadius: "var(--renge-radius-2)", border: "1px solid var(--renge-color-border-subtle)", display: "flex", flexWrap: "wrap", gap: "var(--renge-space-4)", alignItems: "flex-start", overflowX: "auto", minWidth: 0 }}
+      >
         {children}
       </div>
     </div>

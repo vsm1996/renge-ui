@@ -115,6 +115,19 @@ body {
   }
 }
 
+/* ============================================================
+   Doc demo hover states — breathe once on each component hover
+   Uses Renge animation token; overrides duration to 0.5s so the
+   hover response is immediate rather than the ambient 8900ms.
+   ============================================================ */
+[data-renge-demo="true"] > *:hover {
+  --renge-duration-10: 0.5s;
+  animation: var(--renge-animation-breathe);
+  animation-iteration-count: 1;
+  position: relative;
+  z-index: 1;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

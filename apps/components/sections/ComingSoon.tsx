@@ -23,6 +23,14 @@ const COMPONENTS = [
   "Avatar", "Stat", "Alert",
   "Spinner", "Progress", "Navbar",
   "EnergyRing", "Pulse", "FlowField",
+  "Select", "Checkbox", "Radio",
+  "Switch", "Textarea", "Slider",
+  "Table", "Tooltip", "Accordion",
+  "Timeline", "Skeleton", "Tabs",
+  "Breadcrumb", "Pagination", "Anchor",
+  "Toast", "Modal", "AspectRatio",
+  "Container", "Spacer", "IconButton",
+  "ButtonGroup", "CopyButton",
 ];
 
 export function ComingSoon() {
@@ -45,7 +53,7 @@ export function ComingSoon() {
           className="inline-block px-renge-4 py-renge-2 bg-renge-accent-subtle rounded-renge-full text-renge-sm text-renge-accent uppercase mb-renge-5"
           style={{ letterSpacing: "0.15em", fontFamily: "var(--font-body)" }}
         >
-          Available now
+          <span style={{ display: "inline-block", animation: "var(--renge-animation-pulse)" }}>Available now</span>
         </motion.div>
 
         <motion.h2
@@ -82,11 +90,16 @@ export function ComingSoon() {
           variants={fadeUp}
           className="flex flex-wrap gap-renge-2 justify-center mb-renge-7"
         >
-          {COMPONENTS.map((name) => (
+          {COMPONENTS.map((name, i) => (
             <span
               key={name}
               className="px-renge-3 py-renge-1 rounded-renge-full border border-renge-border text-renge-sm text-renge-fg-subtle bg-renge-bg-subtle"
-              style={{ fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.02em" }}
+              style={{
+                fontFamily: "var(--font-mono, monospace)",
+                letterSpacing: "0.02em",
+                animation: "var(--renge-animation-float)",
+                animationDelay: `${(i * 0.15) % 5.5}s`,
+              }}
             >
               {name}
             </span>

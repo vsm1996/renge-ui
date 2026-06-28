@@ -9,7 +9,7 @@ export function PhiViz() {
   const inView = useInView(ref, { once: true, margin: "-10%" });
 
   return (
-    <div ref={ref} style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-2)" }}>
+    <div ref={ref} style={{ display: "flex", flexDirection: "column", gap: "var(--renge-space-2)", animation: inView ? "var(--renge-animation-breathe)" : undefined }}>
       {[1, PHI, PHI * PHI].map((ratio, i) => (
         <motion.div
           key={i}
@@ -83,7 +83,7 @@ export function PhyllotaxisViz() {
   });
 
   return (
-    <svg ref={ref} width={size * 2} height={size * 2} viewBox={`0 0 ${size * 2} ${size * 2}`} style={{ display: "block", margin: "0 auto" }}>
+    <svg ref={ref} width={size * 2} height={size * 2} viewBox={`0 0 ${size * 2} ${size * 2}`} style={{ display: "block", margin: "0 auto", animation: inView ? "var(--renge-animation-float-wave)" : undefined }}>
       {points.map((pt, i) => (
         <motion.circle
           key={i}

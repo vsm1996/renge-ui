@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     description: "44 React component primitives built on Renge tokens.",
     url: "https://renge-ui.vercel.app/components",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Components — Renge",
+    description: "44 React component primitives built on Renge tokens. Zero CSS-in-JS runtime, no class names, no specificity battles.",
+  },
   alternates: { canonical: "https://renge-ui.vercel.app/components" },
 };
 

@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     description: "Theme stores and token integration for Svelte 4+ and SvelteKit.",
     url: "https://renge-ui.vercel.app/svelte",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Svelte — Renge",
+    description: "Renge for Svelte. Theme stores, switchProfile, switchMode — full design token integration for Svelte 4+ and SvelteKit.",
+  },
   alternates: { canonical: "https://renge-ui.vercel.app/svelte" },
 };
 

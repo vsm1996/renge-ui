@@ -360,7 +360,7 @@ export default function TailwindPage() {
             </div>
 
             <div>
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>23 petals across 6 categories</h4>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-base)", color: "var(--renge-color-fg)", fontWeight: 600, margin: "0 0 var(--renge-space-2) 0" }}>100 petals across 13 categories</h4>
               <CodeBlock code={`<!-- Typography: 8 levels from display to label -->
 <h1 class="petal-typography-displayLarge">Hero headline</h1>
 <h2 class="petal-typography-headingLarge">Section title</h2>
@@ -465,7 +465,7 @@ export default function TailwindPage() {
               border: "1px solid var(--renge-color-border-subtle)",
             }}>
               <p style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", margin: 0, lineHeight: "var(--renge-line-height-base)" }}>
-                Full petal reference: visit <a href="/petals" style={{ color: "var(--renge-color-accent)", textDecoration: "underline" }}>/petals</a> to explore all 23 petals with visual previews.
+                Full petal reference: visit <a href="/petals" style={{ color: "var(--renge-color-accent)", textDecoration: "underline" }}>/petals</a> to explore all 100 petals with visual previews.
               </p>
             </div>
           </div>

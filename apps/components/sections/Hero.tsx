@@ -136,6 +136,7 @@ export function Hero() {
               fontFamily: "var(--font-body)",
               letterSpacing: "0.08em",
               transition: "all 300ms var(--renge-easing-ease-out)",
+              animation: "var(--renge-animation-swelling)",
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget;
@@ -153,7 +154,7 @@ export function Hero() {
           </a>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — Renge float animation on inner span */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
@@ -167,7 +168,9 @@ export function Hero() {
             fontFamily: "var(--font-body)",
           }}
         >
-          φ° = {GOLDEN_ANGLE.toFixed(3)}°
+          <span style={{ display: "inline-block", animation: "var(--renge-animation-float)" }}>
+            φ° = {GOLDEN_ANGLE.toFixed(3)}°
+          </span>
         </motion.div>
       </Stack>
     </section>

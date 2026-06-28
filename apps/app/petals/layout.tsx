@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     description: "100 semantic token compositions across 13 categories.",
     url: "https://renge-ui.vercel.app/petals",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Petals — Renge",
+    description: "100 semantic token compositions across 13 categories. Pre-made token combinations for typography, spacing, forms, overlays, navigation, and more.",
+  },
   alternates: { canonical: "https://renge-ui.vercel.app/petals" },
 };
 

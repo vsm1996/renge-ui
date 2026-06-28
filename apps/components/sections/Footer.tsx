@@ -31,6 +31,8 @@ export function Footer() {
               fontSize: "var(--renge-font-size-2xl)",
               letterSpacing: "-0.02em",
               opacity: 0.9,
+              display: "inline-block",
+              animation: "var(--renge-animation-breathe)",
             }} className="m-0">
               Renge
             </p>
@@ -100,6 +102,7 @@ export function Footer() {
             fontFamily: "var(--font-mono, monospace)",
             opacity: 0.5,
             letterSpacing: "0.06em",
+            animation: "var(--renge-animation-breathe)",
           }} className="text-renge-sm text-right">
             φ = {PHI.toFixed(10)}
           </div>
