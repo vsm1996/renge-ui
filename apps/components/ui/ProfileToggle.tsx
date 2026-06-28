@@ -298,6 +298,7 @@ export function ProfileToggle() {
               key={p.id}
               role="radio"
               aria-checked={active}
+              data-profile-btn=""
               onClick={() => setProfile(p.id)}
               title={p.description}
               style={{
@@ -310,7 +311,6 @@ export function ProfileToggle() {
                 fontFamily: "var(--font-body)",
                 cursor: "pointer",
                 letterSpacing: "0.05em",
-                transition: "all 300ms var(--renge-easing-ease-out)",
               }}
             >
               {p.label}

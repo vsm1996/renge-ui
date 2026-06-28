@@ -116,16 +116,130 @@ body {
 }
 
 /* ============================================================
-   Doc demo hover states — breathe once on each component hover
-   Uses Renge animation token; overrides duration to 0.5s so the
-   hover response is immediate rather than the ambient 8900ms.
+   Doc demo containers — ensure hovering items stack above siblings
+   Component-level hover states are injected by each component.
    ============================================================ */
 [data-renge-demo="true"] > *:hover {
-  --renge-duration-10: 0.5s;
-  animation: var(--renge-animation-breathe);
-  animation-iteration-count: 1;
   position: relative;
   z-index: 1;
+}
+
+/* ============================================================
+   Doc sidebar navigation links
+   ============================================================ */
+[data-sidebar-link] {
+  transition: background var(--renge-duration-1) var(--renge-easing-ease-out),
+              color var(--renge-duration-2) var(--renge-easing-ease-out),
+              transform var(--renge-duration-1) var(--renge-easing-spring) !important;
+}
+[data-sidebar-link]:hover {
+  background: var(--renge-color-bg-subtle) !important;
+  color: var(--renge-color-fg) !important;
+  transform: translateX(2px);
+}
+[data-sidebar-link]:active {
+  transform: translateX(1px) scale(0.98);
+}
+[data-sidebar-link][data-active="true"] {
+  background: var(--renge-color-accent-subtle) !important;
+  color: var(--renge-color-accent) !important;
+}
+
+/* ============================================================
+   Doc sidebar footer links
+   ============================================================ */
+[data-sidebar-footer-link] {
+  transition: color var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-sidebar-footer-link]:hover {
+  color: var(--renge-color-fg-subtle) !important;
+}
+
+/* ============================================================
+   Profile toggle radio buttons
+   ============================================================ */
+[data-profile-btn] {
+  transition: background var(--renge-duration-2) var(--renge-easing-ease-out),
+              color var(--renge-duration-2) var(--renge-easing-ease-out),
+              border-color var(--renge-duration-2) var(--renge-easing-ease-out),
+              transform var(--renge-duration-1) var(--renge-easing-spring) !important;
+}
+[data-profile-btn]:not([aria-checked="true"]):hover {
+  background: var(--renge-color-bg-subtle) !important;
+  color: var(--renge-color-fg) !important;
+  border-color: var(--renge-color-border) !important;
+  transform: scale(1.04);
+}
+[data-profile-btn]:not([aria-checked="true"]):active {
+  transform: scale(0.97);
+}
+[data-profile-btn][aria-checked="true"] {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 18%, transparent);
+}
+
+/* ============================================================
+   Docs dropdown trigger
+   ============================================================ */
+[data-docs-trigger] {
+  transition: color var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-docs-trigger]:hover {
+  color: var(--renge-color-fg) !important;
+}
+
+/* ============================================================
+   Docs dropdown links — enhance with translate
+   ============================================================ */
+[data-docs-link] {
+  transition: background var(--renge-duration-2) var(--renge-easing-ease-out),
+              transform var(--renge-duration-1) var(--renge-easing-spring) !important;
+}
+[data-docs-link]:hover {
+  background: var(--renge-color-bg-subtle) !important;
+  transform: translateX(2px);
+}
+[data-docs-link]:active {
+  transform: translateX(1px) scale(0.99);
+}
+
+/* ============================================================
+   Nav logo hover
+   ============================================================ */
+[data-nav-logo] {
+  transition: opacity var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-nav-logo]:hover {
+  opacity: 0.75;
+}
+
+/* ============================================================
+   Mobile menu links
+   ============================================================ */
+[data-mobile-link] {
+  transition: color var(--renge-duration-2) var(--renge-easing-ease-out),
+              background var(--renge-duration-1) var(--renge-easing-ease-out) !important;
+}
+[data-mobile-link]:hover {
+  color: var(--renge-color-fg) !important;
+  background: var(--renge-color-bg-subtle) !important;
+}
+
+/* ============================================================
+   ScaleControl reset button
+   ============================================================ */
+[data-scale-reset]:not(:disabled):hover {
+  background: var(--renge-color-bg-subtle) !important;
+  color: var(--renge-color-fg-subtle) !important;
+  border-color: var(--renge-color-border) !important;
+  transform: scale(1.02);
+}
+[data-scale-reset]:not(:disabled):active {
+  transform: scale(0.97);
+}
+[data-scale-reset] {
+  transition: background var(--renge-duration-2) var(--renge-easing-ease-out),
+              color var(--renge-duration-2) var(--renge-easing-ease-out),
+              transform var(--renge-duration-1) var(--renge-easing-spring) !important;
 }
 
 /* Scrollbar */

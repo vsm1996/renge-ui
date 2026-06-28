@@ -72,6 +72,7 @@ export function MobileMenu({ isOpen, onClose, resolveHref }: MobileMenuProps) {
                       key={href}
                       href={href}
                       onClick={() => { onClose(); setDocsOpen(false); }}
+                      data-mobile-link=""
                       style={{
                         display: "block",
                         fontSize: "var(--renge-font-size-sm)",
@@ -94,6 +95,7 @@ export function MobileMenu({ isOpen, onClose, resolveHref }: MobileMenuProps) {
                 key={href}
                 href={resolveHref(href)}
                 onClick={onClose}
+                data-mobile-link=""
                 style={{
                   fontSize: "var(--renge-font-size-sm)",
                   color: "var(--renge-color-fg-subtle)",
@@ -101,7 +103,6 @@ export function MobileMenu({ isOpen, onClose, resolveHref }: MobileMenuProps) {
                   fontFamily: "var(--font-body)",
                   padding: "var(--renge-space-3) 0",
                   borderBottom: "1px solid var(--renge-color-border-subtle)",
-                  transition: "color 150ms",
                 }}
               >
                 {label}

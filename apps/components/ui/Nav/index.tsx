@@ -60,7 +60,7 @@ export function Nav() {
         }}
       >
         <Container size="lg" px={isMobile ? "4" : "0"} style={{ paddingTop: "var(--renge-space-3)", paddingBottom: "var(--renge-space-3)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <a href="/" style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-2)", textDecoration: "none", color: "var(--renge-color-fg)" }}>
+          <a href="/" data-nav-logo="" style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-2)", textDecoration: "none", color: "var(--renge-color-fg)" }}>
             <Lotus size={26} animate={false} />
             <span style={{ fontFamily: "var(--font-display)", fontSize: "var(--renge-font-size-lg)", letterSpacing: "-0.01em" }}>
               Renge

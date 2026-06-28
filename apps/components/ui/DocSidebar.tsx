@@ -22,7 +22,7 @@ export function DocSidebar({
             </p>
             <Stack gap="1">
               {section.items.map(item => (
-                <a key={item.id} href={`#${item.id}`} style={{
+                <a key={item.id} href={`#${item.id}`} data-sidebar-link="" style={{
                   display: "block",
                   padding: "var(--renge-space-1) var(--renge-space-3)",
                   borderRadius: "var(--renge-radius-1)",
@@ -31,7 +31,6 @@ export function DocSidebar({
                   color: "var(--renge-color-fg-subtle)",
                   background: "transparent",
                   textDecoration: "none",
-                  transition: `all var(--renge-duration-2) var(--renge-easing-ease-out)`,
                 }}>
                   {item.label}
                 </a>
@@ -43,7 +42,7 @@ export function DocSidebar({
         {footerLinks.length > 0 && (
           <div style={{ paddingTop: "var(--renge-space-4)", borderTop: "1px solid var(--renge-color-border-subtle)", display: "flex", flexDirection: "column", gap: "var(--renge-space-2)" }}>
             {footerLinks.map(link => (
-              <a key={link.href} href={link.href} style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", textDecoration: "none" }}>
+              <a key={link.href} href={link.href} data-sidebar-footer-link="" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-body)", textDecoration: "none" }}>
                 {link.label} →
               </a>
             ))}

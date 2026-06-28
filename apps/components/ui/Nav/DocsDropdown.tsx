@@ -26,6 +26,7 @@ export function DocsDropdown({ isOpen, onToggle, onClose }: DocsDropdownProps) {
     <div ref={ref} style={{ position: "relative" }}>
       <button
         onClick={onToggle}
+        data-docs-trigger=""
         style={{
           fontSize: "var(--renge-font-size-xs)",
           color: isOpen ? "var(--renge-color-fg)" : "var(--renge-color-fg-subtle)",
@@ -38,7 +39,6 @@ export function DocsDropdown({ isOpen, onToggle, onClose }: DocsDropdownProps) {
           padding: 0,
           fontFamily: "var(--font-body)",
           letterSpacing: "0.04em",
-          transition: "color 200ms",
         }}
       >
         Docs
@@ -79,15 +79,13 @@ export function DocsDropdown({ isOpen, onToggle, onClose }: DocsDropdownProps) {
                 key={href}
                 href={href}
                 onClick={onClose}
+                data-docs-link=""
                 style={{
                   display: "block",
                   padding: "var(--renge-space-3)",
                   borderRadius: "var(--renge-radius-2)",
                   textDecoration: "none",
-                  transition: "background 150ms",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = "var(--renge-color-bg-subtle)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
               >
                 <div style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", fontFamily: "var(--font-body)", marginBottom: 2, fontWeight: 500 }}>
                   {label}

@@ -188,6 +188,7 @@ export function ScaleControl() {
         onClick={reset}
         title="Reset to default"
         disabled={isDefault ? true : false}
+        data-scale-reset=""
         style={{
           width: "100%",
           padding: "4px 0",
