@@ -14,6 +14,22 @@ import {
 } from 'react';
 import { PHI } from '@renge-ui/tokens';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-radio-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-radio] input:focus-visible ~ span[aria-hidden="true"] {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 25%, transparent) !important;
+}
+[data-renge-radio]:not([data-disabled="true"]):hover span[aria-hidden="true"] {
+  border-color: var(--renge-color-accent) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 // ─── Context ─────────────────────────────────────────────────────────────────
 
 interface RadioGroupCtx {
@@ -124,6 +140,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 
     return (
       <label
+        data-renge-radio=""
+        data-disabled={disabled ? 'true' : undefined}
         style={{
           display: 'inline-flex',
           alignItems: 'center',

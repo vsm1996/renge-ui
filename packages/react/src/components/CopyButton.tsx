@@ -8,6 +8,33 @@
 
 import { forwardRef, useState, type ComponentPropsWithoutRef } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-copy-btn-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-copy-btn] {
+  transition: transform var(--renge-duration-1) var(--renge-easing-spring),
+              box-shadow var(--renge-duration-2) var(--renge-easing-ease-out),
+              background var(--renge-duration-2) var(--renge-easing-ease-out),
+              color var(--renge-duration-2) var(--renge-easing-ease-out),
+              border-color var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-renge-copy-btn]:not([data-copied="true"]):hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 var(--renge-space-1) var(--renge-space-2) color-mix(in oklch, var(--renge-color-fg) 8%, transparent) !important;
+  border-color: var(--renge-color-border) !important;
+  color: var(--renge-color-fg) !important;
+}
+[data-renge-copy-btn]:active {
+  transform: scale(0.97) !important;
+  box-shadow: none !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 export interface CopyButtonProps extends Omit<ComponentPropsWithoutRef<'button'>, 'onClick' | 'onCopy'> {
   /** Text to copy to clipboard */
   value: string;
@@ -61,6 +88,8 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
         ref={ref}
         onClick={handleClick}
         aria-label={copied ? successLabel : label}
+        data-renge-copy-btn=""
+        data-copied={copied ? 'true' : undefined}
         style={{
           display: 'inline-flex',
           alignItems: 'center',

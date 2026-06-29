@@ -15,6 +15,29 @@ export interface TextareaProps extends ComponentPropsWithoutRef<'textarea'> {
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
 }
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-textarea-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-textarea] {
+  transition: border-color var(--renge-duration-1) var(--renge-easing-ease-out),
+              box-shadow var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-renge-textarea]:hover:not(:focus):not(:disabled) {
+  border-color: color-mix(in oklch, var(--renge-color-border) 60%, var(--renge-color-fg)) !important;
+}
+[data-renge-textarea]:focus {
+  border-color: var(--renge-color-border-focus) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 16%, transparent) !important;
+  outline: none !important;
+}
+[data-renge-textarea]:disabled { opacity: 0.5; cursor: not-allowed; }`;
+    document.head.appendChild(s);
+  }
+}
+
 // Fibonacci line counts: 3, 5, 8
 const sizeStyles: Record<TextareaSize, CSSProperties> = {
   sm: {
@@ -48,6 +71,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <textarea
         ref={ref}
+        data-renge-textarea=""
         style={{
           ...sizeStyles[size],
           display: 'block',
@@ -58,20 +82,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           borderRadius: 'var(--renge-radius-2)',
           outline: 'none',
           resize,
-          transition: `border-color var(--renge-duration-1) var(--renge-easing-ease-out)`,
           boxSizing: 'border-box',
           fontFamily: 'inherit',
           lineHeight: 'var(--renge-line-height-base)',
           ...style,
-        }}
-        onFocus={(e) => {
-          (e.currentTarget as HTMLTextAreaElement).style.outline = `2px solid var(--renge-color-border-focus)`;
-          (e.currentTarget as HTMLTextAreaElement).style.outlineOffset = '2px';
-          props.onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          (e.currentTarget as HTMLTextAreaElement).style.outline = 'none';
-          props.onBlur?.(e);
         }}
         {...props}
       />

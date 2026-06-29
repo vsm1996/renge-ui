@@ -5,6 +5,22 @@
 
 import { forwardRef, useState, type ComponentPropsWithoutRef, type CSSProperties } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-switch-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-switch] input:focus-visible ~ span[aria-hidden="true"] {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 25%, transparent) !important;
+}
+[data-renge-switch]:not([data-disabled="true"]):hover span[aria-hidden="true"] {
+  filter: brightness(1.06) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 export type SwitchSize = 'sm' | 'md' | 'lg';
 
 export interface SwitchProps extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'type'> {
@@ -91,6 +107,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
 
     return (
       <label
+        data-renge-switch=""
+        data-disabled={disabled ? 'true' : undefined}
         style={{
           display: 'inline-flex',
           alignItems: 'center',

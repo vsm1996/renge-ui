@@ -1,5 +1,23 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-avatar-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-avatar] {
+  transition: transform var(--renge-duration-2) var(--renge-easing-spring),
+              box-shadow var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-renge-avatar]:hover {
+  transform: scale(1.08) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 22%, transparent) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 export type AvatarSize = '1' | '2' | '3' | '4' | '5';
 export type AvatarShape = 'circle' | 'square';
 
@@ -41,6 +59,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     return (
       <div
         ref={ref}
+        data-renge-avatar=""
         aria-label={alt}
         role={alt ? 'img' : undefined}
         style={{

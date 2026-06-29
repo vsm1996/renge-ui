@@ -15,7 +15,7 @@ export const clear: SemanticColorMap = {
   bgInverse: oklch(palette.slateBlue),
   fg: "oklch(20% 0.02 210)",
   fgSubtle: "oklch(35% 0.03 210)",
-  fgMuted: oklch(palette.skyGrey),
+  fgMuted: "oklch(46% 0.04 210)",           // WCAG AA: ~5:1 on white (skyGrey L=70 was 2.56:1)
   fgInverse: oklch(palette.snowWhite),
   border: "oklch(80% 0.02 210)",
   borderSubtle: "oklch(90% 0.01 210)",

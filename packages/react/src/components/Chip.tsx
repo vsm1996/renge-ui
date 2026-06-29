@@ -1,5 +1,31 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-chip-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-chip] {
+  transition: transform var(--renge-duration-1) var(--renge-easing-spring),
+              box-shadow var(--renge-duration-1) var(--renge-easing-ease-out) !important;
+}
+[data-renge-chip]:hover {
+  transform: scale(1.03) !important;
+  box-shadow: 0 1px var(--renge-space-2) color-mix(in oklch, currentColor 14%, transparent) !important;
+}
+[data-renge-chip] button {
+  transition: opacity var(--renge-duration-1) var(--renge-easing-ease-out),
+              transform var(--renge-duration-1) var(--renge-easing-spring) !important;
+}
+[data-renge-chip] button:hover {
+  opacity: 1 !important;
+  transform: scale(1.2) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 export type ChipVariant = 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 
 export interface ChipProps extends ComponentPropsWithoutRef<'span'> {
@@ -28,6 +54,7 @@ export const Chip = forwardRef<HTMLSpanElement, ChipProps>(
     return (
       <span
         ref={ref}
+        data-renge-chip=""
         style={{
           display: 'inline-flex',
           alignItems: 'center',

@@ -30,6 +30,43 @@ const ICON_SIZE: Record<IconButtonSize, number> = {
   xs: 10, sm: 14, md: 18, lg: 22, xl: 32,
 };
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-icon-btn-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-icon-btn] {
+  transition: background var(--renge-duration-2) var(--renge-easing-ease-out),
+              transform var(--renge-duration-1) var(--renge-easing-spring),
+              filter var(--renge-duration-2) var(--renge-easing-ease-out),
+              box-shadow var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-renge-icon-btn][data-variant="ghost"]:not(:disabled):hover {
+  background: var(--renge-color-bg-subtle) !important;
+  transform: scale(1.08) !important;
+}
+[data-renge-icon-btn][data-variant="solid"]:not(:disabled):hover {
+  filter: brightness(1.1) !important;
+  transform: scale(1.08) !important;
+}
+[data-renge-icon-btn][data-variant="outline"]:not(:disabled):hover {
+  background: color-mix(in oklch, currentColor 8%, transparent) !important;
+  transform: scale(1.08) !important;
+}
+[data-renge-icon-btn]:not(:disabled):active {
+  transform: scale(0.93) !important;
+  filter: brightness(1) !important;
+}
+[data-renge-icon-btn]:disabled { opacity: 0.45; cursor: not-allowed; }
+[data-renge-icon-btn]:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 28%, transparent) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   function IconButton(
     {
@@ -79,6 +116,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     return (
       <button
         ref={ref}
+        data-renge-icon-btn=""
+        data-variant={variant}
         style={{
           width: px,
           height: px,
@@ -88,22 +127,11 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           justifyContent: 'center',
           cursor: 'pointer',
           flexShrink: 0,
-          transition: `all var(--renge-duration-2) var(--renge-easing-ease-out)`,
           fontSize: ICON_SIZE[size],
           lineHeight: 1,
           animation: animation ? `var(--renge-animation-${animation})` : undefined,
           ...variantStyles,
           ...style,
-        }}
-        onMouseEnter={(e) => {
-          const el = e.currentTarget as HTMLButtonElement;
-          if (variant === 'ghost') el.style.background = 'var(--renge-color-bg-subtle)';
-          props.onMouseEnter?.(e);
-        }}
-        onMouseLeave={(e) => {
-          const el = e.currentTarget as HTMLButtonElement;
-          if (variant === 'ghost') el.style.background = 'transparent';
-          props.onMouseLeave?.(e);
         }}
         {...props}
       >

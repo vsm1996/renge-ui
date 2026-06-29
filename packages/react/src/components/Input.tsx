@@ -9,6 +9,29 @@ export interface InputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'siz
   fullWidth?: boolean;
 }
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-input-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-input] {
+  transition: border-color var(--renge-duration-1) var(--renge-easing-ease-out),
+              box-shadow var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-renge-input]:hover:not(:focus):not(:disabled) {
+  border-color: color-mix(in oklch, var(--renge-color-border) 60%, var(--renge-color-fg)) !important;
+}
+[data-renge-input]:focus {
+  border-color: var(--renge-color-border-focus) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 16%, transparent) !important;
+  outline: none !important;
+}
+[data-renge-input]:disabled { opacity: 0.5; cursor: not-allowed; }`;
+    document.head.appendChild(s);
+  }
+}
+
 const sizeStyles: Record<InputSize, CSSProperties> = {
   sm: {
     padding: 'var(--renge-space-1) var(--renge-space-2)',
@@ -35,6 +58,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         ref={ref}
+        data-renge-input=""
         style={{
           ...sizeStyles[size],
           display: 'block',
@@ -44,21 +68,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           border: `1px solid ${stateColor[state]}`,
           borderRadius: 'var(--renge-radius-2)',
           outline: 'none',
-          transition: `border-color var(--renge-duration-1) var(--renge-easing-ease-out)`,
-          // Focus is handled via :focus-visible pseudo-class but inline styles can't do that.
-          // We set a CSS custom property approach via box-shadow as focus ring instead.
           boxSizing: 'border-box',
           fontFamily: 'inherit',
           ...style,
-        }}
-        onFocus={(e) => {
-          (e.currentTarget as HTMLInputElement).style.outline = `2px solid var(--renge-color-border-focus)`;
-          (e.currentTarget as HTMLInputElement).style.outlineOffset = '2px';
-          props.onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          (e.currentTarget as HTMLInputElement).style.outline = 'none';
-          props.onBlur?.(e);
         }}
         {...props}
       />

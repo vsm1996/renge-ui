@@ -1,5 +1,23 @@
 import { forwardRef, type ComponentPropsWithoutRef, type CSSProperties } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-badge-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-badge] {
+  transition: transform var(--renge-duration-1) var(--renge-easing-spring),
+              box-shadow var(--renge-duration-1) var(--renge-easing-ease-out) !important;
+}
+[data-renge-badge]:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 1px var(--renge-space-2) color-mix(in oklch, currentColor 18%, transparent) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 export type BadgeVariant = 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 export type BadgeSize = 'sm' | 'md' | 'lg';
 
@@ -35,6 +53,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     return (
       <span
         ref={ref}
+        data-renge-badge=""
         style={{
           display: 'inline-flex',
           alignItems: 'center',

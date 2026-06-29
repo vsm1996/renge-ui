@@ -6,7 +6,6 @@
 
 import { forwardRef, useState, type ComponentPropsWithoutRef, type CSSProperties } from 'react';
 
-// Inject the check-draw keyframe once
 if (typeof document !== 'undefined') {
   const id = '__renge-checkbox-kf__';
   if (!document.getElementById(id)) {
@@ -16,6 +15,13 @@ if (typeof document !== 'undefined') {
 @keyframes rengeCheckDraw {
   from { stroke-dashoffset: 14; }
   to   { stroke-dashoffset: 0; }
+}
+[data-renge-checkbox] input:focus-visible ~ span[aria-hidden="true"] {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 25%, transparent) !important;
+}
+[data-renge-checkbox]:not([data-disabled="true"]):hover span[aria-hidden="true"] {
+  border-color: var(--renge-color-accent) !important;
+  transform: scale(1.08) !important;
 }`;
     document.head.appendChild(s);
   }
@@ -70,6 +76,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     return (
       <label
+        data-renge-checkbox=""
+        data-disabled={disabled ? 'true' : undefined}
         style={{
           display: 'inline-flex',
           alignItems: 'center',

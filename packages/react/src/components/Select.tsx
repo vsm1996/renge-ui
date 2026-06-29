@@ -15,6 +15,29 @@ export interface SelectProps extends Omit<ComponentPropsWithoutRef<'select'>, 's
   placeholder?: string;
 }
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-select-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-select] {
+  transition: border-color var(--renge-duration-1) var(--renge-easing-ease-out),
+              box-shadow var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-renge-select]:hover:not(:focus):not(:disabled) {
+  border-color: color-mix(in oklch, var(--renge-color-border) 60%, var(--renge-color-fg)) !important;
+}
+[data-renge-select]:focus {
+  border-color: var(--renge-color-border-focus) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 16%, transparent) !important;
+  outline: none !important;
+}
+[data-renge-select]:disabled { opacity: 0.5; cursor: not-allowed; }`;
+    document.head.appendChild(s);
+  }
+}
+
 const sizeStyles: Record<SelectSize, CSSProperties> = {
   sm: {
     padding: 'var(--renge-space-1) var(--renge-space-5) var(--renge-space-1) var(--renge-space-2)',
@@ -47,6 +70,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <select
         ref={ref}
+        data-renge-select=""
         style={{
           ...sizeStyles[size],
           display: 'block',
@@ -59,19 +83,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           appearance: 'none',
           WebkitAppearance: 'none',
           cursor: 'pointer',
-          transition: `border-color var(--renge-duration-1) var(--renge-easing-ease-out)`,
           boxSizing: 'border-box',
           fontFamily: 'inherit',
           ...style,
-        }}
-        onFocus={(e) => {
-          (e.currentTarget as HTMLSelectElement).style.outline = `2px solid var(--renge-color-border-focus)`;
-          (e.currentTarget as HTMLSelectElement).style.outlineOffset = '2px';
-          props.onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          (e.currentTarget as HTMLSelectElement).style.outline = 'none';
-          props.onBlur?.(e);
         }}
         {...props}
       >

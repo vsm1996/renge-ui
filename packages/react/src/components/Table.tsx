@@ -5,6 +5,22 @@
 
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-table-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-row]:hover {
+  background: var(--renge-color-bg-subtle) !important;
+}
+[data-renge-row]:hover td {
+  color: var(--renge-color-fg) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 export interface TableProps extends ComponentPropsWithoutRef<'table'> {
   /** Apply zebra striping to alternating rows */
   striped?: boolean;
@@ -103,6 +119,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
     return (
       <tr
         ref={ref}
+        data-renge-row=""
         style={{
           background: isEven ? 'var(--renge-color-bg-subtle)' : undefined,
           borderBottom: '1px solid var(--renge-color-border-subtle)',

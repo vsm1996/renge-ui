@@ -1,5 +1,24 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-stat-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-stat] {
+  border-radius: var(--renge-radius-2);
+  transition: transform var(--renge-duration-2) var(--renge-easing-spring),
+              box-shadow var(--renge-duration-2) var(--renge-easing-ease-out) !important;
+}
+[data-renge-stat]:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 var(--renge-space-1) var(--renge-space-3) color-mix(in oklch, var(--renge-color-fg) 8%, transparent) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 export type TrendDirection = 'up' | 'down' | 'neutral';
 
 export interface StatProps extends ComponentPropsWithoutRef<'div'> {
@@ -39,6 +58,7 @@ export const Stat = forwardRef<HTMLDivElement, StatProps>(
     return (
       <div
         ref={ref}
+        data-renge-stat=""
         style={{
           display: 'flex',
           flexDirection: 'column',

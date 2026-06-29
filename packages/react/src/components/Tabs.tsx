@@ -14,6 +14,32 @@ import {
   type CSSProperties,
 } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-tabs-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-tab] {
+  transition: color var(--renge-duration-2) var(--renge-easing-ease-out),
+              background var(--renge-duration-1) var(--renge-easing-ease-out) !important;
+}
+[data-renge-tab]:not([aria-selected="true"]):hover {
+  color: var(--renge-color-fg) !important;
+  background: var(--renge-color-bg-subtle) !important;
+}
+[data-renge-tab][aria-selected="true"]:hover {
+  background: color-mix(in oklch, var(--renge-color-accent) 6%, transparent) !important;
+}
+[data-renge-tab]:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--renge-color-accent) 25%, transparent) inset !important;
+  border-radius: var(--renge-radius-1) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 // ─── Context ─────────────────────────────────────────────────────────────────
 
 interface TabsCtx {
@@ -106,6 +132,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         aria-selected={isActive}
         aria-controls={`tabpanel-${value}`}
         id={`tab-${value}`}
+        data-renge-tab=""
         onClick={() => ctx?.setActive(value)}
         style={{
           padding: 'var(--renge-space-2) var(--renge-space-4)',

@@ -16,6 +16,29 @@ import {
   type CSSProperties,
 } from 'react';
 
+if (typeof document !== 'undefined') {
+  const id = '__renge-accordion-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-accordion-trigger] {
+  transition: background var(--renge-duration-1) var(--renge-easing-ease-out) !important;
+}
+[data-renge-accordion-trigger]:not(:disabled):hover {
+  background: var(--renge-color-bg-subtle) !important;
+}
+[data-renge-accordion-trigger]:not(:disabled):active {
+  background: var(--renge-color-bg-muted) !important;
+}
+[data-renge-accordion-trigger]:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 20%, transparent) inset !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
+
 // ─── Context ─────────────────────────────────────────────────────────────────
 
 interface AccordionCtx {
@@ -110,6 +133,7 @@ export function AccordionItem({ id, title, children, style, disabled = false }: 
         aria-expanded={isOpen}
         aria-controls={`accordion-panel-${id}`}
         id={`accordion-trigger-${id}`}
+        data-renge-accordion-trigger=""
         disabled={disabled}
         onClick={() => !disabled && ctx?.toggle(id)}
         style={{
@@ -125,13 +149,6 @@ export function AccordionItem({ id, title, children, style, disabled = false }: 
           color: 'var(--renge-color-fg)',
           fontFamily: 'inherit',
           textAlign: 'left',
-          transition: `background var(--renge-duration-1) var(--renge-easing-ease-out)`,
-        }}
-        onMouseEnter={(e) => {
-          if (!disabled) (e.currentTarget as HTMLButtonElement).style.background = 'var(--renge-color-bg-subtle)';
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
         }}
       >
         <span style={{ fontWeight: 500 }}>{title}</span>
