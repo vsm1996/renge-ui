@@ -140,9 +140,17 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
     if (petalName === 'focus') {
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
-          {/* no overflow:hidden here — the ring is a box-shadow and would be clipped */}
           <div style={{ padding: 'var(--renge-space-4)', background: 'var(--renge-color-bg)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)' }}>
-            <div style={{ height: '36px', background: 'var(--renge-color-bg-subtle)', borderRadius: 'var(--renge-radius-2)', ...tokens as any }} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--renge-space-3)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
+                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-subtle)' }}>unfocused</span>
+                <div style={{ padding: 'var(--renge-space-2) var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border)', background: 'var(--renge-color-bg-subtle)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg-subtle)' }}>Input</div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
+                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)' }}>:focus</span>
+                <div style={{ padding: 'var(--renge-space-2) var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-accent)', background: 'var(--renge-color-bg-subtle)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)', ...tokens as any }}>Input</div>
+              </div>
+            </div>
           </div>
           <TokenJSON tokens={tokens} />
         </div>
@@ -152,8 +160,15 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
-            <div style={{ padding: 'var(--renge-space-3) var(--renge-space-4)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', color: 'var(--renge-color-fg)', fontSize: 'var(--renge-font-size-sm)', ...tokens as any }}>
-              Hover state surface
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--renge-space-3)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
+                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-subtle)' }}>rest</span>
+                <div style={{ padding: 'var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', background: 'var(--renge-color-bg)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)' }}>Menu item</div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
+                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)' }}>:hover</span>
+                <div style={{ padding: 'var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)', ...tokens as any }}>Menu item</div>
+              </div>
             </div>
           </PreviewWrap>
           <TokenJSON tokens={tokens} />
@@ -164,8 +179,15 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
-            <div style={{ padding: 'var(--renge-space-3) var(--renge-space-4)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', color: 'var(--renge-color-fg)', fontSize: 'var(--renge-font-size-sm)', ...tokens as any }}>
-              Active/pressed surface
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--renge-space-3)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
+                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-subtle)' }}>:hover</span>
+                <div style={{ padding: 'var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', background: 'var(--renge-color-bg-subtle)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)' }}>Menu item</div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
+                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)' }}>:active</span>
+                <div style={{ padding: 'var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)', ...tokens as any }}>Menu item</div>
+              </div>
             </div>
           </PreviewWrap>
           <TokenJSON tokens={tokens} />
@@ -175,23 +197,21 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
     if (petalName === 'interactiveBase') {
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
-          <PreviewWrap>
-            <div style={{ display: 'flex', gap: 'var(--renge-space-3)', flexWrap: 'wrap' as const }}>
-              {(['Default', 'Hover', 'Active', 'Focus'] as const).map((state, i) => (
-                <div key={state} style={{
-                  padding: 'var(--renge-space-2) var(--renge-space-3)',
-                  borderRadius: 'var(--renge-radius-2)',
-                  border: '1px solid var(--renge-color-border-subtle)',
-                  fontSize: 'var(--renge-font-size-xs)',
-                  color: 'var(--renge-color-fg)',
-                  background: i === 0 ? 'var(--renge-color-bg)' : i === 1 ? 'var(--renge-color-bg-subtle)' : i === 2 ? 'var(--renge-color-bg-muted)' : 'var(--renge-color-bg-subtle)',
-                  boxShadow: i === 3 ? 'var(--renge-shadow-focus)' : undefined,
-                }}>
-                  {state}
+          <div style={{ padding: 'var(--renge-space-4)', background: 'var(--renge-color-bg)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
+              {[
+                { label: 'default', bg: 'var(--renge-color-bg)', ring: false },
+                { label: ':hover',  bg: 'var(--renge-color-bg-subtle)', ring: false },
+                { label: ':active', bg: 'var(--renge-color-bg-muted)', ring: false },
+                { label: ':focus',  bg: 'var(--renge-color-bg-subtle)', ring: true },
+              ].map(({ label, bg, ring }) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 'var(--renge-space-3)' }}>
+                  <span style={{ width: 48, fontSize: 'var(--renge-font-size-xs)', color: ring ? 'var(--renge-color-accent)' : 'var(--renge-color-fg-subtle)', flexShrink: 0 }}>{label}</span>
+                  <div style={{ flex: 1, padding: 'var(--renge-space-2) var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: ring ? '1px solid var(--renge-color-accent)' : '1px solid var(--renge-color-border-subtle)', background: bg, boxShadow: ring ? 'var(--renge-shadow-focus)' : undefined, fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg)' }}>Button</div>
                 </div>
               ))}
             </div>
-          </PreviewWrap>
+          </div>
           <TokenJSON tokens={tokens} />
         </div>
       );
