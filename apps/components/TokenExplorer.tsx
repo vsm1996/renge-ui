@@ -38,10 +38,11 @@ const TOKENS = {
     { key: 'easing-ease-in-out', value: 'cubic-bezier(0.382, 0, 0.618, 1)', formula: 'φ-split inflect', category: 'Easing' },
   ],
   shadow: [
-    { key: 'shadow-layer-1', value: '0 4px 8px rgba(0,0,0,0.05)', formula: 'Subtle elevation', category: 'Shadow' },
-    { key: 'shadow-layer-2', value: '0 8px 12px rgba(0,0,0,0.1)', formula: 'Medium elevation', category: 'Shadow' },
-    { key: 'shadow-layer-3', value: '0 12px 20px rgba(0,0,0,0.15)', formula: 'Strong elevation', category: 'Shadow' },
-    { key: 'shadow-focus', value: '0 0 0 3px var(--renge-color-accent-rgb)', formula: 'Focus ring', category: 'Shadow' },
+    { key: 'shadow-layer-1', value: '0 4px 8px rgb(0 0 0 / 0.05)',  formula: 'Fib[1]×Fib[2]px — subtle lift',   category: 'Shadow' },
+    { key: 'shadow-layer-2', value: '0 8px 12px rgb(0 0 0 / 0.1)',  formula: 'Fib[2]×Fib[3]px — medium lift',  category: 'Shadow' },
+    { key: 'shadow-layer-3', value: '0 12px 20px rgb(0 0 0 / 0.15)', formula: 'Fib[3]×Fib[4]px — strong lift', category: 'Shadow' },
+    { key: 'shadow-focus',   value: '0 0 0 3px accent / 28%',       formula: 'color-mix accent ring — keyboard focus', category: 'Shadow' },
+    { key: 'shadow-inset',   value: 'inset 0 1px 2px rgb(0 0 0 / 0.05)', formula: 'Inset well — inputs/pressed', category: 'Shadow' },
   ],
   color: [
     { key: 'color-bg',           value: 'Background',         formula: 'Profile-dependent', category: 'Semantic Color' },
@@ -277,14 +278,16 @@ export function TokenExplorer() {
                       }}
                     />
                   ) : token.category.includes('Shadow') ? (
-                    <div
-                      style={{
-                        height: '40px',
-                        borderRadius: 'var(--renge-radius-1)',
-                        background: 'var(--renge-color-bg-subtle)',
-                        boxShadow: `var(--renge-${token.key})`,
-                      }}
-                    />
+                    <div style={{ background: 'var(--renge-color-bg-muted)', borderRadius: 'var(--renge-radius-1)', padding: 'var(--renge-space-3) var(--renge-space-4)' }}>
+                      <div
+                        style={{
+                          height: '36px',
+                          borderRadius: 'var(--renge-radius-1)',
+                          background: 'var(--renge-color-bg)',
+                          boxShadow: `var(--renge-${token.key})`,
+                        }}
+                      />
+                    </div>
                   ) : token.category === 'Radius' ? (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                       <div
