@@ -7,5 +7,7 @@ next-env.d.ts
 *.log
 *.tsbuildinfo
 .DS_Store
+test-results/
+.claude/
 
 CLAUDE.md
