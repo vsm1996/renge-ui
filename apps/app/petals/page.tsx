@@ -140,8 +140,57 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
     if (petalName === 'focus') {
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
-          <PreviewWrap>
+          {/* no overflow:hidden here — the ring is a box-shadow and would be clipped */}
+          <div style={{ padding: 'var(--renge-space-4)', background: 'var(--renge-color-bg)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)' }}>
             <div style={{ height: '36px', background: 'var(--renge-color-bg-subtle)', borderRadius: 'var(--renge-radius-2)', ...tokens as any }} />
+          </div>
+          <TokenJSON tokens={tokens} />
+        </div>
+      );
+    }
+    if (petalName === 'hoverSurface') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+          <PreviewWrap>
+            <div style={{ padding: 'var(--renge-space-3) var(--renge-space-4)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', color: 'var(--renge-color-fg)', fontSize: 'var(--renge-font-size-sm)', ...tokens as any }}>
+              Hover state surface
+            </div>
+          </PreviewWrap>
+          <TokenJSON tokens={tokens} />
+        </div>
+      );
+    }
+    if (petalName === 'activeSurface') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+          <PreviewWrap>
+            <div style={{ padding: 'var(--renge-space-3) var(--renge-space-4)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', color: 'var(--renge-color-fg)', fontSize: 'var(--renge-font-size-sm)', ...tokens as any }}>
+              Active/pressed surface
+            </div>
+          </PreviewWrap>
+          <TokenJSON tokens={tokens} />
+        </div>
+      );
+    }
+    if (petalName === 'interactiveBase') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
+          <PreviewWrap>
+            <div style={{ display: 'flex', gap: 'var(--renge-space-3)', flexWrap: 'wrap' as const }}>
+              {(['Default', 'Hover', 'Active', 'Focus'] as const).map((state, i) => (
+                <div key={state} style={{
+                  padding: 'var(--renge-space-2) var(--renge-space-3)',
+                  borderRadius: 'var(--renge-radius-2)',
+                  border: '1px solid var(--renge-color-border-subtle)',
+                  fontSize: 'var(--renge-font-size-xs)',
+                  color: 'var(--renge-color-fg)',
+                  background: i === 0 ? 'var(--renge-color-bg)' : i === 1 ? 'var(--renge-color-bg-subtle)' : i === 2 ? 'var(--renge-color-bg-muted)' : 'var(--renge-color-bg-subtle)',
+                  boxShadow: i === 3 ? 'var(--renge-shadow-focus)' : undefined,
+                }}>
+                  {state}
+                </div>
+              ))}
+            </div>
           </PreviewWrap>
           <TokenJSON tokens={tokens} />
         </div>
@@ -1215,9 +1264,13 @@ const sheet = Object.entries(petals.navigation.navItem.tokens)
               )}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 'var(--renge-space-4)' }}>
-              {Object.entries(categoryPetals).map(([petalName, petal]) => (
-                <div key={petalName} style={{ padding: 'var(--renge-space-4)', borderRadius: 'var(--renge-radius-3)', border: '1px solid var(--renge-color-border-subtle)', background: 'color-mix(in oklch, var(--renge-color-bg) 97%, var(--renge-color-accent))', minWidth: 0, overflow: 'hidden' }}>
+            {(() => {
+              const petalEntries = Object.entries(categoryPetals);
+              const isOdd = petalEntries.length % 2 !== 0;
+              return (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 'var(--renge-space-4)' }}>
+              {petalEntries.map(([petalName, petal], idx) => (
+                <div key={petalName} style={{ padding: 'var(--renge-space-4)', borderRadius: 'var(--renge-radius-3)', border: '1px solid var(--renge-color-border-subtle)', background: 'color-mix(in oklch, var(--renge-color-bg) 97%, var(--renge-color-accent))', minWidth: 0, overflow: 'hidden', ...(isOdd && idx === petalEntries.length - 1 ? { gridColumn: '1 / -1' } : {}) }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--renge-space-2)', marginBottom: 'var(--renge-space-2)' }}>
                     <h3 style={{ fontSize: 'var(--renge-font-size-base)', fontWeight: 600, color: 'var(--renge-color-fg)', margin: 0 }}>
                       {petal.label}
@@ -1233,6 +1286,8 @@ const sheet = Object.entries(petals.navigation.navItem.tokens)
                 </div>
               ))}
             </div>
+              );
+            })()}
           </section>
         );
       })}
