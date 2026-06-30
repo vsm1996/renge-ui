@@ -85,7 +85,7 @@ importers:
   packages/petals:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.6.3
+        specifier: ^2.6.4
         version: link:../tokens
     devDependencies:
       tsup:
@@ -101,7 +101,7 @@ importers:
   packages/react:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.6.3
+        specifier: ^2.6.4
         version: link:../tokens
     devDependencies:
       '@types/react':
@@ -126,7 +126,7 @@ importers:
   packages/svelte:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.6.3
+        specifier: ^2.6.4
         version: link:../tokens
     devDependencies:
       '@sveltejs/vite-plugin-svelte':
@@ -169,7 +169,7 @@ importers:
         specifier: ^1.2.0
         version: link:../petals
       '@renge-ui/tokens':
-        specifier: ^2.6.3
+        specifier: ^2.6.4
         version: link:../tokens
       tailwindcss:
         specifier: '>=3.0.0 <6.0.0'
@@ -188,7 +188,7 @@ importers:
   packages/test-utils:
     devDependencies:
       '@renge-ui/tokens':
-        specifier: ^2.6.3
+        specifier: ^2.6.4
         version: link:../tokens
       tsup:
         specifier: ^8.5.1
@@ -215,7 +215,7 @@ importers:
   packages/vue:
     dependencies:
       '@renge-ui/tokens':
-        specifier: ^2.6.3
+        specifier: ^2.6.4
         version: link:../tokens
     devDependencies:
       '@testing-library/user-event':

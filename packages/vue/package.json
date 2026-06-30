@@ -40,7 +40,7 @@
   },
   "packageManager": "pnpm@10.30.2",
   "dependencies": {
-    "@renge-ui/tokens": "^2.6.3"
+    "@renge-ui/tokens": "^2.6.4"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
