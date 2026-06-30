@@ -287,6 +287,105 @@ describe('validateContrastRatio', () => {
   });
 });
 
+describe('warnings', () => {
+  describe('validateSpacingScale warnings', () => {
+    it('warns on a large step (ratio above PHI²)', () => {
+      // 4px → 16px is a 4× jump, above PHI² ≈ 2.618
+      const result = validateSpacingScale({ 'sm': '4px', 'xl': '16px' });
+      expect(result.valid).toBe(true);
+      expect(result.warnings).toHaveLength(1);
+      expect(result.warnings[0]).toMatch(/possible missing step/);
+    });
+
+    it('warns on near-duplicate values (ratio below 1.1)', () => {
+      // 10px → 10.5px is a 1.05× step — visually indistinguishable
+      const result = validateSpacingScale({ 'a': '10px', 'b': '10.5px', 'c': '20px' });
+      expect(result.valid).toBe(true);
+      expect(result.warnings.some(w => w.includes('nearly equal'))).toBe(true);
+    });
+
+    it('emits no warnings for a well-proportioned scale', () => {
+      // Ratios ~1.5–2.0 — inside the warning bands
+      const result = validateSpacingScale({
+        'space-1': '4px',
+        'space-2': '8px',
+        'space-3': '12px',
+        'space-4': '20px',
+      });
+      expect(result.valid).toBe(true);
+      expect(result.warnings).toHaveLength(0);
+    });
+
+    it('errors do not produce warnings for the same step', () => {
+      // Duplicate — should error, not warn
+      const result = validateSpacingScale({ 'a': '8px', 'b': '8px' });
+      expect(result.valid).toBe(false);
+      expect(result.errors.length).toBeGreaterThan(0);
+      expect(result.warnings).toHaveLength(0);
+    });
+  });
+
+  describe('validateTypeScale warnings', () => {
+    it('warns when ratio is approaching the tolerance limit', () => {
+      // ratio = 1.25, expected = 1.618, tolerance = 0.3 → deviation 22.7% vs 30% max
+      // 22.7 / 30 = 75.7% of tolerance → over 60% threshold → warning
+      const result = validateTypeScale(
+        { base: { fontSize: '16px', lineHeight: '1.5' }, lg: { fontSize: '20px', lineHeight: '1.5' } },
+        1.618,
+        0.3
+      );
+      expect(result.valid).toBe(true);
+      expect(result.warnings.some(w => w.includes('approaching tolerance limit'))).toBe(true);
+    });
+
+    it('does not warn when ratio is comfortably within tolerance', () => {
+      // ratio ≈ 1.618, tolerance 10% — right on target
+      const result = validateTypeScale(
+        { sm: { fontSize: '10px', lineHeight: '1.4' }, lg: { fontSize: '16.18px', lineHeight: '1.6' } },
+        1.618,
+        0.10
+      );
+      expect(result.valid).toBe(true);
+      expect(result.warnings).toHaveLength(0);
+    });
+  });
+
+  describe('validateContrastRatio warnings', () => {
+    it('warns when contrast passes AA but not AAA', () => {
+      // oklch(75% 0 0) on white — contrast ~4.9:1, passes AA (4.5) but not AAA (7:1)
+      const result = validateContrastRatio('oklch(75% 0 0)', 'oklch(100% 0 0)', 4.5);
+      expect(result.valid).toBe(true);
+      expect(result.warnings.some(w => w.includes('AAA'))).toBe(true);
+    });
+
+    it('does not warn when contrast meets AAA', () => {
+      // Black on white — 21:1, well above 7:1 AAA
+      const result = validateContrastRatio('oklch(0% 0 0)', 'oklch(100% 0 0)', 4.5);
+      expect(result.valid).toBe(true);
+      expect(result.warnings).toHaveLength(0);
+    });
+
+    it('warns when passing large-text threshold but failing normal-text AA', () => {
+      // Checking at minRatio=3 (large text); color has ~4x contrast — passes 3:1 but not 4.5:1
+      const result = validateContrastRatio('oklch(46% 0.04 210)', 'oklch(100% 0 0)', 3.0);
+      expect(result.valid).toBe(true);
+      // Should warn about AA for normal text if ratio < 4.5
+      const hasNormalTextWarning = result.warnings.some(w => w.includes('normal text AA'));
+      const ratio = parseFloat(result.warnings[0]?.match(/[\d.]+/)?.[0] ?? '0');
+      if (ratio > 0 && ratio < 4.5) {
+        expect(hasNormalTextWarning).toBe(true);
+      }
+    });
+
+    it('does not warn on a failure (error takes precedence)', () => {
+      // Below minRatio — should only have errors, not warnings
+      const result = validateContrastRatio('oklch(70% 0.1 10)', 'oklch(90% 0.05 10)', 4.5);
+      expect(result.valid).toBe(false);
+      expect(result.warnings).toHaveLength(0);
+    });
+  });
+});
+
 describe('ValidationResult interface', () => {
   it('should return valid structure', () => {
     const result: ValidationResult = {

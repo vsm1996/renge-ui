@@ -60,14 +60,17 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             {tag}
             <button
               type="button"
+              aria-label={`Remove ${tag}`}
               onClick={() => handleRemoveTag(tag)}
               style={{
                 background: 'transparent',
                 border: 'none',
                 color: 'inherit',
                 cursor: 'pointer',
-                padding: 0,
+                padding: '0 2px',
                 fontSize: 'var(--renge-font-size-sm)',
+                lineHeight: 1,
+                borderRadius: 'var(--renge-radius-1)',
               }}
             >
               ×

@@ -1,49 +1,137 @@
-import { forwardRef, useState, useRef, useEffect, ReactNode } from 'react';
+import { forwardRef, useState, useRef, useEffect, useCallback, type ReactNode } from 'react';
 import type { ComponentPropsWithoutRef } from 'react';
+
+if (typeof document !== 'undefined') {
+  const id = '__renge-dropdown-css__';
+  if (!document.getElementById(id)) {
+    const s = document.createElement('style');
+    s.id = id;
+    s.textContent = `
+[data-renge-dropdown-trigger] {
+  transition: background var(--renge-duration-1) var(--renge-easing-ease-out) !important;
+}
+[data-renge-dropdown-trigger]:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 25%, transparent) !important;
+}
+[data-renge-dropdown-item] {
+  transition: background var(--renge-duration-1) var(--renge-easing-ease-out) !important;
+}
+[data-renge-dropdown-item]:focus-visible {
+  outline: none !important;
+  background: var(--renge-color-bg-subtle) !important;
+  box-shadow: inset 0 0 0 2px var(--renge-color-border-focus) !important;
+}
+[data-renge-dropdown-item]:not(:disabled):hover {
+  background: var(--renge-color-bg-subtle) !important;
+}
+[data-renge-dropdown-item]:not(:disabled):active {
+  background: var(--renge-color-bg-muted) !important;
+}`;
+    document.head.appendChild(s);
+  }
+}
 
 export interface DropdownMenuProps extends ComponentPropsWithoutRef<'div'> {
   trigger?: ReactNode;
-  items?: Array<{ label: string; value?: string; onClick?: () => void }>;
+  items?: Array<{ label: string; value?: string; onClick?: () => void; disabled?: boolean }>;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
 export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
-  ({ trigger, items, isOpen, onOpenChange, ...props }, ref) => {
+  ({ trigger, items = [], isOpen, onOpenChange, ...props }, ref) => {
     const [open, setOpen] = useState(isOpen ?? false);
-    const triggerRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
+    const close = useCallback(() => {
+      setOpen(false);
+      onOpenChange?.(false);
+      triggerRef.current?.focus();
+    }, [onOpenChange]);
+
     useEffect(() => {
-      const handleClickOutside = (e: MouseEvent) => {
+      if (!open) return;
+      const handler = (e: MouseEvent) => {
         if (
-          menuRef.current &&
-          !menuRef.current.contains(e.target as Node) &&
+          menuRef.current && !menuRef.current.contains(e.target as Node) &&
           !triggerRef.current?.contains(e.target as Node)
         ) {
           setOpen(false);
           onOpenChange?.(false);
         }
       };
-      if (open) document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      document.addEventListener('mousedown', handler);
+      return () => document.removeEventListener('mousedown', handler);
     }, [open, onOpenChange]);
+
+    // Focus first item when menu opens
+    useEffect(() => {
+      if (!open || !menuRef.current) return;
+      const first = menuRef.current.querySelector<HTMLButtonElement>('[data-renge-dropdown-item]:not(:disabled)');
+      first?.focus();
+    }, [open]);
 
     return (
       <div ref={ref} style={{ position: 'relative', display: 'inline-block' }} {...props}>
-        <div
+        <button
           ref={triggerRef}
-          onClick={() => {
-            setOpen(!open);
-            onOpenChange?.(!open);
+          type="button"
+          data-renge-dropdown-trigger=""
+          aria-haspopup="menu"
+          aria-expanded={open}
+          onClick={() => { const next = !open; setOpen(next); onOpenChange?.(next); }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' && open) { e.preventDefault(); close(); }
+            if ((e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') && !open) {
+              e.preventDefault();
+              setOpen(true);
+              onOpenChange?.(true);
+            }
           }}
-          style={{ cursor: 'pointer' }}
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            color: 'inherit',
+            font: 'inherit',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            borderRadius: 'var(--renge-radius-1)',
+          }}
         >
           {trigger}
-        </div>
+        </button>
+
         {open && (
           <div
             ref={menuRef}
+            role="menu"
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+              if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                const btns = Array.from(
+                  menuRef.current?.querySelectorAll<HTMLButtonElement>('[data-renge-dropdown-item]:not(:disabled)') ?? []
+                );
+                const idx = btns.indexOf(document.activeElement as HTMLButtonElement);
+                const next = e.key === 'ArrowDown'
+                  ? (btns[idx + 1] ?? btns[0])
+                  : (btns[idx - 1] ?? btns[btns.length - 1]);
+                next?.focus();
+              }
+              if (e.key === 'Home') {
+                e.preventDefault();
+                menuRef.current?.querySelectorAll<HTMLButtonElement>('[data-renge-dropdown-item]:not(:disabled)')[0]?.focus();
+              }
+              if (e.key === 'End') {
+                e.preventDefault();
+                const all = menuRef.current?.querySelectorAll<HTMLButtonElement>('[data-renge-dropdown-item]:not(:disabled)');
+                all?.[all.length - 1]?.focus();
+              }
+            }}
             style={{
               position: 'absolute',
               top: '100%',
@@ -58,15 +146,14 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
               overflow: 'hidden',
             }}
           >
-            {items?.map((item, idx) => (
+            {items.map((item, idx) => (
               <button
                 key={idx}
                 type="button"
-                onClick={() => {
-                  item.onClick?.();
-                  setOpen(false);
-                  onOpenChange?.(false);
-                }}
+                role="menuitem"
+                data-renge-dropdown-item=""
+                disabled={item.disabled}
+                onClick={() => { item.onClick?.(); close(); }}
                 style={{
                   display: 'block',
                   width: '100%',
@@ -74,16 +161,10 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
                   padding: 'var(--renge-space-2) var(--renge-space-3)',
                   border: 'none',
                   background: 'transparent',
-                  color: 'var(--renge-color-fg)',
-                  cursor: 'pointer',
-                  transition: 'background var(--renge-duration-1)',
+                  color: item.disabled ? 'var(--renge-color-fg-muted)' : 'var(--renge-color-fg)',
+                  cursor: item.disabled ? 'not-allowed' : 'pointer',
                   fontSize: 'var(--renge-font-size-sm)',
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = 'var(--renge-color-bg-subtle)';
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.background = 'transparent';
+                  fontFamily: 'inherit',
                 }}
               >
                 {item.label}

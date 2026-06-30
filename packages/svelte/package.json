@@ -40,7 +40,7 @@
   },
   "packageManager": "pnpm@10.30.2",
   "dependencies": {
-    "@renge-ui/tokens": "^2.6.1"
+    "@renge-ui/tokens": "^2.6.3"
   },
   "peerDependencies": {
     "svelte": "^4.0.0"

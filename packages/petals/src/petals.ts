@@ -209,11 +209,34 @@ export const interactive: PetalGroup = {
   },
   focus: {
     label: 'Focus State',
-    description: 'Interactive focus indicator — using shadow and duration',
+    description: 'Keyboard focus ring — 3px accent glow via color-mix, WCAG-compliant',
     tokens: {
       outline: 'none',
       boxShadow: 'var(--renge-shadow-focus)',
       transition: `box-shadow var(--renge-duration-2) var(--renge-easing-ease-out)`,
+    },
+  },
+  hoverSurface: {
+    label: 'Hover Surface',
+    description: 'Subtle background shift on pointer entry — bg-subtle with ease-out',
+    tokens: {
+      background: 'var(--renge-color-bg-subtle)',
+      transition: `background var(--renge-duration-1) var(--renge-easing-ease-out)`,
+    },
+  },
+  activeSurface: {
+    label: 'Active Surface',
+    description: 'Pressed/active state background — bg-muted, slightly deeper than hover',
+    tokens: {
+      background: 'var(--renge-color-bg-muted)',
+      transition: `background var(--renge-duration-1) var(--renge-easing-ease-out)`,
+    },
+  },
+  interactiveBase: {
+    label: 'Interactive Base',
+    description: 'Full set of interaction state transitions — background, box-shadow, and transform with Renge easing',
+    tokens: {
+      transition: `background var(--renge-duration-1) var(--renge-easing-ease-out), box-shadow var(--renge-duration-2) var(--renge-easing-ease-out), transform var(--renge-duration-1) var(--renge-easing-spring)`,
     },
   },
 };

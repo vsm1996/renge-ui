@@ -51,12 +51,28 @@ export function validateSpacingScale(
     }
   });
 
-  // Check monotonic increase (each value > previous)
+  // PHI² ≈ 2.618 — jumps larger than this suggest a missing intermediate step
+  const PHI_SQUARED = 2.618;
+
+  // Check monotonic increase; warn on suspicious gaps or near-duplicates
   for (let i = 1; i < values.length; i++) {
     if (values[i].px <= values[i - 1].px) {
       errors.push(
         `Scale not monotonically increasing: ${values[i - 1].key} (${values[i - 1].px}px) >= ${values[i].key} (${values[i].px}px)`
       );
+    } else {
+      const ratio = values[i].px / values[i - 1].px;
+      if (ratio > PHI_SQUARED) {
+        warnings.push(
+          `Large step between ${values[i - 1].key} (${values[i - 1].px}px) and ${values[i].key} (${values[i].px}px) ` +
+          `(ratio ${ratio.toFixed(2)}×, above PHI² ${PHI_SQUARED}): possible missing step`
+        );
+      } else if (ratio < 1.1) {
+        warnings.push(
+          `Values nearly equal: ${values[i - 1].key} (${values[i - 1].px}px) and ${values[i].key} (${values[i].px}px) ` +
+          `(ratio ${ratio.toFixed(2)}×): may be visually indistinguishable`
+        );
+      }
     }
   }
 
@@ -112,12 +128,19 @@ export function validateTypeScale(
     const ratio = sizes[i].px / sizes[i - 1].px;
     const expectedMin = expectedRatio * (1 - tolerance);
     const expectedMax = expectedRatio * (1 + tolerance);
+    const deviation = Math.abs(ratio - expectedRatio) / expectedRatio;
 
     if (ratio < expectedMin || ratio > expectedMax) {
-      const deviation = ((ratio - expectedRatio) / expectedRatio * 100).toFixed(1);
       errors.push(
         `Typography ratio deviation: ${ratio.toFixed(3)} ` +
-        `(expected ~${expectedRatio.toFixed(3)}, actual deviation: ${deviation}%) ` +
+        `(expected ~${expectedRatio.toFixed(3)}, actual deviation: ${(deviation * 100).toFixed(1)}%) ` +
+        `between ${sizes[i - 1].key} (${sizes[i - 1].px}px) and ${sizes[i].key} (${sizes[i].px}px)`
+      );
+    } else if (deviation > tolerance * 0.6) {
+      // Within the error threshold but over 60% of the way to it — approaching the limit
+      warnings.push(
+        `Typography ratio approaching tolerance limit: ${ratio.toFixed(3)} ` +
+        `(expected ~${expectedRatio.toFixed(3)}, deviation ${(deviation * 100).toFixed(1)}% vs ${(tolerance * 100).toFixed(0)}% max) ` +
         `between ${sizes[i - 1].key} (${sizes[i - 1].px}px) and ${sizes[i].key} (${sizes[i].px}px)`
       );
     }
@@ -183,11 +206,28 @@ export function validateContrastRatio(
   const darker = Math.min(fgLuminance, bgLuminance);
   const contrastRatio = (lighter + 0.05) / (darker + 0.05);
 
+  const WCAG_AA_NORMAL = 4.5;
+  const WCAG_AA_LARGE  = 3.0;
+  const WCAG_AAA       = 7.0;
+
   if (contrastRatio < minRatio) {
     errors.push(
       `Contrast ratio ${contrastRatio.toFixed(2)} is below minimum ${minRatio.toFixed(2)} ` +
       `(foreground: ${foreground}, background: ${background})`
     );
+  } else {
+    // Passes — warn about higher thresholds not met
+    if (contrastRatio < WCAG_AAA) {
+      warnings.push(
+        `Contrast ratio ${contrastRatio.toFixed(2)}:1 meets AA but not AAA (${WCAG_AAA}:1 for normal text, ${WCAG_AA_NORMAL}:1 for large text)`
+      );
+    }
+    // If checking large-text threshold (minRatio ≤ 3:1), warn that it would fail normal text AA
+    if (minRatio <= WCAG_AA_LARGE && contrastRatio < WCAG_AA_NORMAL) {
+      warnings.push(
+        `Contrast ratio ${contrastRatio.toFixed(2)}:1 passes large text AA (${WCAG_AA_LARGE}:1) but does not meet normal text AA (${WCAG_AA_NORMAL}:1)`
+      );
+    }
   }
 
   return {

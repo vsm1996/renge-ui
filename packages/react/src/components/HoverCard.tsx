@@ -1,4 +1,4 @@
-import { forwardRef, useState, useRef, useEffect, ReactNode } from 'react';
+import { forwardRef, useState, useRef, useEffect, type ReactNode } from 'react';
 import type { ComponentPropsWithoutRef } from 'react';
 
 export interface HoverCardProps extends Omit<ComponentPropsWithoutRef<'div'>, 'content'> {
@@ -15,15 +15,19 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
       const el = containerRef.current;
       if (!el) return;
 
-      const handleMouseEnter = () => setIsOpen(true);
-      const handleMouseLeave = () => setIsOpen(false);
+      const show = () => setIsOpen(true);
+      const hide = () => setIsOpen(false);
 
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
+      el.addEventListener('mouseenter', show);
+      el.addEventListener('mouseleave', hide);
+      el.addEventListener('focusin', show);
+      el.addEventListener('focusout', hide);
 
       return () => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
+        el.removeEventListener('mouseenter', show);
+        el.removeEventListener('mouseleave', hide);
+        el.removeEventListener('focusin', show);
+        el.removeEventListener('focusout', hide);
       };
     }, []);
 
@@ -33,6 +37,7 @@ export const HoverCard = forwardRef<HTMLDivElement, HoverCardProps>(
         {isOpen && (
           <div
             ref={ref}
+            role="tooltip"
             style={{
               position: 'absolute',
               top: '100%',

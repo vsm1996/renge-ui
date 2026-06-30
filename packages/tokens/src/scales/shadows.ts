@@ -33,7 +33,7 @@ export function createShadowScale(baseUnit: number = 4): Record<string, string> 
     'layer-1': `0 ${y1} ${blur1} rgb(0 0 0 / 0.05)`,
     'layer-2': `0 ${y2} ${blur2} rgb(0 0 0 / 0.1)`,
     'layer-3': `0 ${y3} ${blur3} rgb(0 0 0 / 0.15)`,
-    'focus': `0 0 0 3px rgb(var(--renge-color-accent-rgb) / 0.5)`,
+    'focus': `0 0 0 3px color-mix(in oklch, var(--renge-color-accent) 28%, transparent)`,
     'inset': `inset 0 1px 2px rgb(0 0 0 / 0.05)`,
   };
 }

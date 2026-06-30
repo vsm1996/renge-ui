@@ -457,9 +457,10 @@ describe("createShadowScale", () => {
     expect(scale["layer-3"]).toContain("0.15");
   });
 
-  it("focus shadow uses color reference", () => {
+  it("focus shadow uses color-mix with accent", () => {
     const scale = createShadowScale();
-    expect(scale["focus"]).toContain("--renge-color-accent-rgb");
+    expect(scale["focus"]).toContain("--renge-color-accent");
+    expect(scale["focus"]).toContain("color-mix");
   });
 
   it("inset shadow uses correct pattern", () => {
