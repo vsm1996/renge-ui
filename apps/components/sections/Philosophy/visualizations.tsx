@@ -73,7 +73,7 @@ export function PhyllotaxisViz() {
   const ref = useRef<SVGSVGElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
   const GOLDEN_ANGLE = 137.508;
-  const n = 60;
+  const n = 89;
   const size = 80;
   const points = Array.from({ length: n }, (_, i) => {
     const idx = i + 1;
