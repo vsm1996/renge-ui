@@ -100,11 +100,28 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       onChange?.(v);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'].includes(e.key)) return;
+      e.preventDefault();
+      const inputs = Array.from(
+        e.currentTarget.querySelectorAll<HTMLInputElement>('input[type="radio"]:not(:disabled)')
+      );
+      if (!inputs.length) return;
+      const currentIdx = inputs.findIndex((input) => input.checked);
+      const start = currentIdx === -1 ? 0 : currentIdx;
+      const next = (e.key === 'ArrowDown' || e.key === 'ArrowRight')
+        ? (start + 1) % inputs.length
+        : (start - 1 + inputs.length) % inputs.length;
+      inputs[next].focus();
+      inputs[next].click();
+    };
+
     return (
       <RadioGroupContext.Provider value={{ value: current, onChange: handleChange, name, size, disabled }}>
         <div
           ref={ref}
           role="radiogroup"
+          onKeyDown={handleKeyDown}
           style={{
             display: 'flex',
             flexDirection: direction === 'vertical' ? 'column' : 'row',
@@ -158,6 +175,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           name={ctx?.name}
           checked={isChecked}
           disabled={disabled}
+          tabIndex={ctx && ctx.value && !isChecked ? -1 : 0}
           onChange={(e) => {
             handleChange();
             onChange?.(e);

@@ -111,13 +111,42 @@ export function Modal({
     return () => document.removeEventListener('keydown', handler);
   }, [open, closeOnEsc, onClose]);
 
-  // Focus trap
+  // Focus management — move focus into dialog on open, restore on close
   useEffect(() => {
     if (open) {
       const prev = document.activeElement as HTMLElement;
       dialogRef.current?.focus();
       return () => prev?.focus();
     }
+  }, [open]);
+
+  // Focus trap — Tab/Shift+Tab cycle within the dialog
+  useEffect(() => {
+    if (!open || !dialogRef.current) return;
+    const el = dialogRef.current;
+    const FOCUSABLE = [
+      'a[href]', 'button:not(:disabled)', 'input:not(:disabled)',
+      'select:not(:disabled)', 'textarea:not(:disabled)',
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(', ');
+
+    const handler = (e: globalThis.KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const nodes = Array.from(el.querySelectorAll<HTMLElement>(FOCUSABLE));
+      if (!nodes.length) { e.preventDefault(); return; }
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey) {
+        if (active === first || active === el) { e.preventDefault(); last.focus(); }
+      } else {
+        if (active === last || active === el) { e.preventDefault(); first.focus(); }
+      }
+    };
+
+    document.addEventListener('keydown', handler, true);
+    return () => document.removeEventListener('keydown', handler, true);
   }, [open]);
 
   if (!mounted || !visible) return null;

@@ -21,7 +21,7 @@ const light: SemanticColorMap = {
   bgInverse:    "oklch(18% 0.12 269)",           // deep night inverse
   fg:           "oklch(16% 0.08 265)",           // dark indigo-navy, high contrast
   fgSubtle:     "oklch(30% 0.10 265)",
-  fgMuted:      "oklch(50% 0.08 260)",
+  fgMuted:      "oklch(46% 0.10 260)",           // WCAG AA: ~5:1 on dusk bg ✓
   fgInverse:    "oklch(92% 0.04 258)",           // cool near-white on dark
   border:       "oklch(78% 0.06 268)",
   borderSubtle: "oklch(88% 0.04 268)",

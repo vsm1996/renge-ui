@@ -8,22 +8,22 @@ export function AccessibilityDocs() {
       criterion: "1.4.3: Contrast",
       level: "AA",
       status: "✅",
-      description: "All text on light backgrounds meets 4.5:1 contrast ratio minimum",
-      implementation: "Color tokens (earth, twilight, fire, void, leaf) updated with verified contrast ratios",
+      description: "All text across light and dark mode meets 4.5:1 minimum contrast ratio",
+      implementation: "All 6 profiles verified across both modes. fire/twilight light fgMuted raised to L≤46%; void dark fgMuted raised from L=40% to L=58%",
     },
     {
       criterion: "2.5.5: Target Size",
       level: "AA",
-      status: "✅",
-      description: "All interactive elements sized 44×44px minimum",
-      implementation: "Button, input, and link components enforce minHeight: 44px",
+      status: "⚠️",
+      description: "Primary interactive elements (Button md/lg, Input, Select) meet 44×44px. Compact inline variants (sm Button, Badge, CopyButton) may fall below",
+      implementation: "Full-size components meet target. Compact variants are sized for context — WCAG 2.2 relaxed this criterion to 24×24px minimum (2.5.8)",
     },
     {
       criterion: "2.4.7: Focus Visible",
       level: "AA",
       status: "✅",
       description: "All keyboard-interactive elements have visible focus indicators",
-      implementation: "Focus ring: 2px solid --renge-color-border-focus with 2px offset",
+      implementation: "Focus ring: 3px glow via box-shadow using --renge-color-accent at 25–28% opacity. Hidden inputs (Radio, Checkbox, Switch) show ring on visual indicator via CSS sibling selector",
     },
     {
       criterion: "1.4.1: Use of Color",
@@ -143,7 +143,7 @@ export function AccessibilityDocs() {
               Color Contrast
             </Heading>
             <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)" }}>
-              All text on light backgrounds meets WCAG AA contrast (4.5:1 minimum). Component states visible without relying on color alone.
+              All text across light and dark modes meets WCAG AA contrast (4.5:1 minimum) across all 6 color profiles. Component states remain visible without relying on color alone.
             </Text>
           </div>
 
@@ -159,7 +159,7 @@ export function AccessibilityDocs() {
               Keyboard Navigation
             </Heading>
             <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)" }}>
-              All interactive elements are keyboard accessible. Focus indicators are clearly visible. Skip links enable efficient navigation.
+              All interactive components implement ARIA keyboard patterns. Tabs use Left/Right arrow navigation. RadioGroup uses Up/Down/Left/Right with roving tabindex. Modal traps focus via Tab cycling. Skip links enable efficient page navigation.
             </Text>
           </div>
 
@@ -213,6 +213,43 @@ export function AccessibilityDocs() {
         </div>
       </div>
 
+      <div style={{ paddingTop: "var(--renge-space-4)" }}>
+        <Heading level={3} style={{ fontSize: "var(--renge-font-size-lg)", marginBottom: "var(--renge-space-4)" }}>
+          Keyboard Patterns
+        </Heading>
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--renge-font-size-sm)" }}>
+            <thead>
+              <tr style={{ borderBottom: "2px solid var(--renge-color-border)", background: "var(--renge-color-bg-subtle)" }}>
+                <th style={{ padding: "var(--renge-space-2) var(--renge-space-3)", textAlign: "left", fontWeight: 600, color: "var(--renge-color-fg-subtle)" }}>Component</th>
+                <th style={{ padding: "var(--renge-space-2) var(--renge-space-3)", textAlign: "left", fontWeight: 600, color: "var(--renge-color-fg-subtle)" }}>Keys</th>
+                <th style={{ padding: "var(--renge-space-2) var(--renge-space-3)", textAlign: "left", fontWeight: 600, color: "var(--renge-color-fg-subtle)" }}>Behavior</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { component: "Button / IconButton", keys: "Enter, Space", behavior: "Activate" },
+                { component: "Tabs", keys: "←→ Arrow, Home, End", behavior: "Navigate between tabs (roving tabindex)" },
+                { component: "RadioGroup", keys: "↑↓←→ Arrow", behavior: "Select next/previous radio (roving tabindex)" },
+                { component: "Accordion", keys: "Enter, Space", behavior: "Toggle panel open/closed" },
+                { component: "Modal", keys: "Esc, Tab, Shift+Tab", behavior: "Close on Esc; Tab cycles through focusable elements within the dialog" },
+                { component: "Checkbox / Switch", keys: "Space", behavior: "Toggle checked state" },
+                { component: "Select", keys: "↑↓ Arrow, Enter, Esc", behavior: "Native browser behavior (delegated to <select>)" },
+                { component: "Tooltip", keys: "Focus / Blur", behavior: "Show on focus; hide on blur" },
+              ].map((row, i) => (
+                <tr key={i} style={{ borderBottom: "1px solid var(--renge-color-border-subtle)" }}>
+                  <td style={{ padding: "var(--renge-space-2) var(--renge-space-3)", color: "var(--renge-color-fg)", fontWeight: 500 }}>{row.component}</td>
+                  <td style={{ padding: "var(--renge-space-2) var(--renge-space-3)" }}>
+                    <code style={{ fontFamily: "monospace", fontSize: "var(--renge-font-size-xs)", background: "var(--renge-color-bg-muted)", padding: "2px 6px", borderRadius: "var(--renge-radius-1)", color: "var(--renge-color-fg)" }}>{row.keys}</code>
+                  </td>
+                  <td style={{ padding: "var(--renge-space-2) var(--renge-space-3)", color: "var(--renge-color-fg-subtle)" }}>{row.behavior}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div
         style={{
           padding: "var(--renge-space-5)",
@@ -223,10 +260,10 @@ export function AccessibilityDocs() {
       >
         <Stack gap="3">
           <Heading level={3} style={{ fontSize: "var(--renge-font-size-lg)", margin: 0 }}>
-            ✨ 100% WCAG 2.1 Level AA Compliant
+            WCAG 2.1 Level AA
           </Heading>
           <Text size="base" style={{ margin: 0, color: "var(--renge-color-fg-subtle)" }}>
-            Every Renge component meets all WCAG 2.1 Level AA success criteria. Your application built with Renge will be accessible to users with disabilities, and compliant with legal accessibility requirements (ADA, AODA, Equality Act 2010, etc.).
+            Renge components meet WCAG 2.1 Level AA standards. All 6 color profiles pass 4.5:1 contrast ratios in both light and dark modes. All interactive components implement proper ARIA keyboard patterns. Applications built with Renge will be accessible to users with disabilities.
           </Text>
         </Stack>
       </div>

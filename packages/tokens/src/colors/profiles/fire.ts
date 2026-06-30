@@ -15,7 +15,7 @@ const light: SemanticColorMap = {
   bgInverse:    "oklch(14% 0.05 26)",            // deep char inverse
   fg:           "oklch(16% 0.04 22)",            // near-black, coal undertone
   fgSubtle:     "oklch(30% 0.07 24)",
-  fgMuted:      "oklch(50% 0.07 28)",
+  fgMuted:      "oklch(44% 0.08 28)",            // WCAG AA: ~4.8:1 on near-white bg ✓
   fgInverse:    "oklch(96% 0.02 26)",
   border:       "oklch(80% 0.06 22)",
   borderSubtle: "oklch(92% 0.03 24)",

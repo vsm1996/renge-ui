@@ -40,7 +40,7 @@ const dark: SemanticColorMap = {
   bgInverse:    "oklch(96% 0.00 0)",
   fg:           "oklch(94% 0.01 250)",
   fgSubtle:     "oklch(68% 0.01 250)",
-  fgMuted:      "oklch(40% 0.01 250)",
+  fgMuted:      "oklch(58% 0.01 250)",           // WCAG AA: ~4.8:1 on void bg ✓
   fgInverse:    "oklch(7%  0.00 0)",
   border:       "oklch(20% 0.01 250)",
   borderSubtle: "oklch(14% 0.01 250)",

@@ -116,6 +116,8 @@ export function ProfileDropdown() {
   const { profile, mode, setProfile, setMode } = useProfile();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const listboxRef = useRef<HTMLDivElement>(null);
   const current = PROFILES.find((p) => p.id === profile) ?? PROFILES[0];
 
   useEffect(() => {
@@ -127,11 +129,25 @@ export function ProfileDropdown() {
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
+  // Focus the active option when the dropdown opens
+  useEffect(() => {
+    if (!open || !listboxRef.current) return;
+    const active = listboxRef.current.querySelector<HTMLButtonElement>('[aria-selected="true"]');
+    (active ?? listboxRef.current.querySelector<HTMLButtonElement>('[role="option"]'))?.focus();
+  }, [open]);
+
   return (
     <div ref={ref} style={{ display: "flex", alignItems: "center", gap: "var(--renge-space-2)", position: "relative" }}>
       {/* Trigger */}
       <button
+        ref={triggerRef}
         onClick={() => setOpen((o) => !o)}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape' && open) { e.preventDefault(); setOpen(false); }
+          if ((e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') && !open) {
+            e.preventDefault(); setOpen(true);
+          }
+        }}
         aria-expanded={open}
         aria-haspopup="listbox"
         style={{
@@ -168,8 +184,12 @@ export function ProfileDropdown() {
       {/* Dropdown panel */}
       {open && (
         <div
+          ref={listboxRef}
           role="listbox"
           aria-label="Color profile"
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') { setOpen(false); triggerRef.current?.focus(); }
+          }}
           style={{
             position: "absolute",
             top: "calc(100% + var(--renge-space-2))",
@@ -190,7 +210,19 @@ export function ProfileDropdown() {
                 key={p.id}
                 role="option"
                 aria-selected={active}
-                onClick={() => { setProfile(p.id); setOpen(false); }}
+                onClick={() => { setProfile(p.id); setOpen(false); triggerRef.current?.focus(); }}
+                onKeyDown={(e) => {
+                  if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    (e.currentTarget.nextElementSibling as HTMLButtonElement | null)?.focus();
+                  } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prev = e.currentTarget.previousElementSibling as HTMLButtonElement | null;
+                    if (prev) prev.focus(); else triggerRef.current?.focus();
+                  } else if (e.key === 'Tab') {
+                    setOpen(false);
+                  }
+                }}
                 title={p.description}
                 style={{
                   display: "flex",

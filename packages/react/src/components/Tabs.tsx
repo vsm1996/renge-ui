@@ -98,11 +98,30 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
 // ─── TabList ──────────────────────────────────────────────────────────────────
 
 export const TabList = forwardRef<HTMLDivElement, TabListProps>(
-  function TabList({ style, children, ...props }, ref) {
+  function TabList({ style, children, onKeyDown, ...props }, ref) {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const tabs = Array.from(
+        e.currentTarget.querySelectorAll<HTMLButtonElement>('[role="tab"]:not(:disabled)')
+      );
+      const idx = tabs.indexOf(document.activeElement as HTMLButtonElement);
+      if (idx === -1) return onKeyDown?.(e);
+
+      let next = idx;
+      if (e.key === 'ArrowRight') { e.preventDefault(); next = (idx + 1) % tabs.length; }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); next = (idx - 1 + tabs.length) % tabs.length; }
+      else if (e.key === 'Home') { e.preventDefault(); next = 0; }
+      else if (e.key === 'End') { e.preventDefault(); next = tabs.length - 1; }
+      else return onKeyDown?.(e);
+
+      tabs[next].focus();
+      tabs[next].click();
+    };
+
     return (
       <div
         ref={ref}
         role="tablist"
+        onKeyDown={handleKeyDown}
         style={{
           display: 'flex',
           gap: 0,
@@ -133,6 +152,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         aria-controls={`tabpanel-${value}`}
         id={`tab-${value}`}
         data-renge-tab=""
+        tabIndex={isActive ? 0 : -1}
         onClick={() => ctx?.setActive(value)}
         style={{
           padding: 'var(--renge-space-2) var(--renge-space-4)',
