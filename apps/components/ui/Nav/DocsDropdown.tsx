@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { DOCS_LINKS } from "./links";
 
@@ -12,6 +13,7 @@ interface DocsDropdownProps {
 
 export function DocsDropdown({ isOpen, onToggle, onClose }: DocsDropdownProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -74,27 +76,32 @@ export function DocsDropdown({ isOpen, onToggle, onClose }: DocsDropdownProps) {
               gap: "var(--renge-space-2)",
             }}
           >
-            {DOCS_LINKS.map(({ label, href, desc }) => (
-              <a
-                key={href}
-                href={href}
-                onClick={onClose}
-                data-docs-link=""
-                style={{
-                  display: "block",
-                  padding: "var(--renge-space-3)",
-                  borderRadius: "var(--renge-radius-2)",
-                  textDecoration: "none",
-                }}
-              >
-                <div style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-fg)", fontFamily: "var(--font-body)", marginBottom: 2, fontWeight: 500 }}>
-                  {label}
-                </div>
-                <div style={{ fontSize: "var(--renge-font-size-xs)", color: "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.01em", lineHeight: 1.4 }}>
-                  {desc}
-                </div>
-              </a>
-            ))}
+            {DOCS_LINKS.map(({ label, href, desc }) => {
+              const hrefPath = href.split("#")[0] || "/";
+              const isCurrent = hrefPath === "/" ? pathname === "/" : pathname === hrefPath || pathname.startsWith(hrefPath + "/");
+              return (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={onClose}
+                  data-docs-link=""
+                  style={{
+                    display: "block",
+                    padding: "var(--renge-space-3)",
+                    borderRadius: "var(--renge-radius-2)",
+                    textDecoration: "none",
+                    background: isCurrent ? "var(--renge-color-accent-subtle)" : "transparent",
+                  }}
+                >
+                  <div style={{ fontSize: "var(--renge-font-size-sm)", color: isCurrent ? "var(--renge-color-accent)" : "var(--renge-color-fg)", fontFamily: "var(--font-body)", marginBottom: 2, fontWeight: isCurrent ? 600 : 500 }}>
+                    {label}
+                  </div>
+                  <div style={{ fontSize: "var(--renge-font-size-xs)", color: isCurrent ? "var(--renge-color-accent)" : "var(--renge-color-fg-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.01em", lineHeight: 1.4, opacity: isCurrent ? 0.7 : 1 }}>
+                    {desc}
+                  </div>
+                </a>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>

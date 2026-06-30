@@ -157,39 +157,41 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       );
     }
     if (petalName === 'hoverSurface') {
+      const NAV_ITEMS = ['Dashboard', 'Analytics', 'Settings', 'Team'];
+      const HOVER_IDX = 1;
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
-          <PreviewWrap>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--renge-space-3)' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
-                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-subtle)' }}>rest</span>
-                <div style={{ padding: 'var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', background: 'var(--renge-color-bg)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)' }}>Menu item</div>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
-                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)' }}>:hover</span>
-                <div style={{ padding: 'var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)', ...tokens as any }}>Menu item</div>
-              </div>
-            </div>
-          </PreviewWrap>
+          <div style={{ padding: 'var(--renge-space-3)', background: 'var(--renge-color-bg-muted)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)', display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {NAV_ITEMS.map((item, i) => {
+              const isHovered = i === HOVER_IDX;
+              return (
+                <div key={item} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--renge-space-2) var(--renge-space-3)', borderRadius: 'var(--renge-radius-1)', fontSize: 'var(--renge-font-size-sm)', color: isHovered ? 'var(--renge-color-fg)' : 'var(--renge-color-fg-muted)', borderLeft: isHovered ? '2px solid var(--renge-color-accent-subtle)' : '2px solid transparent', ...(isHovered ? tokens as any : { background: 'var(--renge-color-bg)' }) }}>
+                  {item}
+                  {isHovered && <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)', background: 'var(--renge-color-accent-subtle)', padding: '1px var(--renge-space-2)', borderRadius: 'var(--renge-radius-full)' }}>:hover</span>}
+                </div>
+              );
+            })}
+          </div>
           <TokenJSON tokens={tokens} />
         </div>
       );
     }
     if (petalName === 'activeSurface') {
+      const NAV_ITEMS = ['Dashboard', 'Analytics', 'Settings', 'Team'];
+      const ACTIVE_IDX = 2;
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
-          <PreviewWrap>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--renge-space-3)' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
-                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-subtle)' }}>:hover</span>
-                <div style={{ padding: 'var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', background: 'var(--renge-color-bg-subtle)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)' }}>Menu item</div>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
-                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)' }}>:active</span>
-                <div style={{ padding: 'var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: '1px solid var(--renge-color-border-subtle)', fontSize: 'var(--renge-font-size-sm)', color: 'var(--renge-color-fg)', ...tokens as any }}>Menu item</div>
-              </div>
-            </div>
-          </PreviewWrap>
+          <div style={{ padding: 'var(--renge-space-3)', background: 'var(--renge-color-bg-muted)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)', display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {NAV_ITEMS.map((item, i) => {
+              const isActive = i === ACTIVE_IDX;
+              return (
+                <div key={item} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--renge-space-2) var(--renge-space-3)', borderRadius: 'var(--renge-radius-1)', fontSize: 'var(--renge-font-size-sm)', color: isActive ? 'var(--renge-color-fg)' : 'var(--renge-color-fg-muted)', borderLeft: isActive ? '2px solid var(--renge-color-accent)' : '2px solid transparent', ...(isActive ? tokens as any : { background: 'var(--renge-color-bg-subtle)' }) }}>
+                  {item}
+                  {isActive && <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)', background: 'var(--renge-color-accent-subtle)', padding: '1px var(--renge-space-2)', borderRadius: 'var(--renge-radius-full)' }}>:active</span>}
+                </div>
+              );
+            })}
+          </div>
           <TokenJSON tokens={tokens} />
         </div>
       );
@@ -197,20 +199,18 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
     if (petalName === 'interactiveBase') {
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
-          <div style={{ padding: 'var(--renge-space-4)', background: 'var(--renge-color-bg)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
-              {[
-                { label: 'default', bg: 'var(--renge-color-bg)', ring: false },
-                { label: ':hover',  bg: 'var(--renge-color-bg-subtle)', ring: false },
-                { label: ':active', bg: 'var(--renge-color-bg-muted)', ring: false },
-                { label: ':focus',  bg: 'var(--renge-color-bg-subtle)', ring: true },
-              ].map(({ label, bg, ring }) => (
-                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 'var(--renge-space-3)' }}>
-                  <span style={{ width: 48, fontSize: 'var(--renge-font-size-xs)', color: ring ? 'var(--renge-color-accent)' : 'var(--renge-color-fg-subtle)', flexShrink: 0 }}>{label}</span>
-                  <div style={{ flex: 1, padding: 'var(--renge-space-2) var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: ring ? '1px solid var(--renge-color-accent)' : '1px solid var(--renge-color-border-subtle)', background: bg, boxShadow: ring ? 'var(--renge-shadow-focus)' : undefined, fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg)' }}>Button</div>
-                </div>
-              ))}
-            </div>
+          <div style={{ padding: 'var(--renge-space-4)', background: 'var(--renge-color-bg-muted)', borderRadius: 'var(--renge-radius-2)', marginBottom: 'var(--renge-space-3)', display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-2)' }}>
+            {[
+              { label: 'default', bg: 'var(--renge-color-bg)',        border: 'var(--renge-color-border-subtle)', text: 'var(--renge-color-fg-muted)', ring: false },
+              { label: ':hover',  bg: 'var(--renge-color-bg-subtle)', border: 'var(--renge-color-border)',        text: 'var(--renge-color-fg)',       ring: false },
+              { label: ':active', bg: 'var(--renge-color-bg)',        border: 'var(--renge-color-accent-subtle)', text: 'var(--renge-color-fg)',       ring: false, accent: true },
+              { label: ':focus',  bg: 'var(--renge-color-bg-subtle)', border: 'var(--renge-color-accent)',        text: 'var(--renge-color-accent)',    ring: true },
+            ].map(({ label, bg, border, text, ring, accent }) => (
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 'var(--renge-space-3)' }}>
+                <span style={{ width: 48, fontSize: 'var(--renge-font-size-xs)', color: ring ? 'var(--renge-color-accent)' : accent ? 'var(--renge-color-accent-subtle)' : 'var(--renge-color-fg-subtle)', flexShrink: 0 }}>{label}</span>
+                <div style={{ flex: 1, padding: 'var(--renge-space-2) var(--renge-space-3)', borderRadius: 'var(--renge-radius-2)', border: `1px solid ${border}`, background: bg, boxShadow: ring ? 'var(--renge-shadow-focus)' : undefined, fontSize: 'var(--renge-font-size-xs)', color: text }}>Button</div>
+              </div>
+            ))}
           </div>
           <TokenJSON tokens={tokens} />
         </div>
@@ -1270,10 +1270,10 @@ const sheet = Object.entries(petals.navigation.navItem.tokens)
           <section key={categoryName} id={categoryName} style={{ scrollMarginTop: 'calc(52px + var(--renge-space-6))' }}>
             <div style={{ marginBottom: 'var(--renge-space-5)' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--renge-space-3)', marginBottom: 'var(--renge-space-2)', flexWrap: 'wrap' as const }}>
-                <h2 style={{ fontSize: 'var(--renge-font-size-2xl)', lineHeight: 'var(--renge-line-height-2xl)', color: 'var(--renge-color-fg)', margin: 0 }}>
+                <h2 style={{ fontSize: 'var(--renge-font-size-2xl)', lineHeight: 'var(--renge-line-height-2xl)', color: 'var(--renge-color-fg)', margin: 0, paddingLeft: 'var(--renge-space-3)', borderLeft: '2px solid var(--renge-color-accent)' }}>
                   {meta.title}
                 </h2>
-                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-subtle)' }}>
+                <span style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)', background: 'var(--renge-color-accent-subtle)', padding: '1px var(--renge-space-2)', borderRadius: 'var(--renge-radius-full)' }}>
                   {Object.keys(categoryPetals).length} petals
                 </span>
               </div>
@@ -1295,7 +1295,7 @@ const sheet = Object.entries(petals.navigation.navItem.tokens)
                     <h3 style={{ fontSize: 'var(--renge-font-size-base)', fontWeight: 600, color: 'var(--renge-color-fg)', margin: 0 }}>
                       {petal.label}
                     </h3>
-                    <code style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-fg-muted)', fontFamily: 'monospace', flexShrink: 0 }}>
+                    <code style={{ fontSize: 'var(--renge-font-size-xs)', color: 'var(--renge-color-accent)', fontFamily: 'monospace', flexShrink: 0 }}>
                       {petalName}
                     </code>
                   </div>
