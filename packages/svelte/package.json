@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup && cp -r src/components dist/ && rm -rf dist/components/__tests__",
+    "build": "tsup && cp -r src/components dist/ && rm -rf dist/components/__tests__ && cp -r src/stores dist/",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
