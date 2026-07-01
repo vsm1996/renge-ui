@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-const DEFAULT_PROFILE = "clear";
+const DEFAULT_PROFILE = "ocean";
 const DEFAULT_MODE = "light";
 
 /**

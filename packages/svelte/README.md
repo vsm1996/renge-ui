@@ -19,7 +19,7 @@ Wrap your app with `RengeProvider` to enable theme management:
   import RengeProvider from '@renge-ui/svelte/dist/components/RengeProvider.svelte';
 </script>
 
-<RengeProvider profile="clear" mode="light">
+<RengeProvider profile="ocean" mode="light">
   <YourApp />
 </RengeProvider>
 ```
@@ -45,7 +45,7 @@ Access theme state in any component via Svelte stores:
   <p>Current profile: {$profile}</p>
   <p>Current mode: {$mode}</p>
 
-  <button on:click={() => handleProfileChange('clear')}>Clear</button>
+  <button on:click={() => handleProfileChange('ocean')}>Ocean</button>
   <button on:click={() => handleProfileChange('earth')}>Earth</button>
   <button on:click={() => handleProfileChange('twilight')}>Twilight</button>
 
@@ -92,7 +92,7 @@ If you need to sync the store state with existing DOM attributes at startup:
 A Svelte component that wraps your app and manages theme initialization.
 
 **Props:**
-- `profile` (string, default: `"clear"`) — The color profile to use
+- `profile` (string, default: `"ocean"`) — The color profile to use (`"ocean"`, `"earth"`, `"twilight"`, `"fire"`, `"void"`, `"leaf"`)
 - `mode` ("light" | "dark", default: `"light"`) — The color mode
 
 ### profile Store

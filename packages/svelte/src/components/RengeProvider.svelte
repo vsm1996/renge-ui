@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { switchProfile, switchMode } from "../stores/theme";
 
-  export let profile: string = "clear";
+  export let profile: string = "ocean";
   export let mode: "light" | "dark" = "light";
 
   onMount(() => {

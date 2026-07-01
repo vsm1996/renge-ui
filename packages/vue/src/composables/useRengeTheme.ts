@@ -10,7 +10,7 @@ export interface RengeThemeContext extends RengeThemeState {
   switchMode: (mode: "light" | "dark") => void;
 }
 
-const DEFAULT_PROFILE = "clear";
+const DEFAULT_PROFILE = "ocean";
 const DEFAULT_MODE = "light";
 const RENGE_INJECTION_KEY = Symbol("renge-theme");
 

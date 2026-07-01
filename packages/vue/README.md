@@ -16,11 +16,11 @@ Wrap your app with `RengeProvider` to enable theme context:
 
 ```vue
 <script setup lang="ts">
-import RengeProvider from '@renge-ui/vue/dist/components/RengeProvider.vue';
+import { RengeProvider } from '@renge-ui/vue';
 </script>
 
 <template>
-  <RengeProvider profile="clear" mode="light">
+  <RengeProvider profile="ocean" mode="light">
     <YourApp />
   </RengeProvider>
 </template>
@@ -50,7 +50,7 @@ const toggleMode = () => {
     <p>Current profile: {{ profile }}</p>
     <p>Current mode: {{ mode }}</p>
     
-    <button @click="handleProfileChange('clear')">Clear</button>
+    <button @click="handleProfileChange('ocean')">Ocean</button>
     <button @click="handleProfileChange('earth')">Earth</button>
     <button @click="handleProfileChange('twilight')">Twilight</button>
     
@@ -101,7 +101,7 @@ const colorToken = rengeVars.colors.surface;
 A Vue component that provides theme context to child components.
 
 **Props:**
-- `profile` (string, default: `"clear"`) — The color profile to use
+- `profile` (string, default: `"ocean"`) — The color profile to use (`"ocean"`, `"earth"`, `"twilight"`, `"fire"`, `"void"`, `"leaf"`)
 - `mode` ("light" | "dark", default: `"light"`) — The color mode
 
 ### useRengeTheme()

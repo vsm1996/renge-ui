@@ -8,7 +8,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  profile: "clear",
+  profile: "ocean",
   mode: "light",
 });
 
