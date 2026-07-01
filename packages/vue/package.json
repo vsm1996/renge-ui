@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup && cp -r src/components dist/ && cp src/shims-vue.d.ts dist/ && for f in dist/index.d.ts dist/index.d.mts; do printf '/// <reference path=\"./shims-vue.d.ts\" />\\n' | cat - \"$f\" > \"$f.tmp\" && mv \"$f.tmp\" \"$f\"; done",
+    "build": "tsup && cp -r src/components dist/ && rm -rf dist/components/__tests__ && cp src/shims-vue.d.ts dist/ && for f in dist/index.d.ts dist/index.d.mts; do printf '/// <reference path=\"./shims-vue.d.ts\" />\\n' | cat - \"$f\" > \"$f.tmp\" && mv \"$f.tmp\" \"$f\"; done",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
