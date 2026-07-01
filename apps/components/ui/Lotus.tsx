@@ -117,7 +117,7 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
 
     // Breeze phase staggered by petal angle so the ripple moves around the flower
     const breezeDelay = BLOOM_END + ((p.angleDeg + 90) / 360) * 3.5;
-    const breezeDuration = 4.0 + (p.delay * 0.4); // slight duration variation
+    const breezeDuration = 5.5 + (p.delay * 0.6); // slight duration variation
 
     return (
       <g key={key} transform={`translate(${bx}, ${by}) rotate(${rotDeg})`}>
@@ -134,7 +134,7 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
           animate={{
             scaleY: 1,
             opacity: 1,
-            ...(animate ? { scaleX: [1, 1.055, 0.96, 1.03, 0.985, 1] } : {}),
+            ...(animate ? { scaleX: [1, 1.18, 0.88, 1.12, 0.94, 1] } : {}),
           }}
           transition={{
             scaleY: { duration: 0.95, delay: p.delay, ease: EASE },
