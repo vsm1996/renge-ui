@@ -178,7 +178,7 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
     >
       {/* Outer ring (8 petals) — slow clockwise rotation */}
       <motion.g
-        style={{ transformOrigin: `${cx}px ${cy}px` }}
+        style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}
         animate={animate ? { rotate: 360 } : undefined}
         transition={{
           rotate: {
@@ -194,7 +194,7 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
 
       {/* Inner ring (5 petals) — counterclockwise, φ-ratio faster */}
       <motion.g
-        style={{ transformOrigin: `${cx}px ${cy}px` }}
+        style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}
         animate={animate ? { rotate: -360 } : undefined}
         transition={{
           rotate: {
