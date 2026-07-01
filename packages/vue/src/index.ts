@@ -11,6 +11,7 @@
 // Composables
 export { useRengeTheme, useRengeInject } from "./composables/useRengeTheme";
 export type { RengeThemeState, RengeThemeContext } from "./composables/useRengeTheme";
+export { default as RengeProvider } from "./components/RengeProvider.vue";
 
 // Layout & Display (Batch 1)
 export { default as Stack } from "./components/Stack.vue";
