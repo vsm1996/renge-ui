@@ -154,7 +154,7 @@ export function Frameworks() {
               margin: "0 0 var(--renge-space-4) 0",
             }}
           >
-            One system. Every framework.
+            One system. React, Vue, and Svelte.
           </motion.h2>
 
           <motion.p
@@ -171,7 +171,7 @@ export function Frameworks() {
               maxWidth: "52ch",
             }}
           >
-            The same tokens, petals, and mathematical proportions — wherever you build.
+            The same tokens, petals, and mathematical proportions — across the three frameworks that matter to you.
           </motion.p>
         </div>
 
