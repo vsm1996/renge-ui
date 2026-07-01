@@ -1,11 +1,13 @@
-import { provide, inject, reactive } from "vue";
+import { provide, inject, reactive, toRefs, type Ref } from "vue";
 
 export interface RengeThemeState {
   profile: string;
   mode: "light" | "dark";
 }
 
-export interface RengeThemeContext extends RengeThemeState {
+export interface RengeThemeContext {
+  profile: Ref<string>;
+  mode: Ref<"light" | "dark">;
   switchProfile: (name: string) => void;
   switchMode: (mode: "light" | "dark") => void;
 }
@@ -35,7 +37,7 @@ export function useRengeTheme() {
   };
 
   const context: RengeThemeContext = {
-    ...state,
+    ...toRefs(state),
     switchProfile,
     switchMode,
   };

@@ -18,7 +18,7 @@ export const mode = writable<"light" | "dark">(DEFAULT_MODE);
 /**
  * Switch the color profile and update the DOM.
  *
- * @param name - The profile name (e.g., "clear", "earth", "twilight")
+ * @param name - The profile name (e.g., "ocean", "earth", "twilight")
  */
 export function switchProfile(name: string) {
   profile.set(name);
