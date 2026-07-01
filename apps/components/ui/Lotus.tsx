@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useAnimationFrame } from "framer-motion";
 import { PHI, GOLDEN_ANGLE, EASE_OUT } from "@/lib/phi";
 
 const EASE = EASE_OUT;
@@ -61,6 +62,20 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
   const cx = size / 2;
   const cy = size / 2;
   const half = size / 2;
+
+  const outerRef = useRef<SVGGElement>(null);
+  const innerRef = useRef<SVGGElement>(null);
+
+  // Drive rotation via SVG native rotate(angle, cx, cy) — guaranteed to rotate
+  // around (cx, cy) with no transform-origin ambiguity.
+  useAnimationFrame((t) => {
+    if (!animate) return;
+    const elapsed = Math.max(0, t - BLOOM_END * 1000);
+    const outerAngle = (elapsed / (OUTER_PERIOD * 1000)) * 360;
+    const innerAngle = -(elapsed / (INNER_PERIOD * 1000)) * 360;
+    outerRef.current?.setAttribute("transform", `rotate(${outerAngle % 360}, ${cx}, ${cy})`);
+    innerRef.current?.setAttribute("transform", `rotate(${innerAngle % 360}, ${cx}, ${cy})`);
+  });
 
   // ── ring geometry — all proportions scale by φ ────────────────────────────
   const outerBaseR = half * 0.30;
@@ -176,42 +191,15 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
       aria-hidden
       style={style}
     >
-      {/* Outer ring (8 petals) — slow clockwise rotation */}
-      {/*
-        transform-box defaults to view-box for SVG elements, so "50% 50%"
-        always resolves to the SVG viewport center (cx, cy) — stable regardless
-        of child bounding box changes (e.g. petal scaleX breathing).
-      */}
-      <motion.g
-        style={{ transformOrigin: "50% 50%" }}
-        animate={animate ? { rotate: 360 } : undefined}
-        transition={{
-          rotate: {
-            repeat: Infinity,
-            duration: OUTER_PERIOD,
-            ease: "linear",
-            delay: BLOOM_END,
-          },
-        }}
-      >
+      {/* Outer ring — rotate(angle, cx, cy) driven by useAnimationFrame */}
+      <g ref={outerRef}>
         {outerPetals.map((p, i) => renderPetal(p, `outer-${i}`))}
-      </motion.g>
+      </g>
 
-      {/* Inner ring (5 petals) — counterclockwise, φ-ratio faster */}
-      <motion.g
-        style={{ transformOrigin: "50% 50%" }}
-        animate={animate ? { rotate: -360 } : undefined}
-        transition={{
-          rotate: {
-            repeat: Infinity,
-            duration: INNER_PERIOD,
-            ease: "linear",
-            delay: BLOOM_END,
-          },
-        }}
-      >
+      {/* Inner ring — counterclockwise, φ-ratio faster */}
+      <g ref={innerRef}>
         {innerPetals.map((p, i) => renderPetal(p, `inner-${i}`))}
-      </motion.g>
+      </g>
 
       {/* Fixed center — stamens, receptacle, seeds stay still */}
 
