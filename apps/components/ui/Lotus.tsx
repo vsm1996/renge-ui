@@ -177,8 +177,13 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
       style={style}
     >
       {/* Outer ring (8 petals) — slow clockwise rotation */}
+      {/*
+        transform-box defaults to view-box for SVG elements, so "50% 50%"
+        always resolves to the SVG viewport center (cx, cy) — stable regardless
+        of child bounding box changes (e.g. petal scaleX breathing).
+      */}
       <motion.g
-        style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}
+        style={{ transformOrigin: "50% 50%" }}
         animate={animate ? { rotate: 360 } : undefined}
         transition={{
           rotate: {
@@ -194,7 +199,7 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
 
       {/* Inner ring (5 petals) — counterclockwise, φ-ratio faster */}
       <motion.g
-        style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}
+        style={{ transformOrigin: "50% 50%" }}
         animate={animate ? { rotate: -360 } : undefined}
         transition={{
           rotate: {
