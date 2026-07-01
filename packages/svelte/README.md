@@ -10,9 +10,25 @@ pnpm add @renge-ui/svelte @renge-ui/tokens
 
 ## Usage
 
+### Import the stylesheet
+
+Import the token stylesheet **once** at your app's entry point. This defines
+every design token — spacing, type, motion, the palette, and the semantic color
+variables (`--renge-color-bg`, `--renge-color-fg`, `--renge-color-accent`, …).
+
+```ts
+// main.ts
+import '@renge-ui/tokens/renge.css';
+```
+
+The color system works immediately on import — it ships with the `ocean` profile
+as the default (and follows the system light/dark preference). `RengeProvider`
+and `switchProfile` only change *which* profile is active; you do not need them
+for `var(--renge-color-*)` to resolve.
+
 ### Setup with RengeProvider
 
-Wrap your app with `RengeProvider` to enable theme management:
+Wrap your app with `RengeProvider` to switch profile/mode at runtime:
 
 ```svelte
 <script>

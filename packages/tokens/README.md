@@ -35,11 +35,15 @@ import '@renge-ui/tokens/renge.css';
 @import '@renge-ui/tokens/renge.css';
 ```
 
-Then set `data-profile` on `<html>` to activate a color profile:
+That's it — `var(--renge-color-bg)`, `var(--renge-color-fg)`, etc. resolve
+immediately. The stylesheet seeds `:root` with the default `ocean` profile, so
+the color system works with no attribute and no JavaScript.
+
+To switch to a different profile, set `data-profile` on `<html>`:
 
 ```html
-<html data-profile="ocean">                   <!-- light -->
-<html data-profile="ocean" data-mode="dark">  <!-- explicit dark -->
+<html data-profile="earth">                   <!-- light -->
+<html data-profile="earth" data-mode="dark">  <!-- explicit dark -->
 ```
 
 System `prefers-color-scheme: dark` is respected automatically — no attribute needed.

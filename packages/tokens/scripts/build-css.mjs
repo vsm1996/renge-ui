@@ -6,6 +6,8 @@
  *
  * Output structure:
  *   :root                                        — spacing, type, motion, radius, palette, animations
+ *                                                  + default profile (ocean light) semantic colors
+ *   @media prefers-color-scheme: dark            — default profile dark, when no data-profile is set
  *   [data-profile="X"]                           — light color vars for each profile
  *   [data-profile="X"][data-mode="dark"]         — explicit dark
  *   @media prefers-color-scheme: dark            — system dark preference
@@ -42,6 +44,11 @@ function varsToBlock(vars, indent = "  ") {
 
 // ─── 1. Base vars (:root) ─────────────────────────────────────────────────────
 
+// The default profile whose semantic colors seed :root, so var(--renge-color-*)
+// resolves with zero JS and no data-profile attribute. Must match
+// createRengeTheme()'s defaults (see src/theme.ts).
+const DEFAULT_PROFILE = "ocean";
+
 const theme = createRengeTheme();
 const baseVars = {};
 
@@ -64,6 +71,14 @@ for (const [key, value] of Object.entries(theme.vars)) {
   }
 }
 
+// Seed :root with the default profile's semantic colors so the color system
+// works on plain CSS import — no data-profile attribute, no JS required.
+// [data-profile="X"] blocks below override these (equal specificity, later in
+// source order) the moment a profile attribute is set.
+const defaultLightVars = createSemanticColorVars(profiles[DEFAULT_PROFILE].light);
+const defaultDarkVars = createSemanticColorVars(profiles[DEFAULT_PROFILE].dark);
+Object.assign(baseVars, defaultLightVars);
+
 const lines = [];
 
 lines.push("/* @renge-ui/tokens — generated stylesheet */");
@@ -74,6 +89,15 @@ lines.push("");
 
 lines.push(":root {");
 lines.push(varsToBlock(baseVars));
+lines.push("}");
+lines.push("");
+
+// Default profile follows the system dark preference until an explicit
+// data-profile is set (at which point the per-profile blocks below take over).
+lines.push("@media (prefers-color-scheme: dark) {");
+lines.push("  :root:not([data-profile]) {");
+lines.push(varsToBlock(defaultDarkVars, "    "));
+lines.push("  }");
 lines.push("}");
 lines.push("");
 
