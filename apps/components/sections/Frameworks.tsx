@@ -57,9 +57,17 @@ const FRAMEWORKS = [
     count: "Stores + actions",
     detail: "rengeStore, profileStore, token actions.",
     icon: (
+      // Svelte logo: two interlocking pill shapes forming an S.
+      // Lower pill renders first (behind); upper pill's bg fill creates the interlock.
       <svg viewBox="0 0 48 48" width={36} height={36} fill="none" aria-hidden>
-        <path d="M36 8c3 4 2 10-2 15L20 38c-4 5-11 6-15 2-3-4-2-10 2-15L21 10c4-5 11-6 15-2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="none" />
-        <path d="M28 14c2 3 1 7-2 11L18 36c-3 4-8 5-11 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.5" />
+        <g transform="translate(21 33) rotate(-28)">
+          <rect x="-16" y="-6" width="32" height="12" rx="6"
+            fill="var(--renge-color-bg)" stroke="currentColor" strokeWidth="2.5" />
+        </g>
+        <g transform="translate(27 15) rotate(-28)">
+          <rect x="-16" y="-6" width="32" height="12" rx="6"
+            fill="var(--renge-color-bg)" stroke="currentColor" strokeWidth="2.5" />
+        </g>
       </svg>
     ),
   },
