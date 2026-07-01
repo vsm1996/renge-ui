@@ -3,6 +3,15 @@
 import { motion } from "framer-motion";
 import { PHI, GOLDEN_ANGLE, EASE_OUT } from "@/lib/phi";
 
+const EASE = EASE_OUT;
+
+// All bloom animations finish around 1.5s — continuous motion starts after
+const BLOOM_END = 1.6;
+
+// Counter-rotating ring periods — φ ratio between them (mathematically intentional)
+const OUTER_PERIOD = 90;           // clockwise, 90s per revolution
+const INNER_PERIOD = 90 / PHI;    // counterclockwise, ~55.6s per revolution
+
 /**
  * Lotus flower — top-down view.
  *
@@ -14,10 +23,12 @@ import { PHI, GOLDEN_ANGLE, EASE_OUT } from "@/lib/phi";
  *   • Receptacle seed holes: 13 arranged in a ring (Fibonacci)
  *   • Stamen dots: 21 arranged in a ring (Fibonacci)
  *
- * All colors are CSS custom properties → reactive to profile changes.
+ * Motion:
+ *   • Outer ring rotates clockwise at OUTER_PERIOD s/rev
+ *   • Inner ring rotates counterclockwise at INNER_PERIOD s/rev (φ faster)
+ *   • Each petal breathes with a staggered scaleX oscillation (breeze)
+ *   • All continuous motion begins after the bloom animation completes
  */
-
-const EASE = EASE_OUT;
 
 /**
  * Lotus petal — elongated with a pointed tip, matching real lotus anatomy.
@@ -27,10 +38,8 @@ function petalPath(w: number, h: number): string {
   const hw = w / 2;
   return [
     "M 0 0",
-    // left edge: swell outward to widest point then taper inward to pointed tip
     `C ${-hw * 0.65} ${-h * 0.1}   ${-hw * 1.0} ${-h * 0.43}  ${-hw * 0.76} ${-h * 0.7}`,
     `C ${-hw * 0.45} ${-h * 0.86}  ${-hw * 0.14} ${-h * 0.97}  0 ${-h}`,
-    // right edge mirrored
     `C ${hw * 0.14} ${-h * 0.97}   ${hw * 0.45} ${-h * 0.86}   ${hw * 0.76} ${-h * 0.7}`,
     `C ${hw * 1.0} ${-h * 0.43}    ${hw * 0.65} ${-h * 0.1}    0 0`,
     "Z",
@@ -54,21 +63,21 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
   const half = size / 2;
 
   // ── ring geometry — all proportions scale by φ ────────────────────────────
-  const outerBaseR = half * 0.30; // outer petal bases sit on this ring
-  const innerBaseR = outerBaseR / PHI; // inner ring radius = outer / φ
+  const outerBaseR = half * 0.30;
+  const innerBaseR = outerBaseR / PHI;
 
-  const outerW = half * 0.28; // outer petal width at widest
-  const outerH = half * 0.62; // outer petal height (base → tip)
-  const innerW = outerW / PHI; // inner petal width = outer / φ
-  const innerH = outerH / PHI; // inner petal height = outer / φ
+  const outerW = half * 0.28;
+  const outerH = half * 0.62;
+  const innerW = outerW / PHI;
+  const innerH = outerH / PHI;
 
   // ── ring angles — inner ring offset by golden angle (phyllotaxis) ──────────
-  const outerStart = -90; // first outer petal points straight up
-  const innerStart = -90 + GOLDEN_ANGLE; // inner ring rotated by φ°
+  const outerStart = -90;
+  const innerStart = -90 + GOLDEN_ANGLE;
 
   // ── petal arrays ───────────────────────────────────────────────────────────
   const outerPetals = Array.from({ length: 8 }, (_, i) => ({
-    angleDeg: outerStart + i * 45, // 360° / 8 = 45° spacing
+    angleDeg: outerStart + i * 45,
     baseR: outerBaseR,
     w: outerW,
     h: outerH,
@@ -80,7 +89,7 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
   }));
 
   const innerPetals = Array.from({ length: 5 }, (_, i) => ({
-    angleDeg: innerStart + i * 72, // 360° / 5 = 72° spacing
+    angleDeg: innerStart + i * 72,
     baseR: innerBaseR,
     w: innerW,
     h: innerH,
@@ -95,8 +104,8 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
   const receptacleR = half * 0.115;
   const stamenRingR = half * 0.172;
   const seedRingR = receptacleR * 0.63;
-  const SEED_COUNT = 13; // Fibonacci
-  const STAMEN_COUNT = 21; // Fibonacci
+  const SEED_COUNT = 13;
+  const STAMEN_COUNT = 21;
 
   // ── render helper ──────────────────────────────────────────────────────────
   type Petal = (typeof outerPetals)[0];
@@ -104,7 +113,11 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
     const rad = (p.angleDeg * Math.PI) / 180;
     const bx = cx + p.baseR * Math.cos(rad);
     const by = cy + p.baseR * Math.sin(rad);
-    const rotDeg = p.angleDeg + 90; // align tip outward from centre
+    const rotDeg = p.angleDeg + 90;
+
+    // Breeze phase staggered by petal angle so the ripple moves around the flower
+    const breezeDelay = BLOOM_END + ((p.angleDeg + 90) / 360) * 3.5;
+    const breezeDuration = 4.0 + (p.delay * 0.4); // slight duration variation
 
     return (
       <g key={key} transform={`translate(${bx}, ${by}) rotate(${rotDeg})`}>
@@ -118,10 +131,21 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
           strokeOpacity={p.strokeOpacity}
           style={{ transformBox: "fill-box", transformOrigin: "50% 100%" }}
           initial={animate ? { scaleY: 0, opacity: 0 } : undefined}
-          animate={{ scaleY: 1, opacity: 1 }}
+          animate={{
+            scaleY: 1,
+            opacity: 1,
+            ...(animate ? { scaleX: [1, 1.055, 0.96, 1.03, 0.985, 1] } : {}),
+          }}
           transition={{
             scaleY: { duration: 0.95, delay: p.delay, ease: EASE },
             opacity: { duration: 0.45, delay: p.delay },
+            scaleX: {
+              duration: breezeDuration,
+              delay: breezeDelay,
+              repeat: Infinity,
+              ease: "easeInOut",
+              repeatType: "mirror",
+            },
           }}
         />
         {/* Midrib vein */}
@@ -152,13 +176,41 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
       aria-hidden
       style={style}
     >
-      {/* Outer ring (8 petals) — rendered first, sits behind inner ring */}
-      {outerPetals.map((p, i) => renderPetal(p, `outer-${i}`))}
+      {/* Outer ring (8 petals) — slow clockwise rotation */}
+      <motion.g
+        style={{ transformOrigin: `${cx}px ${cy}px` }}
+        animate={animate ? { rotate: 360 } : undefined}
+        transition={{
+          rotate: {
+            repeat: Infinity,
+            duration: OUTER_PERIOD,
+            ease: "linear",
+            delay: BLOOM_END,
+          },
+        }}
+      >
+        {outerPetals.map((p, i) => renderPetal(p, `outer-${i}`))}
+      </motion.g>
 
-      {/* Inner ring (5 petals) — rendered on top, more upright */}
-      {innerPetals.map((p, i) => renderPetal(p, `inner-${i}`))}
+      {/* Inner ring (5 petals) — counterclockwise, φ-ratio faster */}
+      <motion.g
+        style={{ transformOrigin: `${cx}px ${cy}px` }}
+        animate={animate ? { rotate: -360 } : undefined}
+        transition={{
+          rotate: {
+            repeat: Infinity,
+            duration: INNER_PERIOD,
+            ease: "linear",
+            delay: BLOOM_END,
+          },
+        }}
+      >
+        {innerPetals.map((p, i) => renderPetal(p, `inner-${i}`))}
+      </motion.g>
 
-      {/* Stamens — 21 dots (Fibonacci) in a ring around the receptacle */}
+      {/* Fixed center — stamens, receptacle, seeds stay still */}
+
+      {/* Stamens — 21 dots (Fibonacci) */}
       {Array.from({ length: STAMEN_COUNT }, (_, i) => {
         const a = (i / STAMEN_COUNT) * 2 * Math.PI - Math.PI / 2;
         const scx = cx + stamenRingR * Math.cos(a);
@@ -186,7 +238,7 @@ export function Lotus({ size = 400, animate = true, style }: LotusProps) {
         <circle cx={cx} cy={cy} r={receptacleR} fill="var(--renge-color-accent)" fillOpacity={0.9} />
       </motion.g>
 
-      {/* Seed holes — 13 (Fibonacci) punched into the receptacle */}
+      {/* Seed holes — 13 (Fibonacci) */}
       {Array.from({ length: SEED_COUNT }, (_, i) => {
         const a = (i / SEED_COUNT) * 2 * Math.PI - Math.PI / 2;
         const scx = cx + seedRingR * Math.cos(a);
