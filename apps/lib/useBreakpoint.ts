@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 
 /**
  * SSR-safe breakpoint hook.
- * Returns true once mounted if viewport is <= breakpoint px.
- * Defaults to the standard mobile breakpoint (768px).
+ * Returns true once mounted if viewport is < breakpoint px.
+ *
+ * Defaults to 1224px — the large-tablet / small-laptop line. Below it the whole
+ * site (nav + content sections) uses the compact single-column layout, so
+ * tablets and small laptops no longer get squeezed into the desktop grid.
  */
-export function useBreakpoint(breakpoint = 768): boolean {
+export function useBreakpoint(breakpoint = 1224): boolean {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {

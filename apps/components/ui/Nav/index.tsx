@@ -21,7 +21,7 @@ const linkStyle = {
 } as const;
 
 export function Nav() {
-  const isMobile = useBreakpoint(1224);
+  const isMobile = useBreakpoint();
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
