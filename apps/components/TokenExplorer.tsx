@@ -94,7 +94,7 @@ type TokenCategory = keyof typeof TOKENS;
 
 export function TokenExplorer() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-200px' });
+  const inView = useInView(ref, { once: true, margin: '-10%' });
   const [activeTab, setActiveTab] = useState<TokenCategory>('spacing');
   const [searchTerm, setSearchTerm] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
