@@ -6,9 +6,9 @@
  * Light: Soft dusk periwinkle sky — lavender-tinted surfaces, sunset pink-orange horizon accent.
  * Dark:  Deep inky indigo-purple — the tension of cool depth vs warm horizon glow.
  *
- * The amber/orange accent reads against both modes:
+ * The sunset-pink accent (hue ≈15) reads against both modes:
  *   on light (periwinkle bg) — warm glow against cool sky
- *   on dark  (indigo bg)     — ember against deep night
+ *   on dark  (indigo bg)     — rose horizon against deep night
  */
 
 import type { SemanticColorMap } from "../../types";
@@ -50,10 +50,10 @@ const dark: SemanticColorMap = {
   fgInverse:    "oklch(14% 0.10 269)",
   border:       "oklch(34% 0.10 272)",
   borderSubtle: "oklch(24% 0.08 272)",
-  borderFocus:  "oklch(70% 0.20 40)",            // WCAG fix: brighter amber for 4.5:1
-  accent:       "oklch(70% 0.20 40)",            // WCAG fix: brighter amber horizon for 4.5:1 on deep indigo
-  accentHover:  "oklch(68% 0.22 36)",
-  accentSubtle: "oklch(22% 0.10 40)",
+  borderFocus:  "oklch(70% 0.18 15)",            // sunset pink — matches light-mode accent identity
+  accent:       "oklch(70% 0.18 15)",            // sunset pink horizon — 6.9:1 on deep indigo, hue unique vs fire's 40
+  accentHover:  "oklch(68% 0.18 12)",
+  accentSubtle: "oklch(22% 0.08 15)",            // dark rose wash
   success:      oklch(palette.seaFoam),
   successSubtle:"oklch(22% 0.10 170)",
   warning:      oklch(palette.honeyYellow),

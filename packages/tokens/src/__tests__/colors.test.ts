@@ -124,6 +124,16 @@ describe("theme color output per profile", () => {
     expect(Math.abs(earthH - fireH)).toBeGreaterThan(10);
   });
 
+  it("every profile's accent is unique in both modes", () => {
+    // Regression: twilight dark accent used to be byte-identical to fire's
+    for (const mode of ["light", "dark"] as const) {
+      const accents = ALL_PROFILES.map(
+        (profile) => createRengeTheme({ profile, mode }).vars["--renge-color-accent"]
+      );
+      expect(new Set(accents).size).toBe(ALL_PROFILES.length);
+    }
+  });
+
   it("mode config is respected — light and dark produce different bg", () => {
     for (const profile of ALL_PROFILES) {
       const light = createRengeTheme({ profile, mode: "light" });
