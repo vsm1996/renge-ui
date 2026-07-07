@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, type CSSProperties } from 'vue'
 
 export interface ModalProps {
   open?: boolean
@@ -17,10 +17,10 @@ const emit = defineEmits<{
 
 const exiting = ref(false)
 
-const sizeMap = {
-  sm: 'max-width: 400px;',
-  md: 'max-width: 600px;',
-  lg: 'max-width: 800px;',
+const sizeMap: Record<'sm' | 'md' | 'lg', CSSProperties> = {
+  sm: { maxWidth: '400px' },
+  md: { maxWidth: '600px' },
+  lg: { maxWidth: '800px' },
 }
 
 const handleClose = () => {

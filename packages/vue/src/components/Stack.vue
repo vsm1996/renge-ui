@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
+
 interface StackProps {
   gap?: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
   direction?: 'vertical' | 'horizontal';
@@ -28,7 +30,7 @@ const justifyMap = {
   around: 'space-around',
 };
 
-const stackStyle = {
+const stackStyle: CSSProperties = {
   display: 'flex',
   flexDirection: props.direction === 'vertical' ? 'column' : 'row',
   gap: `var(--renge-space-${props.gap})`,

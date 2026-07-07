@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, type CSSProperties } from 'vue'
 
 export type SwitchSize = 'sm' | 'md' | 'lg'
 
@@ -41,7 +41,7 @@ const thumbOffset = computed(() =>
   isChecked.value ? w - thumb - padding : padding
 )
 
-const trackStyle = computed(() => ({
+const trackStyle = computed<CSSProperties>(() => ({
   position: 'relative',
   display: 'inline-block',
   width: `${w}px`,
@@ -55,7 +55,7 @@ const trackStyle = computed(() => ({
   flexShrink: 0,
 }))
 
-const thumbStyle = computed(() => ({
+const thumbStyle = computed<CSSProperties>(() => ({
   position: 'absolute',
   top: `${padding}px`,
   left: `${thumbOffset.value}px`,
@@ -67,14 +67,14 @@ const thumbStyle = computed(() => ({
   transition: 'left var(--renge-duration-2) var(--renge-easing-spring)',
 }))
 
-const labelStyle = computed(() => ({
+const labelStyle = computed<CSSProperties>(() => ({
   fontSize: FONT[props.size],
   color: props.disabled ? 'var(--renge-color-fg-muted)' : 'var(--renge-color-fg)',
   userSelect: 'none',
   lineHeight: 'var(--renge-line-height-base)',
 }))
 
-const wrapperStyle = computed(() => ({
+const wrapperStyle = computed<CSSProperties>(() => ({
   display: 'inline-flex',
   alignItems: 'center',
   gap: 'var(--renge-space-2)',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, type CSSProperties } from 'vue'
 
 export type CheckboxSize = 'sm' | 'md' | 'lg'
 
@@ -33,7 +33,7 @@ const FONT: Record<CheckboxSize, string> = {
 const px = computed(() => SIZE_PX[props.size])
 const isChecked = computed(() => props.modelValue ?? false)
 
-const boxStyle = computed(() => ({
+const boxStyle = computed<CSSProperties>(() => ({
   width: `${px.value}px`,
   height: `${px.value}px`,
   minWidth: `${px.value}px`,
@@ -53,14 +53,14 @@ const boxStyle = computed(() => ({
   opacity: props.disabled ? 0.5 : 1,
 }))
 
-const labelStyle = computed(() => ({
+const labelStyle = computed<CSSProperties>(() => ({
   display: 'inline-flex',
   alignItems: 'center',
   gap: 'var(--renge-space-2)',
   cursor: props.disabled ? 'not-allowed' : 'pointer',
 }))
 
-const textStyle = computed(() => ({
+const textStyle = computed<CSSProperties>(() => ({
   fontSize: FONT[props.size],
   color: props.disabled ? 'var(--renge-color-fg-muted)' : 'var(--renge-color-fg)',
   lineHeight: 'var(--renge-line-height-base)',

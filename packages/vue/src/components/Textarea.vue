@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, type CSSProperties } from 'vue'
 
 export type TextareaSize = 'sm' | 'md' | 'lg'
 export type TextareaState = 'default' | 'error' | 'success'
@@ -55,7 +55,7 @@ const stateColor: Record<TextareaState, string> = {
 
 const textareaRef = ref<HTMLTextAreaElement>()
 
-const computedStyle = computed(() => ({
+const computedStyle = computed<CSSProperties>(() => ({
   ...sizeStyles[props.size],
   display: 'block',
   width: props.fullWidth ? '100%' : undefined,

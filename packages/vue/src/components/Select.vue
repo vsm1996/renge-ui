@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, type CSSProperties } from 'vue'
 
 export type SelectSize = 'sm' | 'md' | 'lg'
 export type SelectState = 'default' | 'error' | 'success'
@@ -51,7 +51,7 @@ const chevronSvg =
 
 const selectRef = ref<HTMLSelectElement>()
 
-const computedStyle = computed(() => ({
+const computedStyle = computed<CSSProperties>(() => ({
   ...sizeStyles[props.size],
   display: 'block',
   width: props.fullWidth ? '100%' : undefined,

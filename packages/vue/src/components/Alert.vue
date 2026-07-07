@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
+
 interface AlertProps {
   status?: 'info' | 'success' | 'warning' | 'danger';
   title?: string;
@@ -8,7 +10,7 @@ const props = withDefaults(defineProps<AlertProps>(), {
   status: 'info',
 });
 
-const alertStyle = {
+const alertStyle: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   gap: props.title ? 'var(--renge-space-1)' : undefined,

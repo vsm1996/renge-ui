@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
+
 interface AvatarProps {
   src?: string;
   alt?: string;
@@ -32,7 +34,7 @@ const px = sizePx[props.size];
 const radius = props.shape === 'circle' ? 'var(--renge-radius-full)' : 'var(--renge-radius-3)';
 const label = props.initials ? props.initials.slice(0, 2).toUpperCase() : undefined;
 
-const avatarStyle = {
+const avatarStyle: CSSProperties = {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -48,7 +50,7 @@ const avatarStyle = {
   userSelect: 'none',
 };
 
-const imgStyle = {
+const imgStyle: CSSProperties = {
   width: '100%',
   height: '100%',
   objectFit: 'cover',

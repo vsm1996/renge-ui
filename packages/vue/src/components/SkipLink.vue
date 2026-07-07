@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, type CSSProperties } from 'vue';
 
 interface SkipLinkProps {
   href?: string;
@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<SkipLinkProps>(), {
 
 const topPosition = ref('-40px');
 
-const getStyle = () => ({
+const getStyle = (): CSSProperties => ({
   position: 'absolute',
   top: topPosition.value,
   left: 0,

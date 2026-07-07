@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
+
 interface VisuallyHiddenProps {}
 
 defineProps<VisuallyHiddenProps>();
 
-const style = {
+const style: CSSProperties = {
   position: 'absolute',
   width: '1px',
   height: '1px',

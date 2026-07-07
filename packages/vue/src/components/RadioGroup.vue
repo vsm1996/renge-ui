@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, ref } from 'vue'
+import { computed, provide, ref, type CSSProperties } from 'vue'
 
 export type RadioSize = 'sm' | 'md' | 'lg'
 
@@ -37,7 +37,7 @@ const current = computed({
   },
 })
 
-const wrapperStyle = computed(() => ({
+const wrapperStyle = computed<CSSProperties>(() => ({
   display: 'flex',
   flexDirection: props.direction === 'vertical' ? 'column' : 'row',
   flexWrap: props.direction === 'horizontal' ? 'wrap' : undefined,

@@ -1,6 +1,6 @@
 {
   "name": "@renge-ui/vue",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Vue 3 composables and components for the Renge design system.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -16,9 +16,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup && cp -r src/components dist/ && rm -rf dist/components/__tests__ && cp -r src/composables dist/ && cp src/shims-vue.d.ts dist/ && for f in dist/index.d.ts dist/index.d.mts; do printf '/// <reference path=\"./shims-vue.d.ts\" />\\n' | cat - \"$f\" > \"$f.tmp\" && mv \"$f.tmp\" \"$f\"; done",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist && vite build && vue-tsc -p tsconfig.build.json",
+    "dev": "vite build --watch",
+    "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
@@ -52,10 +52,10 @@
     "@vitest/ui": "^1.6.0",
     "@vue/test-utils": "^2.4.6",
     "jsdom": "^24.1.0",
-    "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "vite": "^5.4.0",
     "vitest": "^1.6.0",
-    "vue": "^3.4.27"
+    "vue": "^3.4.27",
+    "vue-tsc": "^3.0.0"
   }
 }

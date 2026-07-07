@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, type CSSProperties } from 'vue'
 
 export interface SliderProps {
   modelValue?: number
@@ -42,7 +42,7 @@ const phiMarkers = computed(() => [
   { point: phi618.value, label: 'φ⁻²' },
 ])
 
-const markerStyle = (point: number) => ({
+const markerStyle = (point: number): CSSProperties => ({
   position: 'absolute',
   left: `${((point - numMin.value) / (numMax.value - numMin.value)) * 100}%`,
   top: 0,
@@ -53,43 +53,43 @@ const markerStyle = (point: number) => ({
   gap: '2px',
 })
 
-const markerLine = {
+const markerLine: CSSProperties = {
   width: '1px',
   height: '6px',
   background: 'var(--renge-color-accent)',
   opacity: 0.5,
 }
 
-const markerLabel = {
+const markerLabel: CSSProperties = {
   fontSize: '9px',
   color: 'var(--renge-color-fg-muted)',
   lineHeight: 1,
 }
 
-const wrapperStyle = computed(() => ({
+const wrapperStyle = computed<CSSProperties>(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 'var(--renge-space-2)',
 }))
 
-const labelRowStyle = {
+const labelRowStyle: CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
 }
 
-const labelStyle = {
+const labelStyle: CSSProperties = {
   fontSize: 'var(--renge-font-size-sm)',
   color: 'var(--renge-color-fg-subtle)',
 }
 
-const valueStyle = {
+const valueStyle: CSSProperties = {
   fontSize: 'var(--renge-font-size-sm)',
   color: 'var(--renge-color-accent)',
   fontVariantNumeric: 'tabular-nums',
 }
 
-const sliderContainerStyle = {
+const sliderContainerStyle: CSSProperties = {
   position: 'relative',
 }
 

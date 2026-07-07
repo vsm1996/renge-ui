@@ -14,26 +14,37 @@ export interface RengeThemeContext {
 
 const DEFAULT_PROFILE = "ocean";
 const DEFAULT_MODE = "light";
-const RENGE_INJECTION_KEY = Symbol("renge-theme");
+// Symbol.for: the key must resolve identically even if this module is
+// instantiated twice (bundled copy in index.mjs + raw copy under
+// dist/composables imported by the shipped SFCs).
+const RENGE_INJECTION_KEY = Symbol.for("renge-ui:theme");
 
 /**
  * Provide Renge theme context to child components.
  * Updates document root attributes for CSS variable scoping.
+ *
+ * `initial` seeds the reactive state synchronously so SSR output and the
+ * first client render already reflect the desired profile/mode; the document
+ * attributes are still only stamped in the browser.
  */
-export function useRengeTheme() {
+export function useRengeTheme(initial?: Partial<RengeThemeState>) {
   const state = reactive<RengeThemeState>({
-    profile: DEFAULT_PROFILE,
-    mode: DEFAULT_MODE,
+    profile: initial?.profile ?? DEFAULT_PROFILE,
+    mode: initial?.mode ?? DEFAULT_MODE,
   });
 
   const switchProfile = (name: string) => {
     state.profile = name;
-    document.documentElement.setAttribute("data-profile", name);
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("data-profile", name);
+    }
   };
 
   const switchMode = (mode: "light" | "dark") => {
     state.mode = mode;
-    document.documentElement.setAttribute("data-mode", mode);
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("data-mode", mode);
+    }
   };
 
   const context: RengeThemeContext = {

@@ -1,6 +1,29 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
+// Inject TransitionGroup classes + keyframe once (scoped <style> keyframes get
+// hash-renamed and can't be referenced from inline animation bindings)
+if (typeof document !== 'undefined' && !document.getElementById('__renge-vue-toast-css__')) {
+  const s = document.createElement('style')
+  s.id = '__renge-vue-toast-css__'
+  s.textContent = `
+@keyframes renge-toast-slide-in {
+  from { opacity: 0; transform: translateX(100px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.renge-toast-move,
+.renge-toast-enter-active,
+.renge-toast-leave-active {
+  transition: all 0.3s var(--renge-easing-spring);
+}
+.renge-toast-enter-from,
+.renge-toast-leave-to {
+  opacity: 0;
+  transform: translateX(100px);
+}`
+  document.head.appendChild(s)
+}
+
 interface ToastItem {
   id: string
   message: string
@@ -23,10 +46,14 @@ function removeToast(id: string) {
   toasts.value = toasts.value.filter((item) => item.id !== id)
 }
 
-;(window as any).toast = { add: addToast, remove: removeToast }
+if (typeof window !== 'undefined') {
+  ;(window as any).toast = { add: addToast, remove: removeToast }
+}
 
 onUnmounted(() => {
-  delete (window as any).toast
+  if (typeof window !== 'undefined') {
+    delete (window as any).toast
+  }
 })
 </script>
 
@@ -43,7 +70,7 @@ onUnmounted(() => {
       pointerEvents: 'none',
     }"
   >
-    <Transition-group name="toast" tag="div">
+    <TransitionGroup name="renge-toast" tag="div">
       <div
         v-for="toast in toasts"
         :key="toast.id"
@@ -70,41 +97,12 @@ onUnmounted(() => {
           border: '1px solid',
           fontSize: 'var(--renge-font-size-sm)',
           boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-          animation: 'slideIn 0.3s var(--renge-easing-spring)',
+          animation: 'renge-toast-slide-in 0.3s var(--renge-easing-spring)',
         }"
       >
         {{ toast.message }}
       </div>
-    </Transition-group>
+    </TransitionGroup>
   </div>
   <slot />
 </template>
-
-<style scoped>
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.toast-move,
-.toast-enter-active,
-.toast-leave-active {
-  transition: all 0.3s var(--renge-easing-spring);
-}
-
-.toast-enter-from {
-  opacity: 0;
-  transform: translateX(100px);
-}
-
-.toast-leave-to {
-  opacity: 0;
-  transform: translateX(100px);
-}
-</style>

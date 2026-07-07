@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
+
 interface StatProps {
   value: string | number;
   label: string;
@@ -33,34 +35,34 @@ const trendSymbol = {
   neutral: '—',
 };
 
-const statStyle = {
+const statStyle: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   padding: 'var(--renge-space-4)',
 };
 
-const labelStyle = {
+const labelStyle: CSSProperties = {
   fontSize: 'var(--renge-font-size-xs)',
   color: 'var(--renge-color-fg-muted)',
   marginBottom: 'var(--renge-space-1)',
   fontWeight: 500,
 };
 
-const valueContainerStyle = {
+const valueContainerStyle: CSSProperties = {
   display: 'flex',
   alignItems: 'baseline',
   gap: 'var(--renge-space-3)',
   flexWrap: 'wrap',
 };
 
-const valueStyle = {
+const valueStyle: CSSProperties = {
   fontSize: 'var(--renge-font-size-3xl)',
   lineHeight: 1.2,
   fontWeight: 600,
   color: 'var(--renge-color-fg)',
 };
 
-const captionStyle = {
+const captionStyle: CSSProperties = {
   fontSize: 'var(--renge-font-size-xs)',
   color: 'var(--renge-color-fg-muted)',
   marginTop: 'var(--renge-space-1)',

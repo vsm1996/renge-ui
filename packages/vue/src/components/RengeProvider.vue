@@ -12,7 +12,10 @@ const props = withDefaults(defineProps<Props>(), {
   mode: "light",
 });
 
-const { switchProfile, switchMode } = useRengeTheme();
+const { switchProfile, switchMode } = useRengeTheme({
+  profile: props.profile,
+  mode: props.mode,
+});
 
 onMounted(() => {
   switchProfile(props.profile);
@@ -23,7 +26,3 @@ onMounted(() => {
 <template>
   <slot />
 </template>
-
-<style scoped>
-/* RengeProvider is a wrapper component that applies theme context */
-</style>

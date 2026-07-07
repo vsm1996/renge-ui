@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, type CSSProperties } from 'vue'
 
 export type InputSize = 'sm' | 'md' | 'lg'
 export type InputState = 'default' | 'error' | 'success'
@@ -52,7 +52,7 @@ const stateColor: Record<InputState, string> = {
 
 const inputRef = ref<HTMLInputElement>()
 
-const computedStyle = computed(() => ({
+const computedStyle = computed<CSSProperties>(() => ({
   ...sizeStyles[props.size],
   display: 'block',
   width: props.fullWidth ? '100%' : undefined,

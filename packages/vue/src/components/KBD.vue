@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue';
+
 interface KBDProps {
   keys?: string[];
 }
@@ -7,14 +9,14 @@ const props = withDefaults(defineProps<KBDProps>(), {
   keys: () => [],
 });
 
-const kbdStyle = {
+const kbdStyle: CSSProperties = {
   display: 'inline-flex',
   alignItems: 'center',
   gap: '4px',
   fontFamily: 'monospace',
 };
 
-const keyStyle = {
+const keyStyle: CSSProperties = {
   display: 'inline-block',
   minWidth: '24px',
   height: '24px',
@@ -28,7 +30,7 @@ const keyStyle = {
   fontWeight: 600,
 };
 
-const separatorStyle = {
+const separatorStyle: CSSProperties = {
   margin: '0 4px',
 };
 </script>

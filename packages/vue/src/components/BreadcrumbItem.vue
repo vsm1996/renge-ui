@@ -24,7 +24,7 @@ const handleMouseLeave = (e: any) => {
 </script>
 
 <template>
-  <li>
+  <li :style="{ display: 'flex', alignItems: 'center', gap: 'var(--renge-space-1)' }">
     <span v-if="!href || current" :style="{ color: current ? 'var(--renge-color-fg)' : 'var(--renge-color-fg-subtle)', fontWeight: current ? 500 : undefined }" :aria-current="current ? 'page' : undefined" v-bind="$attrs">
       <slot />
     </span>
@@ -33,10 +33,3 @@ const handleMouseLeave = (e: any) => {
     </a>
   </li>
 </template>
-
-<style scoped>
-:global(li) {
-  display: flex;
-  align-items: center;
-}
-</style>

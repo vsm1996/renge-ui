@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
+import { computed, inject, type CSSProperties } from 'vue'
 import { PHI } from '@renge-ui/tokens'
 
 export type RadioSize = 'sm' | 'md' | 'lg'
@@ -21,8 +21,8 @@ const emit = defineEmits<{
 
 const ctx = inject<any>('radio-group', null)
 
-const size = computed(() => props.size ?? ctx?.size ?? 'md')
-const disabled = computed(() => props.disabled ?? ctx?.disabled ?? false)
+const size = computed<RadioSize>(() => props.size ?? ctx?.size ?? 'md')
+const disabled = computed<boolean>(() => props.disabled ?? ctx?.disabled ?? false)
 const isChecked = computed(() => ctx && ctx.value.value === props.value)
 
 const OUTER_PX: Record<RadioSize, number> = { sm: 16, md: 20, lg: 24 }
@@ -35,7 +35,7 @@ const FONT: Record<RadioSize, string> = {
 const outer = computed(() => OUTER_PX[size.value])
 const inner = computed(() => Math.round(outer.value / PHI))
 
-const labelStyle = computed(() => ({
+const labelStyle = computed<CSSProperties>(() => ({
   display: 'inline-flex',
   alignItems: 'center',
   gap: 'var(--renge-space-2)',
@@ -43,7 +43,7 @@ const labelStyle = computed(() => ({
   opacity: disabled.value ? 0.5 : 1,
 }))
 
-const circleStyle = computed(() => ({
+const circleStyle = computed<CSSProperties>(() => ({
   width: `${outer.value}px`,
   height: `${outer.value}px`,
   minWidth: `${outer.value}px`,
@@ -59,7 +59,7 @@ const circleStyle = computed(() => ({
   flexShrink: 0,
 }))
 
-const innerDotStyle = computed(() => ({
+const innerDotStyle = computed<CSSProperties>(() => ({
   width: isChecked.value ? `${inner.value}px` : 0,
   height: isChecked.value ? `${inner.value}px` : 0,
   borderRadius: 'var(--renge-radius-full)',
@@ -67,7 +67,7 @@ const innerDotStyle = computed(() => ({
   transition: 'all var(--renge-duration-2) var(--renge-easing-spring)',
 }))
 
-const textStyle = computed(() => ({
+const textStyle = computed<CSSProperties>(() => ({
   fontSize: FONT[size.value],
   color: disabled.value ? 'var(--renge-color-fg-muted)' : 'var(--renge-color-fg)',
   lineHeight: 'var(--renge-line-height-base)',
