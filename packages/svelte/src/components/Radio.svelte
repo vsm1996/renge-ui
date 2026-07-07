@@ -8,9 +8,10 @@
   export let disabled: boolean | undefined = undefined;
   export let style = '';
 
+  type RadioSize = 'sm' | 'md' | 'lg';
   const ctx = getContext<any>('radio-group');
 
-  const finalSize = size ?? ctx?.size ?? 'md';
+  const finalSize: RadioSize = size ?? ctx?.size ?? 'md';
   const finalDisabled = disabled ?? ctx?.disabled ?? false;
   const isChecked = ctx ? ctx.value === value : false;
 

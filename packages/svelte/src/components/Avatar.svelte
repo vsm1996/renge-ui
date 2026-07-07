@@ -46,7 +46,7 @@
 </script>
 
 <div
-  {alt}
+  aria-label={alt}
   role={alt ? 'img' : undefined}
   style="{baseStyles} {style}"
   {...$$restProps}

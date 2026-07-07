@@ -25,11 +25,16 @@
     toasts.update((t) => t.filter((item) => item.id !== id));
   }
 
-  window.toast = { add: addToast, remove: removeToast };
+  // Guard window: the instance script also runs during SSR, where it is undefined.
+  if (typeof window !== 'undefined') {
+    (window as any).toast = { add: addToast, remove: removeToast };
+  }
 
   onMount(() => {
     return () => {
-      delete window.toast;
+      if (typeof window !== 'undefined') {
+        delete (window as any).toast;
+      }
     };
   });
 </script>

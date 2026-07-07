@@ -10,6 +10,7 @@
 
 // Stores
 export { profile, mode, switchProfile, switchMode, initializeTheme } from "./stores/theme";
+export { default as RengeProvider } from "./components/RengeProvider.svelte";
 
 // Layout & Display (Batch 1)
 export { default as Stack } from "./components/Stack.svelte";

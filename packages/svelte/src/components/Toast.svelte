@@ -29,15 +29,24 @@
     if (duration) {
       timeoutId = setTimeout(() => {
         exiting = true;
-        setTimeout(onClose, 200);
+        setTimeout(() => onClose?.(), 200);
       }, duration);
     }
   });
 
   const handleClose = () => {
     exiting = true;
-    setTimeout(onClose, 200);
+    setTimeout(() => onClose?.(), 200);
   };
+
+  // Handlers live here (not inline) so their TS type casts get preprocessed —
+  // vitePreprocess only strips TS from <script>, not from template expressions.
+  function handleBtnEnter(e: MouseEvent) {
+    (e.currentTarget as HTMLButtonElement).style.opacity = '1';
+  }
+  function handleBtnLeave(e: MouseEvent) {
+    (e.currentTarget as HTMLButtonElement).style.opacity = '0.7';
+  }
 </script>
 
 <div
@@ -75,12 +84,8 @@
       transition: opacity var(--renge-duration-1);
     "
     on:click={handleClose}
-    on:mouseenter={(e) => {
-      (e.currentTarget as HTMLButtonElement).style.opacity = '1';
-    }}
-    on:mouseleave={(e) => {
-      (e.currentTarget as HTMLButtonElement).style.opacity = '0.7';
-    }}
+    on:mouseenter={handleBtnEnter}
+    on:mouseleave={handleBtnLeave}
   >
     ✕
   </button>

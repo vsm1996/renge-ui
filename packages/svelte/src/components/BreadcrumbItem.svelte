@@ -3,9 +3,22 @@
   export let href: string | null = null;
   let className = '';
   export { className as class };
+
+  // Handlers live here (not inline) so their TS type casts get preprocessed —
+  // vitePreprocess only strips TS from <script>, not from template expressions.
+  function handleEnter(e: MouseEvent) {
+    const el = e.currentTarget as HTMLAnchorElement;
+    el.style.color = 'var(--renge-color-accent-hover)';
+    el.style.textDecoration = 'underline';
+  }
+  function handleLeave(e: MouseEvent) {
+    const el = e.currentTarget as HTMLAnchorElement;
+    el.style.color = 'var(--renge-color-accent)';
+    el.style.textDecoration = 'none';
+  }
 </script>
 
-<li>
+<li style="display: flex; align-items: center; gap: var(--renge-space-1);">
   {#if href && !current}
     <a
       {href}
@@ -15,14 +28,8 @@
         text-decoration: none;
         transition: color var(--renge-duration-1) var(--renge-easing-ease-out);
       "
-      on:mouseenter={(e) => {
-        (e.currentTarget as HTMLAnchorElement).style.color = 'var(--renge-color-accent-hover)';
-        (e.currentTarget as HTMLAnchorElement).style.textDecoration = 'underline';
-      }}
-      on:mouseleave={(e) => {
-        (e.currentTarget as HTMLAnchorElement).style.color = 'var(--renge-color-accent)';
-        (e.currentTarget as HTMLAnchorElement).style.textDecoration = 'none';
-      }}
+      on:mouseenter={handleEnter}
+      on:mouseleave={handleLeave}
       {...$$restProps}
     >
       <slot />
@@ -41,10 +48,3 @@
     </span>
   {/if}
 </li>
-
-<style>
-  :global(li) {
-    display: flex;
-    align-items: center;
-  }
-</style>

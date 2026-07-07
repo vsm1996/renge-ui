@@ -1,24 +1,24 @@
 {
   "name": "@renge-ui/svelte",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Svelte stores and components for the Renge design system.",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "type": "module",
+  "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "svelte": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup && cp -r src/components dist/ && rm -rf dist/components/__tests__ && cp -r src/stores dist/",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit",
+    "build": "svelte-package -i src -o dist && rm -rf dist/components/__tests__ dist/vitest-setup.js dist/vitest-setup.d.ts dist/vitest-setup.d.ts.map",
+    "dev": "svelte-package -i src -o dist --watch",
+    "typecheck": "svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
@@ -46,6 +46,7 @@
     "svelte": "^4.0.0"
   },
   "devDependencies": {
+    "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^3.1.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/svelte": "^4.0.5",
@@ -53,7 +54,7 @@
     "@vitest/ui": "^1.6.0",
     "jsdom": "^24.1.0",
     "svelte": "^4.2.20",
-    "tsup": "^8.5.1",
+    "svelte-check": "^3.8.6",
     "typescript": "^5.9.3",
     "vite": "^5.4.0",
     "vitest": "^1.6.0"
