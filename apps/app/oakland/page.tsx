@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ProfileProvider, ProfileToggle } from "@/components/ui/ProfileToggle";
 import { Nav } from "@/components/ui/Nav";
 import { Stack, Grid, Section, Text, Heading, Card, Badge, Divider } from "@renge-ui/react";
+import { useBreakpoint } from "@/lib/useBreakpoint";
 
 // ============================================================================
 // Data
@@ -1055,6 +1056,7 @@ function ParkCard({ park }: { park: (typeof PARKS)[0] }) {
 // ============================================================================
 
 export default function OaklandPage() {
+  const isMobile = useBreakpoint();
   const forestPlants = PLANTS.filter((p) => p.habitat === "forest");
   const woodlandPlants = PLANTS.filter((p) => p.habitat === "woodland");
   const wetlandPlants = PLANTS.filter((p) => p.habitat === "marsh" || p.habitat === "estuary");
@@ -1218,7 +1220,12 @@ export default function OaklandPage() {
                 </Text>
                 <Heading
                   level={2}
-                  style={{ fontSize: "var(--renge-font-size-3xl)", letterSpacing: "-0.02em" }}
+                  style={{
+                    fontSize: isMobile
+                      ? "clamp(var(--renge-font-size-lg), 9vw, var(--renge-font-size-xl))"
+                      : "clamp(var(--renge-font-size-xl), 6vw, var(--renge-font-size-3xl))",
+                    letterSpacing: "-0.02em",
+                  }}
                 >
                   Five places to know.
                 </Heading>
@@ -1257,7 +1264,15 @@ export default function OaklandPage() {
               >
                 Phyllotaxis
               </Text>
-              <Heading level={2} style={{ fontSize: "var(--renge-font-size-3xl)", letterSpacing: "-0.02em" }}>
+              <Heading
+                level={2}
+                style={{
+                  fontSize: isMobile
+                    ? "clamp(var(--renge-font-size-lg), 9vw, var(--renge-font-size-xl))"
+                    : "clamp(var(--renge-font-size-xl), 6vw, var(--renge-font-size-3xl))",
+                  letterSpacing: "-0.02em",
+                }}
+              >
                 137.5°.
               </Heading>
               <Text style={{ color: "var(--renge-color-fg-subtle)", lineHeight: 1.7 }}>
@@ -1302,7 +1317,15 @@ export default function OaklandPage() {
                     Redwood Regional
                   </Text>
                 </Stack>
-                <Heading level={2} style={{ fontSize: "var(--renge-font-size-2xl)", letterSpacing: "-0.02em" }}>
+                <Heading
+                  level={2}
+                  style={{
+                    fontSize: isMobile
+                      ? "clamp(var(--renge-font-size-lg), 7vw, var(--renge-font-size-xl))"
+                      : "clamp(var(--renge-font-size-xl), 4vw, var(--renge-font-size-2xl))",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
                   The forest floor.
                 </Heading>
                 <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)", lineHeight: 1.7 }}>
@@ -1349,7 +1372,15 @@ export default function OaklandPage() {
                     Joaquin Miller & the hills
                   </Text>
                 </Stack>
-                <Heading level={2} style={{ fontSize: "var(--renge-font-size-2xl)", letterSpacing: "-0.02em" }}>
+                <Heading
+                  level={2}
+                  style={{
+                    fontSize: isMobile
+                      ? "clamp(var(--renge-font-size-lg), 7vw, var(--renge-font-size-xl))"
+                      : "clamp(var(--renge-font-size-xl), 4vw, var(--renge-font-size-2xl))",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
                   Oak, bay, madrone.
                 </Heading>
                 <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)", lineHeight: 1.7 }}>
@@ -1402,7 +1433,15 @@ export default function OaklandPage() {
                     Lake Merritt · MLK Shoreline · San Leandro Bay
                   </Text>
                 </Stack>
-                <Heading level={2} style={{ fontSize: "var(--renge-font-size-2xl)", letterSpacing: "-0.02em" }}>
+                <Heading
+                  level={2}
+                  style={{
+                    fontSize: isMobile
+                      ? "clamp(var(--renge-font-size-lg), 7vw, var(--renge-font-size-xl))"
+                      : "clamp(var(--renge-font-size-xl), 4vw, var(--renge-font-size-2xl))",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
                   Where the bay begins.
                 </Heading>
                 <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)", lineHeight: 1.7 }}>
@@ -1478,7 +1517,15 @@ export default function OaklandPage() {
                     Leona Canyon & creek corridors
                   </Text>
                 </Stack>
-                <Heading level={2} style={{ fontSize: "var(--renge-font-size-2xl)", letterSpacing: "-0.02em" }}>
+                <Heading
+                  level={2}
+                  style={{
+                    fontSize: isMobile
+                      ? "clamp(var(--renge-font-size-lg), 7vw, var(--renge-font-size-xl))"
+                      : "clamp(var(--renge-font-size-xl), 4vw, var(--renge-font-size-2xl))",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
                   Along the water line.
                 </Heading>
                 <Text size="sm" style={{ color: "var(--renge-color-fg-subtle)", lineHeight: 1.7 }}>

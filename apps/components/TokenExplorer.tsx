@@ -140,7 +140,15 @@ export function TokenExplorer() {
             >
               Explorer
             </Text>
-            <Heading level={2} style={{ fontSize: 'var(--renge-font-size-3xl)', letterSpacing: '-0.02em' }}>
+            <Heading
+              level={2}
+              style={{
+                fontSize: 'var(--renge-font-size-xl)',
+                fontFamily: 'var(--font-display)',
+                fontWeight: 400,
+                letterSpacing: '-0.01em',
+              }}
+            >
               All tokens, searchable.
             </Heading>
             <Text style={{ color: 'var(--renge-color-fg-subtle)', lineHeight: 1.7 }}>
