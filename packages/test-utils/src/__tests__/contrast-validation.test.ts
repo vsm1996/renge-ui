@@ -66,6 +66,33 @@ describe("contrast validation — all profiles × modes", () => {
         expect(ratio).toBeGreaterThanOrEqual(4.5);
       });
 
+      // Muted/secondary text must meet AA on the two surfaces it's designed for:
+      // the page (bg) and cards (bg-subtle). (Regression: dark fg-muted used to
+      // sit well below 4.5:1 on these — see the profile token comments.)
+      it(`${profile} ${mode} — fg-muted / bg`, () => {
+        const theme = createRengeTheme({ profile: profile as any, mode: mode as any });
+        const ratio = getContrastRatio(
+          theme.vars["--renge-color-fg-muted"],
+          theme.vars["--renge-color-bg"]
+        );
+        if (ratio && ratio < 4.5) {
+          console.log(`  fg-muted/bg ratio ${ratio.toFixed(2)}:1 (${theme.vars["--renge-color-fg-muted"]} on ${theme.vars["--renge-color-bg"]})`);
+        }
+        expect(ratio).toBeGreaterThanOrEqual(4.5);
+      });
+
+      it(`${profile} ${mode} — fg-muted / bg-subtle`, () => {
+        const theme = createRengeTheme({ profile: profile as any, mode: mode as any });
+        const ratio = getContrastRatio(
+          theme.vars["--renge-color-fg-muted"],
+          theme.vars["--renge-color-bg-subtle"]
+        );
+        if (ratio && ratio < 4.5) {
+          console.log(`  fg-muted/bg-subtle ratio ${ratio.toFixed(2)}:1 (${theme.vars["--renge-color-fg-muted"]} on ${theme.vars["--renge-color-bg-subtle"]})`);
+        }
+        expect(ratio).toBeGreaterThanOrEqual(4.5);
+      });
+
       it(`${profile} ${mode} — accent / bg`, () => {
         const theme = createRengeTheme({ profile: profile as any, mode: mode as any });
         const result = validateContrastRatio(
