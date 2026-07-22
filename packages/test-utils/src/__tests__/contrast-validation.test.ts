@@ -29,23 +29,14 @@ function getContrastRatio(fg: string, bg: string): number | null {
     const m = m_ * m_ * m_;
     const s = s_ * s_ * s_;
 
-    const r = 4.0767416621 * l - 3.3077363322 * m + 0.2309101289 * s;
-    const g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193761 * s;
-    const b_ = -0.0041960771 * l - 0.7034186147 * m + 1.7076147010 * s;
+    // OKLab → LINEAR-light sRGB; WCAG luminance uses these directly (no second
+    // sRGB EOTF — see validators.ts oklchToLuminance). Clamp out-of-gamut.
+    const clamp = (c: number) => Math.max(0, Math.min(1, c));
+    const r = clamp(4.0767416621 * l - 3.3077363322 * m + 0.2309101289 * s);
+    const g = clamp(-1.2684380046 * l + 2.6097574011 * m - 0.3413193761 * s);
+    const b_ = clamp(-0.0041960771 * l - 0.7034186147 * m + 1.7076147010 * s);
 
-    function linearize(c: number): number {
-      c = Math.max(0, Math.min(1, c));
-      if (c <= 0.04045) {
-        return c / 12.92;
-      }
-      return Math.pow((c + 0.055) / 1.055, 2.4);
-    }
-
-    const lr = linearize(r);
-    const lg = linearize(g);
-    const lb = linearize(b_);
-
-    return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb;
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b_;
   }
 
   const fgL = parseLuminance(fg);

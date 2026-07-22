@@ -277,27 +277,17 @@ function oklchToLuminance(L: number, C: number, H: number): number {
   const m = m_ * m_ * m_;
   const s = s_ * s_ * s_;
 
-  const r = 4.0767416621 * l - 3.3077363322 * m + 0.2309101289 * s;
-  const g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193761 * s;
-  const b_ = -0.0041960771 * l - 0.7034186147 * m + 1.7076147010 * s;
+  // This matrix converts OKLab to LINEAR-light sRGB. The channels are already
+  // linear, so WCAG relative luminance is computed from them DIRECTLY. (The
+  // previous version applied the sRGB EOTF — `linearize()` — to these values a
+  // second time, which is only a no-op at 0 and 1; it darkened every midtone,
+  // so contrast was correct at black/white but badly wrong everywhere between.)
+  // Out-of-gamut results are clamped to [0,1], matching what a display renders.
+  const clamp = (c: number) => Math.max(0, Math.min(1, c));
+  const r = clamp(4.0767416621 * l - 3.3077363322 * m + 0.2309101289 * s);
+  const g = clamp(-1.2684380046 * l + 2.6097574011 * m - 0.3413193761 * s);
+  const b_ = clamp(-0.0041960771 * l - 0.7034186147 * m + 1.7076147010 * s);
 
-  // Linearize RGB values for luminance calculation
-  const lr = linearize(r);
-  const lg = linearize(g);
-  const lb = linearize(b_);
-
-  // WCAG relative luminance formula
-  return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb;
-}
-
-/**
- * Apply gamma linearization for luminance calculation
- * Converts sRGB to linear RGB values
- */
-function linearize(c: number): number {
-  c = Math.max(0, Math.min(1, c)); // clamp to 0–1
-  if (c <= 0.04045) {
-    return c / 12.92;
-  }
-  return Math.pow((c + 0.055) / 1.055, 2.4);
+  // WCAG relative luminance formula (on linear-light components)
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b_;
 }
