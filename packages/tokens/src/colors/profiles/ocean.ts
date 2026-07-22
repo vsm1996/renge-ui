@@ -19,8 +19,8 @@ const light: SemanticColorMap = {
   fgInverse:    oklch(palette.snowWhite),
   border:       "oklch(80% 0.02 210)",
   borderSubtle: "oklch(90% 0.01 210)",
-  borderFocus:  "oklch(60% 0.12 210)",           // darker sky blue — 4.5:1 on white
-  accent:       "oklch(60% 0.12 210)",          // WCAG fix: darker blue for 4.5:1 on white
+  borderFocus:  "oklch(53% 0.12 210)",           // unified with accent (4.70:1 on bg; ≥3:1 focus indicator)
+  accent:       "oklch(53% 0.12 210)",          // WCAG AA: 4.70:1 on bg. (Was 60% — a prior "fix" made with the buggy contrast validator, actually only 3.59:1.)
   accentHover:  oklch(palette.riverBlue),
   accentSubtle: "oklch(92% 0.04 210)",
   success:      oklch(palette.mossGreen),

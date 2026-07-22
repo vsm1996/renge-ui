@@ -232,7 +232,7 @@ describe('validateContrastRatio', () => {
   });
 
   it('should fail for insufficient contrast', () => {
-    // oklch(70% 0.1 10) vs oklch(90% 0.05 10), contrast ≈ 3.22 < 4.5
+    // oklch(70% 0.1 10) vs oklch(90% 0.05 10) — two light colours, ≈ 2.0:1 < 4.5
     const result = validateContrastRatio(
       'oklch(70% 0.1 10)',
       'oklch(90% 0.05 10)',
@@ -242,6 +242,17 @@ describe('validateContrastRatio', () => {
     expect(result.valid).toBe(false);
     expect(result.errors.length).toBeGreaterThan(0);
     expect(result.errors.some((e) => e.includes('Contrast ratio'))).toBe(true);
+  });
+
+  it('computes correct luminance for mid-tone colours (regression: no double sRGB linearization)', () => {
+    // The OKLab→sRGB matrix already yields LINEAR-light RGB; applying the sRGB
+    // EOTF again used to darken every midtone, so mid-gray oklch(50%) vs white
+    // read as ~16:1 instead of the true ~6:1. This locks the correct value —
+    // right at black/white (21:1) is not enough; the midrange must be right too.
+    const res = validateContrastRatio('oklch(50% 0 0)', 'oklch(100% 0 0)', 100);
+    const ratio = parseFloat(res.errors.join(' ').match(/ratio ([\d.]+)/)![1]);
+    expect(ratio).toBeGreaterThan(5.0);
+    expect(ratio).toBeLessThan(7.0); // ~6.0 correct; ~16 was the double-linearize bug
   });
 
   it('should reject missing colors', () => {
@@ -352,8 +363,8 @@ describe('warnings', () => {
 
   describe('validateContrastRatio warnings', () => {
     it('warns when contrast passes AA but not AAA', () => {
-      // oklch(75% 0 0) on white — contrast ~4.9:1, passes AA (4.5) but not AAA (7:1)
-      const result = validateContrastRatio('oklch(75% 0 0)', 'oklch(100% 0 0)', 4.5);
+      // oklch(52% 0 0) on white — contrast ~5.5:1, passes AA (4.5) but not AAA (7:1)
+      const result = validateContrastRatio('oklch(52% 0 0)', 'oklch(100% 0 0)', 4.5);
       expect(result.valid).toBe(true);
       expect(result.warnings.some(w => w.includes('AAA'))).toBe(true);
     });
