@@ -354,19 +354,38 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
   //   All 22 semantic tokens available on every color-accepting utility.
   //   Note: text-renge-{color} and text-renge-{size} coexist without conflict
   //   because matchUtilities resolves them by value-set key lookup.
+  //
+  //   Opacity modifiers (bg-renge-success/60, border-renge-warning/[0.4], …) are
+  //   supported via `modifiers: 'any'` + color-mix. Without this, matchUtilities
+  //   registers colors as STATIC utilities and the /NN modifier silently
+  //   generates no CSS. color-mix(in oklab, …) is already a Renge dependency
+  //   (shadows, component variants), and the base tokens are OKLCH.
   // ═══════════════════════════════════════════════════════════════════════════
 
-  matchUtilities({ bg:         (v) => ({ "background-color": v }) }, { values: colors });
-  matchUtilities({ text:       (v) => ({ color: v }) }, { values: colors });
-  matchUtilities({ border:     (v) => ({ "border-color": v }) }, { values: colors });
-  matchUtilities({ outline:    (v) => ({ "outline-color": v }) }, { values: colors });
-  matchUtilities({ ring:       (v) => ({ "--tw-ring-color": v }) }, { values: colors });
-  matchUtilities({ fill:       (v) => ({ fill: v }) }, { values: colors });
-  matchUtilities({ stroke:     (v) => ({ stroke: v }) }, { values: colors });
-  matchUtilities({ caret:      (v) => ({ "caret-color": v }) }, { values: colors });
-  matchUtilities({ accent:     (v) => ({ "accent-color": v }) }, { values: colors });
-  matchUtilities({ decoration: (v) => ({ "text-decoration-color": v }) }, { values: colors });
-  matchUtilities({ shadow:     (v) => ({ "--tw-shadow-color": v }) }, { values: colors });
+  // Apply an opacity modifier to a token color. `modifier` is Tailwind's raw
+  // value after the slash: "60" → 60%, "0.4" → 40%, "60%"/var(...) pass through.
+  const withAlpha = (color: string, modifier: string | null): string => {
+    if (modifier === null || modifier === undefined) return color;
+    const amount = /^\d+$/.test(modifier)
+      ? `${modifier}%`
+      : /^0?\.\d+$/.test(modifier)
+        ? `${parseFloat(modifier) * 100}%`
+        : modifier;
+    return `color-mix(in oklab, ${color} ${amount}, transparent)`;
+  };
+  const colorOpts = { values: colors, modifiers: "any" as const };
+
+  matchUtilities({ bg:         (v, { modifier }) => ({ "background-color": withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ text:       (v, { modifier }) => ({ color: withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ border:     (v, { modifier }) => ({ "border-color": withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ outline:    (v, { modifier }) => ({ "outline-color": withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ ring:       (v, { modifier }) => ({ "--tw-ring-color": withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ fill:       (v, { modifier }) => ({ fill: withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ stroke:     (v, { modifier }) => ({ stroke: withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ caret:      (v, { modifier }) => ({ "caret-color": withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ accent:     (v, { modifier }) => ({ "accent-color": withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ decoration: (v, { modifier }) => ({ "text-decoration-color": withAlpha(v, modifier) }) }, colorOpts);
+  matchUtilities({ shadow:     (v, { modifier }) => ({ "--tw-shadow-color": withAlpha(v, modifier) }) }, colorOpts);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // § 5 — Typography utilities
