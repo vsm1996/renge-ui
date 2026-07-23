@@ -123,9 +123,17 @@ describe("CSS variable references only", () => {
     }
   });
 
-  it("every color value is a CSS var reference", () => {
+  it("every color resolves to a CSS var reference, and supports the /opacity modifier", () => {
     for (const val of Object.values(preset.theme.extend.colors.renge)) {
-      expect(val).toMatch(/^var\(--renge-/);
+      const fn = val as (arg?: { opacityValue?: string }) => string;
+      expect(typeof fn).toBe("function");
+      // No modifier → the plain token var.
+      expect(fn()).toMatch(/^var\(--renge-/);
+      // /60 (opacityValue "0.6") → color-mix at 60%, so the modifier actually
+      // generates CSS instead of silently doing nothing.
+      expect(fn({ opacityValue: "0.6" })).toMatch(
+        /^color-mix\(in oklab, var\(--renge-[a-z-]+\) 60%, transparent\)$/,
+      );
     }
   });
 
@@ -355,7 +363,13 @@ describe("colors scale", () => {
       "info", "info-subtle",
     ];
     for (const key of colorKeys) {
-      expect(renge[key as keyof typeof renge]).toBe(`var(--renge-color-${key})`);
+      // Values are opacity-aware functions now; the plain call (no modifier)
+      // must resolve to the token var, and `.raw` carries the same reference.
+      const fn = renge[key as keyof typeof renge] as ((a?: { opacityValue?: string }) => string) & {
+        raw: string;
+      };
+      expect(fn()).toBe(`var(--renge-color-${key})`);
+      expect(fn.raw).toBe(`var(--renge-color-${key})`);
     }
   });
 });
