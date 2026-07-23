@@ -143,6 +143,32 @@ describe("contrast validation — all profiles × modes", () => {
         expect(result.valid).toBe(true);
         expect(ratio).toBeGreaterThanOrEqual(4.5);
       });
+
+      // Regression: warning/info as text on bg used to fail AA (4.5) in light
+      // mode across every profile (3.1–3.9:1). Darkened to hold this bar.
+      it(`${profile} ${mode} — warning / bg`, () => {
+        const theme = createRengeTheme({ profile: profile as any, mode: mode as any });
+        const ratio = getContrastRatio(
+          theme.vars["--renge-color-warning"],
+          theme.vars["--renge-color-bg"]
+        );
+        if (ratio && ratio < 4.5) {
+          console.log(`  warning/bg ratio ${ratio.toFixed(2)}:1 (${theme.vars["--renge-color-warning"]} on ${theme.vars["--renge-color-bg"]})`);
+        }
+        expect(ratio).toBeGreaterThanOrEqual(4.5);
+      });
+
+      it(`${profile} ${mode} — info / bg`, () => {
+        const theme = createRengeTheme({ profile: profile as any, mode: mode as any });
+        const ratio = getContrastRatio(
+          theme.vars["--renge-color-info"],
+          theme.vars["--renge-color-bg"]
+        );
+        if (ratio && ratio < 4.5) {
+          console.log(`  info/bg ratio ${ratio.toFixed(2)}:1 (${theme.vars["--renge-color-info"]} on ${theme.vars["--renge-color-bg"]})`);
+        }
+        expect(ratio).toBeGreaterThanOrEqual(4.5);
+      });
     });
   });
 });

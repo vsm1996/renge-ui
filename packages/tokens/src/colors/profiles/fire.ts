@@ -25,11 +25,11 @@ const light: SemanticColorMap = {
   accentSubtle: "oklch(96% 0.10 24)",            // orange-red glow on surface
   success:      oklch(palette.mossGreen),
   successSubtle:"oklch(93% 0.05 130)",
-  warning:      "oklch(62% 0.20 52)",
+  warning:      "oklch(55% 0.2 52)",   // AA: darkened for 4.5:1 text-on-bg
   warningSubtle:"oklch(95% 0.04 52)",
   danger:       oklch(palette.cranberryRed),
   dangerSubtle: "oklch(95% 0.04 2)",
-  info:         oklch(palette.riverBlue),
+  info:         "oklch(50% 0.14 200)",  // AA: darkened for 4.5:1 text-on-bg
   infoSubtle:   "oklch(94% 0.04 200)",
 };
 

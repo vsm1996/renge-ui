@@ -198,10 +198,10 @@ export default function TailwindPage() {
                 ["bg-renge-accent", "Primary accent", "CTA, highlights"],
                 ["bg-renge-accent-hover", "Hover state accent", "Interactive feedback"],
                 ["bg-renge-accent-subtle", "Subtle accent background", "Soft highlight"],
-                ["text-renge-success", "Success status color", "WCAG AA compliant"],
-                ["text-renge-warning", "Warning status color", "WCAG AA compliant"],
-                ["text-renge-danger", "Error/danger color", "WCAG AA compliant"],
-                ["text-renge-info", "Informational color", "WCAG AA compliant"],
+                ["text-renge-success", "Success status color", "WCAG AA text on bg — all profiles"],
+                ["text-renge-warning", "Warning status color", "WCAG AA text on bg — all profiles"],
+                ["text-renge-danger", "Error/danger color", "WCAG AA text on bg — all profiles"],
+                ["text-renge-info", "Informational color", "WCAG AA text on bg — all profiles"],
               ]} />
             </div>
 

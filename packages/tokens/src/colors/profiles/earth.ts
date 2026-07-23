@@ -25,11 +25,11 @@ const light: SemanticColorMap = {
   accentSubtle: "oklch(94% 0.05 68)",            // barely-there cream tint
   success:      oklch(palette.mossGreen),
   successSubtle:"oklch(92% 0.06 130)",
-  warning:      oklch(palette.sunsetOrange),
+  warning:      "oklch(55% 0.2 40)",   // AA: darkened for 4.5:1 text-on-bg
   warningSubtle:"oklch(94% 0.05 40)",
   danger:       oklch(palette.cranberryRed),
   dangerSubtle: "oklch(94% 0.05 2)",
-  info:         oklch(palette.riverBlue),
+  info:         "oklch(50% 0.14 200)",  // AA: darkened for 4.5:1 text-on-bg
   infoSubtle:   "oklch(94% 0.05 200)",
 };
 
