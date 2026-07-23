@@ -32,11 +32,11 @@ const light: SemanticColorMap = {
   accentSubtle: "oklch(93% 0.06 130)",
   success:      "oklch(54% 0.10 170)",            // dark teal — distinct from green accent, AA ✓
   successSubtle:"oklch(92% 0.06 170)",
-  warning:      oklch(palette.sunsetOrange),
+  warning:      "oklch(55% 0.2 40)",   // AA: darkened for 4.5:1 text-on-bg
   warningSubtle:"oklch(94% 0.04 40)",
   danger:       oklch(palette.cranberryRed),
   dangerSubtle: "oklch(94% 0.04 2)",
-  info:         oklch(palette.riverBlue),
+  info:         "oklch(50% 0.14 200)",  // AA: darkened for 4.5:1 text-on-bg
   infoSubtle:   "oklch(94% 0.04 200)",
 };
 
