@@ -69,7 +69,7 @@ export default function TokensPage() {
           <Stack gap="4">
             <CodeBlock code={`pnpm add @renge-ui/tokens`} />
             <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap", alignItems: "center" }}>
-              <Badge variant="neutral">v2.6.1</Badge>
+              <Badge variant="neutral">v2.8.2</Badge>
               <Badge variant="neutral">WCAG 2.1 AA</Badge>
             </Stack>
           </Stack>

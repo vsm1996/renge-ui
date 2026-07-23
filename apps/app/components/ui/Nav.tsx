@@ -254,7 +254,7 @@ export function Nav() {
           </div>
 
           <a
-            href="https://github.com/anthropics/renge"
+            href="https://github.com/vsm1996/renge-ui"
             target="_blank"
             rel="noopener noreferrer"
             style={{

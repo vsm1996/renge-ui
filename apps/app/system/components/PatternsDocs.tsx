@@ -54,7 +54,7 @@ import { createRengeTheme } from "@renge-ui/tokens";
 const theme = createRengeTheme({ profile: "twilight" });
 // Inject theme.css — all @renge-ui/react components adapt automatically.`}</Code>
       <Callout>
-        All 44 components use only <code>var(--renge-*)</code> CSS custom properties. Switch color profiles by swapping the injected theme block — no component state changes required.
+        Every component uses only <code>var(--renge-*)</code> CSS custom properties. Switch color profiles by swapping the injected theme block — no component state changes required.
       </Callout>
     </ComponentSection>
   );

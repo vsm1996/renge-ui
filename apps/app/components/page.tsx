@@ -885,13 +885,13 @@ export default function ComponentsPage() {
                   </TableHead>
                   <TableBody>
                     {[
-                      ["@renge-ui/tokens", "2.6.1", "stable"],
-                      ["@renge-ui/react", "3.7.0", "stable"],
-                      ["@renge-ui/tailwind", "2.9.0", "stable"],
-                      ["@renge-ui/petals", "1.1.0", "stable"],
-                      ["@renge-ui/vue", "1.1.0", "stable"],
-                      ["@renge-ui/svelte", "1.1.0", "stable"],
-                      ["@renge-ui/test-utils", "1.0.2", "stable"],
+                      ["@renge-ui/tokens", "2.8.2", "stable"],
+                      ["@renge-ui/react", "3.9.0", "stable"],
+                      ["@renge-ui/tailwind", "2.12.0", "stable"],
+                      ["@renge-ui/petals", "1.2.0", "stable"],
+                      ["@renge-ui/vue", "1.2.0", "stable"],
+                      ["@renge-ui/svelte", "1.2.0", "stable"],
+                      ["@renge-ui/test-utils", "1.1.0", "stable"],
                     ].map(([pkg, ver, status], i) => (
                       <TableRow key={i} index={i}>
                         <TableCell><code style={{ fontFamily: "var(--font-mono)", fontSize: "var(--renge-font-size-sm)" }}>{pkg}</code></TableCell>
