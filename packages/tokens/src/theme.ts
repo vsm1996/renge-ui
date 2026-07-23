@@ -47,7 +47,15 @@ const defaults: Required<RengeThemeConfig> = {
 // ============================================================================
 
 export function createRengeTheme(config: RengeThemeConfig = {}): RengeTheme {
-  const resolved = { ...defaults, ...config };
+  // Drop explicitly-undefined config values so they don't clobber defaults.
+  // Callers routinely spread a fully-shaped config with undefined holes — e.g.
+  // RengeProvider with no `config` passes `{ profile: undefined, mode:
+  // undefined, ... }` — and a plain `{ ...defaults, ...config }` would replace
+  // "ocean"/"light" with undefined and then crash on profiles[undefined][mode].
+  const defined = Object.fromEntries(
+    Object.entries(config).filter(([, v]) => v !== undefined),
+  ) as RengeThemeConfig;
+  const resolved = { ...defaults, ...defined };
   const {
     baseUnit,
     typeBase,

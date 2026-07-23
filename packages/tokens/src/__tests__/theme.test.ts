@@ -9,6 +9,16 @@ describe("createRengeTheme", () => {
     expect(theme).toHaveProperty("config");
   });
 
+  it("ignores explicitly-undefined config values instead of clobbering defaults", () => {
+    // Regression: callers (RengeProvider with no config) spread a fully-shaped
+    // config with undefined holes. `{ ...defaults, ...config }` used to replace
+    // profile/mode with undefined and crash on profiles[undefined][mode].
+    const { config } = createRengeTheme({ profile: undefined, mode: undefined, baseUnit: 6 });
+    expect(config.profile).toBe("ocean");
+    expect(config.mode).toBe("light");
+    expect(config.baseUnit).toBe(6); // real overrides still apply
+  });
+
   it("resolves all defaults", () => {
     const { config } = createRengeTheme();
     expect(config.baseUnit).toBe(4);
