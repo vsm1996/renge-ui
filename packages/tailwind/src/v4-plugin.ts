@@ -208,21 +208,17 @@ const rengeV4Plugin: ReturnType<typeof plugin> = plugin(function ({
   const theme = createRengeTheme({ baseUnit: 6 });
   const baseVars: Record<string, string> = {};
 
+  // Inject EVERY non-color token into :root — spacing, type, radius, motion,
+  // shadow, z-index, width/height/min/max, container, aspect, palette,
+  // animation, … Semantic colors are the one exception: they're per-profile and
+  // handled in §2. A hand-maintained allowlist here previously dropped whole
+  // categories (shadow, z-index, w/h/min/max), so petals referencing them (card
+  // shadows, overlay z-index, table/field sizes) rendered incomplete under a
+  // Tailwind-only integration. "Everything but color" can't silently omit a
+  // future token category.
   for (const [key, value] of Object.entries(theme.vars)) {
-    if (
-      key.startsWith("--renge-space-") ||
-      key.startsWith("--renge-font-size-") ||
-      key.startsWith("--renge-line-height-") ||
-      key.startsWith("--renge-radius-") ||
-      key.startsWith("--renge-duration-") ||
-      key.startsWith("--renge-easing-") ||
-      key.startsWith("--renge-animation-") ||
-      key.startsWith("--renge-container-") ||
-      key.startsWith("--renge-col-min-") ||
-      key.startsWith("--renge-aspect-")
-    ) {
-      baseVars[key] = value;
-    }
+    if (key.startsWith("--renge-color-")) continue;
+    baseVars[key] = value;
   }
 
   addBase({ ":root": baseVars });

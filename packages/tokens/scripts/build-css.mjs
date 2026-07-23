@@ -52,23 +52,16 @@ const DEFAULT_PROFILE = "ocean";
 const theme = createRengeTheme();
 const baseVars = {};
 
+// Inject EVERY non-color token — spacing, type, radius, motion, shadow,
+// z-index, width/height/min/max, size, container, aspect, palette, animation, …
+// Semantic colors are seeded per-profile below (see §DEFAULT_PROFILE and the
+// per-profile blocks). A hand-maintained allowlist here previously omitted
+// whole categories (shadow, z-index, w/h/min/max), so petals referencing them
+// rendered incomplete on a plain-CSS import. "Everything but color" stays
+// complete as tokens are added.
 for (const [key, value] of Object.entries(theme.vars)) {
-  if (
-    key.startsWith("--renge-space-") ||
-    key.startsWith("--renge-font-size-") ||
-    key.startsWith("--renge-line-height-") ||
-    key.startsWith("--renge-radius-") ||
-    key.startsWith("--renge-duration-") ||
-    key.startsWith("--renge-easing-") ||
-    key.startsWith("--renge-size-") ||
-    key.startsWith("--renge-animation-") ||
-    key.startsWith("--renge-palette-") ||
-    key.startsWith("--renge-container-") ||
-    key.startsWith("--renge-col-min-") ||
-    key.startsWith("--renge-aspect-")
-  ) {
-    baseVars[key] = value;
-  }
+  if (key.startsWith("--renge-color-")) continue;
+  baseVars[key] = value;
 }
 
 // Seed :root with the default profile's semantic colors so the color system

@@ -1,9 +1,55 @@
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { describe, it, expect } from 'vitest';
 import {
   petals,
   typography, spacing, cards, interactive, compositions,
   alerts, navigation, overlay, forms, feedback, dataDisplay, layout, decoration,
 } from '../index';
+
+// ─── Token integrity ──────────────────────────────────────────────────────────
+// A petal is only real if every --renge-* var it references is actually SHIPPED
+// by the standard integration. This guards the gap where petals referenced
+// tokens (shadow/z-index/w/h/min/max) that the injection allowlists silently
+// dropped — the box-shadow, z-index, or size just wouldn't render. The check is
+// against the generated renge.css (the plain-CSS path); the Tailwind v4 plugin
+// injects the same "everything but color" base set.
+
+describe('petals — token integrity (every referenced var actually ships)', () => {
+  // The built stylesheet is the source of truth for what's injected. Requires
+  // @renge-ui/tokens to be built (dist/renge.css); if this throws, run its build.
+  const require = createRequire(import.meta.url);
+  const css = readFileSync(require.resolve('@renge-ui/tokens/renge.css'), 'utf8');
+  const defined = new Set(
+    [...css.matchAll(/(--renge-[a-z0-9-]+)\s*:/g)].map((m) => m[1]),
+  );
+
+  const categories: Record<string, Record<string, { tokens: Record<string, string> }>> = {
+    typography, spacing, cards, interactive, compositions,
+    alerts, navigation, overlay, forms, feedback, dataDisplay, layout, decoration,
+  };
+
+  it('every --renge-* var referenced by any petal is defined in renge.css', () => {
+    const missing: string[] = [];
+    for (const [cat, group] of Object.entries(categories)) {
+      for (const [name, petal] of Object.entries(group)) {
+        for (const value of Object.values(petal.tokens)) {
+          for (const m of String(value).matchAll(/var\((--renge-[a-z0-9-]+)/g)) {
+            if (!defined.has(m[1])) missing.push(`${cat}.${name} → ${m[1]}`);
+          }
+        }
+      }
+    }
+    expect(missing, `petals reference tokens not shipped in renge.css:\n${missing.join('\n')}`).toEqual([]);
+  });
+
+  it('the shipped stylesheet actually defines the once-missing categories', () => {
+    // Regression anchor for the specific gap: shadow / z-index / sizing tokens.
+    for (const v of ['--renge-shadow-layer-1', '--renge-zindex-modal', '--renge-w-full', '--renge-h-4']) {
+      expect(defined.has(v), `${v} should be shipped in renge.css`).toBe(true);
+    }
+  });
+});
 
 // ─── Structure & Exports ──────────────────────────────────────────────────────
 
