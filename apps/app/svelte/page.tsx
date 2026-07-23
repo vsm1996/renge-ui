@@ -65,9 +65,9 @@ export default function SveltePage() {
             <Stack gap="4">
               <CodeBlock code={`pnpm add @renge-ui/svelte @renge-ui/tokens`} />
               <Stack direction="horizontal" gap="3" style={{ flexWrap: "wrap", alignItems: "center" }}>
-                <Badge variant="neutral">v1.1.0</Badge>
+                <Badge variant="neutral">v1.2.0</Badge>
                 <Badge variant="neutral">Svelte 4+</Badge>
-                <a href="https://github.com/soka-labs/renge/tree/main/packages/svelte" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", textDecoration: "none" }}>GitHub →</a>
+                <a href="https://github.com/vsm1996/renge-ui/tree/main/packages/svelte" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", textDecoration: "none" }}>GitHub →</a>
                 <a href="https://npmjs.com/package/@renge-ui/svelte" style={{ fontSize: "var(--renge-font-size-sm)", color: "var(--renge-color-accent)", textDecoration: "none" }}>npm →</a>
               </Stack>
             </Stack>
