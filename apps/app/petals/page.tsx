@@ -613,7 +613,6 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
   // ── forms ──
   if (categoryName === 'forms') {
     if (petalName === 'checkbox' || petalName === 'checkboxChecked') {
-      const isChecked = petalName === 'checkboxChecked';
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>
           <PreviewWrap>
@@ -777,7 +776,6 @@ function PetalPreview({ categoryName, petalName, petal }: { categoryName: string
       );
     }
     if (petalName.startsWith('progress')) {
-      const isFill = petalName === 'progressFill' || petalName === 'progressSuccess';
       const fillColor = petalName === 'progressSuccess' ? 'var(--renge-color-success)' : 'var(--renge-color-accent)';
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--renge-space-3)' }}>

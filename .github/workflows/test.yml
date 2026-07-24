@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - 'packages/**'
+      - 'apps/**'
+      - 'eslint.config.ts'
       - 'turbo.json'
       - '.github/workflows/test.yml'
   push:
@@ -45,6 +47,13 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      # Lint is static — no build needed. Runs first for fast feedback. Fails
+      # on error-severity rules only; no-explicit-any and the react-hooks
+      # effect rules are intentionally `warn` (see eslint.config.ts) and stay
+      # visible without blocking.
+      - name: Lint
+        run: pnpm lint
 
       # Build first so cross-package tests/types resolve built dist
       # (e.g. react/petals/test-utils consume @renge-ui/tokens' dist + renge.css).

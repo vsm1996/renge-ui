@@ -9,6 +9,7 @@ export default tseslint.config(
       "**/node_modules/**",
       "**/.next/**",
       "**/.turbo/**",
+      "**/.svelte-kit/**",
       "**/*.js",
       "**/*.mjs",
       "**/*.cjs",

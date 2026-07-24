@@ -13,7 +13,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const [month, setMonth] = useState(new Date(value || new Date()).getMonth());
-    const [year, setYear] = useState(new Date(value || new Date()).getFullYear());
+    const [year] = useState(new Date(value || new Date()).getFullYear());
 
     useEffect(() => {
       const handleClickOutside = (e: MouseEvent) => {

@@ -1,5 +1,5 @@
 import { forwardRef, useState, useMemo, useEffect } from 'react';
-import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
 export interface CommandItem {
   id: string;
