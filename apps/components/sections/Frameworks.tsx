@@ -22,7 +22,7 @@ const FRAMEWORKS = [
     install: "pnpm add @renge-ui/react",
     href: "/components",
     docLabel: "View components →",
-    count: "44 components",
+    count: "60+ components",
     detail: "forwardRef. Inline tokens. No class names.",
     icon: (
       <svg viewBox="0 0 48 48" width={36} height={36} fill="none" aria-hidden>
