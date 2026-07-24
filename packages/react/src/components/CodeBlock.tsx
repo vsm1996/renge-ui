@@ -8,7 +8,7 @@ export interface CodeBlockProps extends ComponentPropsWithoutRef<'pre'> {
 }
 
 export const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
-  ({ code, language, inline = false, children, ...props }, ref) => {
+  ({ code, language: _language, inline = false, children, ...props }, ref) => {
     if (inline) {
       return (
         <code

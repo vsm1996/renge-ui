@@ -414,7 +414,7 @@ describe('petals — consistency', () => {
     const containsTransparent = (v: string) => v.includes('transparent');
     for (const group of Object.values(petals)) {
       for (const petal of Object.values(group)) {
-        for (const [prop, value] of Object.entries(petal.tokens)) {
+        for (const [, value] of Object.entries(petal.tokens)) {
           const isVar = (value as string).startsWith('var(--renge-');
           const isPlain = plainValues.has(value as string);
           const isComposite = (value as string).includes('var(--renge-');

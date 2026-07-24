@@ -22,7 +22,6 @@ const TOKEN_NAV: SidebarSection[] = [
 ];
 
 export default function TokensPage() {
-  const PHI = 1.618033988749895;
 
   return (
     <DocPageLayout sidebar={<DocSidebar sections={TOKEN_NAV} footerLinks={[

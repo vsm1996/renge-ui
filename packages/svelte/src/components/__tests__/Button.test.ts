@@ -1,7 +1,7 @@
 import { render } from '@testing-library/svelte'
 import userEvent from '@testing-library/user-event'
 import Button from '../Button.svelte'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 
 describe('Button', () => {
   it('renders with default props', () => {
@@ -11,7 +11,7 @@ describe('Button', () => {
   })
 
   it('applies size styles', () => {
-    const { getByRole, rerender } = render(Button, { props: { size: 'lg' } })
+    const { getByRole } = render(Button, { props: { size: 'lg' } })
     const button = getByRole('button')
     const styles = window.getComputedStyle(button)
     expect(styles.padding).toBeTruthy()

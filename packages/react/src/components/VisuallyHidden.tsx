@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import type { ComponentPropsWithoutRef } from 'react';
 
-export interface VisuallyHiddenProps extends ComponentPropsWithoutRef<'span'> {}
+export type VisuallyHiddenProps = ComponentPropsWithoutRef<'span'>;
 
 export const VisuallyHidden = forwardRef<HTMLSpanElement, VisuallyHiddenProps>(
   (props, ref) => (
