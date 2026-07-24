@@ -5,6 +5,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Container, Stack } from "@renge-ui/react";
+import { COMPONENT_COUNT_FLOOR } from "@/lib/site-facts";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -79,7 +80,7 @@ export function ComingSoon() {
           className="text-renge-lg text-renge-fg-subtle leading-renge-lg m-0 mb-renge-6"
           style={{ fontFamily: "var(--font-body)" }}
         >
-          60+ React components built on the token system.
+          {COMPONENT_COUNT_FLOOR}+ React components built on the token system.
           Proportional. Accessible. Composable.
         </motion.p>
 

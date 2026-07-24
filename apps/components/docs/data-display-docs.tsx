@@ -7,6 +7,7 @@ import {
   Accordion, AccordionItem, Timeline, TimelineItem, Badge,
 } from "@renge-ui/react";
 import { PropRow, PropsTable, Demo, Code, ComponentSection } from "@/components/ui/DocPrimitives";
+import { COMPONENT_COUNT, PETAL_COMPOSITIONS, PETAL_CATEGORIES } from "@/lib/site-facts";
 
 export function TableDocs() {
   const plants = [
@@ -122,32 +123,32 @@ export function TimelineDocs() {
       <Demo label="Build history">
         <Timeline style={{ width: "100%", maxWidth: 480 }}>
           <TimelineItem
-            title="Tokens — v2.2.4"
-            description="Added animation scale. 15 named keyframes. All Fibonacci-derived durations."
-            timestamp="Today"
-            status="completed"
-          />
-          <TimelineItem
-            title="React — v2.3.3"
-            description="44 components. Added data input, display, navigation, feedback, layout, and action categories."
-            timestamp="Today"
+            title="React — v3.9.0"
+            description={`${COMPONENT_COUNT} forwardRef component primitives on the token system. RSC-ready.`}
+            timestamp="Jul 2026"
             status="active"
           />
           <TimelineItem
-            title="Tailwind — v2.2.5"
-            description="v4 plugin now injects animation vars and @keyframes blocks."
-            timestamp="Today"
+            title="Tokens — v2.8.2"
+            description="OKLCH color, φ typography, Fibonacci spacing. Six profiles, all WCAG-AA."
+            timestamp="Jul 2026"
             status="completed"
           />
           <TimelineItem
-            title="@renge-ui/vue"
-            description="Vue 3 port shipped. useRengeTheme composable + full token integration."
+            title="Tailwind — v2.12.0"
+            description="v4 plugin: color-mix opacity, animation vars, full token coverage."
+            timestamp="Jul 2026"
+            status="completed"
+          />
+          <TimelineItem
+            title="Petals — v1.2.0"
+            description={`${PETAL_COMPOSITIONS} semantic token compositions across ${PETAL_CATEGORIES} categories.`}
             timestamp="Jun 2026"
             status="completed"
           />
           <TimelineItem
-            title="@renge-ui/svelte"
-            description="Svelte port shipped. profile/mode stores + SvelteKit support."
+            title="Vue + Svelte — v1.2.0"
+            description="Vue 3 composables and Svelte stores. Full token integration on both."
             timestamp="Jun 2026"
             status="completed"
           />
@@ -155,20 +156,20 @@ export function TimelineDocs() {
       </Demo>
       <Code>{`<Timeline>
   <TimelineItem
-    title="v1.0 released"
-    description="First stable token system."
-    timestamp="Jan 2025"
+    title="Tokens — v2.8.2"
+    description="OKLCH color, φ typography, Fibonacci spacing."
+    timestamp="Jul 2026"
     status="completed"
   />
   <TimelineItem
-    title="React components"
-    description="44 components added."
-    timestamp="Feb 2025"
+    title="React — v3.9.0"
+    description="forwardRef component primitives."
+    timestamp="Jul 2026"
     status="active"
   />
   <TimelineItem
-    title="Vue port"
-    description="Shipped. useRengeTheme composable."
+    title="Vue + Svelte"
+    description="Composables and stores shipped."
     timestamp="Jun 2026"
     status="completed"
   />
