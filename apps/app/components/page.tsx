@@ -17,6 +17,7 @@ import {
 import { ComponentSection, Demo, CodeBlock, PropsTable, PropRow, KeyboardTable, KeyboardRow } from "@/components/ui/DocPrimitives";
 import { DocPageLayout } from "@/components/ui/DocPageLayout";
 import { DocSidebar, type SidebarSection } from "@/components/ui/DocSidebar";
+import { COMPONENT_COUNT_FLOOR } from "@/lib/site-facts";
 
 const COMPONENT_NAV: SidebarSection[] = [
   { label: "Components", items: [
@@ -68,7 +69,7 @@ export default function ComponentsPage() {
           @renge-ui/react
         </p>
         <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(36px, 5vw, 72px)", color: "var(--renge-color-fg)", fontWeight: 400, margin: 0, marginBottom: "var(--renge-space-5)", letterSpacing: "-0.02em" }}>
-          60+ component primitives.
+          {COMPONENT_COUNT_FLOOR}+ component primitives.
         </h1>
         <p style={{ fontSize: "var(--renge-font-size-lg)", color: "var(--renge-color-fg-subtle)", fontFamily: "var(--font-body)", lineHeight: "var(--renge-line-height-lg)", margin: 0, marginBottom: "var(--renge-space-6)", maxWidth: 560 }}>
           All consuming Renge tokens via inline styles. Zero CSS-in-JS runtime, no class names, no specificity battles.
@@ -1340,7 +1341,7 @@ const steps = [
       <div style={{ padding: "var(--renge-space-6)", background: "var(--renge-color-bg-subtle)", borderRadius: "var(--renge-radius-3)", border: "1px solid var(--renge-color-border-subtle)" }}>
         <Heading level={2} size="lg" style={{ marginBottom: "var(--renge-space-3)" }}>Full Reference</Heading>
         <Text as="p" color="fg-subtle" style={{ margin: 0 }}>
-          All 60+ components are fully typed with TypeScript, accept standard HTML props via spread, and use Renge tokens exclusively for styling. See{" "}
+          All {COMPONENT_COUNT_FLOOR}+ components are fully typed with TypeScript, accept standard HTML props via spread, and use Renge tokens exclusively for styling. See{" "}
           <Anchor href="https://www.npmjs.com/package/@renge-ui/react" target="_blank" rel="noopener noreferrer">@renge-ui/react on npm</Anchor>{" "}or the{" "}
           <Anchor href="https://github.com/vsm1996/renge-ui/blob/main/packages/react/README.md" target="_blank" rel="noopener noreferrer">GitHub README</Anchor>{" "}for the complete API.
         </Text>
